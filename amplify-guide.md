@@ -1,17 +1,58 @@
-## Overview
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
+- [Overview](#overview)
+  - [What is NGINX Amplify](#what-is-nginx-amplify)
+  - [Main components](#main-components)
+- [Amplify Agent](#amplify-agent)
+  - [Installation](#installation)
+  - [Updates](#updates)
+  - [Configuration and logging](#configuration-and-logging)
+  - [Source code](#source-code)
+  - [How Amplify Agent works](#how-amplify-agent-works)
+  - [Metadata and metrics collection](#metadata-and-metrics-collection)
+  - [Detecting and monitoring NGINX instances](#detecting-and-monitoring-nginx-instances)
+  - [Configuring NGINX for Amplify metric collection](#configuring-nginx-for-amplify-metric-collection)
+  - [NGINX configuration analysis](#nginx-configuration-analysis)
+- [User interface](#user-interface)
+  - [Graphs page](#graphs-page)
+    - [Systems list](#systems-list)
+    - [Preview](#preview)
+    - [Graph feed](#graph-feed)
+  - [Reports](#reports)
+  - [Events](#events)
+  - [Alerts](#alerts)
+  - [Settings](#settings)
+- [Metrics and metadata](#metrics-and-metadata)
+  - [OS metrics](#os-metrics)
+  - [NGINX metrics](#nginx-metrics)
+    - [HTTP connections and requests](#http-connections-and-requests)
+    - [HTTP methods](#http-methods)
+    - [HTTP status codes](#http-status-codes)
+    - [HTTP protocol versions](#http-protocol-versions)
+    - [Custom HTTP metrics](#custom-http-metrics)
+    - [Upstream metrics](#upstream-metrics)
+    - [Cache metrics](#cache-metrics)
+    - [NGINX process metrics](#nginx-process-metrics)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Overview
 
 ### What is NGINX Amplify
 
-NGINX Amplify is a monitoring and configuration help product. It is a SaaS product, and it's hosted on AWS public cloud.
+NGINX Amplify is a tool designed to monitor and optimize application delivery infrastructures. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling modern web applications.
 
 You can use NGINX Amplify to do the following:
 
+ * Visually identify performance bottlenecks, overloaded servers, or potential DDoS attacks
+ * Improve and optimize NGINX performance with intelligent advice and recommendations
+ * Get notified when something is wrong with the application delivery
+ * Plan web application capacity and performance
  * Keep track of the systems running NGINX
- * Proactively identify issues related to NGINX configuration and operations
- * Find bottlenecks in NGINX infrastructure
- * Improve and optimize NGINX configuration and setup
- * Plan web applications capacity and performance
+
+NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud.
 
 ### Main components
 
@@ -19,13 +60,13 @@ NGINX Amplify includes the following key components:
 
  1. **Agent**
 
-    Amplify Agent is a Python application running on end systems. Its role is to collect various metrics from the operating system and from the NGINX instances, aggregate and send them to the backend system for visualization.
+    Amplify Agent is a Python application that runs on monitored systems. Its role is to collect various metrics from the operating system and from the NGINX instances, aggregate and send them to the backend system for visualization.
 
-    NGINX Amplify is hosted on AWS. All communications between the Amplify Agent and the Amplify SaaS are done securely over TLS/SSL, using 2048-bit encryption.
+    NGINX Amplify is hosted on AWS. All communications between the agent and Amplify SaaS are done securely over TLS/SSL. All traffic is always initiated by the agent.
 
- 2. **Web UI**
+ 2. **Amplify UI**
 
-    This is the user interface accessible from all major browsers.
+    This is the user interface accessible from all major browsers. Web interface is only accessible via TLS/SSL.
 
  3. **Backend** (implemented as a SaaS)
 
@@ -40,18 +81,18 @@ In order to be able to use NGINX Amplify to monitor your infrastructure, you nee
 
 This is done as simple as:
 
- 1. Download and run install script.
+ 1. `Download and run install script.`
 
         # curl -sS -L -O http://pp.nginx.com/andrew/files/install.sh && \
         API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh`
 
-    (where API_KEY is a unique API key assigned when you create an account with Amplify)
+    Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
 
  2. Start Amplify Agent.
 
         # /etc/init.d/amplify-agent start
 
-Amplify Agent will drop *root* privileges after it's started. It will then use the effective UID of the user `nginx`. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
+**Note.** Amplify Agent will drop *root* privileges after it's started. It will then use the effective UID of the user `nginx`. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
 ### Updates
 
@@ -63,7 +104,7 @@ It is highly recommended to periodically check for updates and install the lates
         apt-get install nginx-amplify-agent && \
         service amplify-agent restart
 
- * On CentOS use:
+ * `On CentOS use:`
 
         XXXX
 
@@ -98,22 +139,21 @@ Normal level of logging for the agent is `INFO`. If you'd ever need to debug the
 
 ### Source code
 
-Amplify Agent is an open source application. It's licensed under the 2-clause BSD license, and it is available here:
+Amplify Agent is an open source application. It's licensed under the `[2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/LICENSE)`, and it is available here:
 
- * `Sources: https://github.com/nginxinc/naas-agent`
+ * `Sources: https://github.com/nginxinc/nginx-amplify-agent`
  * `Packages repo (public): http://packages.naas.nginx.com/ (TBD)`
+ * `Install script for Linux: https://github.com/nginxinc/nginx-amplify/agent/install.sh`
 
 ### How Amplify Agent works
 
-#### What happens after install
-
 NGINX Amplify Agent is a compact application written in Python. The role of the agent is to collect various metrics and metadata and export them to the main system for visualization.
 
-You will need to install the Amplify Agent on all hosts that you'd like to monitored.
+You will need to install Amplify Agent on all hosts that you'd like to monitor.
 
-Upon proper installation, the agent will automatically start to report metrics, and you should see something in the Amplify Web UI in about a minute or so.
+Upon proper installation, the agent will automatically start to report metrics, and you should see something in the Amplify UI in about a minute or so.
 
-Amplify Agent collects metrics and sends them to the Amplify SaaS on a 'per-object' basis. Basically, each distinct type of a monitored entity is seen as a (data) object.
+Amplify Agent collects metrics and sends them to the Amplify SaaS on a 'per-object' basis. Basically, each distinct type of a monitored entity is seen as a (data) object internally.
 
 There're currently the following object types:
 
@@ -122,30 +162,28 @@ There're currently the following object types:
 
 By NGINX instance the agent assumes any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
-**Note.** When objects are first seen by the agent, they will be automatically created in Amplify SaaS, and visualized in the Web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
+**Note.** When objects are first seen by the agent, they will be automatically created in Amplify SaaS, and visualized in the web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
 
-When an NGINX instance disappears from the system for whatever reason and is no longer reporting — and no longer necessary, you should manually delete it from the Web UI. The 'Delete' object button is in the meta viewer popup (see **User interface** below).
+When an NGINX instance disappears from a system for whatever reason and is no longer reporting — and no longer necessary, you should manually delete it in the web UI. The 'Delete' object button can be found in the meta viewer popup (see **User interface** below).
 
-#### Metadata and metrics collection
-
-##### Types of data
+### Metadata and metrics collection
 
 The agent collects the following type of data:
 
  * **System metadata.** This is basic information about the OS environment where the agent runs. This could be hostname, uptime information, and so on.
  * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic etc.
- * **NGINX metadata.** This is what describes your NGINX instances, and it includes a particular package and build information, path to binary, configure options etc. NGINX metadata also includes config file breakdown.
+ * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, path to binary, configure options etc. NGINX metadata also includes config file breakdown.
  * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX logs files.
 
 Amplify Agent will mostly use Python's **psutil()** to collect the data, but occasionally may also invoke select system utilities like **ps(1)**.
 
 While the agent is running on the host, it collects metrics with steady 20s intervals. Metrics then get aggregated and sent to SaaS once per minute.
 
-Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify Web UI using a web browser.
+Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify UI using a web browser.
 
 NGINX config updates are reported only when a configuration change is detected.
 
-##### Detecting and monitoring NGINX instances
+### Detecting and monitoring NGINX instances
 
 Amplify Agent is capable of detecting several types of NGINX instances:
 
@@ -159,7 +197,7 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 **Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* leaf objects for monitoring. NGINX objects are always the leaf objects having a single parent object (the OS).
 
-##### Configuring NGINX for Amplify metric collection
+### Configuring NGINX for Amplify metric collection
 
 In order to be able to see NGINX graphs in the UI, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to pick it automatically. Otherwise, add it as follows:
 
@@ -194,17 +232,20 @@ Without *stub_status* the agent will **not** be able to collect quite a few esse
 
 For more information about *stub_status*, please refer to our reference documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-        nginx.http.conn.current = ss.active
-        nginx.http.conn.active = ss.active - ss.waiting
-        nginx.http.conn.idle = ss.waiting
-        nginx.http.request.reading = ss.reading
-        nginx.http.request.writing = ss.writing
-        nginx.http.conn.dropped = ss.accepts - ss.handled
-        nginx.http.conn.dropped_s = (current nginx.conn.dropped - previous nginx.conn.dropped) /
-                                    (current measurement timestamp - previous timestamp)
-        nginx.http.conn.accepted = ss.accepts
-        nginx.http.conn.accepted_s = (current nginx.conn.accepted - previous nginx.conn.accepted) /
-                                    (current measurement timestamp - previous timestamp)
+Amplify agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as follows:
+
+    nginx.http.conn.accepted = stub_status.accepts
+    nginx.http.conn.active = stub_status.active - stub_status.waiting
+    nginx.http.conn.current = stub_status.active
+    nginx.http.conn.dropped = stub_status.accepts - stub_status.handled
+    nginx.http.conn.idle = stub_status.waiting
+
+    nginx.http.request.count = stub_status.requests
+    nginx.http.request.current = stub_status.reading + stub_status.writing
+    nginx.http.request.reading = stub_status.reading
+    nginx.http.request.writing = stub_status.writing
+
+For more information about the metric list, please refer to the **Metrics and metadata** section below.
 
 Amplify Agent will also try to collect all additional metrics relevant to a particular NGINX instance from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
@@ -212,13 +253,15 @@ You don't have to specifically point the agent to either NGINX configuration or 
 
 Agent will also try to detect the log format for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
-##### NGINX configuration analysis
+**Note.** A number of metrics outlined in **Metrics and metadata** below will only be available if corresponding variables are defined for a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format. You can find complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
 
-Amplify Agent is able to automatically find all relevant NGINX configuration files, parse configuration, extract their logical structure and send them to Amplify SaaS for further analysis and reports. For more information on configuration analysis and reports see **Reports** section below.
+### NGINX configuration analysis
 
-After the agent finds a particular NGINX configuration, it'll then start to keep track of them.
+Amplify Agent is able to automatically find all relevant NGINX configuration files, parse configuration, extract their logical structure and send an associated JSON data to Amplify SaaS for further analysis and reports. For more information on configuration analysis and reports see **Reports** section below.
 
-When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is changed, such updates will be automatically sent to Amplify SaaS.
+After the agent finds a particular NGINX configuration, it'll then start to keep automatically track of its changes.
+
+When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is changed, such updates will be sent to Amplify SaaS.
 
 **Note.** The following directives and their parameters aren't exported to the SaaS: *ssl_certificate*, *ssl_certificate_key*, *ssl_client_certificate*, *ssl_password_file*, *ssl_stapling_file*, *ssl_trusted_certificate*, *auth_basic_user_file*, *secure_link_secret*.
 
@@ -227,19 +270,17 @@ When a change is detected with NGINX — e.g. a master process restarts, or the 
 
 ### Graphs page
 
-Upon logging in, the first thing you see is going to be the **Graphs** page.
+When you first login to Amplify, you’re presented with a graphical dashboard on the **Graphs** page. From here you can see an overview of all your systems with graphs of key statistics, such as CPU, Memory, and Disk usage.
 
-**Graphs** page is essentially what the name suggests. It's a collection of graphs that visualize the metrics collected from your systems.
+#### Systems list
 
-#### Inventory
+On the left is the list of the Systems being monitored by Amplify, those that have the Amplify agent installed on it. The systems do not have to have NGINX installed, though you get additional visibility into NGINX if they do. For systems that do have NGINX installed, the version of NGINX is listed under the hostname for that server.
 
-On the left you'll find the inventory list of all hosts that are currently monitored — those that have the Amplify Agent installed. In the inventory list you will always see the parent OS object and the NGINX objects combined into a single 'system'.
+When you install the agent on a new system, it'll automatically appear in the Systems list. The Systems list persists across all menu pages (**Graphs**, **Reports**, **Events**, **Alerts**).
 
-When you install the agent on a new system, it'll automatically appear in the inventory. The inventory list is persistent across all menu pages (**Graphs**, **Reports**, **Events**, **Alerts**).
+Systems list allows you to quickly check their status. It also provides a quick overview of the key metrics being reported. Mousing over any of the Systems in the list reveals 4 vertical dots — if you click on them, a pullout tray will appear. The tray will display numerical and text information about current CPU and memory usage, traffic in and out, OS flavor, and NGINX version.
 
-Inventory list allows you to quickly check the status of the monitored systems. It also provides a quick overview of the key metrics being reported. When you hover on a particular system, the UI element will extend a little bit to the right, and then it is possible to unhide more information about the key metrics, such as current CPU and memory usage, traffic in and out, OS flavor and version, NGINX version.
-
-When you extend the system UI element, you will also find two additional controls our there — namely, per-system settings, and the viewer of metadata.
+While on the **Graphs** page, clicking on any of the systems will bring up the graphs for that system in the center **Preview** column (see below).
 
 You can apply sorting and search/filter to the inventory list to quickly find the system in question.
 
@@ -247,56 +288,56 @@ You can apply sorting and search/filter to the inventory list to quickly find th
 
 In the middle of the screen there's the **Preview** section where you can quickly browse and check what graphs are available, and whether there are any anomalies to be analyzed.
 
-The graphs in the **Preview** column are split in distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the inventory list, the **Preview** column will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
+The graphs in the **Preview** column are split in distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the leftmost column, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
 
-When you click on a graph in **Preview**, a bigger form of it appears on the right for a 'quick look' analysis. It will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph feed** (see below).
+Clicking on any of the smaller graphs in the Preview column will bring up a larger version of that graph in the **Graph Feed** on the right side for a 'quick look' reference. It will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph feed** (see below).
 
-Some graphs have an additional selector for the label associated with a metric. E.g. with 'Disk latency', or 'Network traffic' you can select what device or interface you're analyzing. Switching label on a graph changes the preview graph to display the corresponding data.
+There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the **Graph feed** for further analysis.
+
+Some graphs in the **Preview** have an additional selector for the label associated with a metric. E.g. with 'Disk latency', or 'Network traffic' you can select what device or interface you're analyzing. Switching label on a graph changes the preview graph to display the corresponding data.
+
+Up above the **Graph feed** is the time range, that helps to scale displayed data for up to the past week.
 
 #### Graph feed
 
 Section on the right is called **Graph feed**. When analyzing the graphs, you can populate this section from **Preview**. In order to do that, click on a graph's checkbox in **Preview**. The 'checked' graph from **Preview** will then be added to the bottom of the **Graph feed**. When you uncheck the graph, it'll be removed from the **Graph feed**.
 
-You can also add the top-most graph opened earlier for a 'quick look' view to the Graph feed.
+You can also add the topmost graph opened earlier for a 'quick look' view to the **Graph feed**.
 
 If you need to extend **Graph feed** to a bigger form, you can click on the 'expand' icon to the left of the 'Graph feed' label.
 
-On top of the **Graph feed** you'll find controls to switch the time intervals that are applied to all graphs on the **Graphs** page. You can switch between `1H` `4H` `1D` `2D` and `1W` intervals depending on the time period you'd like to analyze.
+Up above the **Graph feed** you'll find controls to switch the time intervals that are applied to all graphs on the **Graphs** page. You can switch between `1H` `4H` `1D` `2D` and `1W` intervals depending on the time period you'd like to analyze.
 
 You will also see a ruler on all graphs that might be very helpful when trying to manually correlate events.
 
 A typical workflow when analyzing OS and/or NGINX behavior would be:
 
  * Browse through the graphs in **Preview**
- * With a single click sequantially bring the interesting ones to the right for a quick look
+ * With a single click bring the interesting ones to the right for a quick look
  * Populate the **Graph feed** with the graphs from **Preview** that require further analysis and correlation
  * Change time intervals for visualization to see a bigger picture
- * Scroll through the **Graph feed** matching the graphs in the feed to the 'quick look' view
+ * Scroll through the **Graph feed** to visually match the graphs in the feed to the 'quick look' view
  * Expand/collapse the **Graph feed** depending on the required level of detalization
  * Find anomalies, correlations, trends
  * Leave graphs in the **Graph feed** for future analysis/monitoring
 
-In the **Graph feed** you can click on the graph title to quickly scroll **Preview** to the relevant section.
+You can also just pin the graphs that you want to check regularly to the **Graph** feed with, and use it as a general monitoring dashboard.
 
-You can also just populate the **Graph** feed with the graphs you want to check regularly, and use it as a general monitoring dashboard.
+In the **Graph feed** you can click on the graph title to quickly scroll **Preview** to the relevant section.
 
 State of the **Graphs** page is automatically saved, so next time you log in, you should see the same **Graph** page that you previously built for monitoring and analysis.
 
 ### Reports
 
-Reports are based on the capabilities of the Amplify Agent to parse NGINX configuration files and provide them for further analysis through the features in the SaaS core.
+Reports are based on the capabilities of the Amplify Agent to parse NGINX configuration files and provide them for further analysis through the features in the SaaS core. This is where Amplify offers configuration recommendations to help improving performance, reliability, and security of your applications. With well thought-out and explained recommendations you’ll know exactly where the problem is, why it is a problem and how to fix it.
 
-The agent can also periodically invoke `nginx -t` in order to check NGINX configuration and assume the results in the report.
-
-Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, configure the appropriate behavior either in Global, or Local (per-system) settings.
-
-When you switch to the **Reports** page, click on a particular system in the inventory list in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
+When you switch to the **Reports** page, click on a particular system in the Systems list in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
 
 Currently only static analysis is done over the NGINX configuration. The following information is provided when a report is run against an NGINX config:
 
  * Overview information
    * path to NGINX config files(s)
-   * status of parsing and testing the config
+   * whether the parser failed or not, and th results of `nginx -t`
    * first seen and last modified info
    * 3rd party modules found
    * breakdown of IPv4/IPv6 usage
@@ -305,22 +346,24 @@ Currently only static analysis is done over the NGINX configuration. The followi
  * Static analysis
    * various suggestions about configuration structure
    * typical configuration gotchas highlighted
-   * basic proxy configuration advice
+   * common advice about proxy configurations
    * suggestions about simplifying rewrites for certain use cases
-   * basic security measures (e.g. *stub_status* is unprotected)
+   * key security measures (e.g. *stub_status* is unprotected)
    * typical errors in configuring locations, esp. with *regex*
 
 Static analysis will only include information about specific issues with the NGINX configuration if those are found in your NGINX setup.
 
 Going further, the **Reports** section will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration (e.g. when it makes sense to increase or decrease certain parameter etc.). Stay tuned!
 
+Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding seeting in either Global, or Local (per-system) settings (see **Settings** below).
+
 ### Events
 
 There're local (per-agent) and global events.
 
-In order to see events generated by a particular agent, click on a host in the inventory list, and browse through local events in the middle column.
+In order to see events generated by a particular agent, click on a system on the left, and browse through local events in the middle column.
 
-In the right-most corner you'll see SaaS-wide events such as general notifications about Amplify updates or outages.
+In the rightmost corner you'll see SaaS-wide events such as general notifications about Amplify updates or outages.
 
 ### Alerts
 
@@ -328,22 +371,22 @@ Alerts page describes configuration of system monitors and associated triggers u
 
 Alerts are based on setting a rule to monitor a particular metric. When the rule is being set you will also be able to specify the threshold, and the email for notifications. You can use any email, e.g. your PagerDuty email routing for that.
 
-**Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
-
 The way rules and alerts work is the following:
 
  1. Metrics are being continuously monitored against the rulesets
  2. If there's a rule for a metric, the new metric update is checked to violate the threshold
  3. If the threshold is met, alert notification is generated (the rule will continue to be monitored)
  4. If subsequent metric updates show that the metric doesn't violate anymore the threshold for the configured period, the alert is cleared.
+ 
+By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname in question in the ruleset. Currently metrics can't be aggregated across all systems, instead any system will match a particular ruleset unless a hostname is specified.
 
-For the thresholds you should currently use metrics' absolute values. `E.g. for something like XXXX you should use 14747920 to set the threshold of XX KB/s.` Please see the **Metrics** section below for more information about metric names, and their descriptions.
+With the notifications you shouldn't see continuous redundant ones about the same single alert over and over again. Instead there will be digest information sent out every 30 minutes, describing what alerts were generated and which ones were cleared.
+
+**Note.** For the thresholds you should currently use exact measurement units as described in the **Metrics and metadata** section below. You can't currently use abbreviations like GB, KB or Kbps.
 
 **Note.** Gauges are averaged over the interval configured in the ruleset. Counters are summed up. Currently that's not configurable by the user and these are the only reduce functions available for configurating metric thresholds.
 
-You shouldn't see continuous redundant notifications about the same single alert over and over again. Instead there will be digest information sent out every 30m, describing what alerts were generated and which ones were cleared.
-
-Monitors are generally 'across all systems' — meaning, there's no filtering by hostname by default. If a specific alert should only be raised for a particular host, you should specify the hostname in question in the ruleset.
+**Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
 
 ### Settings
 
@@ -355,15 +398,15 @@ Global settings are used to set account-wide behavior for:
  * Checking NGINX configuration syntax
  * Checking SSL certs and configuration (currently not implemented)
 
-Local settings are accessible via the 'settings' icon in the inventory list (you'd need to extend a particular system box first to access additional functions).
+Local settings are accessible via the 'Settings' icon that can be found when the pullout tray for a particular system is extended.
 
-Local settings override corresponding global setting on a per-object basis. E.g. if you'd generally want to monitor your NGINX configurations for everything but specific systems, you can uncheck it in the their local settings.
+Local settings override corresponding global setting on a per-object basis. E.g. if you'd generally want to monitor your NGINX configurations for everything but specific systems, you can uncheck it in the their local settings menu.
 
 
 
 ## Metrics and metadata
 
-## OS metrics
+### OS metrics
 
  * Agent
    * **amplify.agent.status**
@@ -381,7 +424,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, percent
-     Description: CPU utilization percentages.
+     Description: System CPU utilization.
 ```
 
  * Disk usage
@@ -391,23 +434,23 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, bytes
-     Description: Disk usage statistics.
+     Description: System disk usage statistics.
 ```
 
    * **system.disk.in_use**
 
 ```
      Type: gauge, percent
-     Description: Disk usage percentage.
+     Description: System disk usage statistics, percentage.
 ```
 
- * I/O
+ * Disk I/O
    * **system.io.iops_r**
    * **system.io.iops_w**
 
 ```
      Type: counter, integer
-     Description: Number of reads or writes.
+     Description: Number of reads or writes per sampling window.
 ```
 
    * **system.io.kbs_r**
@@ -423,7 +466,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, milliseconds
-     Description: Time spent reading or writing from disk.
+     Description: Time spent reading from or writing to disk.
 ```
 
  * Load average
@@ -433,7 +476,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, float
-     Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
+     Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 min.
 ```
 
  * Memory usage
@@ -454,7 +497,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, percent
-     Description: Statistics about system memory usage.
+     Description: Statistics about system memory usage, percentage.
 ```
 
  * Network
@@ -463,7 +506,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: counter, bytes
-     Description: Network I/O statistics. Number of bytes received or sent, per network interface.
+     Description: Network I/O statistics. Number of bytes received or sent,
+     per network interface.
 ```
 
    * **system.net.drops_in.count**
@@ -471,7 +515,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: counter, integer
-     Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
+     Description: Network I/O statistics. Total number of inbound or
+     outbound packets dropped, per network interface.
 ```
 
    * **system.net.packets_in.count**
@@ -479,7 +524,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: counter, integer
-     Description: Network I/O statistics. Number of packets received or sent, per network interface.
+     Description: Network I/O statistics. Number of packets received
+     or sent, per network interface.
 ```
 
    * **system.net.packets_in.error**
@@ -487,7 +533,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: counter, integer
-     Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
+     Description: Network I/O statistics. Total number of errors while
+     receiving or sending, per network interface.
 ```
 
    * **system.net.listen_overflows**
@@ -511,10 +558,224 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, percent
-     Description: System swap memory statistics, percentage usage.
+     Description: System swap memory statistics, percentage.
 ```
 
 ### NGINX metrics
+
+#### HTTP connections and requests
+
+ * HTTP
+   * **nginx.http.conn.accepted**
+   * **nginx.http.conn.active**
+   * **nginx.http.conn.current**
+   * **nginx.http.conn.dropped**
+   * **nginx.http.conn.idle**
+
+```
+     Type: gauge, integer
+     Description: NGINX-wide statistics describing HTTP connections.
+     Source: stub_status
+```
+
+   * **nginx.http.request.count**
+   * **nginx.http.request.current**
+   * **nginx.http.request.reading**
+   * **nginx.http.request.writing**
+
+```
+     Type: counter, integer
+     Description: Total number of client requests. Number of currently
+     active requests (reading and writing). Number of requests reading
+     headers or writing responses to clients.
+     Source: stub_status
+```
+
+   * **nginx.http.request.malformed**
+
+```
+     Type: counter, integer
+     Description: Number of malformed requests.
+     Source: access.log
+```
+
+   * **nginx.http.request.body_bytes_sent**
+
+```
+     Type: counter, integer
+     Description: Number of bytes sent to clients, not counting
+     response headers.
+     Source: access.log
+```
+
+#### HTTP methods
+
+   * **nginx.http.method.get**
+   * **nginx.http.method.head**
+   * **nginx.http.method.post**
+   * **nginx.http.method.put**
+   * **nginx.http.method.delete**
+   * **nginx.http.method.options**
+
+```
+     Type: counter, integer
+     Description: Statistics about observed request methods.
+     Source: access.log
+```
+
+#### HTTP status codes
+
+   * **nginx.http.status.1xx**
+   * **nginx.http.status.2xx**
+   * **nginx.http.status.3xx**
+   * **nginx.http.status.4xx**
+   * **nginx.http.status.5xx**
+
+```
+     Type: counter, integer
+     Description: Number of requests with specific HTTP status codes.
+     Source: access.log
+```
+
+   * **nginx.http.status.discarded**
+
+```
+     Type: counter, integer
+     Description: Number of requests finalized with 499/444/408.
+     E.g. 499 is logged when the client closes connection.
+     Source: access.log
+```
+
+#### HTTP protocol versions
+
+   * **nginx.http.v0_9**
+   * **nginx.http.v1_0**
+   * **nginx.http.v1_1**
+   * **nginx.http.v2**
+
+```
+     Type: counter, integer
+     Description: Number of requests using specific version of
+     HTTP protocol.
+     Source: access.log
+```
+
+#### Custom HTTP metrics
+
+   * **nginx.http.request.bytes_sent**
+
+```
+     Type: counter, integer
+     Description: Number of bytes sent to clients.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.http.request.length**
+
+```
+     Type: counter, integer
+     Description: Request length, including request line, header and body.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.http.request.time**
+   * **nginx.http.request.time.count**
+   * **nginx.http.request.time.max**
+   * **nginx.http.request.time.median**
+   * **nginx.http.request.time.pctl95**
+
+```
+     Type: gauge, seconds.milliseconds
+     Description: Request processing time — time elapsed between reading
+     the first bytes from the client and writing log entry after the
+     last bytes were sent.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.http.request.buffered**
+
+```
+     Type: counter, integer
+     Description: Number of requests that were buffered to disk.
+     Source: error.log (requires 'warn' log level)
+```
+
+   * **nginx.http.gzip.ratio**
+
+```
+     Type: gauge, float
+     Description: Achieved compression ratio, calculated as the ratio
+     between the original and compressed response sizes.
+     Source: access.log (requires custom log format)
+```
+
+#### Upstream metrics
+
+ * Upstream
+   * **nginx.upstream.connect.time**
+   * **nginx.upstream.connect.time.count**
+   * **nginx.upstream.connect.time.max**
+   * **nginx.upstream.connect.time.median**
+   * **nginx.upstream.connect.time.pctl95**
+
+```
+     Type: gauge, seconds.milliseconds
+     Description: Time spent on establishing connections with upstream
+     servers. With SSL, it also includes time spent on handshake.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.upstream.header.time**
+   * **nginx.upstream.header.time.count**
+   * **nginx.upstream.header.time.max**
+   * **nginx.upstream.header.time.median**
+   * **nginx.upstream.header.time.pctl95**
+
+```
+     Type: gauge, seconds.milliseconds
+     Description: Time spent on receiving response headers from upstream
+     servers.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.upstream.request.count**
+
+```
+     Type: counter. integer
+     Description: Number of requests passed to upstream servers.
+     Source: access.log (requires custom log format)
+```
+
+   * **nginx.upstream.response.buffered**
+
+```
+     Type: counter. integer
+     Description: Number of upstream responsed buffered to disk.
+     Source: error.log (requires 'warn' log level)
+```
+
+   * **nginx.upstream.request.failed**
+   * **nginx.upstream.response.failed**
+
+```
+     Type: counter, integer
+     Description: Number of requests and responses that failed while proxying.
+     Source: error.log
+```
+
+   * **nginx.upstream.response.time**
+   * **nginx.upstream.response.time.count**
+   * **nginx.upstream.response.time.max**
+   * **nginx.upstream.response.time.median**
+   * **nginx.upstream.response.time.pctl95**
+
+```
+     Type: counter, seconds.milliseconds
+     Description: Time spent on receiving responses from upstream servers.
+     Source: access.log (requires custom log format)
+```
+
+#### Cache metrics
 
  * Cache
    * **nginx.cache.bypass**
@@ -531,181 +792,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Source: access.log (requires custom log format)
 ```
 
- * HTTP
-   * **nginx.http.conn.accepted**
-   * **nginx.http.conn.active**
-   * **nginx.http.conn.current**
-   * **nginx.http.conn.dropped**
-   * **nginx.http.conn.idle**
-
-```
-     Type: gauge, integer
-     Description: NGINX-wide statistics describing HTTP connections.
-     Source: stub_status
-```
-
-   * **nginx.http.gzip.ratio**
-
-```
-     Type: gauge, float
-     Description: Achieved compression ratio, calculated as the ratio between the original and compressed response sizes.
-     Source: access.log (requires custom log format)
-```
-
-   * **nginx.http.method.get**
-   * **nginx.http.method.head**
-   * **nginx.http.method.post**
-   * **nginx.http.method.put**
-   * **nginx.http.method.delete**
-   * **nginx.http.method.options**
-
-```
-     Type: counter, integer
-     Description: Statistics about observed request methods.
-     Source: access.log
-```
-
-   * **nginx.http.request.body_bytes_sent**
-
-```
-     Type: counter, integer
-     Description: Number of bytes sent to a client, not counting the response header.
-     Source: access.log
-```
-
-   * **nginx.http.request.bytes_sent**
-
-```
-     Type: counter, integer
-     Description: Number of bytes sent to a client.
-     Source: access.log (requires custom log format)
-```
-
-   * **nginx.http.request.count**
-   * **nginx.http.request.current**
-   * **nginx.http.request.reading**
-   * **nginx.http.request.writing**
-
-```
-     Type: counter, integer
-     Description: Total number of client requests. Number of currently active requests (reading and writing). Number of requests reading header or writing response to client.
-     Source: stub_status
-```
-
-   * **nginx.http.request.length**
-
-```
-     Type: counter, integer
-     Description: Request length, including request line, header and body.
-     Source: access.log (requires custom log format)
-```
-
-   * **nginx.http.request.malformed**
-
-```
-     Type: counter, integer
-     Description: Number of malformed requests.
-```
-
-   * **nginx.http.request.time**
-   * **nginx.http.request.time.count**
-   * **nginx.http.request.time.max**
-   * **nginx.http.request.time.median**
-   * **nginx.http.request.time.pctl95**
-
-```
-     Type: counter, float
-     Description: Request processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client and the log write after the last bytes were sent to the client.
-     Source: access.log (requires custom log format)
-```
-
-   * **nginx.http.request.buffered**
-
-```
-     Type: counter, integer
-     Description: Number of requests that were buffered to disk.
-     Source: error.log (requires 'warn' log level)
-```
-
-   * **nginx.http.status.1xx**
-   * **nginx.http.status.2xx**
-   * **nginx.http.status.3xx**
-   * **nginx.http.status.4xx**
-   * **nginx.http.status.5xx**
-
-```
-     Type: counter, integer
-     Description: Number of requests with specific HTTP status code.
-     Source: error.log (requires 'warn' log level)
-```
-
-   * **nginx.http.status.discarded**
-
-```
-     Type: counter, integer
-     Description: Number of requests failed with 499/444/408. E.g. 499 is logged when client closes connection.
-     Source: access.log
-```
-
-   * **nginx.http.v0_9**
-   * **nginx.http.v1_0**
-   * **nginx.http.v1_1**
-   * **nginx.http.v2**
-
-```
-     Type: counter, integer
-     Description: Number of requests over specific version of HTTP protocol.
-     Source: access.log
-```
-
- * Upstream
-   * **nginx.upstream.connect.time**
-   * **nginx.upstream.connect.time.count**
-   * **nginx.upstream.connect.time.max**
-   * **nginx.upstream.connect.time.median**
-   * **nginx.upstream.connect.time.pctl95**
-
-```
-     Type: counter, integer
-     Description: Number of requests over specific version of HTTP protocol.
-     Source: access.log
-```
-
-   * **nginx.upstream.header.time**
-   * **nginx.upstream.header.time.count**
-   * **nginx.upstream.header.time.max**
-   * **nginx.upstream.header.time.median**
-   * **nginx.upstream.header.time.pctl95**
-
-```
-     Type: counter, integer
-     Description: Number of requests over specific version of HTTP protocol.
-     Source: access.log
-```
-
-   * **nginx.upstream.next.count**
-   * **nginx.upstream.request.count**
-   * **nginx.upstream.request.failed**
-   * **nginx.upstream.response.buffered**
-   * **nginx.upstream.response.failed**
-
-```
-     Type: counter, integer
-     Description: Number of requests over specific version of HTTP protocol.
-     Source: access.log
-```
-
-   * **nginx.upstream.response.time**
-   * **nginx.upstream.response.time.count**
-   * **nginx.upstream.response.time.max**
-   * **nginx.upstream.response.time.median**
-   * **nginx.upstream.response.time.pctl95**
-
-```
-     Type: counter, integer
-     Description: Number of requests over specific version of HTTP protocol.
-     Source: access.log
-```
+#### NGINX process metrics
 
  * Workers
    * **nginx.workers.count**
@@ -721,14 +808,16 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, percent
-     Description: CPU utilization percentages observed from NGINX worker processes.
+     Description: CPU utilization percentages observed from
+     NGINX worker processes.
 ```
 
    * **nginx.workers.fds_count**
 
 ```
      Type: gauge, integer
-     Description: Number of file descriptors utilized by NGINX worker processes.
+     Description: Number of file descriptors utilized by
+     NGINX worker processes.
 ```
 
    * **nginx.workers.io.kbs_r**
@@ -736,7 +825,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: counter, integer
-     Description: Number of kilobytes read from or written to disk by NGINX worker processes.
+     Description: Number of kilobytes read from or written to
+     disk by NGINX worker processes.
 ```
 
    * **nginx.workers.mem.rss**
@@ -758,5 +848,6 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ```
      Type: gauge, integer
-     Description: Hard limit on the number of file descriptors as seen by NGINX worker processes.
+     Description: Hard limit on the number of file descriptors
+     as seen by NGINX worker processes.
 ```
