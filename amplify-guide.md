@@ -492,9 +492,11 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.cache.stale**
    * **nginx.cache.updating**
 
+```
     Type: counter, integer
     Description: Various statistics about NGINX cache usage.
     Source: access.log (requires custom log format)
+```
            
  * HTTP
    * **nginx.http.conn.accepted**
