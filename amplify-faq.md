@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [1. General](#1-general)
+  - [1.1. What is NGINX Amplify](#11-what-is-nginx-amplify)
+  - [1.2. Where is the main system hosted](#12-where-is-the-main-system-hosted)
+  - [1.3. Is the traffic from the agent to the SaaS protected?](#13-is-the-traffic-from-the-agent-to-the-saas-protected)
+  - [1.4. Is the Amplify Agent code publicly available?](#14-is-the-amplify-agent-code-publicly-available)
+  - [1.4. Why is my password asked when installing on CentOS?](#14-why-is-my-password-asked-when-installing-on-centos)
+- [2. User interface](#2-user-interface)
+  - [2.1. What browsers are supported](#21-what-browsers-are-supported)
+- [3. Metrics and metadata](#3-metrics-and-metadata)
+  - [3.1. What metrics and metadata is collected](#31-what-metrics-and-metadata-is-collected)
+  - [3.2. How is the NGINX configuration parsed and analyzed](#32-how-is-the-nginx-configuration-parsed-and-analyzed)
+- [4. Amplify Agent](#4-amplify-agent)
+  - [4.1. What operatings systems are supported](#41-what-operatings-systems-are-supported)
+  - [4.1. What version of Python is required](#41-what-version-of-python-is-required)
+  - [4.2. How to add a new a system to the monitoring?](#42-how-to-add-a-new-a-system-to-the-monitoring)
+  - [4.3. What do I need to get the Agent reporting metrics?](#43-what-do-i-need-to-get-the-agent-reporting-metrics)
+  - [4.4. How to verify if the Amplify Agent is properly installed](#44-how-to-verify-if-the-amplify-agent-is-properly-installed)
+  - [4.5. How to update the agent?](#45-how-to-update-the-agent)
+  - [4.6. How much system resources are required?](#46-how-much-system-resources-are-required)
+  - [4.7. How to restart the agent](#47-how-to-restart-the-agent)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 1. General
 
 ### 1.1. What is NGINX Amplify
