@@ -366,19 +366,23 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 ## OS metrics
 
  * Agent
-   * **amplify.agent.status**   
+   * **amplify.agent.status**
 
-           Type: internal, integer
-           Description: 1 - agent is up, 0 - agent is down.
+```   
+     Type: internal, integer
+     Description: 1 - agent is up, 0 - agent is down.
+```
 
  * CPU usage
    * **system.cpu.idle**
    * **system.cpu.iowait**
    * **system.cpu.system**
    * **system.cpu.user**
-   
-           Type: gauge, percent
-           Description: CPU utilization percentages.
+
+```
+     Type: gauge, percent
+     Description: CPU utilization percentages.
+```
    
  * Disk usage
    * **system.disk.free**
