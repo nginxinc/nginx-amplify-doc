@@ -137,7 +137,7 @@ Normal level of logging for the agent is `INFO`. If you'd ever need to debug the
 
 ### Source code
 
-Amplify Agent is an open source application. It's licensed under the `[2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/LICENSE)`, and it is available here:
+Amplify Agent is an open source application. It is licensed under the `[2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/LICENSE)`, and it's available here:
 
  * `Sources: https://github.com/nginxinc/nginx-amplify-agent`
  * `Public package repository: http://packages.naas.nginx.com/ (TBD)`
@@ -166,7 +166,7 @@ When a system or an NGINX instance is removed from the infrastructure for whatev
 
 ### Metadata and metrics collection
 
-The agent collects the following type of data:
+Amplify agent collects the following type of data:
 
  * **System metadata.** This is basic information about the OS environment where the agent runs. This could be hostname, uptime information, and so on.
  * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic etc.
@@ -367,7 +367,7 @@ In the rightmost corner you'll see SaaS-wide events such as general notification
 
 Alerts page describes configuration of system monitors and associated triggers used to notify you of any anomalies in your systems' behavior.
 
-Alerts are based on setting a rule to monitor a particular metric. When the rule is being set you will also be able to specify the threshold, and the email for notifications. You can use any email, e.g. your PagerDuty email routing for that.
+Alerts are based on setting a rule to monitor a particular metric. When the rule is being set you will also be able to specify the threshold, and the email for notifications.
 
 The way rules and alerts work is the following:
 
