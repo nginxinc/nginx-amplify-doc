@@ -44,7 +44,7 @@ This is done as simple as:
 
         # curl -sS -L -O http://pp.nginx.com/andrew/files/install.sh && \
         API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh`
-     
+
     (where API_KEY is a unique API key assigned when you create an account with Amplify)
 
  2. Start Amplify Agent.
@@ -85,6 +85,7 @@ Upon installation, the agent's log rotation schedule is added to `/etc/logrotate
 Normal level of logging for the agent is `INFO`. If you'd ever need to debug the agent, you'd need to change it to `DEBUG` as follows. Bear in mind, the size of the agent's log file could grow really fast with the `DEBUG`:
 
 ```
+
     [logger_agent-default]
     level = DEBUG
     ..
@@ -163,6 +164,7 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 In order to be able to see NGINX graphs in the UI, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to pick it automatically. Otherwise, add it as follows:
 
 ```
+
     # cd /etc/nginx
     
     # grep -i include\.*conf nginx.conf
@@ -364,10 +366,10 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 ## OS metrics
 
  * Agent
-   * **amplify.agent.status**
-   
-        Type: internal, integer
-        Description: 1 - agent is up, 0 - agent is down.
+   * **amplify.agent.status**   
+
+           Type: internal, integer
+           Description: 1 - agent is up, 0 - agent is down.
 
  * CPU usage
    * **system.cpu.idle**
@@ -375,49 +377,49 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **system.cpu.system**
    * **system.cpu.user**
    
-        Type: gauge, percent
-        Description: CPU utilization percentages.
+           Type: gauge, percent
+           Description: CPU utilization percentages.
    
  * Disk usage
    * **system.disk.free**
    * **system.disk.total**
    * **system.disk.used**
    
-        Type: gauge, bytes
-        Description: Disk usage statistics.
+           Type: gauge, bytes
+           Description: Disk usage statistics.
 
    * **system.disk.in_use**
 
-        Type: gauge, percent
-        Description: Disk usage percentage.
+           Type: gauge, percent
+           Description: Disk usage percentage.
    
    
  * I/O
    * **system.io.iops_r**
    * **system.io.iops_w**
    
-        Type: counter, integer
-        Description: Number of reads or writes.
+           Type: counter, integer
+           Description: Number of reads or writes.
  		  
    * **system.io.kbs_r**
    * **system.io.kbs_w**
       
-        Type: counter, kilobytes
-        Description: Number of kilobytes read or written.
+           Type: counter, kilobytes
+           Description: Number of kilobytes read or written.
           
    * **system.io.wait_r**
    * **system.io.wait_w**
    
-        Type: gauge, milliseconds
-        Description: Time spent reading or writing from disk.
+           Type: gauge, milliseconds
+           Description: Time spent reading or writing from disk.
           
  * Load average
    * **system.load.1**
    * **system.load.5**
    * **system.load.15**
    
-        Type: gauge, float
-        Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
+           Type: gauge, float
+           Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
           
  * Memory usage
    * **system.mem.available**
@@ -428,56 +430,56 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **system.mem.total**
    * **system.mem.used**
    
-        Type: gauge, bytes
-        Description: Statistics about system memory usage.
+           Type: gauge, bytes
+           Description: Statistics about system memory usage.
           
    * **system.mem.pct_used**
 
-        Type: gauge, percent
-        Description: Statistics about system memory usage.
+           Type: gauge, percent
+           Description: Statistics about system memory usage.
 
  * Network
    * **system.net.bytes_rcvd**
    * **system.net.bytes_sent**
-
-        Type: counter, bytes
-        Description: Network I/O statistics. Number of bytes received or sent, per network interface.
+  
+           Type: counter, bytes
+           Description: Network I/O statistics. Number of bytes received or sent, per network interface.
 
    * **system.net.drops_in.count**
    * **system.net.drops_out.count**
 
-        Type: counter, integer
-        Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
+           Type: counter, integer
+           Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
 
    * **system.net.packets_in.count**
    * **system.net.packets_out.count**
 
-        Type: counter, integer
-        Description: Network I/O statistics. Number of packets received or sent, per network interface.
+           Type: counter, integer
+           Description: Network I/O statistics. Number of packets received or sent, per network interface.
 
    * **system.net.packets_in.error**
    * **system.net.packets_out.error**
 
-        Type: counter, integer
-        Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
+           Type: counter, integer
+           Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
 
    * **system.net.listen_overflows**
-
-        Type: counter, integer
-        Description: Number of times the listen queue of a socket overflowed.
+  
+           Type: counter, integer
+           Description: Number of times the listen queue of a socket overflowed.
 
  * Swap
    * **system.swap.free**
    * **system.swap.total**
    * **system.swap.used**
-   
-        Type: gauge, bytes
-        Description: System swap memory statistics.
+    
+           Type: gauge, bytes
+           Description: System swap memory statistics.
 
    * **system.swap.pct_free**
 
-        Type: gauge, percent
-        Description: System swap memory statistics, percentage usage.
+           Type: gauge, percent
+           Description: System swap memory statistics, percentage usage.
 
 ### NGINX metrics
 
