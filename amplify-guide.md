@@ -211,7 +211,7 @@ In order to be able to see NGINX graphs in the UI, you will need to have [stub_s
         listen 127.0.0.1:80;
         server_name 127.0.0.1;
         location /nginx_status {
-            stub_status;
+            stub_status on;
             allow 127.0.0.1;
             deny all;
         }

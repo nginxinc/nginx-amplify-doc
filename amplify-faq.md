@@ -176,7 +176,7 @@ We worked very hard to make the agent retain as small memory and CPU footprint a
 
 ## 3. User interface
 
-### 3.1. What browsers are supported
+### 3.1. What browsers are supported?
 
 Currently the following desktop browsers are officially fully supported:
 
