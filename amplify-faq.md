@@ -23,7 +23,15 @@ NGINX Amplify SaaS is currently hosted in [AWS us-west-1](http://docs.aws.amazon
 
 ### 1.3. Is the traffic from the agent to the SaaS protected?
 
-All communications between the Amplify Agent and the Amplify SaaS are done securely over TLS/SSL, using 2048-bit encryption.
+All communications between the Amplify Agent and the Amplify SaaS are done securely over TLS/SSL, using 2048-bit key certificate. All traffic is always initiated by the agent. The SaaS system doesn't establish any connections back to the agent running on a host.
+
+### 1.4. Is the Amplify Agent code publicly available?
+
+The agent is open source, licensed under the 2-clause BSD license. You can find it [here]().
+
+### 1.4. Why is my password asked when installing on CentOS?
+
+This is the way the package installation works on CentOS. That's not Amplify Agent asking you for the password, and it's not seen by us.
 
 
 ## 2. User interface
@@ -59,6 +67,17 @@ Amplify Agent is able to automatically find all relevant NGINX configuration fil
 ### 4.1. What operatings systems are supported
 
 Amplify Agent is currently supported on select Linux flavors only — that's Ubuntu, Debian and CentOS.
+
+debian 7/8, ubuntu 12.04, 14.04, 15.04, centos 6 / centos 7
+
+thresh [5:00 PM]
+во, инфа 100%:
+DEBNAMES="ub1204|precise ub1404|trusty ub1504|vivid deb7|wheezy deb8|jessie"
+RHNAMES="centos6 centos7"
+
+### 4.1. What version of Python is required
+
+Amplify Agent will work with Python 2.6+
 
 ### 4.2. How to add a new a system to the monitoring?
 

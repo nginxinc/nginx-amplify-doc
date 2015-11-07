@@ -192,6 +192,18 @@ Without *stub_status* the agent will **not** be able to collect quite a few esse
 
 For more information about *stub_status*, please refer to our reference documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
+        nginx.http.conn.current = ss.active
+        nginx.http.conn.active = ss.active - ss.waiting
+        nginx.http.conn.idle = ss.waiting
+        nginx.http.request.reading = ss.reading
+        nginx.http.request.writing = ss.writing
+        nginx.http.conn.dropped = ss.accepts - ss.handled
+        nginx.http.conn.dropped_s = (current nginx.conn.dropped - previous nginx.conn.dropped) /
+                                    (current measurement timestamp - previous timestamp)
+        nginx.http.conn.accepted = ss.accepts
+        nginx.http.conn.accepted_s = (current nginx.conn.accepted - previous nginx.conn.accepted) /
+                                    (current measurement timestamp - previous timestamp)
+
 Amplify Agent will also try to collect all additional metrics relevant to a particular NGINX instance from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
 You don't have to specifically point the agent to either NGINX configuration or NGINX log files — it should detect their location automatically.
@@ -312,11 +324,11 @@ In the right-most corner you'll see SaaS-wide events such as general notificatio
 
 Alerts page describes configuration of system monitors and associated triggers used to notify you of any anomalies in your systems' behavior.
 
-Alerts are based on setting a monitor for a particular metric. When the monitor is being set you will also be able to specify the threshold, and the email for notifications. You can use any email, e.g. your PagerDuty email routing for that.
+Alerts are based on setting a rule to monitor a particular metric. When the rule is being set you will also be able to specify the threshold, and the email for notifications. You can use any email, e.g. your PagerDuty email routing for that.
 
 **Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
 
-The way monitors and alerts work is the following:
+The way rules and alerts work is the following:
 
  1. Metrics are being continuously monitored against the rulesets
  2. If there's a rule for a metric, the new metric update is checked to violate the threshold
@@ -325,7 +337,7 @@ The way monitors and alerts work is the following:
 
 For the thresholds you should currently use metrics' absolute values. `E.g. for something like XXXX you should use 14747920 to set the threshold of XX KB/s.` Please see the **Metrics** section below for more information about metric names, and their descriptions.
  
-**Note.** Metrics are averaged over the interval configured in the ruleset. Currently this is the only reduce function available for configurating metric thresholds.
+**Note.** Gauges are averaged over the interval configured in the ruleset. Counters are summed up. Currently that's not configurable by the user and these are the only reduce functions available for configurating metric thresholds.
 
 You shouldn't see continuous redundant notifications about the same single alert over and over again. Instead there will be digest information sent out every 30m, describing what alerts were generated and which ones were cleared.
 
@@ -353,141 +365,317 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
  * Agent
    * **amplify.agent.status**
+   
+         Type: internal, integer
+         Description: 1 - agent is up, 0 - agent is down.
+
  * CPU usage
    * **system.cpu.idle**
    * **system.cpu.iowait**
    * **system.cpu.system**
    * **system.cpu.user**
+   
+         Type: gauge, percent
+         Description: CPU utilization percentages.
+   
  * Disk usage
    * **system.disk.free**
-   * **system.disk.in_use**
    * **system.disk.total**
    * **system.disk.used**
+   
+         Type: gauge, bytes
+         Description: Disk usage statistics.
+
+   * **system.disk.in_use**
+
+         Type: gauge, percent
+         Description: Disk usage percentage.
+   
+   
  * I/O
    * **system.io.iops_r**
    * **system.io.iops_w**
+   
+          Type: counter, integer
+          Description: Number of reads or writes.
+ 		  
    * **system.io.kbs_r**
    * **system.io.kbs_w**
+      
+          Type: counter, kilobytes
+          Description: Number of kilobytes read or written.
+          
    * **system.io.wait_r**
    * **system.io.wait_w**
+   
+          Type: gauge, milliseconds
+          Description: Time spent reading or writing from disk.
+          
  * Load average
    * **system.load.1**
-   * **system.load.15**
    * **system.load.5**
+   * **system.load.15**
+   
+          Type: gauge, float
+          Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
+          
  * Memory usage
    * **system.mem.available**
    * **system.mem.buffered**
    * **system.mem.cached**
    * **system.mem.free**
-   * **system.mem.pct_used**
    * **system.mem.shared**
    * **system.mem.total**
    * **system.mem.used**
+   
+          Type: gauge, bytes
+          Description: Statistics about system memory usage.
+          
+   * **system.mem.pct_used**
+
+          Type: gauge, percent
+          Description: Statistics about system memory usage.
+
  * Network
    * **system.net.bytes_rcvd**
    * **system.net.bytes_sent**
+
+          Type: counter, bytes
+          Description: Network I/O statistics. Number of bytes received or sent, per network interface.
+
    * **system.net.drops_in.count**
    * **system.net.drops_out.count**
-   * **system.net.listen_overflows**
+
+          Type: counter, integer
+          Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
+
    * **system.net.packets_in.count**
-   * **system.net.packets_in.error**
    * **system.net.packets_out.count**
+
+          Type: counter, integer
+          Description: Network I/O statistics. Number of packets received or sent, per network interface.
+
+   * **system.net.packets_in.error**
    * **system.net.packets_out.error**
+
+          Type: counter, integer
+          Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
+
+   * **system.net.listen_overflows**
+
+          Type: counter, integer
+          Description: Number of times the listen queue of a socket overflowed.
+
  * Swap
    * **system.swap.free**
-   * **system.swap.pct_free**
    * **system.swap.total**
    * **system.swap.used**
+   
+           Type: gauge, bytes
+           Description: System swap memory statistics.
+
+   * **system.swap.pct_free**
+
+           Type: gauge, percent
+           Description: System swap memory statistics, percentage usage.
 
 ### NGINX metrics
 
  * Cache
    * **nginx.cache.bypass**
    * **nginx.cache.expired**
-   * **nginx.cache.fs.errors**
    * **nginx.cache.hit**
-   * **nginx.cache.lock.timeouts**
    * **nginx.cache.miss**
    * **nginx.cache.revalidated**
    * **nginx.cache.stale**
    * **nginx.cache.updating**
+   
+           Type: counter, integer
+           Description: Various statistics about NGINX cache usage.
+           Source: access.log (requires custom log format)
+           
  * HTTP
    * **nginx.http.conn.accepted**
    * **nginx.http.conn.active**
    * **nginx.http.conn.current**
    * **nginx.http.conn.dropped**
    * **nginx.http.conn.idle**
+   
+           Type: gauge, integer
+           Description: NGINX-wide statistics describing HTTP connections.
+           Source: stub_status
+   
    * **nginx.http.gzip.ratio**
-   * **nginx.http.method.delete**
+   
+           Type: gauge, float
+           Description: Achieved compression ratio, calculated as the ratio between the original and compressed response sizes.
+           Source: access.log (requires custom log format) 
+            
    * **nginx.http.method.get**
    * **nginx.http.method.head**
-   * **nginx.http.method.options**
    * **nginx.http.method.post**
    * **nginx.http.method.put**
+   * **nginx.http.method.delete**
+   * **nginx.http.method.options**
+
+           Type: counter, integer
+           Description: Statistics about observed request methods.
+           Source: access.log
+      
    * **nginx.http.request.body_bytes_sent**
-   * **nginx.http.request.buffered**
+
+           Type: counter, integer
+           Description: Number of bytes sent to a client, not counting the response header.
+           Source: access.log
+
    * **nginx.http.request.bytes_sent**
+
+           Type: counter, integer
+           Description: Number of bytes sent to a client.
+           Source: access.log (requires custom log format)
+
    * **nginx.http.request.count**
    * **nginx.http.request.current**
-   * **nginx.http.request.failed**
-   * **nginx.http.request.length**
-   * **nginx.http.request.limited**
-   * **nginx.http.request.malformed**
    * **nginx.http.request.reading**
+   * **nginx.http.request.writing**
+   
+           Type: counter, integer
+           Description: Total number of client requests. Number of currently active requests (reading and writing). Number of requests reading header or writing response to client.
+           Source: stub_status
+
+   * **nginx.http.request.length**
+
+           Type: counter, integer
+           Description: Request length, including request line, header and body.
+           Source: access.log (requires custom log format)
+
+   * **nginx.http.request.malformed**
+
+           Type: counter, integer
+           Description: Number of malformed requests.
+
    * **nginx.http.request.time**
    * **nginx.http.request.time.count**
    * **nginx.http.request.time.max**
    * **nginx.http.request.time.median**
    * **nginx.http.request.time.pctl95**
-   * **nginx.http.request.writing**
-   * **nginx.http.response.failed**
-   * **nginx.http.ssl_handshake.failed**
+
+           Type: counter, float
+           Description: Request processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client and the log write after the last bytes were sent to the client.
+           Source: access.log (requires custom log format)
+   
+   * **nginx.http.request.buffered**
+
+           Type: counter, integer
+           Description: Number of requests that were buffered to disk.
+           Source: error.log (requires 'warn' log level)
+
    * **nginx.http.status.1xx**
    * **nginx.http.status.2xx**
    * **nginx.http.status.3xx**
    * **nginx.http.status.4xx**
    * **nginx.http.status.5xx**
+   
+           Type: counter, integer
+           Description: Number of requests with specific HTTP status code.
+           Source: error.log (requires 'warn' log level)
+   
    * **nginx.http.status.discarded**
+   
+           Type: counter, integer
+           Description: Number of requests failed with 499/444/408. E.g. 499 is logged when client closes connection.
+           Source: access.log   
+   
    * **nginx.http.v0_9**
    * **nginx.http.v1_0**
    * **nginx.http.v1_1**
    * **nginx.http.v2**
+
+           Type: counter, integer
+           Description: Number of requests over specific version of HTTP protocol.
+           Source: access.log
+
  * Upstream
    * **nginx.upstream.connect.time**
    * **nginx.upstream.connect.time.count**
    * **nginx.upstream.connect.time.max**
    * **nginx.upstream.connect.time.median**
    * **nginx.upstream.connect.time.pctl95**
-   * **nginx.upstream.fastcgi.errors**
+
+           Type: counter, integer
+           Description: Number of requests over specific version of HTTP protocol.
+           Source: access.log
+
    * **nginx.upstream.header.time**
    * **nginx.upstream.header.time.count**
    * **nginx.upstream.header.time.max**
    * **nginx.upstream.header.time.median**
    * **nginx.upstream.header.time.pctl95**
-   * **nginx.upstream.health_check.failed**
+
+           Type: counter, integer
+           Description: Number of requests over specific version of HTTP protocol.
+           Source: access.log
+
    * **nginx.upstream.next.count**
    * **nginx.upstream.request.count**
    * **nginx.upstream.request.failed**
    * **nginx.upstream.response.buffered**
    * **nginx.upstream.response.failed**
+
+           Type: counter, integer
+           Description: Number of requests over specific version of HTTP protocol.
+           Source: access.log
+
    * **nginx.upstream.response.time**
    * **nginx.upstream.response.time.count**
    * **nginx.upstream.response.time.max**
    * **nginx.upstream.response.time.median**
    * **nginx.upstream.response.time.pctl95**
+
+           Type: counter, integer
+           Description: Number of requests over specific version of HTTP protocol.
+           Source: access.log
+
+
  * Workers
    * **nginx.workers.count**
+
+           Type: gauge, integer
+           Description: Number of NGINX worker processes observed.
+
    * **nginx.workers.cpu.system**
    * **nginx.workers.cpu.total**
    * **nginx.workers.cpu.user**
+
+           Type: gauge, percent
+           Description: CPU utilization percentages observed from NGINX worker processes.
+
    * **nginx.workers.fds_count**
+
+           Type: gauge, integer
+           Description: Number of file descriptors utilized by NGINX worker processes.
+
    * **nginx.workers.io.kbs_r**
    * **nginx.workers.io.kbs_w**
+
+           Type: counter, integer
+           Description: Number of kilobytes read from or written to disk by NGINX worker processes.
+
    * **nginx.workers.mem.rss**
-   * **nginx.workers.mem.rss_pct**
    * **nginx.workers.mem.vms**
+
+           Type: gauge, bytes
+           Description: Memory utilization by NGINX worker processes.
+
+   * **nginx.workers.mem.rss_pct**
+
+           Type: gauge, percent
+           Description: Memory utilization by NGINX worker processes.
+
    * **nginx.workers.rlimit_nofile**
-   * **nginx.workers.warn.low_conn**
+
+           Type: gauge, integer
+           Description: Hard limit on the number of file descriptors as seen by NGINX worker processes.
 
 
 
