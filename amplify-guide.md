@@ -59,13 +59,13 @@ It is highly recommended to periodically check for updates and install the lates
 
  * On Ubuntu/Debian use:
 
-       apt-get update && \
-       apt-get install nginx-amplify-agent && \
-       service amplify-agent restart
+        apt-get update && \
+        apt-get install nginx-amplify-agent && \
+        service amplify-agent restart
  
  * On CentOS use:
  
-       XXXX
+        XXXX
 
 ### Configuration and logging
 
@@ -366,8 +366,8 @@ Local settings override corresponding global setting on a per-object basis. E.g.
  * Agent
    * **amplify.agent.status**
    
-         Type: internal, integer
-         Description: 1 - agent is up, 0 - agent is down.
+        Type: internal, integer
+        Description: 1 - agent is up, 0 - agent is down.
 
  * CPU usage
    * **system.cpu.idle**
@@ -375,49 +375,49 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **system.cpu.system**
    * **system.cpu.user**
    
-         Type: gauge, percent
-         Description: CPU utilization percentages.
+        Type: gauge, percent
+        Description: CPU utilization percentages.
    
  * Disk usage
    * **system.disk.free**
    * **system.disk.total**
    * **system.disk.used**
    
-         Type: gauge, bytes
-         Description: Disk usage statistics.
+        Type: gauge, bytes
+        Description: Disk usage statistics.
 
    * **system.disk.in_use**
 
-         Type: gauge, percent
-         Description: Disk usage percentage.
+        Type: gauge, percent
+        Description: Disk usage percentage.
    
    
  * I/O
    * **system.io.iops_r**
    * **system.io.iops_w**
    
-          Type: counter, integer
-          Description: Number of reads or writes.
+        Type: counter, integer
+        Description: Number of reads or writes.
  		  
    * **system.io.kbs_r**
    * **system.io.kbs_w**
       
-          Type: counter, kilobytes
-          Description: Number of kilobytes read or written.
+        Type: counter, kilobytes
+        Description: Number of kilobytes read or written.
           
    * **system.io.wait_r**
    * **system.io.wait_w**
    
-          Type: gauge, milliseconds
-          Description: Time spent reading or writing from disk.
+        Type: gauge, milliseconds
+        Description: Time spent reading or writing from disk.
           
  * Load average
    * **system.load.1**
    * **system.load.5**
    * **system.load.15**
    
-          Type: gauge, float
-          Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
+        Type: gauge, float
+        Description: Number of processes in the system run queue averaged over the last 1, 5, and 15 minutes.
           
  * Memory usage
    * **system.mem.available**
@@ -428,56 +428,56 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **system.mem.total**
    * **system.mem.used**
    
-          Type: gauge, bytes
-          Description: Statistics about system memory usage.
+        Type: gauge, bytes
+        Description: Statistics about system memory usage.
           
    * **system.mem.pct_used**
 
-          Type: gauge, percent
-          Description: Statistics about system memory usage.
+        Type: gauge, percent
+        Description: Statistics about system memory usage.
 
  * Network
    * **system.net.bytes_rcvd**
    * **system.net.bytes_sent**
 
-          Type: counter, bytes
-          Description: Network I/O statistics. Number of bytes received or sent, per network interface.
+        Type: counter, bytes
+        Description: Network I/O statistics. Number of bytes received or sent, per network interface.
 
    * **system.net.drops_in.count**
    * **system.net.drops_out.count**
 
-          Type: counter, integer
-          Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
+        Type: counter, integer
+        Description: Network I/O statistics. Total number of inbound or outbound packets dropped, per network interface.
 
    * **system.net.packets_in.count**
    * **system.net.packets_out.count**
 
-          Type: counter, integer
-          Description: Network I/O statistics. Number of packets received or sent, per network interface.
+        Type: counter, integer
+        Description: Network I/O statistics. Number of packets received or sent, per network interface.
 
    * **system.net.packets_in.error**
    * **system.net.packets_out.error**
 
-          Type: counter, integer
-          Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
+        Type: counter, integer
+        Description: Network I/O statistics. Total number of errors while receiving or sending, per network interface.
 
    * **system.net.listen_overflows**
 
-          Type: counter, integer
-          Description: Number of times the listen queue of a socket overflowed.
+        Type: counter, integer
+        Description: Number of times the listen queue of a socket overflowed.
 
  * Swap
    * **system.swap.free**
    * **system.swap.total**
    * **system.swap.used**
    
-           Type: gauge, bytes
-           Description: System swap memory statistics.
+        Type: gauge, bytes
+        Description: System swap memory statistics.
 
    * **system.swap.pct_free**
 
-           Type: gauge, percent
-           Description: System swap memory statistics, percentage usage.
+        Type: gauge, percent
+        Description: System swap memory statistics, percentage usage.
 
 ### NGINX metrics
 
@@ -490,9 +490,9 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.cache.stale**
    * **nginx.cache.updating**
    
-           Type: counter, integer
-           Description: Various statistics about NGINX cache usage.
-           Source: access.log (requires custom log format)
+        Type: counter, integer
+        Description: Various statistics about NGINX cache usage.
+        Source: access.log (requires custom log format)
            
  * HTTP
    * **nginx.http.conn.accepted**
@@ -501,15 +501,15 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.http.conn.dropped**
    * **nginx.http.conn.idle**
    
-           Type: gauge, integer
-           Description: NGINX-wide statistics describing HTTP connections.
-           Source: stub_status
+        Type: gauge, integer
+        Description: NGINX-wide statistics describing HTTP connections.
+        Source: stub_status
    
    * **nginx.http.gzip.ratio**
    
-           Type: gauge, float
-           Description: Achieved compression ratio, calculated as the ratio between the original and compressed response sizes.
-           Source: access.log (requires custom log format) 
+        Type: gauge, float
+        Description: Achieved compression ratio, calculated as the ratio between the original and compressed response sizes.
+        Source: access.log (requires custom log format) 
             
    * **nginx.http.method.get**
    * **nginx.http.method.head**
@@ -518,41 +518,41 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.http.method.delete**
    * **nginx.http.method.options**
 
-           Type: counter, integer
-           Description: Statistics about observed request methods.
-           Source: access.log
+        Type: counter, integer
+        Description: Statistics about observed request methods.
+        Source: access.log
       
    * **nginx.http.request.body_bytes_sent**
 
-           Type: counter, integer
-           Description: Number of bytes sent to a client, not counting the response header.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of bytes sent to a client, not counting the response header.
+        Source: access.log
 
    * **nginx.http.request.bytes_sent**
 
-           Type: counter, integer
-           Description: Number of bytes sent to a client.
-           Source: access.log (requires custom log format)
+        Type: counter, integer
+        Description: Number of bytes sent to a client.
+        Source: access.log (requires custom log format)
 
    * **nginx.http.request.count**
    * **nginx.http.request.current**
    * **nginx.http.request.reading**
    * **nginx.http.request.writing**
    
-           Type: counter, integer
-           Description: Total number of client requests. Number of currently active requests (reading and writing). Number of requests reading header or writing response to client.
-           Source: stub_status
+        Type: counter, integer
+        Description: Total number of client requests. Number of currently active requests (reading and writing). Number of requests reading header or writing response to client.
+        Source: stub_status
 
    * **nginx.http.request.length**
 
-           Type: counter, integer
-           Description: Request length, including request line, header and body.
-           Source: access.log (requires custom log format)
+        Type: counter, integer
+        Description: Request length, including request line, header and body.
+        Source: access.log (requires custom log format)
 
    * **nginx.http.request.malformed**
 
-           Type: counter, integer
-           Description: Number of malformed requests.
+        Type: counter, integer
+        Description: Number of malformed requests.
 
    * **nginx.http.request.time**
    * **nginx.http.request.time.count**
@@ -560,15 +560,15 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.http.request.time.median**
    * **nginx.http.request.time.pctl95**
 
-           Type: counter, float
-           Description: Request processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client and the log write after the last bytes were sent to the client.
-           Source: access.log (requires custom log format)
+        Type: counter, float
+        Description: Request processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client and the log write after the last bytes were sent to the client.
+        Source: access.log (requires custom log format)
    
    * **nginx.http.request.buffered**
 
-           Type: counter, integer
-           Description: Number of requests that were buffered to disk.
-           Source: error.log (requires 'warn' log level)
+        Type: counter, integer
+        Description: Number of requests that were buffered to disk.
+        Source: error.log (requires 'warn' log level)
 
    * **nginx.http.status.1xx**
    * **nginx.http.status.2xx**
@@ -576,24 +576,24 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.http.status.4xx**
    * **nginx.http.status.5xx**
    
-           Type: counter, integer
-           Description: Number of requests with specific HTTP status code.
-           Source: error.log (requires 'warn' log level)
+        Type: counter, integer
+        Description: Number of requests with specific HTTP status code.
+        Source: error.log (requires 'warn' log level)
    
    * **nginx.http.status.discarded**
    
-           Type: counter, integer
-           Description: Number of requests failed with 499/444/408. E.g. 499 is logged when client closes connection.
-           Source: access.log   
+        Type: counter, integer
+        Description: Number of requests failed with 499/444/408. E.g. 499 is logged when client closes connection.
+        Source: access.log   
    
    * **nginx.http.v0_9**
    * **nginx.http.v1_0**
    * **nginx.http.v1_1**
    * **nginx.http.v2**
 
-           Type: counter, integer
-           Description: Number of requests over specific version of HTTP protocol.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of requests over specific version of HTTP protocol.
+        Source: access.log
 
  * Upstream
    * **nginx.upstream.connect.time**
@@ -602,9 +602,9 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.upstream.connect.time.median**
    * **nginx.upstream.connect.time.pctl95**
 
-           Type: counter, integer
-           Description: Number of requests over specific version of HTTP protocol.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of requests over specific version of HTTP protocol.
+        Source: access.log
 
    * **nginx.upstream.header.time**
    * **nginx.upstream.header.time.count**
@@ -612,9 +612,9 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.upstream.header.time.median**
    * **nginx.upstream.header.time.pctl95**
 
-           Type: counter, integer
-           Description: Number of requests over specific version of HTTP protocol.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of requests over specific version of HTTP protocol.
+        Source: access.log
 
    * **nginx.upstream.next.count**
    * **nginx.upstream.request.count**
@@ -622,9 +622,9 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.upstream.response.buffered**
    * **nginx.upstream.response.failed**
 
-           Type: counter, integer
-           Description: Number of requests over specific version of HTTP protocol.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of requests over specific version of HTTP protocol.
+        Source: access.log
 
    * **nginx.upstream.response.time**
    * **nginx.upstream.response.time.count**
@@ -632,50 +632,50 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.upstream.response.time.median**
    * **nginx.upstream.response.time.pctl95**
 
-           Type: counter, integer
-           Description: Number of requests over specific version of HTTP protocol.
-           Source: access.log
+        Type: counter, integer
+        Description: Number of requests over specific version of HTTP protocol.
+        Source: access.log
 
 
  * Workers
    * **nginx.workers.count**
 
-           Type: gauge, integer
-           Description: Number of NGINX worker processes observed.
+        Type: gauge, integer
+        Description: Number of NGINX worker processes observed.
 
    * **nginx.workers.cpu.system**
    * **nginx.workers.cpu.total**
    * **nginx.workers.cpu.user**
 
-           Type: gauge, percent
-           Description: CPU utilization percentages observed from NGINX worker processes.
+        Type: gauge, percent
+        Description: CPU utilization percentages observed from NGINX worker processes.
 
    * **nginx.workers.fds_count**
 
-           Type: gauge, integer
-           Description: Number of file descriptors utilized by NGINX worker processes.
+        Type: gauge, integer
+        Description: Number of file descriptors utilized by NGINX worker processes.
 
    * **nginx.workers.io.kbs_r**
    * **nginx.workers.io.kbs_w**
 
-           Type: counter, integer
-           Description: Number of kilobytes read from or written to disk by NGINX worker processes.
+        Type: counter, integer
+        Description: Number of kilobytes read from or written to disk by NGINX worker processes.
 
    * **nginx.workers.mem.rss**
    * **nginx.workers.mem.vms**
 
-           Type: gauge, bytes
-           Description: Memory utilization by NGINX worker processes.
+        Type: gauge, bytes
+        Description: Memory utilization by NGINX worker processes.
 
    * **nginx.workers.mem.rss_pct**
 
-           Type: gauge, percent
-           Description: Memory utilization by NGINX worker processes.
+        Type: gauge, percent
+        Description: Memory utilization by NGINX worker processes.
 
    * **nginx.workers.rlimit_nofile**
 
-           Type: gauge, integer
-           Description: Hard limit on the number of file descriptors as seen by NGINX worker processes.
+        Type: gauge, integer
+        Description: Hard limit on the number of file descriptors as seen by NGINX worker processes.
 
 
 
