@@ -566,9 +566,16 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
  * HTTP
    * **nginx.http.conn.accepted**
+   * **nginx.http.conn.dropped**
+
+```
+     Type: counter, integer
+     Description: NGINX-wide statistics describing HTTP connections.
+     Source: stub_status
+```
+
    * **nginx.http.conn.active**
    * **nginx.http.conn.current**
-   * **nginx.http.conn.dropped**
    * **nginx.http.conn.idle**
 
 ```
@@ -578,15 +585,21 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 ```
 
    * **nginx.http.request.count**
+
+```
+     Type: counter, integer
+     Description: Total number of client requests.
+     Source: stub_status
+```
+
    * **nginx.http.request.current**
    * **nginx.http.request.reading**
    * **nginx.http.request.writing**
 
 ```
-     Type: counter, integer
-     Description: Total number of client requests. Number of currently active
-     requests (reading and writing). Number of requests reading headers or
-     writing responses to clients.
+     Type: gauge, integer
+     Description: Number of currently active requests (reading and writing).
+     Number of requests reading headers or writing responses to clients.
      Source: stub_status
 ```
 
