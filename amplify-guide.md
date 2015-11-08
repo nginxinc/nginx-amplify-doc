@@ -811,7 +811,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
    * **nginx.workers.fds_count**
 
 ```
-     Type: gauge, integer
+     Type: counter, integer
      Description: Number of file descriptors utilized by NGINX worker processes.
 ```
 
