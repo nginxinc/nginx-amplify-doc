@@ -1,2 +1,2 @@
 # nginx-amplify-doc
-Public documentation for Amplify
+Public documentation for Amplify.
