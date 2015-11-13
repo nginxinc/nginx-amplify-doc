@@ -42,7 +42,7 @@
 
 ### What is NGINX Amplify
 
-NGINX Amplify is a tool designed to monitor and optimize application delivery infrastructures. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling modern web applications.
+NGINX Amplify is a tool designed to monitor and optimize application delivery infrastructure. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling modern web applications.
 
 You can use NGINX Amplify to do the following:
 
@@ -79,16 +79,18 @@ In order to be able to use NGINX Amplify to monitor your infrastructure, you nee
 
 This could done as simple as:
 
- 1. `Download and run install script.`
+ 1. Download and run install script.
 
-        # curl -sS -L -O http://pp.nginx.com/andrew/files/install.sh && \
-        API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh`
+        # curl -sS -L -O \
+        https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
+        API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh
 
     Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
 
- 2. Start Amplify Agent.
+ 2. Verify that Amplify agent is started.
 
-        # /etc/init.d/amplify-agent start
+        # ps ax | grep -i 'amplify\-'
+        2552 ?        S      0:00 amplify-agent
 
 **Note.** Amplify Agent will drop *root* privileges after it's started. It will then use effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
@@ -98,13 +100,15 @@ It is highly recommended to periodically check for updates and install the lates
 
  * On Ubuntu/Debian use:
 
-        apt-get update && \
+        # apt-get update && \
         apt-get install nginx-amplify-agent && \
         service amplify-agent restart
 
- * `On CentOS use:`
+ * On CentOS/Red Hat use:
 
-        XXXX
+        # yum makecache && \
+        yum update nginx-amplify-agent && \
+        service amplify-agent restart        
 
 ### Configuration and logging
 
@@ -137,11 +141,11 @@ Normal level of logging for the agent is `INFO`. If you'd ever need to debug the
 
 ### Source code
 
-Amplify Agent is an open source application. It is licensed under the `[2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/LICENSE)`, and it's available here:
+Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and it's available here:
 
- * `Sources: https://github.com/nginxinc/nginx-amplify-agent`
- * `Public package repository: http://packages.naas.nginx.com/ (TBD)`
- * `Install script for Linux: https://github.com/nginxinc/nginx-amplify/agent/install.sh`
+ * Sources: https://github.com/nginxinc/nginx-amplify-agent
+ * Public package repository: http://packages.amplify.nginx.com
+ * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
 
 ### How Amplify Agent works
 
@@ -173,13 +177,15 @@ Amplify agent collects the following type of data:
  * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, path to binary, configure options etc. NGINX metadata also includes config file breakdown.
  * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX logs files.
 
-Amplify Agent will mostly use Python's **psutil()** to collect the data, but occasionally may also invoke certain system utilities like **ps(1)**.
+Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
 
 While the agent is running on the host, it collects metrics with steady 20 second intervals. Metrics then get aggregated and sent to SaaS once per minute.
 
 Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify UI using a web browser.
 
 NGINX config updates are reported only when a configuration change is detected.
+
+If the agent is not able to reach Amplify SaaS and send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as the connectivity is re-established.
 
 ### Detecting and monitoring NGINX instances
 
@@ -276,11 +282,11 @@ On the left is the list of the Systems being monitored by Amplify, those that ha
 
 When you install the agent on a new system, it'll automatically appear in the Systems list. The Systems list persists across all pages in the UI (**Graphs**, **Reports**, **Events**, **Alerts**).
 
-Systems list allows you to quickly check their status. It also provides a quick overview of the key metrics being reported. Hovering mouse pointer over any of the Systems in the list reveals 4 vertical dots — if you click on them, a pullout tray will appear. The tray will display numerical and text information about current CPU and memory usage, traffic in and out, OS flavor, and NGINX version.
+Systems list allows you to quickly check their status. It also provides a quick overview of the key metrics being reported. Hovering mouse pointer over any of the Systems in the list reveals 4 vertical dots — if you click on them, a pullout toolbar will appear. The toolbar will display numerical and text information about current CPU and memory usage, traffic in and out, OS flavor, and NGINX version.
 
 While on the **Graphs** page, clicking on any of the systems will bring up the graphs for that system in the center **Preview** column (see below).
 
-You can apply sorting and search/filter to the inventory list to quickly find the system in question.
+You can apply sorting and search/filter to the inventory list to quickly find the system in question. You can search by hostname, IP address, architecture etc. Search accepts regular expressions.
 
 #### Preview
 
@@ -300,7 +306,7 @@ Up above the **Graph feed** is the time range, that helps to scale displayed dat
 
 Section on the right is called **Graph feed**. When analyzing the graphs, you can populate this section from **Preview**. In order to do that, click on a graph's checkbox in **Preview**. The 'checked' graph from **Preview** will then be added to the bottom of the **Graph feed**. When you uncheck the graph, it'll be removed from the **Graph feed**.
 
-You can also add the topmost graph opened earlier for a 'quick look' view to the **Graph feed**.
+You can also add the topmost 'quick look' graph to the **Graph feed** by clicking on (+) sign.
 
 If you need to zoom into graphs, you can click on the 'expand' icon to the left of the 'Graph feed' label.
 
@@ -336,7 +342,7 @@ Currently only static analysis is done over the NGINX configuration. The followi
  * Overview information
    * Path to NGINX config files(s)
    * Whether the parser failed or not, and the results of `nginx -t`
-   * First seen and last modified info
+   * First-seen and last-modified info
    * 3rd party modules found
    * Breakdown of IPv4/IPv6 usage
    * Breakdown of key configuration elements (servers, locations, upstreams)
@@ -353,13 +359,13 @@ Static analysis will only include information about specific issues with the NGI
 
 Going further, the **Reports** section will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration — e.g. when it makes sense to increase or decrease certain parameter like [proxy_buffers](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffers) etc. Stay tuned!
 
-Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding seeting in either Global, or Local (per-system) settings. See **Settings** below.
+Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See **Settings** below.
 
 ### Events
 
 There're local (per-agent) and global events.
 
-In order to see events generated by a particular agent, click on a system on the left, and browse through local events in the middle column.
+In order to see events generated by a particular agent, click on a system on the left, and browse through local events in the middle column. You may think of it as of a mini-log from the agents.
 
 In the rightmost corner you'll see SaaS-wide events such as general notifications about Amplify updates or outages.
 
@@ -378,11 +384,13 @@ The way rules and alerts work is the following:
 
 By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname in the ruleset. Currently metrics can't be aggregated across all systems, instead any system will match a particular ruleset unless a hostname is specified.
 
-With the notifications you shouldn't see continuous redundant ones about the same single alert over and over again. Instead there will be digest information sent out every 30 minutes, describing what alerts were generated and which ones were cleared.
+There's on special rule which is about *amplify.agent.status* metric. This metric reflect the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure 2 min. interval and only 0 (zero) as threshold for *amplify.agent.status*.
+
+With the notifications you shouldn't see continuous redundant ones about the same single alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing what alerts were generated and which ones were cleared.
 
 **Note.** For the thresholds you should currently use exact measurement units as described in the **Metrics and metadata** section below. You can't currently use abbreviations like GB, KB or Kbps.
 
-**Note.** Gauges are averaged over the interval configured in the ruleset. Counters are summed up. Currently that's not configurable by the user and these are the only reduce functions available for configurating metric thresholds.
+**Note.** Gauges are averaged over the interval configured in the ruleset. Counters are summed up. Currently that's not user configurable and these are the only reduce functions available for configurating metric thresholds.
 
 **Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
 
@@ -671,7 +679,15 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Source: access.log
 ```
 
-#### Custom HTTP metrics
+#### Additional HTTP metrics
+
+Metrics below require additional configuration of NGINX logging. Please check the following sections of NGINX reference documentation for more information:
+
+ 1. [Alphabetical index of variables](http://nginx.org/en/docs/varindex.html)
+ 2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
+ 3. [Configuring NGINX error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) 
+
+Amplify will build a couple more graphs in Preview if **nginx.http.request.time** and **nginx.http.request.buffered** are found by the agent.
 
    * **nginx.http.request.bytes_sent**
 
@@ -679,6 +695,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Type: counter, integer
      Description: Number of bytes sent to clients.
      Source: access.log (requires custom log format)
+     Variable: $bytes_sent
 ```
 
    * **nginx.http.request.length**
@@ -687,6 +704,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Type: counter, integer
      Description: Request length, including request line, header and body.
      Source: access.log (requires custom log format)
+     Variable: $request_length
 ```
 
    * **nginx.http.request.time**
@@ -701,6 +719,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      the first bytes from the client and writing log entry after the
      last bytes were sent.
      Source: access.log (requires custom log format)
+     Variable: $request_time
 ```
 
    * **nginx.http.request.buffered**
@@ -718,6 +737,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Description: Achieved compression ratio, calculated as the ratio
      between the original and compressed response sizes.
      Source: access.log (requires custom log format)
+     Variable: $gzip_ratio
 ```
 
 #### Upstream metrics
@@ -734,6 +754,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Description: Time spent on establishing connections with upstream
      servers. With SSL, it also includes time spent on handshake.
      Source: access.log (requires custom log format)
+     Variable: $upstream_connect_time
 ```
 
    * **nginx.upstream.header.time**
@@ -746,14 +767,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Type: gauge, seconds.milliseconds
      Description: Time spent on receiving response headers from upstream servers.
      Source: access.log (requires custom log format)
-```
-
-   * **nginx.upstream.request.count**
-
-```
-     Type: counter. integer
-     Description: Number of requests passed to upstream servers.
-     Source: access.log (requires custom log format)
+     Variable: $upstream_header_time
 ```
 
    * **nginx.upstream.response.buffered**
@@ -770,7 +784,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 ```
      Type: counter, integer
      Description: Number of requests and responses that failed while proxying.
-     Source: error.log
+     Source: error.log (requires 'error' log level)
 ```
 
    * **nginx.upstream.response.time**
@@ -783,6 +797,7 @@ Local settings override corresponding global setting on a per-object basis. E.g.
      Type: gauge, seconds.milliseconds
      Description: Time spent on receiving responses from upstream servers.
      Source: access.log (requires custom log format)
+     Variable: $upstream_response_time
 ```
 
 #### Cache metrics
