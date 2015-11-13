@@ -51,7 +51,7 @@ All communications between the Amplify Agent and the Amplify SaaS are done secur
 
 ### 1.4. Is the Amplify Agent code publicly available?
 
-Amplify Agent is an open source application. It is licensed under the `[2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE)`, and it's available [here](https://github.com/nginxinc/nginx-amplify-agent).
+Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and it's available [here](https://github.com/nginxinc/nginx-amplify-agent).
 
 ### 1.5. Why is my password asked when installing the agent?
 
