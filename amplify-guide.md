@@ -815,6 +815,7 @@ Amplify will build a couple more graphs in Preview if **nginx.http.request.time*
      Type: counter, integer
      Description: Various statistics about NGINX cache usage.
      Source: access.log (requires custom log format)
+     Variable: $upstream_cache_status
 ```
 
 #### NGINX process metrics
