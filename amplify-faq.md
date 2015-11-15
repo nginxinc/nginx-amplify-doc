@@ -124,16 +124,18 @@ If you don't see the new system in the UI, or metrics aren't being collected, pl
  
 ```
     # apt-get update && \
-    apt-get install nginx-amplify-agent && \
-    service amplify-agent restart
+    apt-get install nginx-amplify-agent
+
+    # service amplify-agent restart
 ```
 
  2. On CentOS use
 
 ```
     # yum makecache && \
-    yum update nginx-amplify-agent && \
-    service amplify-agent restart
+    yum update nginx-amplify-agent
+
+    # service amplify-agent restart
 ```
 
 ### 2.7. How much system resources are required?

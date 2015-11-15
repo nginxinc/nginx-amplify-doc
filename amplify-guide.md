@@ -7,7 +7,7 @@
   - [Main components](#main-components)
 - [Amplify Agent](#amplify-agent)
   - [Installation](#installation)
-  - [Updates](#updates)
+  - [Updating](#updating)
   - [Configuration and logging](#configuration-and-logging)
   - [Source code](#source-code)
   - [How Amplify Agent works](#how-amplify-agent-works)
@@ -31,7 +31,7 @@
     - [HTTP methods](#http-methods)
     - [HTTP status codes](#http-status-codes)
     - [HTTP protocol versions](#http-protocol-versions)
-    - [Custom HTTP metrics](#custom-http-metrics)
+    - [Additional HTTP metrics](#additional-http-metrics)
     - [Upstream metrics](#upstream-metrics)
     - [Cache metrics](#cache-metrics)
     - [NGINX process metrics](#nginx-process-metrics)
@@ -94,21 +94,23 @@ This could done as simple as:
 
 **Note.** Amplify Agent will drop *root* privileges after it's started. It will then use effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
-### Updates
+### Updating
 
 It is highly recommended to periodically check for updates and install the latest stable version of the agent.
 
  * On Ubuntu/Debian use:
 
         # apt-get update && \
-        apt-get install nginx-amplify-agent && \
-        service amplify-agent restart
+        apt-get install nginx-amplify-agent
+
+        # service amplify-agent restart
 
  * On CentOS/Red Hat use:
 
         # yum makecache && \
-        yum update nginx-amplify-agent && \
-        service amplify-agent restart        
+        yum update nginx-amplify-agent
+
+        # service amplify-agent restart        
 
 ### Configuration and logging
 
@@ -166,7 +168,7 @@ By NGINX instance the agent assumes any running NGINX master process that has a 
 
 **Note.** When objects are first seen by the agent, they will be automatically created in Amplify SaaS, and visualized in the web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting — and no longer necessary, you should manually delete it in the web UI. The 'Delete' object button can be found in the meta viewer popup (see **User interface** below).
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web UI. The 'Delete' object button can be found in the meta viewer popup (see **User interface** below).
 
 ### Metadata and metrics collection
 
