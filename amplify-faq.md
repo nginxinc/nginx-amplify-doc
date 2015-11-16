@@ -177,6 +177,13 @@ If the agent is not able to determine system's hostname, you can define it manua
     hostname = myhostname1
 ```
 
+Hostname should be something real — the following aren't valid hostnames:
+
+ * localhost
+ * localhost.localdomain
+ * localhost6.localdomain6
+ * ip6-localhost
+
 ## 3. User interface
 
 ### 3.1. What browsers are supported?
