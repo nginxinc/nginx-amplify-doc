@@ -123,6 +123,25 @@ When you first install the agent using the procedure above, your API key is writ
     api_key = ecfdee2e010899135c258d741a6effc7
 ```
 
+If the agent is not able to determine system's hostname, you can define it manually in `/etc/amplify-agent/agent.conf`. Check for the following section, and fill in the desired hostname:
+
+```
+    [credentials]
+    ..
+    hostname = myhostname1
+```
+
+Hostname should be something real — the following aren't valid hostnames:
+
+ * localhost
+ * localhost.localdomain
+ * localhost6.localdomain6
+ * ip6-localhost
+ 
+You can also use the above method to substitute system's hostname with an arbitrary alias.
+
+**Note.** Keep in mind that if you redefine hostname for a live object, it will appear as a failed one in the UI. Redefining hostname in the agent's configuration essentially creates a new system for monitoring.
+
 The agent maintains its log file in `/var/log/amplify-agent/agent.log`.
 
 Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/amplify-agent`.
@@ -168,7 +187,7 @@ By NGINX instance the agent assumes any running NGINX master process that has a 
 
 **Note.** When objects are first seen by the agent, they will be automatically created in Amplify SaaS, and visualized in the web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web UI. The 'Delete' object button can be found in the meta viewer popup (see **User interface** below).
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web UI. The 'Remove object' button can be found in the meta viewer popup (see **User interface** below).
 
 ### Metadata and metrics collection
 
