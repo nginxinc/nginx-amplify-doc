@@ -165,6 +165,15 @@ It's simply
     yum remove nginx-amplify-agent
 ```
 
+### 2.10 How can I (re)define hostname?
+ 
+If the agent is not able to determine system's hostname, you can define it manually in `/etc/amplify-agent/agent.conf`. Check for the following section, and fill in the desired hostname:
+
+```
+    [credentials]
+    ..
+    hostname = myhostname1
+```
 
 ## 3. User interface
 
