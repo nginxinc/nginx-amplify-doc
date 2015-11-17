@@ -11,9 +11,9 @@
     - [Installing Amplify Agent manually](#installing-amplify-agent-manually)
       - [Ubuntu/Debian](#ubuntudebian)
       - [CentOS/Red Hat/Amazon Linux](#centosred-hatamazon-linux)
-    - [Create config file from template](#create-config-file-from-template)
-    - [Start the agent](#start-the-agent)
-    - [Verify that Amplify agent is started](#verify-that-amplify-agent-is-started)
+      - [Create config file from template](#create-config-file-from-template)
+      - [Start the agent](#start-the-agent)
+      - [Verify that Amplify agent is started](#verify-that-amplify-agent-is-started)
   - [Updating](#updating)
   - [Configuration and logging](#configuration-and-logging)
   - [Source code](#source-code)
@@ -153,7 +153,7 @@ This could done as simple as:
 
 ##### CentOS/Red Hat/Amazon Linux
 
- * Create repository config as follows:
+ * Create repository config as follows (mind the correct release number):
 
 ```
     # release="7" && \
@@ -184,7 +184,7 @@ This could done as simple as:
     # yum install nginx-amplify-agent
 ```
 
-#### Create config file from template
+##### Create config file from template
 
 ```
     # api_key="ecfdee2e010899135c258d741a6effc7" && \
@@ -195,13 +195,13 @@ This could done as simple as:
 
 Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
 
-#### Start the agent
+##### Start the agent
 
 ```
     # service amplify-agent start
 ```
 
-#### Verify that Amplify agent is started
+##### Verify that Amplify agent is started
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
