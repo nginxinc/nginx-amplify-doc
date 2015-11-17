@@ -77,6 +77,8 @@ NGINX Amplify is mainly a SaaS product, and it's hosted on AWS public cloud. It 
 
 In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install Amplify Agent on each system that has to be checked.
 
+#### Using install.sh
+
 This could done as simple as:
 
  1. Download and run install script.
@@ -88,6 +90,103 @@ This could done as simple as:
     Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
 
  2. Verify that Amplify agent is started.
+
+        # ps ax | grep -i 'amplify\-'
+        2552 ?        S      0:00 amplify-agent
+
+
+#### Installing Amplify Agent manually
+
+##### Ubuntu/Debian
+
+ * Add nginx public key:
+
+```
+    # curl -fs http://nginx.org/keys/nginx_signing.key | \
+    apt-key add -
+```
+
+   or if using *wget(1)* instead of *curl(1)*
+
+```
+    # wget -q --no-check-certificate -O - \
+    http://nginx.org/keys/nginx_signing.key | \
+    apt-key add -
+```
+
+ * Create repository config as follows:
+
+```
+    # codename=`lsb_release -cs` && \
+    os=`lsb_release -is | tr '[:upper:]' '[:lower:]'` && \
+    echo "deb http://packages.amplify.nginx.com/${os}/ ${codename} amplify-agent" > \
+    /etc/apt/sources.list.d/nginx-amplify.list
+```
+
+ * Verify repository config file:
+
+```
+    # cat /etc/apt/sources.list.d/nginx-amplify.list
+    deb http://packages.amplify.nginx.com/ubuntu/ trusty amplify-agent
+```
+
+ * Update package index files:
+
+```
+    # apt-get update
+```
+
+ * Install Amplify agent:
+
+```
+    # apt-get install nginx-amplify-agent
+```
+
+##### CentOS/Red Hat/Amazon Linux
+
+ * Create repository config as follows:
+
+```
+    # release="7" && \
+    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=0\nenabled=1\n" > \
+    /etc/yum.repos.d/nginx-amplify.repo
+```
+
+ * Verify repository config file:
+
+```
+    # cat /etc/yum.repos.d/nginx-amplify.repo 
+    [nginx-amplify]
+    name=nginx repo
+    baseurl=http://packages.amplify.nginx.com/centos/7/$basearch
+    gpgcheck=0
+    enabled=1
+```
+    
+ * Update package metadata:
+
+```
+    # yum makecache
+```
+
+ * Install Amplify agent:
+
+```
+    # yum install nginx-amplify-agent
+```
+
+#### Create config file from template
+
+```
+    # api_key="ecfdee2e010899135c258d741a6effc7" && \
+    sed "s/api_key.*$/api_key = ${api_key}/" \
+    /etc/amplify-agent/agent.conf.default > \
+    /etc/amplify-agent/agent.conf
+```
+
+Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
+
+#### Verify that Amplify agent is started.
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
