@@ -84,7 +84,7 @@ NGINX Amplify is mainly a SaaS product, and it's hosted on AWS public cloud. It 
 
 In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install Amplify Agent on each system that has to be checked.
 
-**Note.** Amplify Agent will drop *root* privileges after it's started. It will then use effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
+**Note.** Amplify Agent will drop *root* privileges on startup. It will then use effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
 #### Using install.sh
 
