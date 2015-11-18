@@ -22,7 +22,7 @@
 - [3. User interface](#3-user-interface)
   - [3.1. What browsers are supported?](#31-what-browsers-are-supported)
   - [3.2. Is UI traffic secure?](#32-is-ui-traffic-secure)
-  - [3.3. How can I delete a system or NGINX from monitoring?](#33-how-can-i-delete-a-system-or-nginx-from-monitoring)
+  - [3.3. How can I delete a system or an NGINX instance from monitoring?](#33-how-can-i-delete-a-system-or-an-nginx-instance-from-monitoring)
 - [4. Metrics and metadata](#4-metrics-and-metadata)
   - [4.1. What metrics and metadata is collected](#41-what-metrics-and-metadata-is-collected)
   - [4.2. How is the NGINX configuration parsed and analyzed](#42-how-is-the-nginx-configuration-parsed-and-analyzed)
