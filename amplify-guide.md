@@ -21,7 +21,8 @@
   - [Metadata and metrics collection](#metadata-and-metrics-collection)
   - [Detecting and monitoring NGINX instances](#detecting-and-monitoring-nginx-instances)
   - [Configuring NGINX for Amplify metric collection](#configuring-nginx-for-amplify-metric-collection)
-  - [NGINX configuration analysis](#nginx-configuration-analysis)
+  - [NGINX configuration reports](#nginx-configuration-reports)
+  - [What do I need to get the Agent reporting metrics?](#what-do-i-need-to-get-the-agent-reporting-metrics)
 - [User interface](#user-interface)
   - [Graphs page](#graphs-page)
     - [Systems list](#systems-list)
@@ -108,7 +109,7 @@ This could done as simple as:
 
 ##### Ubuntu/Debian
 
- * Add nginx public key:
+ * Add nginx public key.
 
 ```
     # curl -fs http://nginx.org/keys/nginx_signing.key | \
@@ -118,12 +119,12 @@ This could done as simple as:
    or if using *wget(1)* instead of *curl(1)*
 
 ```
-    # wget -q --no-check-certificate -O - \
+    # wget -q -O - \
     http://nginx.org/keys/nginx_signing.key | \
     apt-key add -
 ```
 
- * Create repository config as follows:
+ * Create repository config as follows.
 
 ```
     # codename=`lsb_release -cs` && \
@@ -132,20 +133,20 @@ This could done as simple as:
     /etc/apt/sources.list.d/nginx-amplify.list
 ```
 
- * Verify repository config file:
+ * Verify repository config file.
 
 ```
     # cat /etc/apt/sources.list.d/nginx-amplify.list
     deb http://packages.amplify.nginx.com/ubuntu/ trusty amplify-agent
 ```
 
- * Update package index files:
+ * Update package index files.
 
 ```
     # apt-get update
 ```
 
- * Install Amplify agent:
+ * Install Amplify agent.
 
 ```
     # apt-get install nginx-amplify-agent
@@ -153,32 +154,46 @@ This could done as simple as:
 
 ##### CentOS/Red Hat/Amazon Linux
 
- * Create repository config as follows (mind the correct release number):
+ * Add nginx public key.
+
+```
+    # curl -sS -L -O http://nginx.org/keys/nginx_signing.key && \
+    rpm --import nginx_signing.key
+```
+
+   or if using *wget(1)* instead of *curl(1)*
+
+```
+    # wget -q -O nginx_signing.key http://nginx.org/keys/nginx_signing.key && \
+    rpm --import nginx_signing.key
+```
+
+ * Create repository config as follows (mind the correct release number).
 
 ```
     # release="7" && \
-    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=0\nenabled=1\n" > \
+    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
     /etc/yum.repos.d/nginx-amplify.repo
 ```
 
- * Verify repository config file:
+ * Verify repository config file.
 
 ```
     # cat /etc/yum.repos.d/nginx-amplify.repo 
     [nginx-amplify]
     name=nginx repo
     baseurl=http://packages.amplify.nginx.com/centos/7/$basearch
-    gpgcheck=0
+    gpgcheck=1
     enabled=1
 ```
     
- * Update package metadata:
+ * Update package metadata.
 
 ```
     # yum makecache
 ```
 
- * Install Amplify agent:
+ * Install Amplify agent.
 
 ```
     # yum install nginx-amplify-agent
@@ -392,7 +407,7 @@ Agent will also try to detect the log format for a particular log, in order to b
 
 **Note.** A number of metrics outlined in **Metrics and metadata** will only be available if corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
 
-### NGINX configuration analysis
+### NGINX configuration reports
 
 Amplify Agent is able to automatically find all relevant NGINX configuration files, parse configuration, extract their logical structure and send the associated JSON data to Amplify SaaS for further analysis and reports. For more information on configuration analysis and reports see **Reports** section below.
 
@@ -401,6 +416,20 @@ After the agent finds a particular NGINX configuration, it'll then automatically
 When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is edited, such updates will be sent to Amplify SaaS.
 
 **Note.** The following directives and their parameters aren't exported to the SaaS: *ssl_certificate*, *ssl_certificate_key*, *ssl_client_certificate*, *ssl_password_file*, *ssl_stapling_file*, *ssl_trusted_certificate*, *auth_basic_user_file*, *secure_link_secret*.
+
+### What do I need to get the Agent reporting metrics?
+
+After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the SaaS in regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify UI.
+
+If you don't see the new system in the UI, or metrics aren't being collected, please make sure that:
+
+ 1. Amplify Agent package has been successfully installed
+ 2. `amplify-agent` process is running
+ 3. [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is properly set up in your NGINX configuration
+ 4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config)
+ 5. Oubound TLS/SSL from the system is not restricted
+ 6. System DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
+ 7. Check if *selinux(8)* interferes. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation.
 
 
 ## User interface
@@ -544,6 +573,10 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 
 ## Metrics and metadata
+
+Most metrics will be collected by the agent without requiring the user to perform any additional setup (for troubleshooting see section "What do I need to get the Agent reporting metrics?" above).
+
+Some additional metrics for NGINX will only be reported if NGINX configuration file is adjusted accordingly. See section "Additional HTTP metrics" below, and pay attention to Source and Variable fields in metric descriptions that follow.
 
 ### OS metrics
 
@@ -820,7 +853,20 @@ Metrics below require additional configuration of NGINX logging. Please check th
  2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
  3. [Configuring NGINX error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) 
 
-Amplify will build a couple more graphs in Preview if **nginx.http.request.time** and **nginx.http.request.buffered** are found by the agent.
+Example configuration for an extended log format could be as follows:
+
+```
+    log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
+			 ' $status $body_bytes_sent "$http_referer" '
+			 '"$http_user_agent" "$http_x_forwarded_for" '
+			 'rt=$request_time ua="$upstream_addr" '
+			 'us="$upstream_status" ut="$upstream_response_time" '
+			 'cs=$upstream_cache_status' ;
+
+    access_log  /var/log/nginx/access.log  main_ext;
+```
+
+Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
 
    * **nginx.http.request.bytes_sent**
 
