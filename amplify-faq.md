@@ -66,10 +66,11 @@ It could be that you're starting the install script from a non-root account. In 
 
 Amplify Agent is currently supported on the following Linux flavors only:
 
- * Ubuntu 12.04, 14.04, 15.04
+ * Ubuntu 12.04, 14.04, 15.04, 15.10
  * Debian 7, 8
  * CentOS 6, 7
  * Red Hat 6, 7
+ * Amazon Linux
 
 ### 2.2. What version of Python is required?
 
@@ -91,6 +92,8 @@ This could done as simple as:
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
+
+For manual installation instructions, please see the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-amplify-agent-manually).
 
 ### 2.4. What do I need to get the Agent reporting metrics?
 
