@@ -64,7 +64,7 @@ It could be that you're starting the install script from a non-root account. In 
 
 ### 2.1. What operatings systems are supported?
 
-Amplify Agent is currently supported on the following Linux flavors only:
+Amplify Agent currently works on the following Linux flavors only:
 
  * Ubuntu 12.04, 14.04, 15.04, 15.10
  * Debian 7, 8
@@ -199,13 +199,19 @@ Currently the following desktop browsers are officially fully supported:
 
 ### 3.2. Is UI traffic secure?
 
-We only support TLS/SSL connections the web UI.
+We only support TLS/SSL connections to the web UI.
 
-### 3.3. How can I delete a system or NGINX from monitoring?
+### 3.3. How can I delete a system or an NGINX instance from monitoring?
 
-It's currently done from the information window that you can find when hovering on a system on the left. Click vertical dots, extend toolbar and choose the [i] icon. There you can delete objects from the UI.
+If the goal is to completely delete previously monitored object, then do the following:
 
-Bear in mind — deleting objects there will not stop the agent. To completely remove system from monitoring, stop or deinstall the agent, and then clean it up in the UI.
+ * Uninstall the agent
+ * Delete objects from the UI
+ * Delete alarms
+
+To delete system from the UI — find it in the list, hover, click vertical dots on the right, extend toolbar and choose the [i] icon. There you can delete objects from the UI.
+
+Bear in mind — deleting objects there will not stop the agent. To completely remove system from monitoring, stop or deinstall the agent first, and then clean it up in the UI. Don't forget to also clean up any alarms.
 
 
 ## 4. Metrics and metadata
