@@ -22,7 +22,7 @@
   - [Detecting and monitoring NGINX instances](#detecting-and-monitoring-nginx-instances)
   - [Configuring NGINX for Amplify metric collection](#configuring-nginx-for-amplify-metric-collection)
   - [NGINX configuration reports](#nginx-configuration-reports)
-  - [What do I need to get the Agent reporting metrics?](#what-do-i-need-to-get-the-agent-reporting-metrics)
+  - [What to check if Agent isn't reporting metrics](#what-to-check-if-agent-isnt-reporting-metrics)
 - [User interface](#user-interface)
   - [Graphs page](#graphs-page)
     - [Systems list](#systems-list)
@@ -417,7 +417,7 @@ When a change is detected with NGINX — e.g. a master process restarts, or the 
 
 **Note.** The following directives and their parameters aren't exported to the SaaS: *ssl_certificate*, *ssl_certificate_key*, *ssl_client_certificate*, *ssl_password_file*, *ssl_stapling_file*, *ssl_trusted_certificate*, *auth_basic_user_file*, *secure_link_secret*.
 
-### What do I need to get the Agent reporting metrics?
+### What to check if Agent isn't reporting metrics
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the SaaS in regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify UI.
 
@@ -857,11 +857,11 @@ Example configuration for an extended log format could be as follows:
 
 ```
     log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
-			 ' $status $body_bytes_sent "$http_referer" '
-			 '"$http_user_agent" "$http_x_forwarded_for" '
-			 'rt=$request_time ua="$upstream_addr" '
-			 'us="$upstream_status" ut="$upstream_response_time" '
-			 'cs=$upstream_cache_status' ;
+                         ' $status $body_bytes_sent "$http_referer" '
+                         '"$http_user_agent" "$http_x_forwarded_for" '
+                         'rt=$request_time ua="$upstream_addr" '
+                         'us="$upstream_status" ut="$upstream_response_time" '
+                         'cs=$upstream_cache_status' ;
 
     access_log  /var/log/nginx/access.log  main_ext;
 ```
