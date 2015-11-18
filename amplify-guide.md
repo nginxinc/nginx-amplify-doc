@@ -15,7 +15,8 @@
       - [Start the agent](#start-the-agent)
       - [Verify that Amplify agent is started](#verify-that-amplify-agent-is-started)
   - [Updating](#updating)
-  - [Configuration and logging](#configuration-and-logging)
+  - [Configuration](#configuration)
+  - [Logging](#logging)
   - [Source code](#source-code)
   - [How Amplify Agent works](#how-amplify-agent-works)
   - [Metadata and metrics collection](#metadata-and-metrics-collection)
@@ -239,7 +240,7 @@ It is highly recommended to periodically check for updates and install the lates
 
         # service amplify-agent restart        
 
-### Configuration and logging
+### Configuration
 
 Amplify Agent's configuration resides in `/etc/amplify-agent/agent.conf`.
 
@@ -268,6 +269,8 @@ Hostname should be something real — the following aren't valid hostnames:
 You can also use the above method to substitute system's hostname with an arbitrary alias.
 
 **Note.** Keep in mind that if you redefine hostname for a live object, it will appear as a failed one in the UI. Redefining hostname in the agent's configuration essentially creates a new system for monitoring.
+
+### Logging
 
 The agent maintains its log file in `/var/log/amplify-agent/agent.log`.
 
