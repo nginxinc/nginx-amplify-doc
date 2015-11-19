@@ -16,6 +16,9 @@
       - [Verify that Amplify agent is started](#verify-that-amplify-agent-is-started)
   - [Updating](#updating)
   - [Configuration](#configuration)
+    - [API key](#api-key)
+    - [Hostname and uuid](#hostname-and-uuid)
+    - [Proxies](#proxies)
   - [Logging](#logging)
   - [Source code](#source-code)
   - [How Amplify Agent works](#how-amplify-agent-works)
@@ -244,6 +247,8 @@ It is highly recommended to periodically check for updates and install the lates
 
 Amplify Agent's configuration resides in `/etc/amplify-agent/agent.conf`.
 
+#### API key
+
 When you first install the agent using the procedure above, your API key is written to the `agent.conf` file automatically. If you'll need to ever change the API key, look for the following section in `agent.conf`, and edit it accordingly:
 
 ```
@@ -251,7 +256,13 @@ When you first install the agent using the procedure above, your API key is writ
     api_key = ecfdee2e010899135c258d741a6effc7
 ```
 
-If the agent is not able to determine system's hostname, you can define it manually in `/etc/amplify-agent/agent.conf`. Check for the following section, and fill in the desired hostname:
+#### Hostname and uuid
+
+In order to create a unique object for monitoring the OS, the agent should be able to extract a valid hostname from the system. The hostname will then be utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/naas-agent/blob/master/amplify/agent/util/host.py#L137). Essentially, the uuid identifier  is used to unambiguously describe the agent to the Amplify core. If uuid is changed, it makes the agent and the core register a new object for monitoring.
+
+When generated, uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects hostname for the first time. Normally you should *not* change the uuid in `agent.conf` by hand.
+
+The agent will try to do its best in determining the correct hostname. If it fails to detect hostname, you can (re)define it manually in the `agent.conf` file. Check for the following section, and fill in the desired hostname:
 
 ```
     [credentials]
@@ -259,16 +270,26 @@ If the agent is not able to determine system's hostname, you can define it manua
     hostname = myhostname1
 ```
 
-Hostname should be something real — the following aren't valid hostnames:
+Hostname should be something **real**. The agent won't start unless a valid hostname is defined. The following aren't valid hostnames:
 
  * localhost
  * localhost.localdomain
  * localhost6.localdomain6
- * ip6-localhost
- 
-You can also use the above method to substitute system's hostname with an arbitrary alias.
+ * ip6-localhost 
 
-**Note.** Keep in mind that if you redefine hostname for a live object, it will appear as a failed one in the UI. Redefining hostname in the agent's configuration essentially creates a new system for monitoring.
+**Note.** You can also use the above method to substitute system's hostname with an arbitrary alias. Keep in mind that if you redefine hostname for a live object, it will appear as a failed one in the UI very shortly. Redefining hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
+
+#### Proxies
+
+If your system is in a DMZ environment without direct access to the Internet, the only way for the agent to report collected metrics to Amplify would be through a proxy.
+
+Amplify agent obeys usual environment variables, common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
+
+```
+    [proxies]
+    https = https://10.20.30.40:3030
+    ..
+```
 
 ### Logging
 
