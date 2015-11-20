@@ -258,7 +258,7 @@ When you first install the agent using the procedure above, your API key is writ
 
 #### Hostname and uuid
 
-In order to create a unique object for monitoring the OS, the agent should be able to extract a valid hostname from the system. The hostname will then be utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/naas-agent/blob/master/amplify/agent/util/host.py#L137). Essentially, the uuid identifier  is used to unambiguously describe the agent to the Amplify core. If uuid is changed, it makes the agent and the core register a new object for monitoring.
+In order to create unique objects for monitoring, the agent should be able to extract a valid hostname from the system. The hostname will also be utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/naas-agent/blob/master/amplify/agent/util/host.py#L137). Essentially, the hostname and the uuid  are used to unambiguously describe the agent to the Amplify core. If hostname or uuid are changed, it makes the agent and the core register a new object for monitoring.
 
 When generated, uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects hostname for the first time. Normally you should *not* change the uuid in `agent.conf` by hand.
 
@@ -277,7 +277,7 @@ Hostname should be something **real**. The agent won't start unless a valid host
  * localhost6.localdomain6
  * ip6-localhost 
 
-**Note.** You can also use the above method to substitute system's hostname with an arbitrary alias. Keep in mind that if you redefine hostname for a live object, it will appear as a failed one in the UI very shortly. Redefining hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
+**Note.** You can also use the above method to substitute system's hostname with an arbitrary alias. Keep in mind that if you redefine hostname for a live object, existing object will appear as a failed one in the UI very shortly. Redefining hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
 
 #### Proxies
 
