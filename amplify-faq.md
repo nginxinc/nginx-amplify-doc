@@ -33,7 +33,7 @@
 
 ### 1.1. What is NGINX Amplify?
 
-NGINX Amplify is a tool enabling comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
+NGINX Amplify is a tool for comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
 
 You can use NGINX Amplify to do the following:
 
