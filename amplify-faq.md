@@ -33,11 +33,11 @@
 
 ### 1.1. What is NGINX Amplify?
 
-NGINX Amplify is a tool designed to monitor and optimize application delivery infrastructure. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling modern web applications.
+NGINX Amplify is a tool enabling comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
 
 You can use NGINX Amplify to do the following:
 
- * Visualize and identify performance bottlenecks, overloaded servers, or potential DDoS attacks
+ * Visualize and identify NGINX performance bottlenecks, overloaded servers, or potential DDoS attacks
  * Improve and optimize NGINX performance with intelligent advice and recommendations
  * Get notified when something is wrong with the application delivery
  * Plan web application capacity and performance
@@ -74,7 +74,7 @@ Amplify Agent currently works on the following Linux flavors only:
 
 ### 2.2. What version of Python is required?
 
-Amplify Agent will work with Python 2.6+.
+NGINX Amplify Agent will work with Python 2.6+.
 
 ### 2.3. How do I add a new a system to the monitoring?
 
