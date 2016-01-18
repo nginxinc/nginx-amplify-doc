@@ -103,7 +103,7 @@ If you don't see the new system in the UI, or metrics aren't being collected, pl
 
  1. Amplify Agent package has been successfully installed
  2. `amplify-agent` process is running
- 3. [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is properly set up in your NGINX configuration
+ 3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration
  4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config)
  5. Oubound TLS/SSL from the system is not restricted
  6. System DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
