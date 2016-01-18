@@ -5,7 +5,7 @@
 - [Overview](#overview)
   - [What is NGINX Amplify](#what-is-nginx-amplify)
   - [Main components](#main-components)
-- [Amplify Agent](#amplify-agent)
+- [NGINX Amplify Agent](#nginx-amplify-agent)
   - [Installation](#installation)
     - [Using install.sh](#using-installsh)
     - [Installing Amplify Agent manually](#installing-amplify-agent-manually)
