@@ -887,6 +887,7 @@ Example configuration for an extended log format could be as follows:
                          '"$http_user_agent" "$http_x_forwarded_for" '
                          'rt=$request_time ua="$upstream_addr" '
                          'us="$upstream_status" ut="$upstream_response_time" '
+                         'ul="$upstream_response_length" '
                          'cs=$upstream_cache_status' ;
 
     access_log  /var/log/nginx/access.log  main_ext;
