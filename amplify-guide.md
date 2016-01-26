@@ -7,13 +7,13 @@
   - [Main Components](#main-components)
 - [Installing and Managing NGINX Amplify Agent](#installing-and-managing-nginx-amplify-agent)
   - [Installing Amplify Agent](#installing-amplify-agent)
-    - [Using install.sh](#using-installsh)
+    - [Using the Install Script](#using-the-install-script)
     - [Installing Amplify Agent Manually](#installing-amplify-agent-manually)
-      - [Ubuntu/Debian](#ubuntudebian)
-      - [CentOS/Red Hat/Amazon Linux](#centosred-hatamazon-linux)
-      - [Create Config File From Template](#create-config-file-from-template)
-      - [Start Amplify Agent](#start-amplify-agent)
-      - [Verify that Amplify Agent Has Started](#verify-that-amplify-agent-has-started)
+      - [Installing on Ubuntu or Debian](#installing-on-ubuntu-or-debian)
+      - [Installing on CentOS, Red Hat Linux or Amazon Linux](#installing-on-centos-red-hat-linux-or-amazon-linux)
+      - [Creating Config File From Template](#creating-config-file-from-template)
+      - [Starting Amplify Agent](#starting-amplify-agent)
+      - [Verifying that Amplify Agent Has Started](#verifying-that-amplify-agent-has-started)
   - [Updating Amplify Agent](#updating-amplify-agent)
   - [Configuring Amplify Agent](#configuring-amplify-agent)
     - [Changing the API Key](#changing-the-api-key)
@@ -91,11 +91,11 @@ In order to be able to use NGINX Amplify to monitor your infrastructure, you nee
 
 **Note.** Amplify Agent will drop *root* privileges on startup. It will then use the effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
-#### Using install.sh
+#### Using the Install Script
 
-This could done as simple as:
+The installation could done as simple as this.
 
- 1. Download and run install script:
+ 1. Download and run the install script:
 
         # curl -sS -L -O \
         https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
@@ -111,7 +111,7 @@ This could done as simple as:
 
 #### Installing Amplify Agent Manually
 
-##### Ubuntu/Debian
+##### Installing on Ubuntu or Debian
 
  * Add nginx public key:
 
@@ -156,7 +156,7 @@ This could done as simple as:
     # apt-get install nginx-amplify-agent
 ```
 
-##### CentOS/Red Hat/Amazon Linux
+##### Installing on CentOS, Red Hat Linux or Amazon Linux
 
  * Add nginx public key:
 
@@ -183,7 +183,9 @@ This could done as simple as:
     /etc/yum.repos.d/nginx-amplify.repo
 ```
 
+
    On Amazon Linux use:
+
 
 ```
     # release="latest" && \
@@ -214,7 +216,7 @@ This could done as simple as:
     # yum install nginx-amplify-agent
 ```
 
-##### Create Config File From Template
+##### Creating Config File From Template
 
 ```
     # api_key="ecfdee2e010899135c258d741a6effc7" && \
@@ -225,13 +227,13 @@ This could done as simple as:
 
 API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding new system in the Amplify UI. You can also find the API key in the Account Information menu.
 
-##### Start Amplify Agent
+##### Starting Amplify Agent
 
 ```
     # service amplify-agent start
 ```
 
-##### Verify that Amplify Agent Has Started
+##### Verifying that Amplify Agent Has Started
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
