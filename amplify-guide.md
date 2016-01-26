@@ -448,13 +448,11 @@ If everything is configured properly, you should see something along these lines
 Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
 
 ```
-
     nginx.http.conn.accepted = stub_status.accepts
     nginx.http.conn.active = stub_status.active - stub_status.waiting
     nginx.http.conn.current = stub_status.active
     nginx.http.conn.dropped = stub_status.accepts - stub_status.handled
     nginx.http.conn.idle = stub_status.waiting
-
     nginx.http.request.count = stub_status.requests
     nginx.http.request.current = stub_status.reading + stub_status.writing
     nginx.http.request.reading = stub_status.reading
