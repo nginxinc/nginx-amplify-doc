@@ -90,7 +90,7 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
 In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install Amplify Agent on each system that has to be checked.
 
-**Note.** Amplify Agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective user ID (e.g. `www-data`).
+**Note.** Amplify Agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective user ID (e.g. `www-data`).
 
 #### Using the Install Script
 
@@ -102,7 +102,7 @@ The installation procedure can be as simple as this.
         https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
         API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh
 
-    where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify UI. You can always check the API key in the Account Information menu.
+    where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify web interface. You can always check the API key in the Account Information menu.
 
  2. Verify that Amplify agent has started.
 
@@ -120,7 +120,7 @@ The installation procedure can be as simple as this.
     # curl -fs http://nginx.org/keys/nginx_signing.key | apt-key add -
 ```
 
-    or when using *wget(1)* instead of *curl(1)*
+   or
 
 ```
     # wget -q -O - \
@@ -164,7 +164,7 @@ The installation procedure can be as simple as this.
     rpm --import nginx_signing.key
 ```
 
-    or when using *wget(1)* instead of *curl(1)*
+   or
 
 ```
     # wget -q -O nginx_signing.key http://nginx.org/keys/nginx_signing.key && \
@@ -174,21 +174,17 @@ The installation procedure can be as simple as this.
  * Create repository config as follows (mind the correct release number).
 
 
-    On CentOS or Red Hat use:
-   
-```
-    # release="7" && \
-    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
-    /etc/yum.repos.d/nginx-amplify.repo
-```
+   * On CentOS or Red Hat use:
 
-    On Amazon Linux use:
+         # release="7" && \
+         printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
+         /etc/yum.repos.d/nginx-amplify.repo
 
-```
-    # release="latest" && \
-    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/amzn/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
-    /etc/yum.repos.d/nginx-amplify.repo
-```
+   * On Amazon Linux use:
+
+         # release="latest" && \
+         printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/amzn/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
+         /etc/yum.repos.d/nginx-amplify.repo
 
  * Verify repository config file (RHEL 7.1 example follows).
 
@@ -222,7 +218,7 @@ The installation procedure can be as simple as this.
     /etc/amplify-agent/agent.conf
 ```
 
-API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding new system in the Amplify UI. You can also find the API key in the Account Information menu.
+API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding new system in the Amplify web interface. You can also find the API key in the Account Information menu.
 
 ##### Starting and Stopping Amplify Agent
 
@@ -265,7 +261,7 @@ Amplify Agent's configuration file is `/etc/amplify-agent/agent.conf`.
 
 #### Overriding the Effective User ID
 
-Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective user ID (e.g. `www-data`).
+Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective user ID (e.g. `www-data`).
 
 In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in `/etc/amplify-agent/agent.conf`
 
@@ -317,7 +313,7 @@ Hostname should be something **real**. The agent won't start unless a valid host
 
 If your system is in a DMZ environment without direct access to the Internet, the only way for the agent to report collected metrics to Amplify would be through a proxy.
 
-Amplify agent obeys usual environment variables, common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
+Amplify Agent obeys usual environment variables, common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
 
 ```
     [proxies]
@@ -327,7 +323,7 @@ Amplify agent obeys usual environment variables, common on Linux systems (e.g. `
 
 #### Logging
 
-The agent maintains its log file in `/var/log/amplify-agent/agent.log`.
+Amplify Agent maintains its log file in `/var/log/amplify-agent/agent.log`.
 
 Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/amplify-agent`.
 
@@ -364,7 +360,7 @@ By an NGINX instance the agent assumes any running NGINX master process that has
 
 **Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web interface. The "Remove object" button can be found in the meta viewer popup (see **User interface** below).
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web interface. The "Remove object" button can be found in the meta viewer popup (see **User Interface** below).
 
 ### Metadata and Metrics Collection
 
@@ -436,9 +432,9 @@ Without *stub_status* the agent will **not** be able to collect quite a few esse
 
 For more information about *stub_status*, please refer to our reference documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-Please make sure the ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing — use the same exact URL stemming from your NGINX configuration. E.g. don't test against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
+Please make sure the ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing — use the same exact URL stemming from your NGINX configuration. E.g. don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
 
-If everything is configured properly, you should see something like this when testing it with *curl(1)*:
+If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
 
 ```
     $ curl http://localhost/nginx_status
@@ -450,6 +446,8 @@ If everything is configured properly, you should see something like this when te
 
 Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
 
+```
+
     nginx.http.conn.accepted = stub_status.accepts
     nginx.http.conn.active = stub_status.active - stub_status.waiting
     nginx.http.conn.current = stub_status.active
@@ -460,6 +458,7 @@ Amplify Agent uses data from *stub_status* to calculate a number of metrics rela
     nginx.http.request.current = stub_status.reading + stub_status.writing
     nginx.http.request.reading = stub_status.reading
     nginx.http.request.writing = stub_status.writing
+```
 
 For more information about the metric list, please refer to the **Metrics and Metadata** section below.
 
@@ -479,7 +478,7 @@ After the agent finds a particular NGINX configuration, it'll then automatically
 
 When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is edited, such updates will be sent to the Amplify backend.
 
-**Note.** The following directives and their parameters aren't exported to the SaaS: *ssl_certificate*, *ssl_certificate_key*, *ssl_client_certificate*, *ssl_password_file*, *ssl_stapling_file*, *ssl_trusted_certificate*, *auth_basic_user_file*, *secure_link_secret*.
+**Note.** The following directives and their parameters aren't exported to the SaaS backend: [ssl_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate), [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 ### What to Check if Amplify Agent Isn't Reporting Metrics
 
