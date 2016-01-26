@@ -93,7 +93,7 @@ In order to be able to use NGINX Amplify to monitor your infrastructure, you nee
 
 #### Using the Install Script
 
-The installation could done as simple as this.
+The installation procedure can be as simple as this.
 
  1. Download and run the install script:
 
