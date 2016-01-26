@@ -3,30 +3,30 @@
 
 
 - [Overview](#overview)
-  - [What is NGINX Amplify](#what-is-nginx-amplify)
-  - [Main components](#main-components)
-- [NGINX Amplify Agent](#nginx-amplify-agent)
-  - [Installation](#installation)
+  - [What is NGINX Amplify?](#what-is-nginx-amplify)
+  - [Main Components](#main-components)
+- [Installing and Managing NGINX Amplify Agent](#installing-and-managing-nginx-amplify-agent)
+  - [Installing Amplify Agent](#installing-amplify-agent)
     - [Using install.sh](#using-installsh)
-    - [Installing Amplify Agent manually](#installing-amplify-agent-manually)
+    - [Installing Amplify Agent Manually](#installing-amplify-agent-manually)
       - [Ubuntu/Debian](#ubuntudebian)
       - [CentOS/Red Hat/Amazon Linux](#centosred-hatamazon-linux)
-      - [Create config file from template](#create-config-file-from-template)
-      - [Start the agent](#start-the-agent)
-      - [Verify that Amplify agent is started](#verify-that-amplify-agent-is-started)
-  - [Updating](#updating)
-  - [Configuration](#configuration)
-    - [API key](#api-key)
-    - [Hostname and uuid](#hostname-and-uuid)
-    - [Proxies](#proxies)
+      - [Create Config File From Template](#create-config-file-from-template)
+      - [Start Amplify Agent](#start-amplify-agent)
+      - [Verify that Amplify Agent Has Started](#verify-that-amplify-agent-has-started)
+  - [Updating Amplify Agent](#updating-amplify-agent)
+  - [Configuring Amplify Agent](#configuring-amplify-agent)
+    - [Changing the API Key](#changing-the-api-key)
+    - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
+    - [Setting Up a Proxy](#setting-up-a-proxy)
   - [Logging](#logging)
   - [Source code](#source-code)
-  - [How Amplify Agent works](#how-amplify-agent-works)
-  - [Metadata and metrics collection](#metadata-and-metrics-collection)
-  - [Detecting and monitoring NGINX instances](#detecting-and-monitoring-nginx-instances)
-  - [Configuring NGINX for Amplify metric collection](#configuring-nginx-for-amplify-metric-collection)
-  - [NGINX configuration reports](#nginx-configuration-reports)
-  - [What to check if Agent isn't reporting metrics](#what-to-check-if-agent-isnt-reporting-metrics)
+  - [How Amplify Agent Works](#how-amplify-agent-works)
+  - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
+  - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
+  - [Configuring NGINX for Amplify Metric Collection](#configuring-nginx-for-amplify-metric-collection)
+  - [NGINX Configuration Reports](#nginx-configuration-reports)
+  - [What to Check if Agent Isn't Reporting Metrics](#what-to-check-if-agent-isnt-reporting-metrics)
 - [User interface](#user-interface)
   - [Graphs page](#graphs-page)
     - [Systems list](#systems-list)
@@ -52,7 +52,7 @@
 
 ## Overview
 
-### What is NGINX Amplify
+### What is NGINX Amplify?
 
 NGINX Amplify is a tool for comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
 
@@ -64,63 +64,63 @@ You can use NGINX Amplify to do the following:
  * Plan web application capacity and performance
  * Keep track of the systems running NGINX
 
-### Main components
+### Main Components
 
 NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It includes the following key components:
 
- 1. **Agent**
+ 1. **Amplify Agent**
 
-    NGINX Amplify Agent is a Python application that runs on monitored systems. Its role is to collect various metrics from the operating system and from the NGINX instances, aggregate and send them to the backend system for visualization.
+    A Python application that runs on monitored systems. Its role is to collect various metrics from the operating system and from the NGINX instances, aggregate and send them to the backend system for visualization.
 
     All communications between the agent and NGINX Amplify SaaS are done securely over TLS/SSL. All traffic is always initiated by the agent.
 
  2. **NGINX Amplify UI**
 
-    This is the user interface accessible from all major browsers. Web interface is only accessible via TLS/SSL.
+    The user interface accessible from all major browsers. The web interface is accessible only via TLS/SSL.
 
  3. **Backend** (implemented as a SaaS)
 
-    This is the core system component encompassing scalable metrics collection infrastructure, database, and core API.
+    The core system component, implemented as SaaS. It encompasses scalable metrics collection infrastructure, database, and the core API.
 
 
-## NGINX Amplify Agent
+## Installing and Managing NGINX Amplify Agent
 
-### Installation
+### Installing Amplify Agent
 
 In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install Amplify Agent on each system that has to be checked.
 
-**Note.** Amplify Agent will drop *root* privileges on startup. It will then use effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive found in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
+**Note.** Amplify Agent will drop *root* privileges on startup. It will then use the effective UID of the user `nginx`. Package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective UID (e.g. `www-data`).
 
 #### Using install.sh
 
 This could done as simple as:
 
- 1. Download and run install script.
+ 1. Download and run install script:
 
         # curl -sS -L -O \
         https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
         API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh
 
-    Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
+    where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify UI. You can always check the API key in the Account Information menu.
 
- 2. Verify that Amplify agent is started.
+ 2. Verify that Amplify agent has started.
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
 
 
-#### Installing Amplify Agent manually
+#### Installing Amplify Agent Manually
 
 ##### Ubuntu/Debian
 
- * Add nginx public key.
+ * Add nginx public key:
 
 ```
     # curl -fs http://nginx.org/keys/nginx_signing.key | \
     apt-key add -
 ```
 
-   or if using *wget(1)* instead of *curl(1)*
+   or when using *wget(1)* instead of *curl(1)*
 
 ```
     # wget -q -O - \
@@ -150,7 +150,7 @@ This could done as simple as:
     # apt-get update
 ```
 
- * Install Amplify agent.
+ * Install Amplify Agent.
 
 ```
     # apt-get install nginx-amplify-agent
@@ -158,14 +158,14 @@ This could done as simple as:
 
 ##### CentOS/Red Hat/Amazon Linux
 
- * Add nginx public key.
+ * Add nginx public key:
 
 ```
     # curl -sS -L -O http://nginx.org/keys/nginx_signing.key && \
     rpm --import nginx_signing.key
 ```
 
-   or if using *wget(1)* instead of *curl(1)*
+   or when using *wget(1)* instead of *curl(1)*
 
 ```
     # wget -q -O nginx_signing.key http://nginx.org/keys/nginx_signing.key && \
@@ -174,9 +174,20 @@ This could done as simple as:
 
  * Create repository config as follows (mind the correct release number).
 
+
+   On CentOS and Red Hat use:
+   
 ```
     # release="7" && \
     printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
+    /etc/yum.repos.d/nginx-amplify.repo
+```
+
+   On Amazon Linux use:
+
+```
+    # release="latest" && \
+    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/amzn/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
     /etc/yum.repos.d/nginx-amplify.repo
 ```
 
@@ -197,13 +208,13 @@ This could done as simple as:
     # yum makecache
 ```
 
- * Install Amplify agent.
+ * Install Amplify Agent.
 
 ```
     # yum install nginx-amplify-agent
 ```
 
-##### Create config file from template
+##### Create Config File From Template
 
 ```
     # api_key="ecfdee2e010899135c258d741a6effc7" && \
@@ -212,20 +223,20 @@ This could done as simple as:
     /etc/amplify-agent/agent.conf
 ```
 
-Where API_KEY is a unique API key assigned when you create an account with Amplify. You will see your API key when adding new system in the Amplify UI.
+API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding new system in the Amplify UI. You can also find the API key in the Account Information menu.
 
-##### Start the agent
+##### Start Amplify Agent
 
 ```
     # service amplify-agent start
 ```
 
-##### Verify that Amplify agent is started
+##### Verify that Amplify Agent Has Started
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
 
-### Updating
+### Updating Amplify Agent
 
 It is highly recommended to periodically check for updates and install the latest stable version of the agent.
 
@@ -243,24 +254,24 @@ It is highly recommended to periodically check for updates and install the lates
 
         # service amplify-agent restart        
 
-### Configuration
+### Configuring Amplify Agent
 
-Amplify Agent's configuration resides in `/etc/amplify-agent/agent.conf`.
+Amplify Agent's configuration file is `/etc/amplify-agent/agent.conf`.
 
-#### API key
+#### Changing the API Key
 
-When you first install the agent using the procedure above, your API key is written to the `agent.conf` file automatically. If you'll need to ever change the API key, look for the following section in `agent.conf`, and edit it accordingly:
+When you first install the agent using the procedure above, your API key is written to the `agent.conf` file automatically. If you ever need to change the API key, edit the following section in `agent.conf`:
 
 ```
     [credentials]
     api_key = ecfdee2e010899135c258d741a6effc7
 ```
 
-#### Hostname and uuid
+#### Changing the Hostname and UUID
 
-In order to create unique objects for monitoring, the agent should be able to extract a valid hostname from the system. The hostname will also be utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/naas-agent/blob/master/amplify/agent/util/host.py#L137). Essentially, the hostname and the uuid  are used to unambiguously describe the agent to the Amplify core. If hostname or uuid are changed, it makes the agent and the core register a new object for monitoring.
+In order to create unique objects for monitoring, the agent must be able to extract a valid hostname from the system. The hostname is also utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/naas-agent/blob/master/amplify/agent/util/host.py#L137). Essentially, the hostname and the uuid unambiguously identify a particular instance of the agent to the Amplify core. If the hostname or the uuid are changed, it makes the agent and the core register a new object for monitoring.
 
-When generated, uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects hostname for the first time. Normally you should *not* change the uuid in `agent.conf` by hand.
+When first generated, the uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects the hostname for the first time. Normally you should *not* change the uuid in `agent.conf` by hand.
 
 The agent will try to do its best in determining the correct hostname. If it fails to detect hostname, you can (re)define it manually in the `agent.conf` file. Check for the following section, and fill in the desired hostname:
 
@@ -277,9 +288,9 @@ Hostname should be something **real**. The agent won't start unless a valid host
  * localhost6.localdomain6
  * ip6-localhost 
 
-**Note.** You can also use the above method to substitute system's hostname with an arbitrary alias. Keep in mind that if you redefine hostname for a live object, existing object will appear as a failed one in the UI very shortly. Redefining hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
+**Note.** You can also use the above method to substitute the system's hostname with an arbitrary alias. Keep in mind that if you redefine hostname for a live object, existing object will appear as a failed one in the UI very shortly. Redefining hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
 
-#### Proxies
+#### Setting Up a Proxy
 
 If your system is in a DMZ environment without direct access to the Internet, the only way for the agent to report collected metrics to Amplify would be through a proxy.
 
@@ -297,7 +308,7 @@ The agent maintains its log file in `/var/log/amplify-agent/agent.log`.
 
 Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/amplify-agent`.
 
-Normal level of logging for the agent is `INFO`. If you'd ever need to debug the agent, you'd need to change it to `DEBUG` as follows. Bear in mind, the size of the agent's log file could grow really fast with the `DEBUG`:
+Normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change it to `DEBUG` as follows. Bear in mind, the size of the agent's log file can grow really fast with the `DEBUG`:
 
 ```
 
@@ -313,36 +324,36 @@ Normal level of logging for the agent is `INFO`. If you'd ever need to debug the
 
 ### Source code
 
-Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and it's available here:
+Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available here:
 
  * Sources: https://github.com/nginxinc/nginx-amplify-agent
  * Public package repository: http://packages.amplify.nginx.com
  * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
 
-### How Amplify Agent works
+### How Amplify Agent Works
 
-NGINX Amplify Agent is a compact application written in Python. The role of the agent is to collect various metrics and metadata and export them to the main system for visualization.
+NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and export them to the main system for visualization.
 
 You will need to install Amplify Agent on all hosts that you'd like to monitor.
 
 Upon proper installation, the agent will automatically start to report metrics, and you should see something in the Amplify UI in about a minute or so.
 
-Amplify Agent collects metrics and sends them to the Amplify SaaS on a 'per-object' basis. Basically, each distinct type of a monitored entity is seen as a (data) object internally.
+Amplify Agent collects metrics and sends them to the Amplify SaaS on a "per-object" basis. Basically, each distinct type of a monitored entity is seen as a (data) object internally.
 
-There're currently the following object types:
+Currently there're the following object types:
 
  1. Operating system (this is the parent object)
  2. NGINX instance
 
 By NGINX instance the agent assumes any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
-**Note.** When objects are first seen by the agent, they will be automatically created in Amplify SaaS, and visualized in the web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
+**Note.** When objects are first seen by the agent, they are automatically created in Amplify SaaS, and visualized in the web UI. You don't have to manually add NGINX instances after you install the Amplify Agent on a host.
 
 When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting&nbsp;— and no longer necessary, you should manually delete it in the web UI. The 'Remove object' button can be found in the meta viewer popup (see **User interface** below).
 
-### Metadata and metrics collection
+### Metadata and Metrics Collection
 
-Amplify agent collects the following type of data:
+Amplify Agent collects the following type of data:
 
  * **System metadata.** This is basic information about the OS environment where the agent runs. This could be hostname, uptime information, and so on.
  * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic etc.
@@ -351,7 +362,7 @@ Amplify agent collects the following type of data:
 
 Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
 
-While the agent is running on the host, it collects metrics with steady 20 second intervals. Metrics then get aggregated and sent to SaaS once per minute.
+While the agent is running on the host, it collects metrics at steady 20 second intervals. Metrics then get aggregated and sent to SaaS once per minute.
 
 Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify UI using a web browser.
 
@@ -359,7 +370,7 @@ NGINX config updates are reported only when a configuration change is detected.
 
 If the agent is not able to reach Amplify SaaS and send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as the connectivity is re-established.
 
-### Detecting and monitoring NGINX instances
+### Detecting and Monitoring NGINX Instances
 
 Amplify Agent is capable of detecting several types of NGINX instances:
 
@@ -373,7 +384,7 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 **Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* objects for monitoring. On a single system several NGINX objects always have the same parent object (the OS).
 
-### Configuring NGINX for Amplify metric collection
+### Configuring NGINX for Amplify Metric Collection
 
 In order to monitor your NGINX instances, and be able to see various NGINX graphs in the UI, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to pick it automatically. Otherwise, add it as follows:
 
@@ -423,7 +434,7 @@ Amplify agent uses data from *stub_status* to calculate a number of metrics rela
     nginx.http.request.reading = stub_status.reading
     nginx.http.request.writing = stub_status.writing
 
-For more information about the metric list, please refer to the **Metrics and metadata** section below.
+For more information about the metric list, please refer to the **Metrics and Metadata** section below.
 
 Amplify Agent will also try to collect all additional metrics relevant to a particular NGINX instance from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
@@ -431,9 +442,9 @@ You don't have to specifically point the agent to either NGINX configuration or 
 
 Agent will also try to detect the log format for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
-**Note.** A number of metrics outlined in **Metrics and metadata** will only be available if corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
+**Note.** A number of metrics outlined in **Metrics and Metadata** will only be available if corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
 
-### NGINX configuration reports
+### NGINX Configuration Reports
 
 Amplify Agent is able to automatically find all relevant NGINX configuration files, parse configuration, extract their logical structure and send the associated JSON data to Amplify SaaS for further analysis and reports. For more information on configuration analysis and reports see **Reports** section below.
 
@@ -443,7 +454,7 @@ When a change is detected with NGINX — e.g. a master process restarts, or the 
 
 **Note.** The following directives and their parameters aren't exported to the SaaS: *ssl_certificate*, *ssl_certificate_key*, *ssl_client_certificate*, *ssl_password_file*, *ssl_stapling_file*, *ssl_trusted_certificate*, *auth_basic_user_file*, *secure_link_secret*.
 
-### What to check if Agent isn't reporting metrics
+### What to Check if Agent Isn't Reporting Metrics
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the SaaS in regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify UI.
 
