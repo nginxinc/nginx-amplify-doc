@@ -173,18 +173,19 @@ The installation procedure can be as simple as this.
 
  * Create repository config as follows (mind the correct release number).
 
+   Use the first snippet below for CentOS and Red Hat Linux. The second one applies to Amazon Linux.
 
-   * On CentOS or Red Hat use:
+```
+    # release="7" && \
+    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
+    /etc/yum.repos.d/nginx-amplify.repo
+```
 
-         # release="7" && \
-         printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/centos/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
-         /etc/yum.repos.d/nginx-amplify.repo
-
-   * On Amazon Linux use:
-
-         # release="latest" && \
-         printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/amzn/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
-         /etc/yum.repos.d/nginx-amplify.repo
+```
+    # release="latest" && \
+    printf "[nginx-amplify]\nname=nginx amplify repo\nbaseurl=http://packages.amplify.nginx.com/amzn/${release}/\$basearch\ngpgcheck=1\nenabled=1\n" > \
+    /etc/yum.repos.d/nginx-amplify.repo
+```
 
  * Verify repository config file (RHEL 7.1 example follows).
 
