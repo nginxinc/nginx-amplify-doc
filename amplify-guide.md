@@ -935,7 +935,7 @@ Example configuration for the extended log format could be as follows:
     access_log  /var/log/nginx/access.log  main_ext;
 ```
 
-Please check the following sections of NGINX reference documentation for more information:
+Please check the following sections of the NGINX reference documentation for more information:
 
  1. [Alphabetical index of variables](http://nginx.org/en/docs/varindex.html)
  2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
