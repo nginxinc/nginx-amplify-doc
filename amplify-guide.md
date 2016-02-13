@@ -481,7 +481,7 @@ When a change is detected with NGINX — e.g. a master process restarts, or the 
 
 ### What to Check if Amplify Agent Isn't Reporting Metrics
 
-After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at a 1 minute interval. It'll take about a minute for the new system to appear in the Amplify web interface.
+After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
 If you don't see the new system in the web interface, or metrics aren't being collected, please make sure that:
 
@@ -489,9 +489,10 @@ If you don't see the new system in the web interface, or metrics aren't being co
  2. `amplify-agent` process is running
  3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration
  4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config)
- 5. Oubound TLS/SSL from the system is not restricted
+ 5. Some additional metrics for NGINX require extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-http-metrics).
  6. System DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 7. Check if *selinux(8)* interferes. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation.
+ 7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted
+ 8. Check if *selinux(8)* interferes. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
 
 ### Amplify Agent Source Code
 
@@ -616,7 +617,7 @@ The way rules and alerts work is the following:
 
 By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname in the ruleset. Currently metrics can't be aggregated across all systems, instead any system will match a particular ruleset unless a hostname is specified.
 
-There's on special rule which is about *amplify.agent.status* metric. This metric reflect the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure 2 min. interval and only 0 (zero) as threshold for *amplify.agent.status*.
+There's on special rule which is about *amplify.agent.status* metric. This metric reflect the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure 2 min. interval and only 0 (zero) as the threshold for *amplify.agent.status*.
 
 With the notifications you shouldn't see continuous redundant ones about the same single alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing what alerts were generated and which ones were cleared.
 
