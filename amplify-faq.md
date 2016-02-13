@@ -99,7 +99,7 @@ For manual installation instructions, please check the user guide [here](https:/
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
-If you don't see the new system in the web interface, or metrics aren't being collected, please make sure that:
+If you don't see the new system in the web interface, or metrics aren't being collected, please check the following:
 
  1. Amplify Agent package has been successfully installed
  2. `amplify-agent` process is running

@@ -483,7 +483,7 @@ When a change is detected with NGINX — e.g. a master process restarts, or the 
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
-If you don't see the new system in the web interface, or metrics aren't being collected, please make sure that:
+If you don't see the new system in the web interface, or metrics aren't being collected, please check the following:
 
  1. Amplify Agent package has been successfully installed
  2. `amplify-agent` process is running
@@ -917,13 +917,11 @@ Some additional metrics for NGINX monitoring will only be reported if NGINX conf
 
 #### Additional HTTP Metrics
 
-Metrics below require additional configuration of NGINX logging. Please check the following sections of NGINX reference documentation for more information:
+In order for the Amplify Agent to obtain the metrics below, some additional configuration of NGINX logging is required.
 
- 1. [Alphabetical index of variables](http://nginx.org/en/docs/varindex.html)
- 2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
- 3. [Configuring NGINX error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) 
+In brief, the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include the corresponding NGINX [variables](http://nginx.org/en/docs/varindex.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) may require a different log level.
 
-Example configuration for an extended log format could be as follows:
+Example configuration for the extended log format could be as follows:
 
 ```
     log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
@@ -937,7 +935,13 @@ Example configuration for an extended log format could be as follows:
     access_log  /var/log/nginx/access.log  main_ext;
 ```
 
-Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
+Please check the following sections of NGINX reference documentation for more information:
+
+ 1. [Alphabetical index of variables](http://nginx.org/en/docs/varindex.html)
+ 2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
+ 3. [Configuring NGINX error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) 
+
+By default, Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
 
    * **nginx.http.request.bytes_sent**
 
