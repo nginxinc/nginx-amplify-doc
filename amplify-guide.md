@@ -529,7 +529,7 @@ The graphs in the **Preview** column are split in distinct sections. Each sectio
 
 Clicking on any of the smaller graphs in the Preview column will bring up a larger version of that graph in the **Graph&nbsp;Feed** on the right side for a "quick look" reference. It will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph Feed** (see below).
 
-**Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the **Graph Feed** for further analysis.
+**Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of feed for further analysis.
 
 Some graphs in the **Preview** have an additional selector for the label associated with a metric. E.g. with "Disk latency", or "Network traffic" you can select what device or interface you're analyzing. Switching label on a graph changes the preview graph to display the corresponding data.
 
