@@ -917,11 +917,9 @@ Some additional metrics for NGINX monitoring will only be reported if NGINX conf
 
 #### Additional HTTP Metrics
 
-In order for the Amplify Agent to obtain the metrics below, some additional configuration of NGINX logging is required.
+Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please perform the following configuration changes.
 
-In brief, the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include the corresponding NGINX [variables](http://nginx.org/en/docs/varindex.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) may require a different log level.
-
-Example configuration for the extended log format could be as follows:
+The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
 
 ```
     log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
@@ -935,13 +933,17 @@ Example configuration for the extended log format could be as follows:
     access_log  /var/log/nginx/access.log  main_ext;
 ```
 
-Please check the following sections of the NGINX reference documentation for more information:
+The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to "warn".
+ 
+```
+    error_log  /var/log/nginx/error.log warn;
+```
 
- 1. [Alphabetical index of variables](http://nginx.org/en/docs/varindex.html)
- 2. [Configuring NGINX access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html)
- 3. [Configuring NGINX error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) 
+**Note.** Don't forget to [reload](http://nginx.org/en/docs/control.html) your NGINX configuration with either `kill -HUP` or `service nginx reload`.
 
 By default, Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
+
+Here is the list of additional metrics that can be collected from [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) NGINX log files:
 
    * **nginx.http.request.bytes_sent**
 
