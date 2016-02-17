@@ -264,7 +264,7 @@ Amplify Agent's configuration file is `/etc/amplify-agent/agent.conf`.
 
 Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If there's the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive in NGINX configuration, the agent will pick up the user specified in NGINX config for its effective user ID (e.g. `www-data`).
 
-In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in `/etc/amplify-agent/agent.conf`
+In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in `/etc/amplify-agent/agent.conf` for that:
 
 ```
     [nginx]
@@ -274,7 +274,7 @@ In case you'd like to manually specify the user ID that the agent should use for
 
 There's an option there to explicitly set the user whose real user ID the agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, the agent startup script extracts the parameter and uses it to lookup the real user ID.
 
-In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID to be used by the agent. By default it's `/etc/nginx/nginx.conf`.
+In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID to be used. By default it's `/etc/nginx/nginx.conf`.
 
 The agent's startup script will try to parse the NGINX configuration file, looking for the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive, and will extract the corresponding information from it.
 
@@ -301,7 +301,7 @@ The agent will try to do its best in determining the correct hostname. If it fai
     hostname = myhostname1
 ```
 
-Hostname should be something **real**. The agent won't start unless a valid hostname is defined. The following aren't valid hostnames:
+Hostname should be something **real**. The agent won't start unless a valid hostname is defined. The following *aren't* valid hostnames:
 
  * localhost
  * localhost.localdomain
@@ -489,7 +489,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
  2. `amplify-agent` process is running
  3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration
  4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config)
- 5. Some additional metrics for NGINX require extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-http-metrics).
+ 5. Some additional metrics for NGINX require extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics).
  6. System DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
  7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted
  8. Check if *selinux(8)* interferes. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
@@ -527,7 +527,7 @@ In the middle of the screen there's the **Preview** section where you can quickl
 
 The graphs in the **Preview** column are split in distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the leftmost column, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
 
-Clicking on any of the smaller graphs in the Preview column will bring up a larger version of that graph in the **Graph Feed** on the right side for a "quick look" reference. It will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph Feed** (see below).
+Clicking on any of the smaller graphs in the Preview column will bring up a larger version of that graph in the **Graph&nbsp;Feed** on the right side for a "quick look" reference. It will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph Feed** (see below).
 
 **Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the **Graph Feed** for further analysis.
 
@@ -644,9 +644,9 @@ Local settings override corresponding global setting on a per-object basis. E.g.
 
 ## Metrics and Metadata
 
-Most metrics will be collected by the Amplify Agent without requiring the user to perform any additional setup (for troubleshooting see section "What to Check if Amplify Agent Isn't Reporting Metrics" above).
+Most metrics will be collected by the Amplify Agent without requiring the user to perform any additional setup — for troubleshooting see section "What to Check if Amplify Agent Isn't Reporting Metrics" above.
 
-Some additional metrics for NGINX monitoring will only be reported if NGINX configuration file is adjusted accordingly. See section "Additional HTTP Metrics" below, and pay attention to Source and Variable fields in metric descriptions that follow.
+Some additional metrics for NGINX monitoring will only be reported if NGINX configuration file is adjusted accordingly. See "Additional NGINX Metrics" below, and pay attention to *source* and *variable* fields in the metric descriptions that follow.
 
 ### OS Metrics
 
@@ -924,7 +924,7 @@ Amplify Agent can collect a number of additional useful metrics described below.
     access_log  /var/log/nginx/access.log  main_ext;
 ```
 
- * The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to "warn".
+ * The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to `warn`.
  
 ```
     error_log  /var/log/nginx/error.log warn;
