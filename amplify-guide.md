@@ -908,9 +908,9 @@ Some additional metrics for NGINX monitoring will only be reported if NGINX conf
 
 #### Additional NGINX Metrics
 
-Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please perform the following configuration changes.
+Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please perform the following configuration changes. By default, Amplify will build a few more graphs in **Preview** if the additional metrics are found by the agent.
 
-The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
+ * The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
 
 ```
     log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
@@ -924,15 +924,13 @@ The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log for
     access_log  /var/log/nginx/access.log  main_ext;
 ```
 
-The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to "warn".
+ * The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to "warn".
  
 ```
     error_log  /var/log/nginx/error.log warn;
 ```
 
 **Note.** Don't forget to [reload](http://nginx.org/en/docs/control.html) your NGINX configuration with either `kill -HUP` or `service nginx reload`.
-
-By default, Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
 
 Here is the list of additional metrics that can be collected from the NGINX log files:
 
