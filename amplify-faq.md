@@ -105,7 +105,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
  2. `amplify-agent` process is running
  3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration
  4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config)
- 5. Some additional metrics for NGINX require extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-http-metrics).
+ 5. Some additional metrics for NGINX require extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics).
  6. System DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
  7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted
  8. Check if *selinux(8)* interferes. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
