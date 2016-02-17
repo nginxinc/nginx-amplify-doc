@@ -650,269 +650,260 @@ Some additional metrics for NGINX monitoring will only be reported if NGINX conf
 
 ### OS Metrics
 
- * Agent
-   * **amplify.agent.status**
+ * **amplify.agent.status**
 
 ```
-     Type: internal, integer
-     Description: 1 - agent is up, 0 - agent is down.
+    Type: internal, integer
+    Description: 1 - agent is up, 0 - agent is down.
 ```
 
- * CPU Usage
-   * **system.cpu.idle**
-   * **system.cpu.iowait**
-   * **system.cpu.system**
-   * **system.cpu.user**
+ * **system.cpu.idle**
+ * **system.cpu.iowait**
+ * **system.cpu.system**
+ * **system.cpu.user**
 
 ```
-     Type: gauge, percent
-     Description: System CPU utilization.
+    Type: gauge, percent
+    Description: System CPU utilization.
 ```
 
- * Disk Usage
-   * **system.disk.free**
-   * **system.disk.total**
-   * **system.disk.used**
+ * **system.disk.free**
+ * **system.disk.total**
+ * **system.disk.used**
 
 ```
-     Type: gauge, bytes
-     Description: System disk usage statistics.
+    Type: gauge, bytes
+    Description: System disk usage statistics.
 ```
 
-   * **system.disk.in_use**
+ * **system.disk.in_use**
 
 ```
-     Type: gauge, percent
-     Description: System disk usage statistics, percentage.
+    Type: gauge, percent
+    Description: System disk usage statistics, percentage.
 ```
 
- * Disk I/O
-   * **system.io.iops_r**
-   * **system.io.iops_w**
+ * **system.io.iops_r**
+ * **system.io.iops_w**
 
 ```
-     Type: counter, integer
-     Description: Number of reads or writes per sampling window.
+    Type: counter, integer
+    Description: Number of reads or writes per sampling window.
 ```
 
-   * **system.io.kbs_r**
-   * **system.io.kbs_w**
+ * **system.io.kbs_r**
+ * **system.io.kbs_w**
 
 ```
-     Type: counter, kilobytes
-     Description: Number of kilobytes read or written.
+    Type: counter, kilobytes
+    Description: Number of kilobytes read or written.
 ```
 
-   * **system.io.wait_r**
-   * **system.io.wait_w**
+ * **system.io.wait_r**
+ * **system.io.wait_w**
 
 ```
-     Type: gauge, milliseconds
-     Description: Time spent reading from or writing to disk.
+    Type: gauge, milliseconds
+    Description: Time spent reading from or writing to disk.
 ```
 
- * Load Average
-   * **system.load.1**
-   * **system.load.5**
-   * **system.load.15**
+ * **system.load.1**
+ * **system.load.5**
+ * **system.load.15**
 
 ```
-     Type: gauge, float
-     Description: Number of processes in the system run queue averaged
-     over the last 1, 5, and 15 min.
+    Type: gauge, float
+    Description: Number of processes in the system run queue averaged
+    over the last 1, 5, and 15 min.
 ```
 
- * Memory Usage
-   * **system.mem.available**
-   * **system.mem.buffered**
-   * **system.mem.cached**
-   * **system.mem.free**
-   * **system.mem.shared**
-   * **system.mem.total**
-   * **system.mem.used**
+ * **system.mem.available**
+ * **system.mem.buffered**
+ * **system.mem.cached**
+ * **system.mem.free**
+ * **system.mem.shared**
+ * **system.mem.total**
+ * **system.mem.used**
 
 ```
-     Type: gauge, bytes
-     Description: Statistics about system memory usage.
+    Type: gauge, bytes
+    Description: Statistics about system memory usage.
 ```
 
-   * **system.mem.pct_used**
+ * **system.mem.pct_used**
 
 ```
-     Type: gauge, percent
-     Description: Statistics about system memory usage, percentage.
+    Type: gauge, percent
+    Description: Statistics about system memory usage, percentage.
 ```
 
- * Network
-   * **system.net.bytes_rcvd**
-   * **system.net.bytes_sent**
+ * **system.net.bytes_rcvd**
+ * **system.net.bytes_sent**
 
 ```
-     Type: counter, bytes
-     Description: Network I/O statistics. Number of bytes received or sent,
-     per network interface.
+    Type: counter, bytes
+    Description: Network I/O statistics. Number of bytes received or sent,
+    per network interface.
 ```
 
-   * **system.net.drops_in.count**
-   * **system.net.drops_out.count**
+ * **system.net.drops_in.count**
+ * **system.net.drops_out.count**
 
 ```
-     Type: counter, integer
-     Description: Network I/O statistics. Total number of inbound or
-     outbound packets dropped, per network interface.
+    Type: counter, integer
+    Description: Network I/O statistics. Total number of inbound or
+    outbound packets dropped, per network interface.
 ```
 
-   * **system.net.packets_in.count**
-   * **system.net.packets_out.count**
+ * **system.net.packets_in.count**
+ * **system.net.packets_out.count**
 
 ```
-     Type: counter, integer
-     Description: Network I/O statistics. Number of packets received
-     or sent, per network interface.
+    Type: counter, integer
+    Description: Network I/O statistics. Number of packets received
+    or sent, per network interface.
 ```
 
-   * **system.net.packets_in.error**
-   * **system.net.packets_out.error**
+ * **system.net.packets_in.error**
+ * **system.net.packets_out.error**
 
 ```
-     Type: counter, integer
-     Description: Network I/O statistics. Total number of errors while
-     receiving or sending, per network interface.
+    Type: counter, integer
+    Description: Network I/O statistics. Total number of errors while
+    receiving or sending, per network interface.
 ```
 
-   * **system.net.listen_overflows**
+ * **system.net.listen_overflows**
 
 ```
-     Type: counter, integer
-     Description: Number of times the listen queue of a socket overflowed.
+    Type: counter, integer
+    Description: Number of times the listen queue of a socket overflowed.
 ```
 
- * Swap
-   * **system.swap.free**
-   * **system.swap.total**
-   * **system.swap.used**
+ * **system.swap.free**
+ * **system.swap.total**
+ * **system.swap.used**
 
 ```
-     Type: gauge, bytes
-     Description: System swap memory statistics.
+    Type: gauge, bytes
+    Description: System swap memory statistics.
 ```
 
-   * **system.swap.pct_free**
+ * **system.swap.pct_free**
 
 ```
-     Type: gauge, percent
-     Description: System swap memory statistics, percentage.
+    Type: gauge, percent
+    Description: System swap memory statistics, percentage.
 ```
 
 ### NGINX Metrics
 
 #### HTTP Connections and Requests
 
- * HTTP
-   * **nginx.http.conn.accepted**
-   * **nginx.http.conn.dropped**
+ * **nginx.http.conn.accepted**
+ * **nginx.http.conn.dropped**
 
 ```
-     Type: counter, integer
-     Description: NGINX-wide statistics describing HTTP connections.
-     Source: stub_status
+    Type: counter, integer
+    Description: NGINX-wide statistics describing HTTP connections.
+    Source: stub_status
 ```
 
-   * **nginx.http.conn.active**
-   * **nginx.http.conn.current**
-   * **nginx.http.conn.idle**
+ * **nginx.http.conn.active**
+ * **nginx.http.conn.current**
+ * **nginx.http.conn.idle**
 
 ```
-     Type: gauge, integer
-     Description: NGINX-wide statistics describing HTTP connections.
-     Source: stub_status
+    Type: gauge, integer
+    Description: NGINX-wide statistics describing HTTP connections.
+    Source: stub_status
 ```
 
-   * **nginx.http.request.count**
+ * **nginx.http.request.count**
 
 ```
-     Type: counter, integer
-     Description: Total number of client requests.
-     Source: stub_status
+    Type: counter, integer
+    Description: Total number of client requests.
+    Source: stub_status
 ```
 
-   * **nginx.http.request.current**
-   * **nginx.http.request.reading**
-   * **nginx.http.request.writing**
+ * **nginx.http.request.current**
+ * **nginx.http.request.reading**
+ * **nginx.http.request.writing**
 
 ```
-     Type: gauge, integer
-     Description: Number of currently active requests (reading and writing).
-     Number of requests reading headers or writing responses to clients.
-     Source: stub_status
+    Type: gauge, integer
+    Description: Number of currently active requests (reading and writing).
+    Number of requests reading headers or writing responses to clients.
+    Source: stub_status
 ```
 
-   * **nginx.http.request.malformed**
+ * **nginx.http.request.malformed**
 
 ```
-     Type: counter, integer
-     Description: Number of malformed requests.
-     Source: access.log
+    Type: counter, integer
+    Description: Number of malformed requests.
+    Source: access.log
 ```
 
-   * **nginx.http.request.body_bytes_sent**
+ * **nginx.http.request.body_bytes_sent**
 
 ```
-     Type: counter, integer
-     Description: Number of bytes sent to clients, not counting
-     response headers.
-     Source: access.log
+    Type: counter, integer
+    Description: Number of bytes sent to clients, not counting
+    response headers.
+    Source: access.log
 ```
 
 #### HTTP Methods
 
-   * **nginx.http.method.get**
-   * **nginx.http.method.head**
-   * **nginx.http.method.post**
-   * **nginx.http.method.put**
-   * **nginx.http.method.delete**
-   * **nginx.http.method.options**
+ * **nginx.http.method.get**
+ * **nginx.http.method.head**
+ * **nginx.http.method.post**
+ * **nginx.http.method.put**
+ * **nginx.http.method.delete**
+ * **nginx.http.method.options**
 
 ```
-     Type: counter, integer
-     Description: Statistics about observed request methods.
-     Source: access.log
+    Type: counter, integer
+    Description: Statistics about observed request methods.
+    Source: access.log
 ```
 
 #### HTTP Status Codes
 
-   * **nginx.http.status.1xx**
-   * **nginx.http.status.2xx**
-   * **nginx.http.status.3xx**
-   * **nginx.http.status.4xx**
-   * **nginx.http.status.5xx**
+ * **nginx.http.status.1xx**
+ * **nginx.http.status.2xx**
+ * **nginx.http.status.3xx**
+ * **nginx.http.status.4xx**
+ * **nginx.http.status.5xx**
 
 ```
-     Type: counter, integer
-     Description: Number of requests with specific HTTP status codes.
-     Source: access.log
+    Type: counter, integer
+    Description: Number of requests with specific HTTP status codes.
+    Source: access.log
 ```
 
-   * **nginx.http.status.discarded**
+ * **nginx.http.status.discarded**
 
 ```
-     Type: counter, integer
-     Description: Number of requests finalized with 499/444/408.
-     E.g. 499 is logged when the client closes connection.
-     Source: access.log
+    Type: counter, integer
+    Description: Number of requests finalized with 499/444/408.
+    E.g. 499 is logged when the client closes connection.
+    Source: access.log
 ```
 
 #### HTTP Protocol Versions
 
-   * **nginx.http.v0_9**
-   * **nginx.http.v1_0**
-   * **nginx.http.v1_1**
-   * **nginx.http.v2**
+ * **nginx.http.v0_9**
+ * **nginx.http.v1_0**
+ * **nginx.http.v1_1**
+ * **nginx.http.v2**
 
 ```
-     Type: counter, integer
-     Description: Number of requests using specific version of HTTP protocol.
-     Source: access.log
+    Type: counter, integer
+    Description: Number of requests using specific version of HTTP protocol.
+    Source: access.log
 ```
 
 #### Additional NGINX Metrics
@@ -945,189 +936,186 @@ By default, Amplify will build a few more graphs in Preview if **nginx.http.requ
 
 Here is the list of additional metrics that can be collected from [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) NGINX log files:
 
-   * **nginx.http.request.bytes_sent**
+ * **nginx.http.request.bytes_sent**
 
 ```
-     Type: counter, integer
-     Description: Number of bytes sent to clients.
-     Source: access.log (requires custom log format)
-     Variable: $bytes_sent
+    Type: counter, integer
+    Description: Number of bytes sent to clients.
+    Source: access.log (requires custom log format)
+    Variable: $bytes_sent
 ```
 
-   * **nginx.http.request.length**
+ * **nginx.http.request.length**
 
 ```
-     Type: counter, integer
-     Description: Request length, including request line, header and body.
-     Source: access.log (requires custom log format)
-     Variable: $request_length
+    Type: counter, integer
+    Description: Request length, including request line, header and body.
+    Source: access.log (requires custom log format)
+    Variable: $request_length
 ```
 
-   * **nginx.http.request.time**
-   * **nginx.http.request.time.count**
-   * **nginx.http.request.time.max**
-   * **nginx.http.request.time.median**
-   * **nginx.http.request.time.pctl95**
+ * **nginx.http.request.time**
+ * **nginx.http.request.time.count**
+ * **nginx.http.request.time.max**
+ * **nginx.http.request.time.median**
+ * **nginx.http.request.time.pctl95**
 
 ```
-     Type: gauge, seconds.milliseconds
-     Description: Request processing time — time elapsed between reading
-     the first bytes from the client and writing log entry after the
-     last bytes were sent.
-     Source: access.log (requires custom log format)
-     Variable: $request_time
+    Type: gauge, seconds.milliseconds
+    Description: Request processing time — time elapsed between reading
+    the first bytes from the client and writing log entry after the
+    last bytes were sent.
+    Source: access.log (requires custom log format)
+    Variable: $request_time
 ```
 
-   * **nginx.http.request.buffered**
+ * **nginx.http.request.buffered**
 
 ```
-     Type: counter, integer
-     Description: Number of requests that were buffered to disk.
-     Source: error.log (requires 'warn' log level)
+    Type: counter, integer
+    Description: Number of requests that were buffered to disk.
+    Source: error.log (requires 'warn' log level)
 ```
 
-   * **nginx.http.gzip.ratio**
+ * **nginx.http.gzip.ratio**
 
 ```
-     Type: gauge, float
-     Description: Achieved compression ratio, calculated as the ratio
-     between the original and compressed response sizes.
-     Source: access.log (requires custom log format)
-     Variable: $gzip_ratio
+    Type: gauge, float
+    Description: Achieved compression ratio, calculated as the ratio
+    between the original and compressed response sizes.
+    Source: access.log (requires custom log format)
+    Variable: $gzip_ratio
 ```
 
 ##### Upstream Metrics
 
- * Upstream
-   * **nginx.upstream.connect.time**
-   * **nginx.upstream.connect.time.count**
-   * **nginx.upstream.connect.time.max**
-   * **nginx.upstream.connect.time.median**
-   * **nginx.upstream.connect.time.pctl95**
+ * **nginx.upstream.connect.time**
+ * **nginx.upstream.connect.time.count**
+ * **nginx.upstream.connect.time.max**
+ * **nginx.upstream.connect.time.median**
+ * **nginx.upstream.connect.time.pctl95**
 
 ```
-     Type: gauge, seconds.milliseconds
-     Description: Time spent on establishing connections with upstream
-     servers. With SSL, it also includes time spent on handshake.
-     Source: access.log (requires custom log format)
-     Variable: $upstream_connect_time
+    Type: gauge, seconds.milliseconds
+    Description: Time spent on establishing connections with upstream
+    servers. With SSL, it also includes time spent on handshake.
+    Source: access.log (requires custom log format)
+    Variable: $upstream_connect_time
 ```
 
-   * **nginx.upstream.header.time**
-   * **nginx.upstream.header.time.count**
-   * **nginx.upstream.header.time.max**
-   * **nginx.upstream.header.time.median**
-   * **nginx.upstream.header.time.pctl95**
+ * **nginx.upstream.header.time**
+ * **nginx.upstream.header.time.count**
+ * **nginx.upstream.header.time.max**
+ * **nginx.upstream.header.time.median**
+ * **nginx.upstream.header.time.pctl95**
 
 ```
-     Type: gauge, seconds.milliseconds
-     Description: Time spent on receiving response headers from upstream servers.
-     Source: access.log (requires custom log format)
-     Variable: $upstream_header_time
+    Type: gauge, seconds.milliseconds
+    Description: Time spent on receiving response headers from upstream servers.
+    Source: access.log (requires custom log format)
+    Variable: $upstream_header_time
 ```
 
-   * **nginx.upstream.response.buffered**
+ * **nginx.upstream.response.buffered**
 
 ```
-     Type: counter. integer
-     Description: Number of upstream responses buffered to disk.
-     Source: error.log (requires 'warn' log level)
+    Type: counter. integer
+    Description: Number of upstream responses buffered to disk.
+    Source: error.log (requires 'warn' log level)
 ```
 
-   * **nginx.upstream.request.failed**
-   * **nginx.upstream.response.failed**
+ * **nginx.upstream.request.failed**
+ * **nginx.upstream.response.failed**
 
 ```
-     Type: counter, integer
-     Description: Number of requests and responses that failed while proxying.
-     Source: error.log (requires 'error' log level)
+    Type: counter, integer
+    Description: Number of requests and responses that failed while proxying.
+    Source: error.log (requires 'error' log level)
 ```
 
-   * **nginx.upstream.response.time**
-   * **nginx.upstream.response.time.count**
-   * **nginx.upstream.response.time.max**
-   * **nginx.upstream.response.time.median**
-   * **nginx.upstream.response.time.pctl95**
+ * **nginx.upstream.response.time**
+ * **nginx.upstream.response.time.count**
+ * **nginx.upstream.response.time.max**
+ * **nginx.upstream.response.time.median**
+ * **nginx.upstream.response.time.pctl95**
 
 ```
-     Type: gauge, seconds.milliseconds
-     Description: Time spent on receiving responses from upstream servers.
-     Source: access.log (requires custom log format)
-     Variable: $upstream_response_time
+    Type: gauge, seconds.milliseconds
+    Description: Time spent on receiving responses from upstream servers.
+    Source: access.log (requires custom log format)
+    Variable: $upstream_response_time
 ```
 
 ##### Cache Metrics
 
- * Cache
-   * **nginx.cache.bypass**
-   * **nginx.cache.expired**
-   * **nginx.cache.hit**
-   * **nginx.cache.miss**
-   * **nginx.cache.revalidated**
-   * **nginx.cache.stale**
-   * **nginx.cache.updating**
+ * **nginx.cache.bypass**
+ * **nginx.cache.expired**
+ * **nginx.cache.hit**
+ * **nginx.cache.miss**
+ * **nginx.cache.revalidated**
+ * **nginx.cache.stale**
+ * **nginx.cache.updating**
 
 ```
-     Type: counter, integer
-     Description: Various statistics about NGINX cache usage.
-     Source: access.log (requires custom log format)
-     Variable: $upstream_cache_status
+    Type: counter, integer
+    Description: Various statistics about NGINX cache usage.
+    Source: access.log (requires custom log format)
+    Variable: $upstream_cache_status
 ```
 
 #### NGINX Process Metrics
 
- * Workers
-   * **nginx.workers.count**
+ * **nginx.workers.count**
 
 ```
-     Type: gauge, integer
-     Description: Number of NGINX worker processes observed.
+    Type: gauge, integer
+    Description: Number of NGINX worker processes observed.
 ```
 
-   * **nginx.workers.cpu.system**
-   * **nginx.workers.cpu.total**
-   * **nginx.workers.cpu.user**
+ * **nginx.workers.cpu.system**
+ * **nginx.workers.cpu.total**
+ * **nginx.workers.cpu.user**
 
 ```
-     Type: gauge, percent
-     Description: CPU utilization percentage observed from NGINX worker processes.
+    Type: gauge, percent
+    Description: CPU utilization percentage observed from NGINX worker processes.
 ```
 
-   * **nginx.workers.fds_count**
+ * **nginx.workers.fds_count**
 
 ```
-     Type: counter, integer
-     Description: Number of file descriptors utilized by NGINX worker processes.
+    Type: counter, integer
+    Description: Number of file descriptors utilized by NGINX worker processes.
 ```
 
-   * **nginx.workers.io.kbs_r**
-   * **nginx.workers.io.kbs_w**
+ * **nginx.workers.io.kbs_r**
+ * **nginx.workers.io.kbs_w**
 
 ```
-     Type: counter, integer
-     Description: Number of kilobytes read from or written to disk by
-     NGINX worker processes.
+    Type: counter, integer
+    Description: Number of kilobytes read from or written to disk by
+    NGINX worker processes.
 ```
 
-   * **nginx.workers.mem.rss**
-   * **nginx.workers.mem.vms**
+ * **nginx.workers.mem.rss**
+ * **nginx.workers.mem.vms**
 
 ```
-     Type: gauge, bytes
-     Description: Memory utilization by NGINX worker processes.
+    Type: gauge, bytes
+    Description: Memory utilization by NGINX worker processes.
 ```
 
-   * **nginx.workers.mem.rss_pct**
+ * **nginx.workers.mem.rss_pct**
 
 ```
-     Type: gauge, percent
-     Description: Memory utilization by NGINX worker processes.
+    Type: gauge, percent
+    Description: Memory utilization by NGINX worker processes.
 ```
 
-   * **nginx.workers.rlimit_nofile**
+ * **nginx.workers.rlimit_nofile**
 
 ```
-     Type: gauge, integer
-     Description: Hard limit on the number of file descriptors
-     as seen by NGINX worker processes.
+    Type: gauge, integer
+    Description: Hard limit on the number of file descriptors
+    as seen by NGINX worker processes.
 ```
