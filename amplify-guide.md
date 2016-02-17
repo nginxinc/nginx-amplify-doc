@@ -934,7 +934,7 @@ The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log lev
 
 By default, Amplify will build a few more graphs in Preview if **nginx.http.request.time**, **nginx.upstream.response.time** and **nginx.http.request.buffered** are found by the agent.
 
-Here is the list of additional metrics that can be collected from [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) NGINX log files:
+Here is the list of additional metrics that can be collected from the NGINX log files:
 
  * **nginx.http.request.bytes_sent**
 
