@@ -44,9 +44,9 @@
     - [HTTP Methods](#http-methods)
     - [HTTP Status Codes](#http-status-codes)
     - [HTTP Protocol Versions](#http-protocol-versions)
-    - [Additional HTTP Metrics](#additional-http-metrics)
-    - [Upstream Metrics](#upstream-metrics)
-    - [Cache Metrics](#cache-metrics)
+    - [Additional NGINX Metrics](#additional-nginx-metrics)
+      - [Upstream Metrics](#upstream-metrics)
+      - [Cache Metrics](#cache-metrics)
     - [NGINX Process Metrics](#nginx-process-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -915,7 +915,7 @@ Some additional metrics for NGINX monitoring will only be reported if NGINX conf
      Source: access.log
 ```
 
-#### Additional HTTP Metrics
+#### Additional NGINX Metrics
 
 Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please perform the following configuration changes.
 
@@ -996,7 +996,7 @@ Here is the list of additional metrics that can be collected from [access.log](h
      Variable: $gzip_ratio
 ```
 
-#### Upstream Metrics
+##### Upstream Metrics
 
  * Upstream
    * **nginx.upstream.connect.time**
@@ -1056,7 +1056,7 @@ Here is the list of additional metrics that can be collected from [access.log](h
      Variable: $upstream_response_time
 ```
 
-#### Cache Metrics
+##### Cache Metrics
 
  * Cache
    * **nginx.cache.bypass**
