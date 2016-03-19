@@ -48,7 +48,7 @@ NGINX Amplify SaaS is currently hosted in [AWS us-west-1](http://docs.aws.amazon
 
 ### 1.3. Is the Traffic from the Agent to the SaaS Protected?
 
-All communications between the Amplify Agent and the Amplify SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent. The backend system doesn't establish any connections back to the agent running on a host.
+All communications between the Amplify Agent and the Amplify SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent. The backend system doesn't set up any connections back to the agent.
 
 ### 1.4. Is the Amplify Agent Code Publicly Available?
 
@@ -70,14 +70,13 @@ NGINX Amplify Agent currently works on the following Linux flavors only:
  * CentOS 6, 7
  * Red Hat 6, 7 (and systems based on it, e.g. Oracle Server)
  * Amazon Linux (latest release)
+ * Gentoo Linux (experimental Ebuild)
 
 ### 2.2. What Version of Python is Required?
 
 NGINX Amplify Agent will work with Python 2.6+.
 
 ### 2.3. How Do I Activate Monitoring for a System?
-
-It's as simple as:
 
  1. Download and run the install script.
 
@@ -111,13 +110,13 @@ If you don't see the new system in the web interface, or metrics aren't being co
 
 ### 2.5. How Do I Verify that the Amplify Agent Is Correctly Installed?
 
- 1. On Ubuntu/Debian
+ 1. On Ubuntu/Debian use:
 
 ```
     # dpkg -s nginx-amplify-agent
 ```
 
- 2. On CentOS and Red Hat
+ 2. On CentOS and Red Hat use:
 
 ```
     # yum info nginx-amplify-agent
@@ -125,7 +124,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
 
 ### 2.6. How Can I Update the Amplify Agent?
 
- 1. On Ubuntu/Debian use
+ 1. On Ubuntu/Debian use:
  
 ```
     # apt-get update && \
@@ -134,7 +133,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
     # service amplify-agent restart
 ```
 
- 2. On CentOS use
+ 2. On CentOS use:
 
 ```
     # yum makecache && \
@@ -157,14 +156,14 @@ It's as simple as
 
 ### 2.9 How Can I Uninstall the Amplify Agent?
 
- 1. On Ubuntu/Debian use
+ 1. On Ubuntu/Debian use:
 
 
 ```
     apt-get remove nginx-amplify-agent
 ```
 
- 2. On CentOS and Red Hat use
+ 2. On CentOS and Red Hat use:
 
 ```
     yum remove nginx-amplify-agent
@@ -172,7 +171,9 @@ It's as simple as
 
 ### 2.10 How Can I Override a System's Hostname?
  
-If the agent is not able to determine the system's hostname, you can define it manually in `/etc/amplify-agent/agent.conf`. Check for the following section, and fill in the desired hostname:
+If the agent is not able to determine the system's hostname, you can define it manually in **/etc/amplify-agent/agent.conf**
+
+Check for the following section, and fill in the desired hostname:
 
 ```
     [credentials]

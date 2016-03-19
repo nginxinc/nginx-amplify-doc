@@ -96,13 +96,13 @@ In order to be able to use NGINX Amplify to monitor your infrastructure, you nee
 
 The installation procedure can be as simple as this.
 
- 1. Download and run the install script:
+ 1. Download and run the install script.
 
         # curl -sS -L -O \
         https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
         API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh
 
-    where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify web interface. You can also find the API key in the *Account Information* menu.
+    where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify web interface. You can also find the API key in the **Account Information** menu.
 
  2. Verify that Amplify Agent has started.
 
@@ -114,7 +114,7 @@ The installation procedure can be as simple as this.
 
 ##### Installing on Ubuntu or Debian
 
- * Add the NGINX public key:
+ * Add the NGINX public key.
 
 ```
     # curl -fs http://nginx.org/keys/nginx_signing.key | apt-key add -
@@ -136,7 +136,7 @@ The installation procedure can be as simple as this.
     /etc/apt/sources.list.d/nginx-amplify.list
 ```
 
- * Verify the repository config file (Ubuntu 14.04 example follows)
+ * Verify the repository config file (Ubuntu 14.04 example follows).
 
 ```
     # cat /etc/apt/sources.list.d/nginx-amplify.list
@@ -157,7 +157,7 @@ The installation procedure can be as simple as this.
 
 ##### Installing on CentOS, Red Hat Linux, or Amazon Linux
 
- * Add the NGINX public key:
+ * Add the NGINX public key.
 
 ```
     # curl -sS -L -O http://nginx.org/keys/nginx_signing.key && \
@@ -258,7 +258,7 @@ It is *highly* recommended that you periodically check for updates and install t
 
 ### Configuring Amplify Agent
 
-Amplify Agent's configuration file is */etc/amplify-agent/agent.conf*.
+Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
 
 #### Overriding the Effective User ID
 
@@ -272,11 +272,9 @@ In case you'd like to manually specify the user ID that the agent should use for
     configfile = /etc/nginx/nginx.conf
 ```
 
-There's an option there to explicitly set the user whose real user ID the agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, the agent startup script extracts the parameter and uses it to look up the real user ID.
+There's an option here to explicitly set the real user ID which the agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, the agent startup script will use it to look up the real user ID.
 
-In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID to be used. By default it's `/etc/nginx/nginx.conf`.
-
-The agent's startup script will try to parse the NGINX configuration file, looking for the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive, and will extract the corresponding information from it.
+In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID. By default it's **/etc/nginx/nginx.conf**
 
 #### Changing the API Key
 
@@ -308,7 +306,7 @@ The hostname should be something **real**. The agent won't start unless a valid 
  * localhost6.localdomain6
  * ip6-localhost 
 
-**Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface very shortly. Redefining the hostname in the agent's configuration essentially creates a new uuid, and a new system for monitoring.
+**Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface very shortly. Redefining the hostname in the agent's configuration essentially creates a new UUID, and a new system for monitoring.
 
 #### Setting Up a Proxy
 
@@ -324,9 +322,9 @@ Amplify Agent obeys the usual environment variables that are common on Linux sys
 
 #### Logging
 
-Amplify Agent maintains its log file in `/var/log/amplify-agent/agent.log`.
+Amplify Agent maintains its log file in **/var/log/amplify-agent/agent.log**
 
-Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/amplify-agent`.
+Upon installation, the agent's log rotation schedule is added to **/etc/logrotate.d/amplify-agent**
 
 The normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as follows. Bear in mind, the size of the agent's log file can grow really fast with `DEBUG`:
 
@@ -361,7 +359,7 @@ The agent considers an NGINX instance to be any running NGINX master process tha
 
 **Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the meta viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
 
 ### Metadata and Metrics Collection
 
@@ -374,13 +372,13 @@ Amplify Agent collects the following types of data:
 
 Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
 
-While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get aggregated and sent to the Amplify backend once per minute.
+While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get aggregated and sent to the Amplify backend once a minute.
 
 Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify web interface using a web browser.
 
 NGINX config updates are reported only when a configuration change is detected.
 
-If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way on the agent's side is about 2 hour's worth.
+If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way is about 2 hour's worth.
 
 ### Detecting and Monitoring NGINX Instances
 
@@ -431,7 +429,7 @@ Without *stub_status* the agent will **not** be able to collect quite a few esse
 
 **Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration.
 
-For more information about *stub_status*, please refer to our reference documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
+For more information about *stub_status*, please refer to NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
 Please make sure the ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL stemming from your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
 
@@ -511,7 +509,7 @@ When you first log in to Amplify, you’re presented with a collection of graphs
 
 #### Systems List
 
-On the left there's a list of the systems being monitored by NGINX Amplify—those that have the Amplify monitoring agent installed on it. The systems do not have to have NGINX installed, though you get additional visibility into NGINX if they do. For systems that have NGINX installed, the version of NGINX is listed under the hostname.
+On the left there's a list of the systems being monitored by NGINX Amplify—those that have the Amplify monitoring agent installed. The systems do not have to have NGINX installed, though you get additional visibility into NGINX if they do. For systems that have NGINX installed, the version of NGINX is listed under the hostname.
 
 When you install the agent on a new system, it'll automatically appear in the systems list. The systems list persists across all pages in the web interface (**Graphs**, **Reports**, **Events**, **Alerts**).
 
@@ -525,13 +523,13 @@ You can apply sorting, search, and filters to the systems list to quickly find t
 
 In the middle of the screen there's the **Preview** section where you can quickly browse and check what graphs are available, and whether there are any anomalies to be analyzed.
 
-The graphs in the **Preview** column are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the systems list, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
+The graphs in the **Preview** pane are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the systems list, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
 
 Clicking on any of the smaller graphs in the **Preview** pane will bring up a larger version of that graph in the [**Graph&nbsp;Feed**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graph-feed) pane on the right side for a "quick look". The graph will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph&nbsp;Feed**.
 
 **Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the feed for further analysis.
 
-Some graphs in the **Preview** pane have an additional selector for the label associated with a metric. E.g., with "Disk latency" or "Network traffic" you can select what device or interface you're analyzing. Switching between labels on a graph changes the preview graph to display the corresponding data.
+Some graphs in the **Preview** pane have an additional selector for the label associated with a metric. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing. Switching between labels on a graph changes the preview graph to display the corresponding data.
 
 Above the **Graph Feed** is the time range, which helps to scale displayed data for up to the past week.
 
@@ -617,7 +615,7 @@ The way rules and alerts work is the following:
 
 By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
 
-There's one special rule which is the about *amplify.agent.status* metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for *amplify.agent.status*.
+There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
 You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing which alerts were generated and which ones were cleared.
 
@@ -639,14 +637,13 @@ Global settings are used to set account-wide behavior for:
 
 Local settings are accessible via the "Settings" icon that can be found when a particular system's tile is extended to the right.
 
-Local settings override corresponding global settings on a per-object basis. If you generally prefer to monitor your NGINX configurations on all but some specfiic systems, you can uncheck those systems in the their local settings menu.
-
+Local settings override the global settings on a per-object basis. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the local settings menu.
 
 ## Metrics and Metadata
 
 Most metrics will be collected by the Amplify Agent without requiring the user to perform any additional setup. For troubleshooting, see [**What to Check if Amplify Agent Isn't Reporting Metrics**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#what-to-check-if-amplify-agent-isnt-reporting-metrics).
 
-Some additional metrics for NGINX monitoring will only be reported if the NGINX configuration file is adjusted accordingly. See [**Additional NGINX Metrics**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) below, and pay attention to the *source* and *variable* fields in the metric descriptions that follow.
+Some additional metrics for NGINX monitoring will only be reported if the NGINX configuration file is adjusted accordingly. See [**Additional NGINX Metrics**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) below, and pay attention to the <pre>Source</pre> and <pre>Variable</pre> fields in the metric descriptions that follow.
 
 ### OS Metrics
 
