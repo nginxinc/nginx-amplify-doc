@@ -200,7 +200,7 @@ Currently the following desktop browsers are fully supported:
 
 ### 3.2. Is the Web Interface Traffic Secure?
 
-We only support TLS/SSL connections to the Amplify web interface.
+We only support SSL/TLS connections to the Amplify web interface.
 
 ### 3.3. How Can I Delete a System or an NGINX Instance from Monitoring?
 
