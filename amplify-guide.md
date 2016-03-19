@@ -361,7 +361,7 @@ The agent considers an NGINX instance to be any running NGINX master process tha
 
 **Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the meta viewer popup (see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below).
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the meta viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
 
 ### Metadata and Metrics Collection
 
@@ -467,7 +467,7 @@ You don't have to specifically point the agent to either NGINX configuration or 
 
 Amplify Agent will also try to detect the log format for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
-**Note.** A number of metrics outlined in **Metrics and Metadata** will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
+**Note.** A number of metrics outlined in [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
 
 ### NGINX Configuration Reports
 
@@ -477,7 +477,7 @@ After the agent finds a particular NGINX configuration, it'll then automatically
 
 When a change is detected with NGINX—e.g. a master process restarts, or the NGINX config is edited—such updates will be sent to the Amplify backend.
 
-**Note.** The following directives and their parameters aren't exported to the SaaS backend: [ssl_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate), [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
+**Note.** The following directives in the NGINX configuration are not analyzed—and their parameters aren't exported to the SaaS backend:  [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 ### What to Check if Amplify Agent Isn't Reporting Metrics
 
@@ -527,7 +527,7 @@ In the middle of the screen there's the **Preview** section where you can quickl
 
 The graphs in the **Preview** column are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the systems list, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
 
-Clicking on any of the smaller graphs in the **Preview** pane will bring up a larger version of that graph in the **Graph&nbsp;Feed** pane on the right side for a "quick look". The graph will be highlighted with a green border, and it'll stay on top of the graphs in the [**Graph Feed**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graph-feed).
+Clicking on any of the smaller graphs in the **Preview** pane will bring up a larger version of that graph in the [**Graph&nbsp;Feed**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graph-feed) pane on the right side for a "quick look". The graph will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph&nbsp;Feed**.
 
 **Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the feed for further analysis.
 
@@ -644,9 +644,9 @@ Local settings override corresponding global settings on a per-object basis. If 
 
 ## Metrics and Metadata
 
-Most metrics will be collected by the Amplify Agent without requiring the user to perform any additional setup. For troubleshooting, see ["What to Check if Amplify Agent Isn't Reporting Metrics"](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#what-to-check-if-amplify-agent-isnt-reporting-metrics).
+Most metrics will be collected by the Amplify Agent without requiring the user to perform any additional setup. For troubleshooting, see [**What to Check if Amplify Agent Isn't Reporting Metrics**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#what-to-check-if-amplify-agent-isnt-reporting-metrics).
 
-Some additional metrics for NGINX monitoring will only be reported if the NGINX configuration file is adjusted accordingly. See ["Additional NGINX Metrics"](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) below, and pay attention to the *source* and *variable* fields in the metric descriptions that follow.
+Some additional metrics for NGINX monitoring will only be reported if the NGINX configuration file is adjusted accordingly. See [**Additional NGINX Metrics**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) below, and pay attention to the *source* and *variable* fields in the metric descriptions that follow.
 
 ### OS Metrics
 
