@@ -459,7 +459,7 @@ Amplify Agent uses data from *stub_status* to calculate a number of metrics rela
     nginx.http.request.writing = stub_status.writing
 ```
 
-For more information about the metric list, please refer to the [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md) section below.
+For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
 
 Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
