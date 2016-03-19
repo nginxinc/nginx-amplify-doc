@@ -3,15 +3,15 @@
 
 
 - [Overview](#overview)
-  - [What is NGINX Amplify?](#what-is-nginx-amplify)
+  - [What Is NGINX Amplify?](#what-is-nginx-amplify)
   - [Main Components](#main-components)
 - [Installing and Managing NGINX Amplify Agent](#installing-and-managing-nginx-amplify-agent)
   - [Installing Amplify Agent](#installing-amplify-agent)
     - [Using the Install Script](#using-the-install-script)
     - [Installing Amplify Agent Manually](#installing-amplify-agent-manually)
       - [Installing on Ubuntu or Debian](#installing-on-ubuntu-or-debian)
-      - [Installing on CentOS, Red Hat Linux or Amazon Linux](#installing-on-centos-red-hat-linux-or-amazon-linux)
-      - [Creating Config File from Template](#creating-config-file-from-template)
+      - [Installing on CentOS, Red Hat Linux, or Amazon Linux](#installing-on-centos-red-hat-linux-or-amazon-linux)
+      - [Creating the Config File from a Template](#creating-the-config-file-from-a-template)
       - [Starting and Stopping Amplify Agent](#starting-and-stopping-amplify-agent)
       - [Verifying that Amplify Agent Has Started](#verifying-that-amplify-agent-has-started)
   - [Updating Amplify Agent](#updating-amplify-agent)
