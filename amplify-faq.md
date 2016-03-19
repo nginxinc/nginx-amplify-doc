@@ -145,7 +145,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
 
 ### 2.7. What System Resources Are Required?
 
-We worked very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you noticed any anomalies with the system resource consumption, please fill in a support ticket through Intercom.
+We worked very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
    
 ### 2.8. How Do I Restart the Amplify Agent?
 
