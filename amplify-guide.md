@@ -114,7 +114,7 @@ The installation procedure can be as simple as this.
 
 ##### Installing on Ubuntu or Debian
 
- * Add the NGINX public key:
+ 1. Add the NGINX public key:
 
 ```
     # curl -fs http://nginx.org/keys/nginx_signing.key | apt-key add -
@@ -127,7 +127,7 @@ The installation procedure can be as simple as this.
     http://nginx.org/keys/nginx_signing.key | apt-key add -
 ```
 
- * Configure the repository as follows.
+ 2. Configure the repository as follows.
 
 ```
     # codename=`lsb_release -cs` && \
@@ -136,20 +136,20 @@ The installation procedure can be as simple as this.
     /etc/apt/sources.list.d/nginx-amplify.list
 ```
 
- * Verify the repository config file (Ubuntu 14.04 example follows)
+ 3. Verify the repository config file (Ubuntu 14.04 example follows)
 
 ```
     # cat /etc/apt/sources.list.d/nginx-amplify.list
     deb http://packages.amplify.nginx.com/ubuntu/ trusty amplify-agent
 ```
 
- * Update the package index files.
+ 4. Update the package index files.
 
 ```
     # apt-get update
 ```
 
- * Install and run Amplify Agent.
+ 5. Install and run Amplify Agent.
 
 ```
     # apt-get install nginx-amplify-agent
