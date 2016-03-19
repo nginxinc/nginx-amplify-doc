@@ -114,7 +114,7 @@ The installation procedure can be as simple as this.
 
 ##### Installing on Ubuntu or Debian
 
- 1. Add the NGINX public key:
+ * Add the NGINX public key:
 
 ```
     # curl -fs http://nginx.org/keys/nginx_signing.key | apt-key add -
@@ -127,7 +127,7 @@ The installation procedure can be as simple as this.
     http://nginx.org/keys/nginx_signing.key | apt-key add -
 ```
 
- 2. Configure the repository as follows.
+ * Configure the repository as follows.
 
 ```
     # codename=`lsb_release -cs` && \
@@ -136,20 +136,20 @@ The installation procedure can be as simple as this.
     /etc/apt/sources.list.d/nginx-amplify.list
 ```
 
- 3. Verify the repository config file (Ubuntu 14.04 example follows)
+ * Verify the repository config file (Ubuntu 14.04 example follows)
 
 ```
     # cat /etc/apt/sources.list.d/nginx-amplify.list
     deb http://packages.amplify.nginx.com/ubuntu/ trusty amplify-agent
 ```
 
- 4. Update the package index files.
+ * Update the package index files.
 
 ```
     # apt-get update
 ```
 
- 5. Install and run Amplify Agent.
+ * Install and run Amplify Agent.
 
 ```
     # apt-get install nginx-amplify-agent
@@ -386,8 +386,8 @@ If the agent is not able to reach the Amplify backend to send the accumulated me
 
 Amplify Agent is capable of detecting several types of NGINX instances:
 
- 1. Installed from a repository package
- 2. Built and installed manually
+ * Installed from a repository package
+ * Built and installed manually
 
 A separate instance of NGINX as seen by the Amplify Agent would be the following:
 
@@ -459,7 +459,7 @@ Amplify Agent uses data from *stub_status* to calculate a number of metrics rela
     nginx.http.request.writing = stub_status.writing
 ```
 
-For more information about the metric list, please refer to the **Metrics and Metadata** section below.
+For more information about the metric list, please refer to the [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md) section below.
 
 Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
