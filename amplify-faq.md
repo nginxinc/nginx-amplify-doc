@@ -65,7 +65,7 @@ It could be that you're starting the install script from a non-root account. In 
 
 NGINX Amplify Agent currently works on the following Linux flavors only:
 
- * Ubuntu 12.04, 14.04, 15.04, 15.10
+ * Ubuntu 12.04, 14.04, 15.10
  * Debian 7, 8
  * CentOS 6, 7
  * Red Hat 6, 7 (and systems based on it, e.g. Oracle Server)
@@ -129,8 +129,6 @@ If you don't see the new system in the web interface, or metrics aren't being co
 ```
     # apt-get update && \
     apt-get install nginx-amplify-agent
-
-    # service amplify-agent restart
 ```
 
  2. On CentOS use:
@@ -138,8 +136,6 @@ If you don't see the new system in the web interface, or metrics aren't being co
 ```
     # yum makecache && \
     yum update nginx-amplify-agent
-
-    # service amplify-agent restart
 ```
 
 ### 2.7. What System Resources Are Required?
@@ -157,7 +153,6 @@ It's as simple as
 ### 2.9 How Can I Uninstall the Amplify Agent?
 
  1. On Ubuntu/Debian use:
-
 
 ```
     apt-get remove nginx-amplify-agent
