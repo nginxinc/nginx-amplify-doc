@@ -491,7 +491,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
  5. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
  6. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
  7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted.
- 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce&nbsp;0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
+ 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
 
 ### Amplify Agent Source Code
 
