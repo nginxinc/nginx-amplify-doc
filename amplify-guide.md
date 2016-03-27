@@ -398,7 +398,7 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 In order to monitor your NGINX instances, and to be able to see various NGINX graphs in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
 
-Otherwise, add it as follows:
+Otherwise, add it as follows (you may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
 ```
 
@@ -417,7 +417,7 @@ Otherwise, add it as follows:
             deny all;
         }
     }
-    ^D
+    <Ctrl-D>
 
     # ls -la conf.d/stub_status.conf
     -rw-r--r-- 1 root root 162 Nov  4 02:40 conf.d/stub_status.conf
@@ -475,7 +475,8 @@ After the agent finds a particular NGINX configuration, it'll then automatically
 
 When a change is detected with NGINX—e.g. a master process restarts, or the NGINX config is edited—such updates will be sent to the Amplify backend.
 
-**Note.** The following directives in the NGINX configuration are not analyzed—and their parameters aren't exported to the SaaS backend:  [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
+**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
+[ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 ### What to Check if Amplify Agent Isn't Reporting Metrics
 
@@ -490,7 +491,7 @@ If you don't see the new system in the web interface, or metrics aren't being co
  5. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
  6. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
  7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted.
- 8. *selinux(8)* is not interfering. Check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
+ 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
 
 ### Amplify Agent Source Code
 
@@ -568,7 +569,7 @@ Reports are based on the capabilities of Amplify to parse NGINX configuration fi
 
 When you switch to the **Reports** page, click on a particular system in the Systems list in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
 
-Currently only static analysis is done for the NGINX configuration. The following information is provided when a report is run against an NGINX config:
+Currently only static analysis is done for the NGINX configuration. The following information is provided when a report is run against an NGINX config structure:
 
  * Overview information
    * Path to NGINX config files(s)
@@ -585,6 +586,8 @@ Currently only static analysis is done for the NGINX configuration. The followin
    * Suggestions about simplifying rewrites for certain use cases
    * Key security measures (e.g. *stub_status* is unprotected)
    * Typical errors in configuring locations, especially with *regex*
+
+To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL cerficates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) are turned on. SSL certificate analysis is *off* by default.
 
 Static analysis will only include information about specific issues with the NGINX configuration if those are found in your NGINX setup.
 
