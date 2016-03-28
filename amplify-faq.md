@@ -18,7 +18,7 @@
   - [2.8. How Do I Restart the Amplify Agent?](#28-how-do-i-restart-the-amplify-agent)
   - [2.9. How Can I Uninstall the Amplify Agent?](#29-how-can-i-uninstall-the-amplify-agent)
   - [2.10. How Can I Override a System's Hostname?](#210-how-can-i-override-a-systems-hostname)
-  - [2.11 Can I Use Amplify Agent with Docker?](#211-can-i-use-amplify-agent-with-docker)
+  - [2.11. Can I Use Amplify Agent with Docker?](#211-can-i-use-amplify-agent-with-docker)
 - [3. User Interface](#3-user-interface)
   - [3.1. What Browsers are Supported?](#31-what-browsers-are-supported)
   - [3.2. Is the Web Interface Traffic Secure?](#32-is-the-web-interface-traffic-secure)
@@ -184,7 +184,7 @@ The hostname should be something real—the following aren't valid hostnames:
  * localhost6.localdomain6
  * ip6-localhost
 
-### 2.11 Can I Use Amplify Agent with Docker?
+### 2.11. Can I Use Amplify Agent with Docker?
 
 Although the Docker support is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/nginx-amplify-agent/tree/master/packages/docker).
 
