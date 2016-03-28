@@ -150,7 +150,7 @@ It's as simple as
     # service amplify-agent restart
 ```
 
-### 2.9 How Can I Uninstall the Amplify Agent?
+### 2.9. How Can I Uninstall the Amplify Agent?
 
  1. On Ubuntu/Debian use:
 
@@ -164,7 +164,7 @@ It's as simple as
     yum remove nginx-amplify-agent
 ```
 
-### 2.10 How Can I Override a System's Hostname?
+### 2.10. How Can I Override a System's Hostname?
  
 If the agent is not able to determine the system's hostname, you can define it manually in **/etc/amplify-agent/agent.conf**
 
@@ -182,6 +182,10 @@ The hostname should be something real—the following aren't valid hostnames:
  * localhost.localdomain
  * localhost6.localdomain6
  * ip6-localhost
+
+### 2.11 Can I Use Amplify Agent with Docker?
+
+Although the Docker support is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/nginx-amplify-agent/tree/master/packages/docker).
 
 ## 3. User Interface
 
@@ -206,7 +210,7 @@ If the goal is to completely delete a previously monitored object, then do the f
  2. Delete objects from the web interface
  3. Delete alarms
 
-To delete a system using the web interface—find it in the list, hover, click the vertical dots on the right, extend the toolbar and choose the [i] icon. You can delete objects from the popup window that appears next.
+To delete a system using the web interface—find it in the list on the left, hover, click the vertical dots on the right, extend the toolbar and choose the [i] icon. You can delete objects from the popup window that appears next.
 
 Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alarms.
 
