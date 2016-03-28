@@ -186,7 +186,7 @@ The hostname should be something real—the following aren't valid hostnames:
 
 ### 2.11. Can I Use Amplify Agent with Docker?
 
-Although the Docker support is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/nginx-amplify-agent/tree/master/packages/docker).
+Although the support for a Docker environment is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/nginx-amplify-agent/tree/master/packages/docker).
 
 ## 3. User Interface
 
