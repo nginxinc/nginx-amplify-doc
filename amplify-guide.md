@@ -516,6 +516,8 @@ When you install the agent on a new system, it'll automatically appear in the sy
 
 The systems liks allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics being reported. Hovering over any of the systems tiles in the list reveals 4 vertical dots—if you click on them, a pullout toolbar will appear. The toolbar will display numerical and text information about current CPU and memory usage, traffic in and out, OS flavor, and NGINX version.
 
+In the toolbar you will also the settings and the metadata viewer icons. Click on [i] and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too. Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
+
 While on the **Graphs** page, clicking on any of the systems will bring up the graphs for that system in the center **Preview** pane (see [below](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#preview)).
 
 You can apply sorting, search, and filters to the systems list to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. Search accepts regular expressions.
