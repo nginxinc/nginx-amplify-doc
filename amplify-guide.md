@@ -922,9 +922,15 @@ Amplify Agent can collect a number of additional useful metrics described below.
                          'us="$upstream_status" ut="$upstream_response_time" '
                          'ul="$upstream_response_length" '
                          'cs=$upstream_cache_status' ;
+```
 
+Here's how you may use the extended log format with your access log configuration:
+
+```
     access_log  /var/log/nginx/access.log  main_ext;
 ```
+
+**Note.** Please bear in mind that by default the agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice.
 
  * The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to `warn`.
  
