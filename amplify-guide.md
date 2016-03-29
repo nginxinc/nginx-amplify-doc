@@ -924,7 +924,7 @@ Amplify Agent can collect a number of additional useful metrics described below.
                          'cs=$upstream_cache_status' ;
 ```
 
-Here's how you may use the extended log format with your access log configuration:
+ * Here's how you may use the extended log format with your access log configuration:
 
 ```
     access_log  /var/log/nginx/access.log  main_ext;
