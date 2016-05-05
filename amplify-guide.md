@@ -916,7 +916,7 @@ Amplify Agent can collect a number of additional useful metrics described below.
 
 ```
     log_format  main_ext '$remote_addr - $remote_user [$time_local] "$request" '
-                         ' $status $body_bytes_sent "$http_referer" '
+                         '$status $body_bytes_sent "$http_referer" '
                          '"$http_user_agent" "$http_x_forwarded_for" '
                          'rt=$request_time ua="$upstream_addr" '
                          'us="$upstream_status" ut="$upstream_response_time" '
@@ -954,7 +954,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
  * **nginx.http.request.length**
 
 ```
-    Type: counter, integer
+    Type: gauge, integer
     Description: Request length, including request line, header, and body.
     Source: access.log (requires custom log format)
     Variable: $request_length
