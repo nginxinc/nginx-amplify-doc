@@ -265,7 +265,7 @@ Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
 
 Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 
-In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in `/etc/amplify-agent/agent.conf` for that:
+In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in **/etc/amplify-agent/agent.conf** for that:
 
 ```
     [nginx]
@@ -341,11 +341,11 @@ The normal level of logging for the agent is `INFO`. If you ever need to debug t
     ..
 ```
 
-#### Configuring stub_status URL
+#### Configuring stub_status or extended status URL
 
-When the Amplify Agent finds a running NGINX instance, it will try to automatically extract the *stub_status* or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
+When the Amplify Agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
 
-The following options can be set up in `/etc/amplify-agent/agent.conf` that would point the agent to the correct URL.
+The following options can be set up in **/etc/amplify-agent/agent.conf** that would point the agent to the correct URL.
 
 To override the *stub_status* URI/URL, use the `stub_status` configuration option.
 
