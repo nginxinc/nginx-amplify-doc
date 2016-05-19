@@ -34,6 +34,7 @@
     - [Systems List](#systems-list)
     - [Preview](#preview)
     - [Graph Feed](#graph-feed)
+  - [Dashboards](#dashboards)
   - [Reports](#reports)
   - [Events](#events)
   - [Alerts](#alerts)
@@ -51,6 +52,7 @@
     - [NGINX Process Metrics](#nginx-process-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 ## Overview
 
@@ -109,7 +111,6 @@ The installation procedure can be as simple as this.
 
         # ps ax | grep -i 'amplify\-'
         2552 ?        S      0:00 amplify-agent
-
 
 #### Installing Amplify Agent Manually
 
@@ -589,6 +590,41 @@ You can also just pin the graphs that you want to check regularly to the **Graph
 In the **Graph Feed** you can click on the graph title to quickly scroll **Preview** to the relevant section.
 
 The state of the **Graphs** page is automatically saved, so next time you log in, you should see the same **Graph** page that you previously built for monitoring and analysis.
+
+### Dashboards
+
+You can create your own dashboards populated with highly customizable graphs of NGINX and system-level metrics.
+
+Some of the use cases for a custom set of graphs are the following:
+
+ * Checking NGINX performance for a particular application or microservice, e.g. based on the URI path
+ * Displaying metrics per virtual server
+ * Visualizing the performance of a group of NGINX servers — for example, front-end load balancers, or an NGINX edge caching layer
+ * Analyzing a detailed breakdown of HTTP status codes per application
+
+When building a custom graph, metrics can be summed or averaged across several NGINX servers. It is also possible to create additional “metric dimensions”, for example, reporting the number of  POST requests for a specific URI.
+
+To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **Edit** in the upper right corner to start editing the dashboard. You can then add graphs and simple values to the dashboard.
+
+When adding or editing a graph, the following dialog appears:
+
+!(Add Graph)[images/add-graph.png]
+
+To defined a graph, perform these steps:
+
+ 1. First pick one or more metrics of interest. You can combine multiple metrics on the same graph using the “Add another metric” button at the bottom.
+ 2. After the metric is selected, NGINX Amplify lists the objects for which it has already observed this particular metric. Select one or multiple objects here. In the example above the objects are the NGINX instances on “astra” and “otter”.
+ 3. Select either “sum” or “avg” as the aggregation function.
+ 4. Last but not least, the “filter” functionality is also available for NGINX metrics. If you click on “Apply filter”, you can then add multiple criteria in order to define specific “metric dimensions”. In the example above, we are filtering by HTTP status code 401.
+ 5. Click “Save” when you’re done, and the graph is added to the dashboard. Obviously you can then edit the graph specs, move it around, resize, stack the graphs on top of each other, etc.
+
+For filters, all the "metric dimensions" aren't stored in the Amplify backend by defaul. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the “filtered” metric is displayed on the graph—the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
+
+Because NGINX Amplify is **not** a SaaS log analyzer, the additional slicing for "metric dimensions" is implemented inside the Amplify Agent. The agent can parse the NGINX access logs on-the-fly and extract all the necessary metrics **without** sending the raw log entries elsewhere. Moreover, the agent understands custom log formats automatically, and will start looking for various newly defined "metric dimensions" following a particular [log_format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) specification.
+
+Essentially, the Amplify Agent does a combination of real-time log analytics and collection of the standard metrics (e.g. metrics from the *stub_status* module). The agent does only the **real-time log processing**, and always on the same host where it is running. 
+
+Metric filters can be really powerful. By using the filters and creating additional "metric dimensions", it is possible to build highly granular and very informative graphs. To enable the agent to slice the metrics you must add the corresponding log variables to the active NGINX log format. Please see the [Additional NGINX metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) section below.
 
 ### Reports
 
