@@ -732,6 +732,14 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
     Description: System CPU utilization.
 ```
 
+ * **system.cpu.stolen**
+
+```
+    Type: gauge, percent
+    Description: System CPU stolen. Represents time when
+    the real CPU was not available to the current VM.
+```
+
  * **system.disk.free**
  * **system.disk.total**
  * **system.disk.used**
@@ -971,6 +979,63 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
     Source: access.log
 ```
 
+#### NGINX Process Metrics
+
+ * **nginx.workers.count**
+
+```
+    Type: gauge, integer
+    Description: Number of NGINX worker processes observed.
+```
+
+ * **nginx.workers.cpu.system**
+ * **nginx.workers.cpu.total**
+ * **nginx.workers.cpu.user**
+
+```
+    Type: gauge, percent
+    Description: CPU utilization percentage observed from NGINX worker processes.
+```
+
+ * **nginx.workers.fds_count**
+
+```
+    Type: counter, integer
+    Description: Number of file descriptors utilized by NGINX worker processes.
+```
+
+ * **nginx.workers.io.kbs_r**
+ * **nginx.workers.io.kbs_w**
+
+```
+    Type: counter, integer
+    Description: Number of kilobytes read from or written to disk by
+    NGINX worker processes.
+```
+
+ * **nginx.workers.mem.rss**
+ * **nginx.workers.mem.vms**
+
+```
+    Type: gauge, bytes
+    Description: Memory utilization by NGINX worker processes.
+```
+
+ * **nginx.workers.mem.rss_pct**
+
+```
+    Type: gauge, percent
+    Description: Memory utilization by NGINX worker processes.
+```
+
+ * **nginx.workers.rlimit_nofile**
+
+```
+    Type: gauge, integer
+    Description: Hard limit on the number of file descriptors
+    as seen by NGINX worker processes.
+```
+
 #### Additional NGINX Metrics
 
 Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please make the following configuration changes. A few more graphs will be added to **Preview** if the additional metrics are found by the agent.
@@ -1088,9 +1153,17 @@ Here is the list of additional metrics that can be collected from the NGINX log 
  * **nginx.upstream.response.buffered**
 
 ```
-    Type: counter. integer
+    Type: counter, integer
     Description: Number of upstream responses buffered to disk.
     Source: error.log (requires 'warn' log level)
+```
+
+ * **nginx.upstream.request.count**
+ * **nginx.upstream.next.count**
+
+```
+    Type: counter, integer
+    Description: Number of requests that were sent to upstream servers.
 ```
 
  * **nginx.upstream.request.failed**
@@ -1100,6 +1173,14 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Type: counter, integer
     Description: Number of requests and responses that failed while proxying.
     Source: error.log (requires 'error' log level)
+```
+
+ * **nginx.upstream.response.length**
+
+```
+    Type: gauge, bytes
+    Description: Average length of the responses obtained from the upstream servers.
+    Source: access.log (requires custom log format)
 ```
 
  * **nginx.upstream.response.time**
@@ -1113,6 +1194,18 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Description: Time spent on receiving responses from upstream servers.
     Source: access.log (requires custom log format)
     Variable: $upstream_response_time
+```
+
+ * **nginx.upstream.status.1xx**
+ * **nginx.upstream.status.2xx**
+ * **nginx.upstream.status.3xx**
+ * **nginx.upstream.status.4xx**
+ * **nginx.upstream.status.5xx**
+
+```
+    Type: counter, integer
+    Description: Number of responses from upstream servers with specific HTTP status codes.
+    Source: access.log (requires custom log format)
 ```
 
 ##### Cache Metrics
@@ -1132,59 +1225,3 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Variable: $upstream_cache_status
 ```
 
-#### NGINX Process Metrics
-
- * **nginx.workers.count**
-
-```
-    Type: gauge, integer
-    Description: Number of NGINX worker processes observed.
-```
-
- * **nginx.workers.cpu.system**
- * **nginx.workers.cpu.total**
- * **nginx.workers.cpu.user**
-
-```
-    Type: gauge, percent
-    Description: CPU utilization percentage observed from NGINX worker processes.
-```
-
- * **nginx.workers.fds_count**
-
-```
-    Type: counter, integer
-    Description: Number of file descriptors utilized by NGINX worker processes.
-```
-
- * **nginx.workers.io.kbs_r**
- * **nginx.workers.io.kbs_w**
-
-```
-    Type: counter, integer
-    Description: Number of kilobytes read from or written to disk by
-    NGINX worker processes.
-```
-
- * **nginx.workers.mem.rss**
- * **nginx.workers.mem.vms**
-
-```
-    Type: gauge, bytes
-    Description: Memory utilization by NGINX worker processes.
-```
-
- * **nginx.workers.mem.rss_pct**
-
-```
-    Type: gauge, percent
-    Description: Memory utilization by NGINX worker processes.
-```
-
- * **nginx.workers.rlimit_nofile**
-
-```
-    Type: gauge, integer
-    Description: Hard limit on the number of file descriptors
-    as seen by NGINX worker processes.
-```
