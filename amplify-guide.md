@@ -46,10 +46,10 @@
     - [HTTP Methods](#http-methods)
     - [HTTP Status Codes](#http-status-codes)
     - [HTTP Protocol Versions](#http-protocol-versions)
+    - [NGINX Process Metrics](#nginx-process-metrics)
     - [Additional NGINX Metrics](#additional-nginx-metrics)
       - [Upstream Metrics](#upstream-metrics)
       - [Cache Metrics](#cache-metrics)
-    - [NGINX Process Metrics](#nginx-process-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
