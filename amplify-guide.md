@@ -21,7 +21,7 @@
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
     - [Setting Up a Proxy](#setting-up-a-proxy)
     - [Logging](#logging)
-    - [Configuring stub_status URL](#configuring-stub_status-url)
+    - [Configuring stub_status or Extended Status URL](#configuring-stub_status-or-extended-status-url)
   - [How Amplify Agent Works](#how-amplify-agent-works)
   - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
   - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
@@ -341,7 +341,7 @@ The normal level of logging for the agent is `INFO`. If you ever need to debug t
     ..
 ```
 
-#### Configuring stub_status or extended status URL
+#### Configuring stub_status or Extended Status URL
 
 When the Amplify Agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
 
