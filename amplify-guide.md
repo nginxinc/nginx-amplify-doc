@@ -427,7 +427,7 @@ Otherwise, add it as follows. You may also grab this config snippet [here](https
 
 Without *stub_status* the agent will **not** be able to collect quite a few essential NGINX metrics required for further monitoring and analysis.
 
-**Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined stub_status is readable by the agent, otherwise the agent won't be able to correctly determine the stub_status URL.
+**Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined *stub_status* is readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
 
 For more information about *stub_status*, please refer to NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
