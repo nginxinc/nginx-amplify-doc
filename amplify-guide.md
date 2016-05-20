@@ -21,7 +21,7 @@
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
     - [Setting Up a Proxy](#setting-up-a-proxy)
     - [Logging](#logging)
-    - [Configuring stub_status or Extended Status URL](#configuring-stub_status-or-extended-status-url)
+    - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
   - [How Amplify Agent Works](#how-amplify-agent-works)
   - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
   - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
