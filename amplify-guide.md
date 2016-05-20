@@ -424,6 +424,8 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 In order to monitor your NGINX instances, and to be able to see various NGINX graphs in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
 
+If you're using NGINX Plus, then you need to have either the *stub_status* or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
+
 Otherwise, add it as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
 ```
@@ -1164,6 +1166,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 ```
     Type: counter, integer
     Description: Number of requests that were sent to upstream servers.
+    Source: access.log (requires custom log format)
 ```
 
  * **nginx.upstream.request.failed**
@@ -1225,3 +1228,196 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Variable: $upstream_cache_status
 ```
 
+#### NGINX Plus Metrics
+
+In [NGINX Plus](https://www.nginx.com/products/) a number of additional metrics describing various aspects of NGINX performance are available. The [extended status](http://nginx.org/en/docs/http/ngx_http_status_module.html) module in NGINX Plus is responsible for collecting and exposing all of the additional counters and gauges.
+
+The NGINX Plus metrics currently supported by the Amplify Agent are described below. The NGINX Plus extended status metrics have the "plus" prefix in their names.
+
+Some of the NGINX Plus extended metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics:
+
+```
+    nginx.http.conn.accepted = connections.accepted
+    nginx.http.conn.active = connections.active
+    nginx.http.conn.current = connections.active + connections.idle
+    nginx.http.conn.dropped = connections.dropped
+    nginx.http.conn.idle = connections.idle
+    nginx.http.request.count = requests.total
+    nginx.http.request.current = requests.current
+```
+
+Please see the following [reference documentation](http://nginx.org/en/docs/http/ngx_http_status_module.html) and a [solution brief](https://www.nginx.com/products/live-activity-monitoring/) for more information about the NGINX Plus extended status.
+
+The NGINX Plus metrics below are collected *per zone*. When configuring a graph using these metrics, please make sure to pick the correct server, upstream or cache zone. A more granular peer-specific breakdown of the metrics below is currently not supported in NGINX Amplify.
+
+##### Server Zone Metrics
+
+ * **plus.http.request.count**
+ * **plus.http.response.count**
+
+```
+    Type: counter, integer
+    Description: The total number of client requests received, and the total
+    number of responses sent to clients.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.http.request.bytes_rcvd**
+ * **plus.http.request.bytes_sent**
+
+```
+    Type: counter, bytes
+    Description: The total number of bytes received from clients, and the total
+    number of bytes sent to clients.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.http.status.1xx**
+ * **plus.http.status.2xx**
+ * **plus.http.status.3xx**
+ * **plus.http.status.4xx**
+ * **plus.http.status.5xx**
+
+```
+    Type: counter, integer
+    Description: The number of responses with status codes 1xx, 2xx, 3xx, 4xx, and 5xx.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.http.status.discarded**
+
+```
+    Type: counter, integer
+    Description: The total number of requests completed without sending a response.
+    Source: NGINX Plus extended status
+```
+    
+##### Upstream Zone Metrics
+
+ * **plus.upstream.request.count**
+ * **plus.upstream.response.count**
+
+```
+    Type: counter, integer
+    Description: The total number of client requests forwarded to the upstream servers,
+    and the total number of responses obtained.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.conn.active**
+
+```
+    Type: gauge, integer
+    Description: The current number of active connections to the upstream servers.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.bytes_rcvd**
+ * **plus.upstream.bytes_sent**
+
+```
+    Type: counter, integer
+    Description: The total number of bytes received from the upstream servers,
+    and the total number of bytes sent.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.status.1xx**
+ * **plus.upstream.status.2xx**
+ * **plus.upstream.status.3xx**
+ * **plus.upstream.status.4xx**
+ * **plus.upstream.status.5xx**
+
+```
+    Type: counter, integer
+    Description: The number of responses from the upstream servers with status
+    codes 1xx, 2xx, 3xx, 4xx, and 5xx.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.header.time**
+ * **plus.upstream.header.time.count**
+ * **plus.upstream.header.time.max**
+ * **plus.upstream.header.time.median**
+ * **plus.upstream.header.time.pctl95**
+
+```
+    Type: gauge, seconds.milliseconds
+    Description: The average time to get the response header from the upstream servers.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.response.time**
+ * **plus.upstream.response.time.count**
+ * **plus.upstream.response.time.max**
+ * **plus.upstream.response.time.median**
+ * **plus.upstream.response.time.pctl95**
+
+```
+    Type: gauge, seconds.milliseconds
+    Description: The average time to get the full response from the upstream servers.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.fails.count**
+ * **plus.upstream.unavail.count**
+ 
+```
+    Type: counter, integer
+    Description: The total number of unsuccessful attempts to communicate with
+    the upstream servers, and the number of times the upstream servers became
+    unavailable for client requests (state "unavail").
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.health.checks**
+ * **plus.upstream.health.fails**
+ * **plus.upstream.health.unhealthy**
+
+```
+    Type: counter, integer
+    Description: The total number of health check requests made, the number of
+    failed health checks, and the number of times the upstream servers became
+    unhealthy (state "unhealthy").
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.queue.size**
+ 
+```
+    Type: gauge, integer
+    Description: The current number of requests in the queue.
+    Source: NGINX Plus extended status
+```
+
+ * **plus.upstream.queue.overflows**
+
+```
+    Type: counter, integer
+    Description: The total number of requests rejected due to the queue overflow.
+    Source: NGINX Plus extended status
+```
+
+##### Cache Zone Metrics
+
+ * **plus.cache.bypass**
+ * **plus.cache.bypass.bytes**
+ * **plus.cache.expired**
+ * **plus.cache.expired.bytes**
+ * **plus.cache.hit**
+ * **plus.cache.hit.bytes**
+ * **plus.cache.miss**
+ * **plus.cache.miss.bytes**
+ * **plus.cache.revalidated**
+ * **plus.cache.revalidated.bytes**
+ * **plus.cache.size**
+ * **plus.cache.stale**
+ * **plus.cache.stale.bytes**
+ * **plus.cache.updating**
+ * **plus.cache.updating.bytes**
+ 
+```
+    Type: counter, integer; counter, bytes
+    Description: Various statistics about NGINX Plus cache usage.
+    Source: NGINX Plus extended status
+```
