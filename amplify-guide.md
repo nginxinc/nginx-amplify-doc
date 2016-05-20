@@ -346,7 +346,7 @@ The normal level of logging for the agent is `INFO`. If you ever need to debug t
     ..
 ```
 
-#### Configuring stub_status or Extended Status URL
+#### Configuring the URL for stub_status or Extended Status
 
 When the Amplify Agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
 
@@ -428,9 +428,9 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 In order to monitor your NGINX instances, and to be able to see various NGINX graphs in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to have either the *stub_status* or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
+If you're using NGINX Plus, then you need to have either the *stub_status* **or** the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
 
-Otherwise, add it as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
+Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
 ```
 
@@ -457,7 +457,7 @@ Otherwise, add it as follows. You may also grab this config snippet [here](https
     # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Without *stub_status* the agent will **not** be able to collect quite a few essential NGINX metrics required for further monitoring and analysis.
+Without *stub_status* or the NGINX Plus extended status, the agent will **not** be able to collect quite a few essential NGINX metrics required for further monitoring and analysis.
 
 **Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined *stub_status* is readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
 
@@ -1044,7 +1044,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### Additional NGINX Metrics
 
-Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please make the following configuration changes. A few more graphs will be added to **Preview** if the additional metrics are found by the agent.
+Amplify Agent can collect a number of additional useful metrics described below. To enable additional metrics, please make the following configuration changes. A few more graphs will be added to **Preview** if the additional metrics are found by the agent. With the additional log format configuration, you'll also be able to build more specific custom graphs.
 
  * The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one—and use it with the `access_log` directives in your NGINX configuration.
 
@@ -1188,6 +1188,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Type: gauge, bytes
     Description: Average length of the responses obtained from the upstream servers.
     Source: access.log (requires custom log format)
+    Variable: $upstream_response_length
 ```
 
  * **nginx.upstream.response.time**
@@ -1238,7 +1239,7 @@ In [NGINX Plus](https://www.nginx.com/products/) a number of additional metrics 
 
 The NGINX Plus metrics currently supported by the Amplify Agent are described below. The NGINX Plus extended status metrics have the "plus" prefix in their names.
 
-Some of the NGINX Plus extended metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics:
+Some of the NGINX Plus extended metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics (instead of using the *stub_status* metrics):
 
 ```
     nginx.http.conn.accepted = connections.accepted
@@ -1370,7 +1371,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
     Type: counter, integer
     Description: The total number of unsuccessful attempts to communicate with
     the upstream servers, and the number of times the upstream servers became
-    unavailable for client requests (state "unavail").
+    unavailable for client requests.
     Source: NGINX Plus extended status
 ```
 
@@ -1382,7 +1383,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
     Type: counter, integer
     Description: The total number of health check requests made, the number of
     failed health checks, and the number of times the upstream servers became
-    unhealthy (state "unhealthy").
+    unhealthy.
     Source: NGINX Plus extended status
 ```
 
