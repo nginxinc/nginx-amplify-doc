@@ -50,6 +50,10 @@
     - [Additional NGINX Metrics](#additional-nginx-metrics)
       - [Upstream Metrics](#upstream-metrics)
       - [Cache Metrics](#cache-metrics)
+    - [NGINX Plus Metrics](#nginx-plus-metrics)
+      - [Server Zone Metrics](#server-zone-metrics)
+      - [Upstream Zone Metrics](#upstream-zone-metrics)
+      - [Cache Zone Metrics](#cache-zone-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
