@@ -547,9 +547,11 @@ From the top meny bar, you can always open the list of the systems that have the
 
 The systems list allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
-On the left you will also find the settings and the metadata viewer icons. Click on [i] and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too. Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
+In the rightmost column of the Systems List you will also find the settings and the metadata viewer icons. Click on the [i] icon and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too.
 
 You can apply sorting, search, and filters to the systems list to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. Search accepts regular expressions.
+
+**Note.** Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 #### Preview
 
