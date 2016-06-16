@@ -36,7 +36,6 @@
     - [Graph Feed](#graph-feed)
   - [Dashboards](#dashboards)
   - [Reports](#reports)
-  - [Events](#events)
   - [Alerts](#alerts)
   - [Settings](#settings)
 - [Metrics and Metadata](#metrics-and-metadata)
@@ -542,15 +541,13 @@ When you first log in to Amplify, you’re presented with a collection of graphs
 
 #### Systems List
 
-On the left there's a list of the systems being monitored by NGINX Amplify—those that have the Amplify monitoring agent installed. The systems do not have to have NGINX installed, though you get additional visibility into NGINX if they do. For systems that have NGINX installed, the version of NGINX is listed under the hostname.
+From the top meny bar, you can always open the list of the systems that have the Amplify Agent installed, and are being monitored. You do *not* need to manually add a new system in the interface. When the agent is properly installed on a new system and reporting, it'll be automatically added to the systems list.
 
-When you install the agent on a new system, it'll automatically appear in the systems list. The systems list persists across all pages in the web interface (**Graphs**, **Reports**, **Events**, **Alerts**).
+![Add Graph](images/systems.png)
 
-The systems liks allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics being reported. Hovering over any of the systems tiles in the list reveals 4 vertical dots—if you click on them, a pullout toolbar will appear. The toolbar will display numerical and text information about current CPU and memory usage, traffic in and out, OS flavor, and NGINX version.
+The systems list allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
-In the toolbar you will also the settings and the metadata viewer icons. Click on [i] and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too. Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
-
-While on the **Graphs** page, clicking on any of the systems will bring up the graphs for that system in the center **Preview** pane (see [below](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#preview)).
+On the left you will also find the settings and the metadata viewer icons. Click on [i] and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too. Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 You can apply sorting, search, and filters to the systems list to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. Search accepts regular expressions.
 
@@ -558,7 +555,7 @@ You can apply sorting, search, and filters to the systems list to quickly find t
 
 In the middle of the screen there's the **Preview** section where you can quickly browse and check what graphs are available, and whether there are any anomalies to be analyzed.
 
-The graphs in the **Preview** pane are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the systems list, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
+The graphs in the **Preview** pane are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the leftmost columnt, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
 
 Clicking on any of the smaller graphs in the **Preview** pane will bring up a larger version of that graph in the [**Graph&nbsp;Feed**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graph-feed) pane on the right side for a "quick look". The graph will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph&nbsp;Feed**.
 
@@ -638,18 +635,28 @@ Metric filters are available only for the metrics generated from the log files. 
 
 Reports are based on the capabilities of Amplify to parse NGINX configuration files and provide them for further analysis through the features in the backend. This is where Amplify offers configuration recommendations to help improve the performance, reliability, and security of your applications. With well-thought-out and detailed recommendations you’ll know exactly where the problem is, why it is a problem, and how to fix it.
 
-When you switch to the **Reports** page, click on a particular system in the Systems list in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
+When you switch to the **Reports** page, click on a particular system on the left in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
 
-Currently only static analysis is done for the NGINX configuration. The following information is provided when a report is run against an NGINX config structure:
+The following information is provided when a report is run against an NGINX config structure:
 
- * Overview information
+ * Version information
+   * Branch, release date, and the latest version in the branch
+ * Overview
    * Path to NGINX config files(s)
    * Whether the parser failed or not, and the results of `nginx -t`
-   * First-seen and last-modified info
+   * Last-modified info
    * 3rd party modules found
-   * Breakdown of IPv4/IPv6 usage
    * Breakdown of key configuration elements (servers, locations, upstreams)
+   * Breakdown of IPv4/IPv6 usage
+ * Security
+   * Any security advisories that apply to this version of NGINX
+ * Virtual servers
+   * Breakdown of virtual host configuration (think "apachectl -S")
+ * SSL
    * OpenSSL version information
+   * Breakdown of the number of SSL or HTTP/2 servers configured
+   * Information about the configured SSL certificates
+   * Warnings about common SSL configuration errors
  * Static analysis
    * Various suggestions about configuration structure
    * Typical configuration gotchas highlighted
@@ -665,14 +672,6 @@ Static analysis will only include information about specific issues with the NGI
 In the future, the **Reports** section will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration—e.g. when it makes sense to increase or decrease certain parameters like [proxy_buffers](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffers) etc. Stay tuned!
 
 **Note.** Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) below.
-
-### Events
-
-There are local (per-agent) and global events.
-
-In order to see events generated by a particular agent, click on a system on the left, and browse through local events in the middle column. You may think of it as of a mini-log from the agents.
-
-In the rightmost corner you'll see the Amplify-wide events such as general notifications about Amplify updates or outages.
 
 ### Alerts
 
@@ -693,9 +692,9 @@ There's one special rule which is the about **amplify.agent.status** metric. Thi
 
 You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing which alerts were generated and which ones were cleared.
 
-**Note.** For the thresholds you should currently use exact measurement units as described in the [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) section below. You can't currently use abbreviations like GB, KB or Kbps.
+**Note.** For the thresholds you should currently use exact measurement units as described in the [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) section below.
 
-**Note.** Gauges are averaged over the interval configured in the ruleset. Counters are summed up. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
+**Note.** Gauges are *averaged* over the interval configured in the ruleset. Counters are *summed up*. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
 
 **Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
 

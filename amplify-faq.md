@@ -211,7 +211,7 @@ If the goal is to completely delete a previously monitored object, then do the f
  2. Delete objects from the web interface
  3. Delete alarms
 
-To delete a system using the web interface—find it in the list on the left, hover, click the vertical dots on the right, extend the toolbar and choose the [i] icon. You can delete objects from the popup window that appears next.
+To delete a system using the web interface—find it in the [Systems List](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#systems-list), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
 Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alarms.
 
