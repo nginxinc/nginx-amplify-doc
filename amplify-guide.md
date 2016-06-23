@@ -648,12 +648,12 @@ The following information is provided when a report is run against an NGINX conf
    * Whether the parser failed or not, and the results of `nginx -t`
    * Last-modified info
    * 3rd party modules found
-   * Breakdown of key configuration elements (servers, locations, upstreams)
+   * Breakdown of the key configuration elements (servers, locations, upstreams)
    * Breakdown of IPv4/IPv6 usage
  * Security
    * Any security advisories that apply to this version of NGINX
  * Virtual servers
-   * Breakdown of virtual host configuration (think "apachectl -S")
+   * Breakdown of the virtual host configuration (think "apachectl -S")
  * SSL
    * OpenSSL version information
    * Breakdown of the number of SSL or HTTP/2 servers configured
