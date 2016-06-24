@@ -1007,7 +1007,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
  * **nginx.workers.fds_count**
 
 ```
-    Type: counter, integer
+    Type: gauge, integer
     Description: Number of file descriptors utilized by NGINX worker processes.
 ```
 
