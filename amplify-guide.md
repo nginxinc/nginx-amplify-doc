@@ -441,7 +441,9 @@ Otherwise, add the *stub_status* configuration as follows. You may also grab thi
     # cat > conf.d/stub_status.conf
     server {
         listen 127.0.0.1:80;
-        server_name 127.0.0.1;
+        server_name "" " " _;
+        access_log off;
+        error_log off;
         location /nginx_status {
             stub_status on;
             allow 127.0.0.1;
