@@ -620,7 +620,7 @@ To define a graph, perform these steps:
  1. First pick one or more metrics of interest. You can combine multiple metrics on the same graph using the "Add another metric" button at the bottom.
  2. After the metric is selected, NGINX Amplify lists the objects for which it has already observed this particular metric. Select one or multiple objects here. In the example above the objects are the NGINX instances on "astra" and "otter".
  3. Select either "sum" or "avg" as the aggregation function.
- 4. Last but not least, the “filter” functionality is also available for NGINX metrics. If you click on "Apply filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 401.
+ 4. Last but not least, the “filter” functionality is also available for NGINX metrics. If you click on "Apply filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
  5. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
 
 **Note.** For filters, all the "metric dimensions" aren't stored in the Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph—the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
