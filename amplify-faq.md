@@ -75,7 +75,7 @@ NGINX Amplify Agent currently works on the following Linux flavors only:
 
 ### 2.2. What Version of Python is Required?
 
-NGINX Amplify Agent will work with Python 2.6+.
+NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported yet.
 
 ### 2.3. How Do I Activate Monitoring for a System?
 
