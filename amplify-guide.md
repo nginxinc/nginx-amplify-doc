@@ -240,15 +240,16 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
  3. The agent is running under the same user as your NGINX worker processes.
  4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
  5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
- 6. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
- 7. stub_status module is included in the NGINX build. This can be checked with `nginx -V`.
- 8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
- 9. All NGINX configuration files are readable by the agent's user ID. (check owner, group and permissions)
- 10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
- 11. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 12. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent to use if required.
- 13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
- 14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`.
+ 6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graph properly.
+ 7. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
+ 8. stub_status module is included in the NGINX build. This can be checked with `nginx -V`.
+ 9. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
+ 10. All NGINX configuration files are readable by the agent's user ID. (check owner, group and permissions)
+ 11. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
+ 12. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
+ 13. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent to use if required.
+ 14. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
+ 15. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`.
 
 ### NGINX Configuration Reports
 
