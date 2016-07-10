@@ -9,6 +9,8 @@
   - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
   - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
   - [Configuring NGINX for Amplify Metric Collection](#configuring-nginx-for-amplify-metric-collection)
+    - [Metrics Originating from stub_status](#metrics-originating-from-stub_status)
+    - [Metrics from access.log and error.log](#metrics-from-accesslog-and-errorlog)
   - [NGINX Configuration Reports](#nginx-configuration-reports)
   - [What to Check if Amplify Agent Isn't Reporting Metrics](#what-to-check-if-amplify-agent-isnt-reporting-metrics)
   - [Amplify Agent Source Code](#amplify-agent-source-code)
