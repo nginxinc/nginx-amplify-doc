@@ -148,6 +148,8 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 In order to monitor an NGINX instance, the agent should be able to [find the relevant NGINX master process](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#detecting-and-monitoring-nginx-instances) first, and determine its key characteristics.
 
+#### Metrics Originating from stub_status
+
 For various NGINX graphs to appear in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
 
 If you're using NGINX Plus, then you need to have either the *stub_status* module -**or**- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
@@ -214,6 +216,8 @@ Amplify Agent uses data from *stub_status* to calculate a number of metrics rela
 For NGINX Plus the agent will automatically use similar metrics available from the extended status output.
 
 For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
+
+#### Metrics from access.log and error.log
 
 Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
