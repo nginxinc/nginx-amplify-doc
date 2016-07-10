@@ -98,16 +98,22 @@ For manual installation instructions, please check the user guide [here](https:/
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
-If you don't see the new system in the web interface, or metrics aren't being collected, please check the following:
+If you don't see the new system or NGINX in the web interface, or (some) metrics aren't being collected, please check the following:
 
- 1. The Amplify Agent package has been successfully installed.
- 2. The `amplify-agent` process is running.
- 3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
- 4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
- 5. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
- 6. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted.
- 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
+ 1. The Amplify Agent package has been successfully [installed](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-and-managing-nginx-amplify-agent), and no warnings were seen upon the installation.
+ 2. The `amplify-agent` process is running and updating its [log file](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#logging).
+ 3. The agent is running under the same user as your NGINX worker processes.
+ 4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
+ 5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
+ 6. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
+ 7. stub_status module is included in the NGINX build. This can be checked with `nginx -V`.
+ 8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
+ 9. All NGINX configuration files are readable by the agent's user ID. (check owner, group and permissions)
+ 10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
+ 11. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
+ 12. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent to use if required.
+ 13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
+ 14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`.
 
 ### 2.5. How Do I Verify that the Amplify Agent Is Correctly Installed?
 
