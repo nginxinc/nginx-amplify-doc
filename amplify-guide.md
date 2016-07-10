@@ -90,6 +90,172 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
     The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, and the core API.
 
 
+## How Amplify Agent Works
+
+NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and export them to the main system for visualization.
+
+You will need to install Amplify Agent on all hosts that you have to monitor.
+
+Upon proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the Amplify web interface in about a minute or so. It takes a few more minutes for the graphs to appear in the [Preview](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#preview) pane.
+
+Amplify Agent collects metrics and sends them to the Amplify backend on a "per-object" basis. Internally, each distinct type of a monitored entity is seen as a unique data object.
+
+Currently there are the following object types:
+
+ 1. Operating system (this is the parent object)
+ 2. NGINX instance
+
+The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
+
+**Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
+
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
+
+### Metadata and Metrics Collection
+
+Amplify Agent collects the following types of data:
+
+ * **System metadata.** This is basic information about the OS environment where the agent runs. This could be the hostname, uptime information, OS flavor, and other data.
+ * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic, etc.
+ * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
+ * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX log files.
+
+Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
+
+While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get aggregated and sent to the Amplify backend once a minute.
+
+Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify web interface using a web browser.
+
+NGINX config updates are reported only when a configuration change is detected.
+
+If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way is about 2 hour's worth.
+
+### Detecting and Monitoring NGINX Instances
+
+Amplify Agent is capable of detecting several types of NGINX instances:
+
+ * Installed from a repository package
+ * Built and installed manually
+
+A separate instance of NGINX as seen by the Amplify Agent would be the following:
+
+ * A unique master process and its workers, started from a distinct binary
+ * A master process running with a default config path, or with a custom path set in the command-line parameters
+
+**Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* objects for monitoring. On a single system several NGINX objects always have the same parent object (the OS).
+
+### Configuring NGINX for Amplify Metric Collection
+
+In order to monitor your NGINX instances, and to be able to see various NGINX graphs in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
+
+If you're using NGINX Plus, then you need to have either the *stub_status* **or** the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
+
+Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
+
+```
+
+    # cd /etc/nginx
+
+    # grep -i include\.*conf nginx.conf
+        include /etc/nginx/conf.d/*.conf;
+
+    # cat > conf.d/stub_status.conf
+    server {
+        listen 127.0.0.1:80;
+        server_name 127.0.0.1;
+        location /nginx_status {
+            stub_status on;
+            allow 127.0.0.1;
+            deny all;
+        }
+    }
+    <Ctrl-D>
+
+    # ls -la conf.d/stub_status.conf
+    -rw-r--r-- 1 root root 162 Nov  4 02:40 conf.d/stub_status.conf
+
+    # kill -HUP `cat /var/run/nginx.pid`
+```
+
+Without *stub_status* or the NGINX Plus extended status, the agent will **not** be able to collect quite a few essential NGINX metrics required for further monitoring and analysis.
+
+**Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined *stub_status* is readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
+
+For more information about *stub_status*, please refer to NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
+
+Please make sure the ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL stemming from your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
+
+If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
+
+```
+    $ curl http://localhost/nginx_status
+    Active connections: 2 
+    server accepts handled requests
+     344014 344014 661581 
+    Reading: 0 Writing: 1 Waiting: 1
+```
+
+Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
+
+```
+    nginx.http.conn.accepted = stub_status.accepts
+    nginx.http.conn.active = stub_status.active - stub_status.waiting
+    nginx.http.conn.current = stub_status.active
+    nginx.http.conn.dropped = stub_status.accepts - stub_status.handled
+    nginx.http.conn.idle = stub_status.waiting
+    nginx.http.request.count = stub_status.requests
+    nginx.http.request.current = stub_status.reading + stub_status.writing
+    nginx.http.request.reading = stub_status.reading
+    nginx.http.request.writing = stub_status.writing
+```
+
+For NGINX Plus the agent will automatically use similar metrics available from the extended status output.
+
+For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
+
+Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
+
+You don't have to specifically point the agent to either NGINX configuration or NGINX log files—it should detect their location automatically.
+
+Amplify Agent will also try to detect the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
+
+**Note.** A number of metrics outlined in [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
+
+### NGINX Configuration Reports
+
+Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [**Reports**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports) section below.
+
+After the agent finds a particular NGINX configuration, it'll then automatically start to keep track of changes to it.
+
+When a change is detected with NGINX—e.g. a master process restarts, or the NGINX config is edited—such updates will be sent to the Amplify backend.
+
+**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
+[ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
+
+### What to Check if Amplify Agent Isn't Reporting Metrics
+
+After you [install and start](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-and-managing-nginx-amplify-agent) the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
+
+If you don't see the new system in the web interface, or metrics aren't being collected, please check the following:
+
+ 1. The Amplify Agent package has been successfully installed.
+ 2. The `amplify-agent` process is running.
+ 3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
+ 4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
+ 5. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
+ 6. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
+ 7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted.
+ 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
+
+### Amplify Agent Source Code
+
+Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available here:
+
+ * Sources: https://github.com/nginxinc/nginx-amplify-agent
+ * Public package repository: http://packages.amplify.nginx.com
+ * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
+
+
 ## Installing and Managing NGINX Amplify Agent
 
 ### Installing Amplify Agent
@@ -368,169 +534,6 @@ To override the extended status URI/URL, use the `plus_status` option.
 ```
 
 **Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
-
-### How Amplify Agent Works
-
-NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and export them to the main system for visualization.
-
-You will need to install Amplify Agent on all hosts that you have to monitor.
-
-Upon proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the Amplify web interface in about a minute or so. It takes a few more minutes for the graphs to appear in the **Preview** pane.
-
-Amplify Agent collects metrics and sends them to the Amplify backend on a "per-object" basis. Internally, each distinct type of a monitored entity is seen as a unique data object.
-
-Currently there are the following object types:
-
- 1. Operating system (this is the parent object)
- 2. NGINX instance
-
-The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
-
-**Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
-
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
-
-### Metadata and Metrics Collection
-
-Amplify Agent collects the following types of data:
-
- * **System metadata.** This is basic information about the OS environment where the agent runs. This could be the hostname, uptime information, OS flavor, and other data.
- * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic, etc.
- * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
- * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX log files.
-
-Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
-
-While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get aggregated and sent to the Amplify backend once a minute.
-
-Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify web interface using a web browser.
-
-NGINX config updates are reported only when a configuration change is detected.
-
-If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way is about 2 hour's worth.
-
-### Detecting and Monitoring NGINX Instances
-
-Amplify Agent is capable of detecting several types of NGINX instances:
-
- * Installed from a repository package
- * Built and installed manually
-
-A separate instance of NGINX as seen by the Amplify Agent would be the following:
-
- * A unique master process and its workers, started from a distinct binary
- * A master process running with a default config path, or with a custom path set in the command-line parameters
-
-**Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* objects for monitoring. On a single system several NGINX objects always have the same parent object (the OS).
-
-### Configuring NGINX for Amplify Metric Collection
-
-In order to monitor your NGINX instances, and to be able to see various NGINX graphs in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
-
-If you're using NGINX Plus, then you need to have either the *stub_status* **or** the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
-
-Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
-
-```
-
-    # cd /etc/nginx
-
-    # grep -i include\.*conf nginx.conf
-        include /etc/nginx/conf.d/*.conf;
-
-    # cat > conf.d/stub_status.conf
-    server {
-        listen 127.0.0.1:80;
-        server_name 127.0.0.1;
-        location /nginx_status {
-            stub_status on;
-            allow 127.0.0.1;
-            deny all;
-        }
-    }
-    <Ctrl-D>
-
-    # ls -la conf.d/stub_status.conf
-    -rw-r--r-- 1 root root 162 Nov  4 02:40 conf.d/stub_status.conf
-
-    # kill -HUP `cat /var/run/nginx.pid`
-```
-
-Without *stub_status* or the NGINX Plus extended status, the agent will **not** be able to collect quite a few essential NGINX metrics required for further monitoring and analysis.
-
-**Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined *stub_status* is readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
-
-For more information about *stub_status*, please refer to NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
-
-Please make sure the ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL stemming from your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
-
-If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
-
-```
-    $ curl http://localhost/nginx_status
-    Active connections: 2 
-    server accepts handled requests
-     344014 344014 661581 
-    Reading: 0 Writing: 1 Waiting: 1
-```
-
-Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
-
-```
-    nginx.http.conn.accepted = stub_status.accepts
-    nginx.http.conn.active = stub_status.active - stub_status.waiting
-    nginx.http.conn.current = stub_status.active
-    nginx.http.conn.dropped = stub_status.accepts - stub_status.handled
-    nginx.http.conn.idle = stub_status.waiting
-    nginx.http.request.count = stub_status.requests
-    nginx.http.request.current = stub_status.reading + stub_status.writing
-    nginx.http.request.reading = stub_status.reading
-    nginx.http.request.writing = stub_status.writing
-```
-
-For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
-
-Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
-
-You don't have to specifically point the agent to either NGINX configuration or NGINX log files—it should detect their location automatically.
-
-Amplify Agent will also try to detect the log format for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
-
-**Note.** A number of metrics outlined in [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
-
-### NGINX Configuration Reports
-
-Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [**Reports**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports) section below.
-
-After the agent finds a particular NGINX configuration, it'll then automatically start to keep track of changes to it.
-
-When a change is detected with NGINX—e.g. a master process restarts, or the NGINX config is edited—such updates will be sent to the Amplify backend.
-
-**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
-[ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
-
-### What to Check if Amplify Agent Isn't Reporting Metrics
-
-After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
-
-If you don't see the new system in the web interface, or metrics aren't being collected, please check the following:
-
- 1. The Amplify Agent package has been successfully installed.
- 2. The `amplify-agent` process is running.
- 3. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
- 4. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
- 5. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
- 6. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 7. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted.
- 8. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
-
-### Amplify Agent Source Code
-
-Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available here:
-
- * Sources: https://github.com/nginxinc/nginx-amplify-agent
- * Public package repository: http://packages.amplify.nginx.com
- * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
 
 
 ## User Interface
@@ -886,7 +889,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 ```
     Type: counter, integer
     Description: NGINX-wide statistics describing HTTP connections.
-    Source: stub_status
+    Source: stub_status (or N+ extended status)
 ```
 
  * **nginx.http.conn.active**
@@ -896,7 +899,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 ```
     Type: gauge, integer
     Description: NGINX-wide statistics describing HTTP connections.
-    Source: stub_status
+    Source: stub_status (or N+ extended status)
 ```
 
  * **nginx.http.request.count**
@@ -904,7 +907,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 ```
     Type: counter, integer
     Description: Total number of client requests.
-    Source: stub_status
+    Source: stub_status (or N+ extended status)
 ```
 
  * **nginx.http.request.current**
@@ -915,7 +918,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
     Type: gauge, integer
     Description: Number of currently active requests (reading and writing).
     Number of requests reading headers or writing responses to clients.
-    Source: stub_status
+    Source: stub_status (or N+ extended status)
 ```
 
  * **nginx.http.request.malformed**
