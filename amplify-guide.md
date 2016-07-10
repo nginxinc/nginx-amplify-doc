@@ -242,13 +242,13 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
  6. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
  7. stub_status module is included in the NGINX build. This can be checked with `nginx -V`.
  8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
- 9. All configuration files are readable by the agent's user ID. (check owner, group and permissions)
+ 9. All NGINX configuration files are readable by the agent's user ID. (check owner, group and permissions)
  10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
  11. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 12. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*.
- 13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with metrics collection. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
- 14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing /proc and /sys. Metrics describing system disk I/O and latency are usually affected. There are not easy workaround for this except for allowing the agent to run as `root`.
- 
+ 12. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*. [Configure a proxy server] for the agent to use if required.
+ 13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
+ 14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`.
+
 ### NGINX Configuration Reports
 
 Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [**Reports**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports) section below.
