@@ -146,11 +146,11 @@ A separate instance of NGINX as seen by the Amplify Agent would be the following
 
 ### Configuring NGINX for Amplify Metric Collection
 
-In order to monitor your NGINX instance(s), the agent should be able to [find the relevant NGINX master process](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#detecting-and-monitoring-nginx-instances) first, and determine its key characteristics.
+In order to monitor an NGINX instance, the agent should be able to [find the relevant NGINX master process](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#detecting-and-monitoring-nginx-instances) first, and determine its key characteristics.
 
 For various NGINX graphs to appear in the web interface, you will need to have [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) defined in your NGINX configuration. If it's there already, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to have either the *stub_status* **or** the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
+If you're using NGINX Plus, then you need to have either the *stub_status* module -**or**- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
 
 Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
@@ -236,7 +236,7 @@ When a change is detected with NGINX—e.g. a master process restarts, or the NG
 
 ### What to Check if Amplify Agent Isn't Reporting Metrics
 
-After you [install and start](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-and-managing-nginx-amplify-agent) the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
+After you [install and start](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-and-managing-nginx-amplify-agent) the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for a new system to appear in the Amplify web interface.
 
 If you don't see the new system or NGINX in the web interface, or (some) metrics aren't being collected, please check the following:
 
@@ -246,11 +246,13 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
  4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
  5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
  6. stub_status is [properly set up](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection) in your NGINX configuration.
- 7. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
- 8. Extra [configuration steps](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) have been performed as required for the additional metrics to be collected.
- 9. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
- 10. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*.
- 11. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
+ 7. stub_status module is included in the NGINX build. This can be checked with `nginx -V`.
+ 8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
+ 9. **All** configuration files are readable by the agent's user ID.
+ 10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
+ 11. The system DNS resolver is properly configured, and `receiver.amplify.nginx.com` can be successfully resolved.
+ 12. Oubound TLS/SSL from the system to `receiver.amplify.nginx.com` is not restricted. This can be checked with *curl(1)*.
+ 13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering. E.g. for *selinux(8)* check `/etc/selinux/config`, try `setenforce 0` temporarily and see if it improves the situation for certain metrics. Some VPS providers use hardened Linux kernels that may restrict metric collection.
 
 ### Amplify Agent Source Code
 
