@@ -18,7 +18,8 @@
   - [2.8. How Do I Restart the Amplify Agent?](#28-how-do-i-restart-the-amplify-agent)
   - [2.9. How Can I Uninstall the Amplify Agent?](#29-how-can-i-uninstall-the-amplify-agent)
   - [2.10. How Can I Override a System's Hostname?](#210-how-can-i-override-a-systems-hostname)
-  - [2.11. Can I Use Amplify Agent with Docker?](#211-can-i-use-amplify-agent-with-docker)
+  - [2.11. How Can I Override the user ID for the Amplify Agent to use?](#211-how-can-i-override-the-user-id-for-the-amplify-agent-to-use)
+  - [2.12. Can I Use Amplify Agent with Docker?](#212-can-i-use-amplify-agent-with-docker)
 - [3. User Interface](#3-user-interface)
   - [3.1. What Browsers are Supported?](#31-what-browsers-are-supported)
   - [3.2. Is the Web Interface Traffic Secure?](#32-is-the-web-interface-traffic-secure)
@@ -83,7 +84,7 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported
 
         # curl -sS -L -O \
         https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-        API_KEY='ecfdee2e010899135c258d741a6effc7' sh ./install.sh
+        API_KEY='ffeedd0102030405060708090a0b0c' sh ./install.sh
 
     where API_KEY is a unique API key assigned when you create an account with Amplify. You can also find the API key in the **Account Information** menu.
 
@@ -190,7 +191,11 @@ The hostname should be something real—the following aren't valid hostnames:
  * localhost6.localdomain6
  * ip6-localhost
 
-### 2.11. Can I Use Amplify Agent with Docker?
+### 2.11. How Can I Override the user ID for the Amplify Agent to use?
+
+Please check the following [section](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id) of the NGINX Amplify public documentation.
+
+### 2.12. Can I Use Amplify Agent with Docker?
 
 Although the support for a Docker environment is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/docker-nginx-amplify).
 
