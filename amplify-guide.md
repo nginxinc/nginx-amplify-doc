@@ -1190,6 +1190,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Type: counter, integer
     Description: Number of requests that were sent to upstream servers.
     Source: access.log (requires custom log format)
+    Variable: $upstream_*
 ```
 
  * **nginx.upstream.request.failed**
@@ -1233,6 +1234,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
     Type: counter, integer
     Description: Number of responses from upstream servers with specific HTTP status codes.
     Source: access.log (requires custom log format)
+    Variable: $upstream_status
 ```
 
 ##### Cache Metrics
