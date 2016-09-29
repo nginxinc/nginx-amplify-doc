@@ -1,6 +1,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+<!-- menu -->
 
 - [Overview](#overview)
   - [What Is NGINX Amplify?](#what-is-nginx-amplify)
@@ -56,8 +57,11 @@
       - [Upstream Zone Metrics](#upstream-zone-metrics)
       - [Cache Zone Metrics](#cache-zone-metrics)
 
+<!-- /menu -->
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- section:1 -->
 
 ## Overview
 
@@ -91,6 +95,9 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
     The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, and the core API.
 
+<!-- /section:1 -->
+
+<!-- section:2 -->
 
 ## How Amplify Agent Works
 
@@ -195,9 +202,9 @@ If everything is configured properly, you should see something along these lines
 
 ```
     $ curl http://localhost/nginx_status
-    Active connections: 2 
+    Active connections: 2
     server accepts handled requests
-     344014 344014 661581 
+     344014 344014 661581
     Reading: 0 Writing: 1 Waiting: 1
 ```
 
@@ -269,6 +276,9 @@ Amplify Agent is an open source application. It is licensed under the [2-clause 
  * Public package repository: http://packages.amplify.nginx.com
  * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
 
+<!-- /section:2 -->
+
+<!-- section:3 -->
 
 ## Installing and Managing NGINX Amplify Agent
 
@@ -375,14 +385,14 @@ The installation procedure can be as simple as this.
  * Verify the repository config file (RHEL 7.1 example follows).
 
 ```
-    # cat /etc/yum.repos.d/nginx-amplify.repo 
+    # cat /etc/yum.repos.d/nginx-amplify.repo
     [nginx-amplify]
     name=nginx repo
     baseurl=http://packages.amplify.nginx.com/centos/7/$basearch
     gpgcheck=1
     enabled=1
 ```
-    
+
  * Update the package metadata.
 
 ```
@@ -489,7 +499,7 @@ The hostname should be something **real**. The agent won't start unless a valid 
  * localhost
  * localhost.localdomain
  * localhost6.localdomain6
- * ip6-localhost 
+ * ip6-localhost
 
 **Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface very shortly. Redefining the hostname in the agent's configuration essentially creates a new UUID, and a new system for monitoring.
 
@@ -549,6 +559,9 @@ To override the extended status URI/URL, use the `plus_status` option.
 
 **Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
 
+<!-- /section:3 -->
+
+<!-- section:4 -->
 
 ## User Interface
 
@@ -730,6 +743,10 @@ Global settings are used to set account-wide behavior for:
 Local settings are accessible via the "Settings" icon that can be found when a particular system's tile is extended to the right.
 
 Local settings override the global settings on a per-object basis. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the local settings menu.
+
+<!-- /section:4 -->
+
+<!-- section:5 -->
 
 ## Metrics and Metadata
 
@@ -1086,7 +1103,7 @@ Amplify Agent can collect a number of additional useful metrics described below.
 **Note.** Please bear in mind that by default the agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice.
 
  * The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to `warn`.
- 
+
 ```
     error_log  /var/log/nginx/error.log warn;
 ```
@@ -1317,7 +1334,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
     Description: The total number of requests completed without sending a response.
     Source: NGINX Plus extended status
 ```
-    
+
 ##### Upstream Zone Metrics
 
  * **plus.upstream.request.count**
@@ -1387,7 +1404,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
 
  * **plus.upstream.fails.count**
  * **plus.upstream.unavail.count**
- 
+
 ```
     Type: counter, integer
     Description: The total number of unsuccessful attempts to communicate with
@@ -1409,7 +1426,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
 ```
 
  * **plus.upstream.queue.size**
- 
+
 ```
     Type: gauge, integer
     Description: The current number of requests in the queue.
@@ -1441,9 +1458,11 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
  * **plus.cache.stale.bytes**
  * **plus.cache.updating**
  * **plus.cache.updating.bytes**
- 
+
 ```
     Type: counter, integer; counter, bytes
     Description: Various statistics about NGINX Plus cache usage.
     Source: NGINX Plus extended status
 ```
+
+<!-- /section:5 -->
