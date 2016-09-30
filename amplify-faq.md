@@ -1,9 +1,11 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+<!-- menu -->
 
 - [1. General](#1-general)
   - [1.1. What Is NGINX Amplify?](#11-what-is-nginx-amplify)
+  - [1.2. Where Is the Main System Hosted?](#12-where-is-the-main-system-hosted)
   - [1.3. Is the Traffic from the Agent to the SaaS Protected?](#13-is-the-traffic-from-the-agent-to-the-saas-protected)
   - [1.4. Is the Amplify Agent Code Publicly Available?](#14-is-the-amplify-agent-code-publicly-available)
   - [1.5. What is This Question About My Password When Installing the Agent?](#15-what-is-this-question-about-my-password-when-installing-the-agent)
@@ -28,7 +30,11 @@
   - [4.1. What Metrics and Metadata Are Collected?](#41-what-metrics-and-metadata-are-collected)
   - [4.2. How Is the NGINX Configuration Parsed and Analyzed?](#42-how-is-the-nginx-configuration-parsed-and-analyzed)
 
+<!-- /menu -->
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- section:1 -->
 
 ## 1. General
 
@@ -43,7 +49,7 @@ You can use NGINX Amplify to do the following:
  * Get notified when something is wrong with application delivery
  * Plan web application capacity and performance
  * Keep track of the systems running NGINX
- 
+
 ### 1.2. Where Is the Main System Hosted?
 
 NGINX Amplify SaaS is currently hosted in [AWS us-west-1](http://docs.aws.amazon.com/general/latest/gr/rande.html) (US West, N. California).
@@ -60,6 +66,9 @@ Amplify Agent is an open source application. It is licensed under the [2-clause 
 
 It could be that you're starting the install script from a non-root account. In this case you will need *sudo* rights. While it depends on a particular system configuration, with a non-root account *sudo* will typically ask for a password.
 
+<!-- /section:1 -->
+
+<!-- section:2 -->
 
 ## 2. NGINX Amplify Agent
 
@@ -133,7 +142,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 ### 2.6. How Can I Update the Amplify Agent?
 
  1. On Ubuntu/Debian use:
- 
+
 ```
     # apt-get update && \
     apt-get install nginx-amplify-agent
@@ -149,7 +158,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 ### 2.7. What System Resources Are Required?
 
 We worked very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
-   
+
 ### 2.8. How Do I Restart the Amplify Agent?
 
 It's as simple as
@@ -173,7 +182,7 @@ It's as simple as
 ```
 
 ### 2.10. How Can I Override a System's Hostname?
- 
+
 If the agent is not able to determine the system's hostname, you can define it manually in **/etc/amplify-agent/agent.conf**
 
 Check for the following section, and fill in the desired hostname:
@@ -198,6 +207,10 @@ Please check the following [section](https://github.com/nginxinc/nginx-amplify-d
 ### 2.12. Can I Use Amplify Agent with Docker?
 
 Although the support for a Docker environment is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/docker-nginx-amplify).
+
+<!-- /section:2 -->
+
+<!-- section:3 -->
 
 ## 3. User Interface
 
@@ -226,6 +239,9 @@ To delete a system using the web interface—find it in the [Systems List](https
 
 Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alarms.
 
+<!-- /section:3 -->
+
+<!-- section:4 -->
 
 ## 4. Metrics and Metadata
 
@@ -247,6 +263,8 @@ Amplify Agent is able to automatically find all relevant NGINX configuration fil
 To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) are turned on. SSL certificate analysis is *off* by default.
 
 The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
-[ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret). 
+[ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 For more information on configuration analysis and reports see the [Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports).
+
+<!-- /section:4 -->
