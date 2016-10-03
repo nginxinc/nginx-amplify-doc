@@ -1,7 +1,8 @@
+<!-- menu -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- menu -->
 
 - [1. General](#1-general)
   - [1.1. What Is NGINX Amplify?](#11-what-is-nginx-amplify)
@@ -30,9 +31,9 @@
   - [4.1. What Metrics and Metadata Are Collected?](#41-what-metrics-and-metadata-are-collected)
   - [4.2. How Is the NGINX Configuration Parsed and Analyzed?](#42-how-is-the-nginx-configuration-parsed-and-analyzed)
 
-<!-- /menu -->
-
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- /menu -->
 
 <!-- section:1 -->
 
@@ -237,7 +238,7 @@ If the goal is to completely delete a previously monitored object, then do the f
 
 To delete a system using the web interface—find it in the [Systems List](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#systems-list), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
-Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alarms.
+Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alerts.
 
 <!-- /section:3 -->
 
