@@ -33,7 +33,7 @@
     - [Setting Up a Proxy](#setting-up-a-proxy)
     - [Logging](#logging)
     - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
-    - [Uninstalling Amplify Agent](#uninstalling-amplify-agent)
+  - [Uninstalling Amplify Agent](#uninstalling-amplify-agent)
 - [User Interface](#user-interface)
   - [Graphs Page](#graphs-page)
     - [Systems List](#systems-list)
@@ -561,11 +561,11 @@ To override the extended status URI/URL, use the `plus_status` option.
 
 **Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
 
-#### Uninstalling Amplify Agent
+### Uninstalling Amplify Agent
 
 To completely delete a previously monitored object, perform the following steps:
 
- 1. Uninstall the agent
+ * Uninstall the agent
 
 On Ubuntu/Debian use:
 
@@ -579,13 +579,13 @@ On CentOS and Red Hat use:
     yum remove nginx-amplify-agent
 ```
 
- 2. Delete objects from the web interface
+ * Delete objects from the web interface
 
 To delete a system using the web interface—find it in the [Systems List](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#systems-list), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
 Bear in mind—deleting objects in the UI will not stop the agent. To completely remove a system from monitoring, stop and/or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alert rules.
 
- 3. Delete alerts
+ * Delete alerts
 
 Check the [Alerts](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#alerts) page and remove/mute the irrelevant rules.
 
