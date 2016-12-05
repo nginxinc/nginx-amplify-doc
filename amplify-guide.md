@@ -69,7 +69,7 @@
 
 ### What Is NGINX Amplify?
 
-NGINX Amplify is a tool for comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
+NGINX Amplify is a tool for comprehensive NGINX monitoring. With NGINX Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
 
 You can use NGINX Amplify to do the following:
 
@@ -83,13 +83,13 @@ You can use NGINX Amplify to do the following:
 
 NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It includes the following key components:
 
-  * **Amplify Agent**
+  * **NGINX Amplify Agent**
 
-  A Python application that runs on monitored systems. Its role is to collect various metrics from the operating system and from the NGINX instances, then aggregate and send them to the backend system for visualization.
+  NGINX Amplify Agent is a Python application that runs on monitored systems.
 
-  All communications between the agent and NGINX Amplify SaaS are done securely over SSL/TLS. All traffic is always initiated by the agent.
+  All communications between the agent and the SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent.
 
-  * **NGINX Amplify UI**
+  * **NGINX Amplify Web UI**
 
   The user interface accessible from all major browsers. The web interface is accessible only via TLS/SSL.
 
@@ -101,15 +101,15 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
 <!-- section:2 -->
 
-## How Amplify Agent Works
+## How NGINX Amplify Agent Works
 
-NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and export them to the main system for visualization.
+NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and export them to the backend for visualization.
 
-You will need to install Amplify Agent on all hosts that you have to monitor.
+You will need to install the Amplify Agent on all hosts that you have to monitor.
 
-Upon proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the Amplify web interface in about a minute or so. It takes a few more minutes for the graphs to appear in the [Preview](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#preview) pane.
+Upon proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the NGINX Amplify web interface in about a minute or so. It takes a few more minutes for the predefined graphs to appear on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page.
 
-Amplify Agent collects metrics and sends them to the Amplify backend on a "per-object" basis. Internally, each distinct type of a monitored entity is seen as a unique data object.
+NGINX Amplify Agent collects metrics and sends them to the Amplify backend on a "per-object" basis.
 
 Currently there are the following object types:
 
@@ -120,18 +120,18 @@ The agent considers an NGINX instance to be any running NGINX master process tha
 
 **Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You don't have to manually add or configure NGINX instances in the web interface after you install the Amplify Agent on a host.
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup—see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
+When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup — see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
 
 ### Metadata and Metrics Collection
 
-Amplify Agent collects the following types of data:
+NGINX Amplify Agent collects the following types of data:
 
   * **System metadata.** This is basic information about the OS environment where the agent runs. This could be the hostname, uptime information, OS flavor, and other data.
   * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic, etc.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX log files.
 
-Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
+The Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but occasionally may also invoke certain system utilities like *ps(1)*.
 
 While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get aggregated and sent to the Amplify backend once a minute.
 
@@ -143,7 +143,7 @@ If the agent is not able to reach the Amplify backend to send the accumulated me
 
 ### Detecting and Monitoring NGINX Instances
 
-Amplify Agent is capable of detecting several types of NGINX instances:
+NGINX Amplify Agent is capable of detecting several types of NGINX instances:
 
   * Installed from a repository package
   * Built and installed manually
@@ -210,7 +210,7 @@ server accepts handled requests
 Reading: 0 Writing: 1 Waiting: 1
 ```
 
-Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
+NGINX Amplify Agent uses data from *stub_status* to calculate a number of metrics related to server-wide HTTP connections and requests as described below:
 
 ```
 nginx.http.conn.accepted = stub_status.accepts
@@ -230,11 +230,11 @@ For more information about the metric list, please refer to [**Metrics and Metad
 
 #### Metrics from access.log and error.log
 
-Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
+NGINX Amplify Agent will also try to collect a few more useful metrics for NGINX from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read log files. Please also make sure that your log files are being written normally and are growing.
 
-You don't have to specifically point the agent to either NGINX configuration or NGINX log files—it should detect their location automatically.
+You don't have to specifically point the agent to either NGINX configuration or NGINX log files — it should detect their location automatically.
 
-Amplify Agent will also try to detect the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
+The agent will also try to detect the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
 **Note.** A number of metrics outlined in [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
 
@@ -261,18 +261,18 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### NGINX Configuration Reports
 
-Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [**Reports**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports) section below.
+NGINX Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [**Analyzer**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer) section below.
 
 After the agent finds a particular NGINX configuration, it'll then automatically start to keep track of changes to it.
 
-When a change is detected with NGINX—e.g. a master process restarts, or the NGINX config is edited—such updates will be sent to the Amplify backend.
+When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is edited — such updates will be sent to the Amplify backend.
 
-**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
+**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed — and their parameters ARE NOT exported to the SaaS backend:
 [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
-### Amplify Agent Source Code
+### NGINX Amplify Agent Source Code
 
-Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available here:
+NGINX Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available here:
 
   * Sources: https://github.com/nginxinc/nginx-amplify-agent
   * Public package repository: http://packages.amplify.nginx.com
@@ -286,9 +286,9 @@ Amplify Agent is an open source application. It is licensed under the [2-clause 
 
 ### Installing Amplify Agent
 
-In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install Amplify Agent on each system that has to be checked.
+In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system that has to be checked.
 
-**Note.** Amplify Agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
+**Note.** The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 
 #### Using the Install Script
 
@@ -301,7 +301,7 @@ The installation procedure can be as simple as this.
   ```
   # curl -sS -L -O \
   https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-  API_KEY='ffeedd0102030405060708090a0b0c' sh ./install.sh
+  API_KEY='ffeedd0102030405060708' sh ./install.sh
   ```
 
   where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify web interface. You can also find the API key in the **Account Information** menu.
@@ -467,11 +467,11 @@ It is *highly* recommended that you periodically check for updates and install t
 
 ### Configuring Amplify Agent
 
-Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
+NGINX Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
 
 #### Overriding the Effective User ID
 
-Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
+NGINX Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 
 In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in **/etc/amplify-agent/agent.conf** for that:
 
@@ -521,7 +521,7 @@ The hostname should be something **real**. The agent won't start unless a valid 
 
 If your system is in a DMZ environment without direct access to the Internet, the only way for the agent to report collected metrics to Amplify would be through a proxy.
 
-Amplify Agent obeys the usual environment variables that are common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However, you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
+NGINX Amplify Agent obeys the usual environment variables that are common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However, you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
 
 ```
 [proxies]
@@ -531,7 +531,7 @@ https = https://10.20.30.40:3030
 
 #### Logging
 
-Amplify Agent maintains its log file in **/var/log/amplify-agent/agent.log**
+NGINX Amplify Agent maintains its log file in **/var/log/amplify-agent/agent.log**
 
 Upon installation, the agent's log rotation schedule is added to **/etc/logrotate.d/amplify-agent**
 
@@ -551,7 +551,7 @@ level = DEBUG
 
 #### Configuring the URL for stub_status or Extended Status
 
-When the Amplify Agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
+When the agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration. In some rare cases it might be needed to override the automatic detection of the status URL.
 
 The following options can be set up in **/etc/amplify-agent/agent.conf** that would point the agent to the correct URL.
 
@@ -573,7 +573,7 @@ plus_status = /status
 
 **Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
 
-### Uninstalling Amplify Agent
+### Uninstalling NGINX Amplify Agent
 
 To completely delete a previously monitored object, perform the following steps:
 
@@ -595,9 +595,9 @@ To completely delete a previously monitored object, perform the following steps:
 
   2. Delete objects from the web interface
 
-  To delete a system using the web interface—find it in the [Systems List](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#systems-list), and choose the [i] icon. You can delete objects from the popup window that appears next.
+  To delete a system using the web interface — find it in the [Inventory](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
-  Bear in mind—deleting objects in the UI will not stop the agent. To completely remove a system from monitoring, stop and/or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alert rules.
+  Bear in mind — deleting objects in the UI will not stop the agent. To completely remove a system from monitoring, stop and/or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alert rules.
 
   3. Delete alerts
 
@@ -609,66 +609,33 @@ To completely delete a previously monitored object, perform the following steps:
 
 ## User Interface
 
-### Graphs Page
+### Graphs
 
-When you first log in to Amplify, you’re presented with a collection of graphs on the **Graphs** page. From here you can see an overview of all your systems with graphs of key statistics, such as CPU, memory, and disk usage.
+When you log in to Amplify, you’re presented with a collection of predefined graphs on the **Graphs** page. Here you can see an overview of the key metric stats, such as CPU, memory, and disk usage for all of your systems.
 
-#### Systems List
+If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into categories such as "System", "NGINX" and so on.
 
-From the top meny bar, you can always open the list of the systems that have the Amplify Agent installed, and are being monitored. You do *not* need to manually add a new system in the interface. When the agent is properly installed on a new system and reporting, it'll be automatically added to the systems list.
+Some graphs have an additional selector for the "label" associated with a metric. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing. Switching between labels changes the graph to display the corresponding data.
+
+On the right, above the graphs, you will find the time range selector, which helps to display different time periods for the graphs.
+
+You can also copy a predefined graph to a custom dashboard by focusing on the graph and clicking on the arrow in the top right corner.
+
+Check the [Metrics and Metadata](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) section below to learn more about the displayed metrics.
+
+### Inventory
+
+From the top menu bar, you can always open the inventory of the systems that are being monitored. When the Amplify Agent is properly installed on a new system and reporting, it's automatically visible in the system index on the left and in the Inventory.
 
 ![Add Graph](images/systems.png)
 
-The systems list allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
+The Inventory allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
-In the rightmost column of the Systems List you will also find the settings and the metadata viewer icons. Click on the [i] icon and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too.
+In the rightmost column of the Inventory you will also find the settings and the metadata viewer icons. Click on the [i] icon and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the leaf NGINX objects too.
 
-You can apply sorting, search, and filters to the systems list to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. Search accepts regular expressions.
+You can apply sorting, search, and filters to the Inventory to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. You can use regular expressions with the search function.
 
-**Note.** Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring—otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
-
-#### Preview
-
-In the middle of the screen there's the **Preview** section where you can quickly browse and check what graphs are available, and whether there are any anomalies to be analyzed.
-
-The graphs in the **Preview** pane are split into distinct sections. Each section is a collection of graphs for a particular system. If you click on a system in the leftmost columnt, **Preview** will scroll to the corresponding section. You can also just scroll the **Preview** manually to find the necessary graphs.
-
-Clicking on any of the smaller graphs in the **Preview** pane will bring up a larger version of that graph in the [**Graph&nbsp;Feed**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graph-feed) pane on the right side for a "quick look". The graph will be highlighted with a green border, and it'll stay on top of the graphs in the **Graph&nbsp;Feed**.
-
-**Note.** There are checkboxes on the preview graphs. Clicking on a graph's checkbox will pin it to the bottom of the feed for further analysis.
-
-Some graphs in the **Preview** pane have an additional selector for the label associated with a metric. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing. Switching between labels on a graph changes the preview graph to display the corresponding data.
-
-Above the **Graph Feed** is the time range, which helps to scale displayed data for up to the past week.
-
-#### Graph Feed
-
-The section on the right is called **Graph Feed**. When analyzing the graphs, you can populate this section from **Preview**. In order to do that, click on a graph's checkbox in **Preview**. The "checked" graph from **Preview** will then be added to the bottom of the **Graph Feed**. When you uncheck the graph, it'll be removed from the **Graph Feed**.
-
-You can also add the topmost "quick look" graph to the **Graph Feed** by clicking on the (+) sign.
-
-If you need to zoom into graphs, you can click on the "expand" icon to the left of the "Graph Feed" label.
-
-Above the **Graph Feed** you'll find controls to switch the time intervals that are applied to all graphs on the **Graphs** page. You can switch between `1H` `4H` `1D` `2D` and `1W` intervals depending on the time period you have to analyze.
-
-You will also see a marker on all graphs that might be very helpful when trying to manually correlate events.
-
-A typical workflow when analyzing OS and NGINX behavior would be:
-
-  * Browse through the graphs in **Preview**
-  * With a single click bring the ones calling for attention to the right for a quick look
-  * Populate the **Graph Feed** with the graphs from **Preview** that require further analysis and correlation
-  * Change time intervals for visualization to see a bigger picture
-  * Scroll through the **Graph Feed** to visually match the graphs in the feed to the "quick look" view
-  * Expand/collapse the **Graph Feed** depending on the required level of detail
-  * Find anomalies, correlations, and trends
-  * Leave graphs in the **Graph Feed** for future analysis/monitoring
-
-You can also just pin the graphs that you want to check regularly to the **Graph** feed, and use it as a general monitoring dashboard.
-
-In the **Graph Feed** you can click on the graph title to quickly scroll **Preview** to the relevant section.
-
-The state of the **Graphs** page is automatically saved, so next time you log in, you should see the same **Graph** page that you previously built for monitoring and analysis.
+**Note.** Bear in mind, that you'd also need to stop or uninstall the Amplify Agent on the systems being removed from the monitoring — otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 ### Dashboards
 
@@ -678,7 +645,7 @@ Some of the use cases for a custom set of graphs are the following:
 
   * Checking NGINX performance for a particular application or microservice, e.g. based on the URI path
   * Displaying metrics per virtual server
-  * Visualizing the performance of a group of NGINX servers—for example, front-end load balancers, or an NGINX edge caching layer
+  * Visualizing the performance of a group of NGINX servers — for example, front-end load balancers, or an NGINX edge caching layer
   * Analyzing a detailed breakdown of HTTP status codes per application
 
 When building a custom graph, metrics can be summed or averaged across several NGINX servers. It is also possible to create additional “metric dimensions”, for example, reporting the number of  POST requests for a specific URI.
@@ -697,7 +664,7 @@ To define a graph, perform these steps:
   4. Last but not least, the “filter” functionality is also available for NGINX metrics. If you click on "Apply filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
   5. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
 
-**Note.** For filters, all the "metric dimensions" aren't stored in the Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph—the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
+**Note.** For filters, all the "metric dimensions" aren't stored in the Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
 
 Because NGINX Amplify is **not** a SaaS log analyzer, the additional slicing for "metric dimensions" is implemented inside the Amplify Agent. The agent can parse the NGINX access logs on-the-fly and extract all the necessary metrics **without** sending the raw log entries elsewhere. Moreover, the agent understands custom log formats automatically, and will start looking for various newly defined "metric dimensions" following a particular [log_format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) specification.
 
@@ -707,11 +674,11 @@ Metric filters can be really powerful. By using the filters and creating additio
 
 Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph.
 
-### Reports
+### Analyzer
 
-Reports are based on the capabilities of Amplify to parse NGINX configuration files and provide them for further analysis through the features in the backend. This is where Amplify offers configuration recommendations to help improve the performance, reliability, and security of your applications. With well-thought-out and detailed recommendations you’ll know exactly where the problem is, why it is a problem, and how to fix it.
+NGINX Amplify Agent parses NGINX configuration files and provides them for further analysis through the specialized features in the backend. This is where Amplify offers configuration recommendations to help improve the performance, reliability, and security of your applications. With well-thought-out and detailed recommendations you’ll know exactly where the problem is, why it is a problem, and how to fix it.
 
-When you switch to the **Reports** page, click on a particular system on the left in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
+When you switch to the **Analyzer** page, click on a particular system on the left in order to see the associated report. If there isn't an NGINX instance found on a system, there will be no report for it.
 
 The following information is provided when a report is run against an NGINX config structure:
 
@@ -745,9 +712,9 @@ To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) fun
 
 Static analysis will only include information about specific issues with the NGINX configuration if those are found in your NGINX setup.
 
-In the future, the **Reports** section will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration—e.g. when it makes sense to increase or decrease certain parameters like [proxy_buffers](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffers) etc. Stay tuned!
+In the future, the **Analyzer** page will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration — e.g. when it makes sense to increase or decrease certain parameters like [proxy_buffers](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffers) etc. Stay tuned!
 
-**Note.** Config analysis and reports are *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) below.
+**Note.** Config analysis is *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) below.
 
 ### Alerts
 
@@ -768,25 +735,29 @@ There's one special rule which is the about **amplify.agent.status** metric. Thi
 
 You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing which alerts were generated and which ones were cleared.
 
-**Note.** For the thresholds you should currently use exact measurement units as described in the [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) section below.
-
 **Note.** Gauges are *averaged* over the interval configured in the ruleset. Counters are *summed up*. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
 
-**Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic.
+**Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic. Also make sure to verify the specified email and check the verification status in the Account menu.
 
-### Settings
+### Account Settings
 
-The **Settings** option in the "hamburger" menu at the top right corner of the web interface describes global settings.
+The **Account** option in the "hamburger" menu at the top right corner of the web interface contains various important settings.
 
-Global settings are used to set account-wide behavior for:
+First of all, you can always check the information you provided upon signing up, and edit specific fields.
 
-  * Analyzing NGINX configuration files
-  * Checking NGINX configuration syntax
-  * Checking SSL certs and configuration
+You can also see the current limits such as "maximum number of agents", "maximum number of custom dashboards", etc.
 
-Local settings are accessible via the "Settings" icon that can be found when a particular system's tile is extended to the right.
+The global settings section is used to enable or disable account-wide behavior for:
 
-Local settings override the global settings on a per-object basis. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the local settings menu.
+  * NGINX configuration files analysis
+  * Periodic NGINX configuration syntax checking with "nginx -t"
+  * Analyzing SSL certs
+
+Per-system settings are accessible via the "Settings" icon that can be found for a particular system in the [**Inventory**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory).
+
+Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the per-system settings menu.
+
+Last but not least, in the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
 
 <!-- /section:4 -->
 
@@ -1046,8 +1017,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
   ```
   Type: counter, integer
-  Description: Number of requests finalized with 499/444/408.
-  E.g. 499 is logged when the client closes the connection.
+  Description: Number of requests finalized with status code 499
+  which is logged when the client closes the connection.
   Source: access.log
   ```
 
@@ -1127,7 +1098,7 @@ Amplify Agent can collect a number of additional useful metrics described below.
 
 <!-- advancedList -->
 
-  * The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one—and use it with the `access_log` directives in your NGINX configuration.
+  * The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
 
   ```
   log_format  main_ext  '$remote_addr - $remote_user [$time_local] "$request" '
@@ -1184,7 +1155,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 
   ```
   Type: gauge, seconds.milliseconds
-  Description: Request processing time—time elapsed between reading
+  Description: Request processing time — time elapsed between reading
   the first bytes from the client and writing a log entry after the
   last bytes were sent.
   Source: access.log (requires custom log format)
