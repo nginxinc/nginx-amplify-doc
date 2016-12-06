@@ -109,7 +109,7 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported
   2552 ?        S      0:00 amplify-agent
   ```
 
-For manual installation instructions, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-amplify-agent-manually).
+For manual installation instructions, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-the-agent-manually).
 
 ### 2.4. What Do I Need to Configure for the Amplify Agent to Properly Report Metrics?
 
@@ -123,7 +123,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
   5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
   6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graphs properly.
-  7. *stub_status* is [properly configured](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-amplify-metric-collection), and the *stub_status module* is included in the NGINX build (this can be checked with `nginx -V`).
+  7. *stub_status* is [properly configured](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-metric-collection), and the *stub_status module* is included in the NGINX build (this can be checked with `nginx -V`).
   8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
   9. All NGINX configuration files are readable by the agent's user ID (check owner, group and permissions).
   10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
@@ -248,7 +248,7 @@ If the goal is to completely delete a previously monitored object, then do the f
   2. Delete objects from the web interface
   3. Delete alarms
 
-To delete a system using the web interface—find it in the [Systems List](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#systems-list), and choose the [i] icon. You can delete objects from the popup window that appears next.
+To delete a system using the web interface — find it in the [Inventory](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
 Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alerts.
 
@@ -273,11 +273,11 @@ Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/p
 
 Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting.
 
-To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) are turned on. SSL certificate analysis is *off* by default.
+To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#account-settings) are turned on. SSL certificate analysis is *off* by default.
 
 The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
 [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
-For more information on configuration analysis and reports see the [Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#reports).
+For more information on configuration analysis and reports see the [Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer).
 
 <!-- /section:4 -->
