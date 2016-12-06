@@ -87,7 +87,7 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
   * **NGINX Amplify Web UI**
 
-  The user interface compatible from all major browsers. The web interface is accessible only via TLS/SSL.
+  The user interface compatible with all major browsers. The web interface is accessible only via TLS/SSL.
 
   * **Backend** (implemented as a SaaS)
 
@@ -99,7 +99,7 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
 ## How NGINX Amplify Agent Works
 
-NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and send them securely to the backend storage.
+NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.
 
 You will need to install the Amplify Agent on all hosts that you have to monitor.
 
@@ -157,7 +157,7 @@ In order to monitor an NGINX instance, the agent should be able to [find the rel
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to have either the *stub_status* module -**or**- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring configured.
+If you're using NGINX Plus, then you need to configure either the *stub_status* module OR the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
 
 Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
@@ -186,13 +186,13 @@ server {
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Without *stub_status* or the NGINX Plus extended status, the agent will **not** be able to collect key NGINX metrics required for further monitoring and analysis.
+Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
 
-**Note.** There's no need to use exactly the above illustrated `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the right URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file where you have defined *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
+**Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
 
 For more information about *stub_status*, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL stemming from your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
+Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
 
 If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
 
@@ -224,7 +224,7 @@ For more information about the metric list, please refer to [**Metrics and Metad
 
 #### Metrics from access.log and error.log
 
-NGINX Amplify Agent will also try to collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read the log files. Please also make sure that your log files are being written normally.
+NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read the log files. Please also make sure that the log files are being written normally.
 
 You don't have to specifically point the agent to either the NGINX configuration or the NGINX log files — it should detect their location automatically.
 
@@ -249,7 +249,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   9. All NGINX configuration files are readable by the agent user ID (check owner, group and permissions).
   10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
   11. The system DNS resolver is correctly configured, and *receiver.amplify.nginx.com* can be successfully resolved.
-  12. Oubound TLS/SSL from the system to *receiver.amplify.nginx.com* is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent to use if required.
+  12. Oubound TLS/SSL from the system to *receiver.amplify.nginx.com* is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent if required.
   13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check **/etc/selinux/config**, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
   14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`. Sometimes fixing permissions for */proc* and */sys/block* may work.
 
@@ -476,7 +476,7 @@ configfile = /etc/nginx/nginx.conf
 
 There's an option here to explicitly set the real user ID which the agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, the agent startup script will use it to look up the real user ID.
 
-In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID. By default it's **/etc/nginx/nginx.conf**
+In addition, there's another option to explicitly tell the agent where it should look for an NGINX configuration file suitable for detecting the real user ID. It's **/etc/nginx/nginx.conf** by default.
 
 #### Changing the API Key
 
@@ -489,7 +489,7 @@ api_key = ffeedd0102030405060708
 
 #### Changing the Hostname and UUID
 
-In order to create unique objects for monitoring, the agent must be able to extract a valid hostname from the system. The hostname is also utilized as one of the components for generating a unique [identifier](https://github.com/nginxinc/nginx-amplify-agent/blob/master/amplify/agent/util/host.py#L145). Essentially, the hostname and the UUID unambiguously identify a particular instance of the agent to the Amplify backend. If the hostname or the UUID are changed, the agent and the backend will register a new object for monitoring.
+In order to create unique objects for monitoring, the agent must be able to extract a valid hostname from the system. The hostname is also utilized as one of the components for generating a unique identifier. Essentially, the hostname and the UUID unambiguously identify a particular instance of the agent to the Amplify backend. If the hostname or the UUID are changed, the agent and the backend will register a new object for monitoring.
 
 When first generated, the uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects the hostname for the first time. Normally you SHOULD NOT change the UUID in `agent.conf`.
 
@@ -501,7 +501,7 @@ The agent will try its best to determine the correct hostname. If it fails to de
 hostname = myhostname1
 ```
 
-The hostname should be something **real**. The agent won't start unless a valid hostname is defined. The following *aren't* valid hostnames:
+The hostname should be something real. The agent won't start unless a valid hostname is defined. The following *aren't* valid hostnames:
 
   * localhost
   * localhost.localdomain
@@ -544,7 +544,7 @@ level = DEBUG
 
 #### Configuring the URL for stub_status or Extended Status
 
-When the agent finds a running NGINX instance, it will try to automatically extract the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
+When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
 
 To override the *stub_status* URI/URL, use the `stub_status` configuration option.
 
@@ -626,7 +626,7 @@ In the rightmost column of the **Inventory** you will also find the settings and
 
 You can apply sorting, search, and filters to the **Inventory** to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. You can use regular expressions with the search function.
 
-**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring — otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
+**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring— otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 ### Dashboards
 
@@ -699,13 +699,13 @@ The following information is provided when a report is run against an NGINX conf
     * Key security measures (e.g. *stub_status* is unprotected)
     * Typical errors in configuring locations, especially with *regex*
 
-To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) are turned on. SSL certificate analysis is *off* by default.
+To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#account-settings) are turned on. SSL certificate analysis is *off* by default.
 
 Static analysis will only include information about specific issues with the NGINX configuration if those are found in your NGINX setup.
 
 In the future, the **Analyzer** page will also include *dynamic analysis*, effectively linking the observed NGINX behavior to its configuration — e.g. when it makes sense to increase or decrease certain parameters like [proxy_buffers](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffers) etc. Stay tuned!
 
-**Note.** Config analysis is *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#settings) below.
+**Note.** Config analysis is *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#account-settings) below.
 
 ### Alerts
 
