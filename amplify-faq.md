@@ -97,7 +97,7 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported
   ```
   # curl -sS -L -O \
   https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-  API_KEY='ffeedd0102030405060708090a0b0c' sh ./install.sh
+  API_KEY='ffeedd0102030405060708' sh ./install.sh
   ```
 
   where API_KEY is a unique API key assigned when you create an account with Amplify. You can also find the API key in the **Account Information** menu.
