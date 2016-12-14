@@ -844,6 +844,22 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Description: 1 - agent is up, 0 - agent is down.
   ```
 
+  * **amplify.agent.cpu.system**
+  * **amplify.agent.cpu.user**
+
+  ```
+  Type: gauge, percent
+  Description: CPU utilization percentage observed from the agent process.
+  ```
+
+  * **amplify.agent.mem.rss**
+  * **amplify.agent.mem.vms**
+
+  ```
+  Type: gauge, bytes
+  Description: Memory utilized by the agent process.
+  ```
+
   * **system.cpu.idle**
   * **system.cpu.iowait**
   * **system.cpu.system**
@@ -858,8 +874,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
   ```
   Type: gauge, percent
-  Description: System CPU stolen. Represents time when
-  the real CPU was not available to the current VM.
+  Description: System CPU stolen. Represents time when the real CPU was not available to the current VM.
   ```
 
   * **system.disk.free**
@@ -1419,6 +1434,16 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   ```
 
 ##### Upstream Zone Metrics
+
+  * **plus.upstream.peer.count**
+
+  ```
+  Type: gauge, integer
+  Description: The current number of live upstream servers in an upstream
+  group. If graphed/monitored without specifying an upstream, it's the current
+  number of all live upstream servers in all upstream groups.
+  Source: NGINX Plus extended status
+  ```
 
   * **plus.upstream.request.count**
   * **plus.upstream.response.count**
