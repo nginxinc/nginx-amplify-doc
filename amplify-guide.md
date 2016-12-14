@@ -13,6 +13,7 @@
   - [Configuring NGINX for Metric Collection](#configuring-nginx-for-metric-collection)
     - [Metrics from stub_status](#metrics-from-stub_status)
     - [Metrics from access.log and error.log](#metrics-from-accesslog-and-errorlog)
+    - [Using Syslog for Metric Collection](#using-syslog-for-metric-collection)
   - [What to Check if the Agent Isn't Reporting Metrics](#what-to-check-if-the-agent-isnt-reporting-metrics)
   - [NGINX Configuration Analysis](#nginx-configuration-analysis)
   - [Source Code for NGINX Amplify Agent](#source-code-for-nginx-amplify-agent)
@@ -30,6 +31,7 @@
     - [Overriding the Effective User ID](#overriding-the-effective-user-id)
     - [Changing the API Key](#changing-the-api-key)
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
+    - [Configuring Syslog](#configuring-syslog)
     - [Setting Up a Proxy](#setting-up-a-proxy)
     - [Logging](#logging)
     - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
@@ -231,6 +233,29 @@ You don't have to specifically point the agent to either the NGINX configuration
 The agent will also try to detect the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for a particular log, in order to be able to parse it properly and possibly extract even more useful metrics, e.g. [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
 **Note.** A number of metrics outlined in [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).
+
+#### Using Syslog for Metric Collection
+
+If you configured the agent for syslog metric collection (see [below](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-syslog)), make sure to add the following settings to the NGINX configuration:
+
+  1. Check that you are using NGINX version 1.9.5 or newer (or NGINX Plus Release 8 or newer).
+  2. Edit the NGINX configuration file and specify the syslog listener address as the first parameter to the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive. Include the `amplify` tag, and your preferred log format:
+
+```
+access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info
+```
+
+(see also how to extend the NGINX log format to collect [additional metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics))
+
+*Note*: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate **access_log** directive for each destination.
+
+  3. Reload NGINX:
+
+```
+# nginx -s reload
+```
+
+  (or `service nginx reload`)
 
 ### What to Check if the Agent Isn't Reporting Metrics
 
@@ -466,6 +491,8 @@ NGINX Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
 
 NGINX Amplify Agent will drop *root* privileges on startup. By default it will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 
+It is really important for the agent and the running NGINX instances to use the same user ID, so that the agent is able to properly collect all NGINX metrics.
+
 In case you'd like to manually specify the user ID that the agent should use for its effective user ID, there's a specialized section in **/etc/amplify-agent/agent.conf** for that:
 
 ```
@@ -509,6 +536,28 @@ The hostname should be something real. The agent won't start unless a valid host
   * ip6-localhost
 
 **Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface. Redefining the hostname in the agent's configuration essentially creates a new UUID, and a new system for monitoring.
+
+#### Configuring Syslog
+
+The agent can collect the NGINX log files via `syslog`. This could be useful when you don't keep the NGINX logs on disk, or when monitoring a container environment such as [Docker](https://github.com/nginxinc/docker-nginx-amplify) with NGINX Amplify.
+
+To configure the agent for syslog, add the following to the */etc/amplify-agent/agent.conf*:
+
+```
+[listeners]
+keys = syslog-default
+
+[listener_syslog-default]
+address = 127.0.0.1:12000
+```
+
+Restart the agent to have it reparse the configuration and start listening on the specified IP address and port:
+
+```
+# service amplify-agent restart
+```
+
+Make sure to [add the `syslog` settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#using-syslog-for-metric-collection) to your NGINX configuration as well.
 
 #### Setting Up a Proxy
 
