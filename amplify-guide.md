@@ -848,7 +848,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **amplify.agent.cpu.user**
 
   ```
-  Type: gauge, percent
+  Type:        gauge, percent
   Description: CPU utilization percentage observed from the agent process.
   ```
 
@@ -856,7 +856,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **amplify.agent.mem.vms**
 
   ```
-  Type: gauge, bytes
+  Type:        gauge, bytes
   Description: Memory utilized by the agent process.
   ```
 
@@ -866,15 +866,16 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.cpu.user**
 
   ```
-  Type: gauge, percent
+  Type:        gauge, percent
   Description: System CPU utilization.
   ```
 
   * **system.cpu.stolen**
 
   ```
-  Type: gauge, percent
-  Description: System CPU stolen. Represents time when the real CPU was not available to the current VM.
+  Type:        gauge, percent
+  Description: System CPU stolen. Represents time when the real CPU was not available to
+               the current VM.
   ```
 
   * **system.disk.free**
@@ -882,14 +883,14 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.disk.used**
 
   ```
-  Type: gauge, bytes
+  Type:        gauge, bytes
   Description: System disk usage statistics.
   ```
 
   * **system.disk.in_use**
 
   ```
-  Type: gauge, percent
+  Type:        gauge, percent
   Description: System disk usage statistics, percentage.
   ```
 
@@ -897,7 +898,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.io.iops_w**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of reads or writes per sampling window.
   ```
 
@@ -905,7 +906,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.io.kbs_w**
 
   ```
-  Type: counter, kilobytes
+  Type:        counter, kilobytes
   Description: Number of kilobytes read or written.
   ```
 
@@ -913,7 +914,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.io.wait_w**
 
   ```
-  Type: gauge, milliseconds
+  Type:        gauge, milliseconds
   Description: Time spent reading from or writing to disk.
   ```
 
@@ -922,9 +923,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.load.15**
 
   ```
-  Type: gauge, float
-  Description: Number of processes in the system run queue, averaged
-  over the last 1, 5, and 15 min.
+  Type:        gauge, float
+  Description: Number of processes in the system run queue, averaged over the last 1, 5,
+               and 15 min.
   ```
 
   * **system.mem.available**
@@ -936,14 +937,14 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.mem.used**
 
   ```
-  Type: gauge, bytes
+  Type:        gauge, bytes
   Description: Statistics about system memory usage.
   ```
 
   * **system.mem.pct_used**
 
   ```
-  Type: gauge, percent
+  Type:        gauge, percent
   Description: Statistics about system memory usage, percentage.
   ```
 
@@ -951,42 +952,42 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.net.bytes_sent**
 
   ```
-  Type: counter, bytes
-  Description: Network I/O statistics. Number of bytes received or sent,
-  per network interface.
+  Type:        counter, bytes
+  Description: Network I/O statistics. Number of bytes received or sent, per network
+               interface.
   ```
 
   * **system.net.drops_in.count**
   * **system.net.drops_out.count**
 
   ```
-  Type: counter, integer
-  Description: Network I/O statistics. Total number of inbound or
-  outbound packets dropped, per network interface.
+  Type:        counter, integer
+  Description: Network I/O statistics. Total number of inbound or outbound packets
+               dropped, per network interface.
   ```
 
   * **system.net.packets_in.count**
   * **system.net.packets_out.count**
 
   ```
-  Type: counter, integer
-  Description: Network I/O statistics. Number of packets received
-  or sent, per network interface.
+  Type:        counter, integer
+  Description: Network I/O statistics. Number of packets received or sent, per network
+               interface.
   ```
 
   * **system.net.packets_in.error**
   * **system.net.packets_out.error**
 
   ```
-  Type: counter, integer
-  Description: Network I/O statistics. Total number of errors while
-  receiving or sending, per network interface.
+  Type:        counter, integer
+  Description: Network I/O statistics. Total number of errors while receiving or sending,
+               per network interface.
   ```
 
   * **system.net.listen_overflows**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of times the listen queue of a socket overflowed.
   ```
 
@@ -995,14 +996,14 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.swap.used**
 
   ```
-  Type: gauge, bytes
+  Type:        gauge, bytes
   Description: System swap memory statistics.
   ```
 
   * **system.swap.pct_free**
 
   ```
-  Type: gauge, percent
+  Type:        gauge, percent
   Description: System swap memory statistics, percentage.
   ```
 
