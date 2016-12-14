@@ -11,8 +11,8 @@
   - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
   - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
   - [Configuring NGINX for Metric Collection](#configuring-nginx-for-metric-collection)
-    - [Metrics from stub_status](#metrics-from-stub_status)
-    - [Metrics from access.log and error.log](#metrics-from-accesslog-and-errorlog)
+    - [Metrics From stub_status](#metrics-from-stub_status)
+    - [Metrics From access.log and error.log](#metrics-from-accesslog-and-errorlog)
     - [Using Syslog for Metric Collection](#using-syslog-for-metric-collection)
   - [What to Check if the Agent Isn't Reporting Metrics](#what-to-check-if-the-agent-isnt-reporting-metrics)
   - [NGINX Configuration Analysis](#nginx-configuration-analysis)
@@ -31,10 +31,12 @@
     - [Overriding the Effective User ID](#overriding-the-effective-user-id)
     - [Changing the API Key](#changing-the-api-key)
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
+    - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
+    - [Configuring the Path to the NGINX Configuration File](#configuring-the-path-to-the-nginx-configuration-file)
     - [Configuring Syslog](#configuring-syslog)
+    - [Excluding Certain NGINX Log Files](#excluding-certain-nginx-log-files)
     - [Setting Up a Proxy](#setting-up-a-proxy)
     - [Logging](#logging)
-    - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
   - [Uninstalling the Agent](#uninstalling-the-agent)
 - [User Interface](#user-interface)
   - [Graphs](#graphs)
@@ -155,7 +157,7 @@ A separate instance of NGINX as seen by the agent would be the following:
 
 In order to monitor an NGINX instance, the agent should be able to [find the relevant NGINX master process](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#detecting-and-monitoring-nginx-instances) first, and determine its key characteristics.
 
-#### Metrics from stub_status
+#### Metrics From stub_status
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
@@ -224,7 +226,7 @@ For NGINX Plus the agent will automatically use similar metrics available from t
 
 For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
 
-#### Metrics from access.log and error.log
+#### Metrics From access.log and error.log
 
 NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read the log files. Please also make sure that the log files are being written normally.
 
@@ -537,6 +539,41 @@ The hostname should be something real. The agent won't start unless a valid host
 
 **Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface. Redefining the hostname in the agent's configuration essentially creates a new UUID, and a new system for monitoring.
 
+#### Configuring the URL for stub_status or Extended Status
+
+When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
+
+To override the *stub_status* URI/URL, use the `stub_status` configuration option.
+
+```
+[nginx]
+..
+stub_status = http://127.0.0.1/nginx_status
+```
+
+To override the extended status URI/URL, use the `plus_status` option.
+
+```
+[nginx]
+..
+plus_status = /status
+```
+
+**Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
+
+#### Configuring the Path to the NGINX Configuration File
+
+The agent detects the NGINX configuration file *automatically*. You DO NOT need to explicitly point the agent to the **nginx.conf**.
+
+If for some reason the agent is not able to find the NGINX configuration, use the following option in **/etc/amplify-agent/agent.conf**:
+
+```
+[nginx]
+configfile = /etc/nginx/nginx.conf
+```
+
+**Note**. It is better to avoid using this option and only add it as a workaround. Please take some time to fill out a support ticket in case you had to manually add the path to the NGINX config file. (this would be really much appreciated!)
+
 #### Configuring Syslog
 
 The agent can collect the NGINX log files via `syslog`. This could be useful when you don't keep the NGINX logs on disk, or when monitoring a container environment such as [Docker](https://github.com/nginxinc/docker-nginx-amplify) with NGINX Amplify.
@@ -558,6 +595,17 @@ Restart the agent to have it reparse the configuration and start listening on th
 ```
 
 Make sure to [add](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#using-syslog-for-metric-collection) the `syslog` settings to your NGINX configuration as well.
+
+#### Excluding Certain NGINX Log Files
+
+By default the agent will try to find and watch all **access.log** files described in the NGINX configuration. If there are multiple log files where the same request is logged, the metrics may get counted more than once.
+
+To exclude specific NGINX log files from the metric collection, add something along these lines to **/etc/amplify-agent/agent.conf**:
+
+```
+[nginx]
+exclude_logs=/var/log/nginx/app1/*,access-app1-*.log,sender1-*.log
+```
 
 #### Setting Up a Proxy
 
@@ -590,28 +638,6 @@ class = logging.handlers.WatchedFileHandler
 level = DEBUG
 ..
 ```
-
-#### Configuring the URL for stub_status or Extended Status
-
-When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
-
-To override the *stub_status* URI/URL, use the `stub_status` configuration option.
-
-```
-[nginx]
-..
-stub_status = http://127.0.0.1/nginx_status
-```
-
-To override the extended status URI/URL, use the `plus_status` option.
-
-```
-[nginx]
-..
-plus_status = /status
-```
-
-**Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
 
 ### Uninstalling the Agent
 
