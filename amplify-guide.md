@@ -840,7 +840,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **amplify.agent.status**
 
   ```
-  Type: internal, integer
+  Type:        internal, integer
   Description: 1 - agent is up, 0 - agent is down.
   ```
 
@@ -1015,9 +1015,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.conn.dropped**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: NGINX-wide statistics describing HTTP connections.
-  Source: stub_status (or N+ extended status)
+  Source:      stub_status (or N+ extended status)
   ```
 
   * **nginx.http.conn.active**
@@ -1025,17 +1025,17 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.conn.idle**
 
   ```
-  Type: gauge, integer
+  Type:        gauge, integer
   Description: NGINX-wide statistics describing HTTP connections.
-  Source: stub_status (or N+ extended status)
+  Source:      stub_status (or N+ extended status)
   ```
 
   * **nginx.http.request.count**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Total number of client requests.
-  Source: stub_status (or N+ extended status)
+  Source:      stub_status (or N+ extended status)
   ```
 
   * **nginx.http.request.current**
@@ -1043,27 +1043,26 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.request.writing**
 
   ```
-  Type: gauge, integer
-  Description: Number of currently active requests (reading and writing).
-  Number of requests reading headers or writing responses to clients.
-  Source: stub_status (or N+ extended status)
+  Type:        gauge, integer
+  Description: Number of currently active requests (reading and writing). Number of
+               requests reading headers or writing responses to clients.
+  Source:      stub_status (or N+ extended status)
   ```
 
   * **nginx.http.request.malformed**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of malformed requests.
-  Source: access.log
+  Source:      access.log
   ```
 
   * **nginx.http.request.body_bytes_sent**
 
   ```
-  Type: counter, integer
-  Description: Number of bytes sent to clients, not counting
-  response headers.
-  Source: access.log
+  Type:        counter, integer
+  Description: Number of bytes sent to clients, not counting response headers.
+  Source:      access.log
   ```
 
 #### HTTP Methods
@@ -1076,9 +1075,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.method.options**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Statistics about observed request methods.
-  Source: access.log
+  Source:      access.log
   ```
 
 #### HTTP Status Codes
@@ -1090,18 +1089,18 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.status.5xx**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of requests with specific HTTP status codes.
-  Source: access.log
+  Source:      access.log
   ```
 
   * **nginx.http.status.discarded**
 
   ```
-  Type: counter, integer
-  Description: Number of requests finalized with status code 499
-  which is logged when the client closes the connection.
-  Source: access.log
+  Type:        counter, integer
+  Description: Number of requests finalized with status code 499 which is logged when the
+               client closes the connection.
+  Source:      access.log
   ```
 
 #### HTTP Protocol Versions
@@ -1112,9 +1111,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.v2**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of requests using a specific version of the HTTP protocol.
-  Source: access.log
+  Source:      access.log
   ```
 
 #### NGINX Process Metrics
@@ -1122,7 +1121,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.workers.count**
 
   ```
-  Type: gauge, integer
+  Type:        gauge, integer
   Description: Number of NGINX worker processes observed.
   ```
 
@@ -1131,14 +1130,14 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.workers.cpu.user**
 
   ```
-  Type: gauge, percent
-  Description: CPU utilization percentage observed from NGINX worker processes.
+  Type:        gauge, percent
+  Description: CPU utilization percentage observed for NGINX worker processes.
   ```
 
   * **nginx.workers.fds_count**
 
   ```
-  Type: gauge, integer
+  Type:        gauge, integer
   Description: Number of file descriptors utilized by NGINX worker processes.
   ```
 
@@ -1146,32 +1145,31 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.workers.io.kbs_w**
 
   ```
-  Type: counter, integer
-  Description: Number of kilobytes read from or written to disk by
-  NGINX worker processes.
+  Type:        counter, integer
+  Description: Number of kilobytes read from or written to disk by NGINX worker processes.
   ```
 
   * **nginx.workers.mem.rss**
   * **nginx.workers.mem.vms**
 
   ```
-  Type: gauge, bytes
-  Description: Memory utilization by NGINX worker processes.
+  Type:        gauge, bytes
+  Description: Memory utilized by NGINX worker processes.
   ```
 
   * **nginx.workers.mem.rss_pct**
 
   ```
-  Type: gauge, percent
-  Description: Memory utilization by NGINX worker processes.
+  Type:        gauge, percent
+  Description: Memory utilization percentage for NGINX worker processes.
   ```
 
   * **nginx.workers.rlimit_nofile**
 
   ```
-  Type: gauge, integer
-  Description: Hard limit on the number of file descriptors
-  as seen by NGINX worker processes.
+  Type:        gauge, integer
+  Description: Hard limit on the number of file descriptors as seen by NGINX worker
+               processes.
   ```
 
 #### Additional NGINX Metrics
@@ -1214,19 +1212,19 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.http.request.bytes_sent**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of bytes sent to clients.
-  Source: access.log (requires custom log format)
-  Variable: $bytes_sent
+  Source:      access.log (requires custom log format)
+  Variable:    $bytes_sent
   ```
 
   * **nginx.http.request.length**
 
   ```
-  Type: gauge, integer
+  Type:        gauge, integer
   Description: Request length, including request line, header, and body.
-  Source: access.log (requires custom log format)
-  Variable: $request_length
+  Source:      access.log (requires custom log format)
+  Variable:    $request_length
   ```
 
   * **nginx.http.request.time**
@@ -1236,30 +1234,29 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.http.request.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
-  Description: Request processing time — time elapsed between reading
-  the first bytes from the client and writing a log entry after the
-  last bytes were sent.
-  Source: access.log (requires custom log format)
-  Variable: $request_time
+  Type:        gauge, seconds.milliseconds
+  Description: Request processing time — time elapsed between reading the first bytes from
+               the client and writing a log entry after the last bytes were sent.
+  Source:      access.log (requires custom log format)
+  Variable:    $request_time
   ```
 
   * **nginx.http.request.buffered**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of requests that were buffered to disk.
-  Source: error.log (requires 'warn' log level)
+  Source:      error.log (requires 'warn' log level)
   ```
 
   * **nginx.http.gzip.ratio**
 
   ```
-  Type: gauge, float
-  Description: Achieved compression ratio, calculated as the ratio
-  between the original and compressed response sizes.
-  Source: access.log (requires custom log format)
-  Variable: $gzip_ratio
+  Type:        gauge, float
+  Description: Achieved compression ratio, calculated as the ratio between the original
+               and compressed response sizes.
+  Source:      access.log (requires custom log format)
+  Variable:    $gzip_ratio
   ```
 
 ##### Upstream Metrics
@@ -1271,11 +1268,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.connect.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
-  Description: Time spent on establishing connections with upstream
-  servers. With SSL, it also includes time spent on the handshake.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_connect_time
+  Type:        gauge, seconds.milliseconds
+  Description: Time spent on establishing connections with upstream servers. With SSL, it
+               also includes time spent on the handshake.
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_connect_time
   ```
 
   * **nginx.upstream.header.time**
@@ -1285,46 +1282,46 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.header.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
+  Type:        gauge, seconds.milliseconds
   Description: Time spent on receiving response headers from upstream servers.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_header_time
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_header_time
   ```
 
   * **nginx.upstream.response.buffered**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of upstream responses buffered to disk.
-  Source: error.log (requires 'warn' log level)
+  Source:      error.log (requires 'warn' log level)
   ```
 
   * **nginx.upstream.request.count**
   * **nginx.upstream.next.count**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of requests that were sent to upstream servers.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_*
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_*
   ```
 
   * **nginx.upstream.request.failed**
   * **nginx.upstream.response.failed**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of requests and responses that failed while proxying.
-  Source: error.log (requires 'error' log level)
+  Source:      error.log (requires 'error' log level)
   ```
 
   * **nginx.upstream.response.length**
 
   ```
-  Type: gauge, bytes
+  Type:        gauge, bytes
   Description: Average length of the responses obtained from the upstream servers.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_response_length
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_response_length
   ```
 
   * **nginx.upstream.response.time**
@@ -1334,10 +1331,10 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.response.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
+  Type:        gauge, seconds.milliseconds
   Description: Time spent on receiving responses from upstream servers.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_response_time
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_response_time
   ```
 
   * **nginx.upstream.status.1xx**
@@ -1347,10 +1344,10 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.status.5xx**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Number of responses from upstream servers with specific HTTP status codes.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_status
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_status
   ```
 
 ##### Cache Metrics
@@ -1364,10 +1361,10 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.cache.updating**
 
   ```
-  Type: counter, integer
+  Type:        counter, integer
   Description: Various statistics about NGINX cache usage.
-  Source: access.log (requires custom log format)
-  Variable: $upstream_cache_status
+  Source:      access.log (requires custom log format)
+  Variable:    $upstream_cache_status
   ```
 
 #### NGINX Plus Metrics
@@ -1398,20 +1395,18 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.http.response.count**
 
   ```
-  Type: counter, integer
-  Description: The total number of client requests received, and the total
-  number of responses sent to clients.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of client requests received, and responses sent to clients.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.http.request.bytes_rcvd**
   * **plus.http.request.bytes_sent**
 
   ```
-  Type: counter, bytes
-  Description: The total number of bytes received from clients, and the total
-  number of bytes sent to clients.
-  Source: NGINX Plus extended status
+  Type:        counter, bytes
+  Description: Number of bytes received from clients, and bytes sent to clients.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.http.status.1xx**
@@ -1421,17 +1416,17 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.http.status.5xx**
 
   ```
-  Type: counter, integer
-  Description: The number of responses with status codes 1xx, 2xx, 3xx, 4xx, and 5xx.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of responses with status codes 1xx, 2xx, 3xx, 4xx, and 5xx.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.http.status.discarded**
 
   ```
-  Type: counter, integer
-  Description: The total number of requests completed without sending a response.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of requests completed without sending a response.
+  Source:      NGINX Plus extended status
   ```
 
 ##### Upstream Zone Metrics
@@ -1439,39 +1434,38 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.peer.count**
 
   ```
-  Type: gauge, integer
-  Description: The current number of live upstream servers in an upstream
-  group. If graphed/monitored without specifying an upstream, it's the current
-  number of all live upstream servers in all upstream groups.
-  Source: NGINX Plus extended status
+  Type:        gauge, integer
+  Description: Current number of live upstream servers in an upstream group. If
+               graphed/monitored without specifying an upstream, it's the current
+               number of all live upstream servers in all upstream groups.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.request.count**
   * **plus.upstream.response.count**
 
   ```
-  Type: counter, integer
-  Description: The total number of client requests forwarded to the upstream servers,
-  and the total number of responses obtained.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of client requests forwarded to the upstream servers, and responses
+               obtained.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.conn.active**
 
   ```
-  Type: gauge, integer
-  Description: The current number of active connections to the upstream servers.
-  Source: NGINX Plus extended status
+  Type:        gauge, integer
+  Description: Current number of active connections to the upstream servers.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.bytes_rcvd**
   * **plus.upstream.bytes_sent**
 
   ```
-  Type: counter, integer
-  Description: The total number of bytes received from the upstream servers,
-  and the total number of bytes sent.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of bytes received from the upstream servers, and bytes sent.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.status.1xx**
@@ -1481,10 +1475,10 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.status.5xx**
 
   ```
-  Type: counter, integer
-  Description: The number of responses from the upstream servers with status
-  codes 1xx, 2xx, 3xx, 4xx, and 5xx.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of responses from the upstream servers with status codes 1xx, 2xx,
+               3xx, 4xx, and 5xx.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.header.time**
@@ -1494,9 +1488,9 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.header.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
-  Description: The average time to get the response header from the upstream servers.
-  Source: NGINX Plus extended status
+  Type:        gauge, seconds.milliseconds
+  Description: Average time to get the response header from the upstream servers.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.response.time**
@@ -1506,20 +1500,19 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.response.time.pctl95**
 
   ```
-  Type: gauge, seconds.milliseconds
-  Description: The average time to get the full response from the upstream servers.
-  Source: NGINX Plus extended status
+  Type:        gauge, seconds.milliseconds
+  Description: Average time to get the full response from the upstream servers.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.fails.count**
   * **plus.upstream.unavail.count**
 
   ```
-  Type: counter, integer
-  Description: The total number of unsuccessful attempts to communicate with
-  the upstream servers, and the number of times the upstream servers became
-  unavailable for client requests.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of unsuccessful attempts to communicate with upstream servers, and
+               number of times upstream servers became unavailable for client requests.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.health.checks**
@@ -1527,27 +1520,26 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.health.unhealthy**
 
   ```
-  Type: counter, integer
-  Description: The total number of health check requests made, the number of
-  failed health checks, and the number of times the upstream servers became
-  unhealthy.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of performed health check requests, failed health checks, and
+               how many times the upstream servers became unhealthy.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.queue.size**
 
   ```
-  Type: gauge, integer
-  Description: The current number of requests in the queue.
-  Source: NGINX Plus extended status
+  Type:        gauge, integer
+  Description: Current number of queued requests.
+  Source:      NGINX Plus extended status
   ```
 
   * **plus.upstream.queue.overflows**
 
   ```
-  Type: counter, integer
-  Description: The total number of requests rejected due to the queue overflow.
-  Source: NGINX Plus extended status
+  Type:        counter, integer
+  Description: Number of requests rejected due to queue overflows.
+  Source:      NGINX Plus extended status
   ```
 
 ##### Cache Zone Metrics
@@ -1569,9 +1561,9 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.cache.updating.bytes**
 
   ```
-  Type: counter, integer; counter, bytes
+  Type:        counter, integer; counter, bytes
   Description: Various statistics about NGINX Plus cache usage.
-  Source: NGINX Plus extended status
+  Source:      NGINX Plus extended status
   ```
 
 <!-- /section:5 -->
