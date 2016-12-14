@@ -14,7 +14,7 @@
   - [2.1. What Operating Systems Are Supported?](#21-what-operating-systems-are-supported)
   - [2.2. What Version of Python is Required?](#22-what-version-of-python-is-required)
   - [2.3. How Do I Start to Monitor my Systems with NGINX Amplify?](#23-how-do-i-start-to-monitor-my-systems-with-nginx-amplify)
-  - [2.4. What Do I Need to Configure for NGINX Amplify Agent to Properly Report Metrics?](#24-what-do-i-need-to-configure-for-nginx-amplify-agent-to-properly-report-metrics)
+  - [2.4. What Do I Need to Configure the NGINX Amplify Agent to Properly Report Metrics?](#24-what-do-i-need-to-configure-the-nginx-amplify-agent-to-properly-report-metrics)
   - [2.5. How Do I Verify that NGINX Amplify Agent Is Correctly Installed?](#25-how-do-i-verify-that-nginx-amplify-agent-is-correctly-installed)
   - [2.6. How Can I Update NGINX Amplify Agent?](#26-how-can-i-update-nginx-amplify-agent)
   - [2.7. What System Resources Are Required?](#27-what-system-resources-are-required)
