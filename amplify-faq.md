@@ -84,7 +84,7 @@ The agent is currently officially packaged and supported for the following Linux
   * Amazon Linux (latest release)
   * Gentoo Linux (experimental Ebuild)
 
-The following OS and distributions are not fully supported yet (and no agent packages are available yet), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Feel free to submit an issue or a PR if you find something that has to be fixed.
+The following OS and distributions are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Feel free to submit an issue or a PR if you find something that has to be fixed.
 
   * FreeBSD 10
   * SLES 12
@@ -93,7 +93,9 @@ The following OS and distributions are not fully supported yet (and no agent pac
 
 ### 2.2. What Version of Python is Required?
 
-NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported yet.
+NGINX Amplify Agent will work with Python 2.6 and 2.7.
+
+Python 3 is not supported yet.
 
 ### 2.3. How Do I Start to Monitor my Systems with NGINX Amplify?
 
@@ -101,24 +103,24 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported
 
   1. Download and run the install script.
 
-  ```
-  # curl -sS -L -O \
-  https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-  API_KEY='ffeedd0102030405060708' sh ./install.sh
-  ```
+```
+# curl -sS -L -O \
+https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
+API_KEY='ffeedd0102030405060708' sh ./install.sh
+```
 
   where API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
 
   2. Verify that the Agent has started.
 
-  ```
-  # ps ax | grep -i 'amplify\-'
-  2552 ?        S      0:00 amplify-agent
-  ```
+```
+# ps ax | grep -i 'amplify\-'
+2552 ?        S      0:00 amplify-agent
+```
 
 For manual installation, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-the-agent-manually).
 
-### 2.4. What Do I Need to Configure for NGINX Amplify Agent to Properly Report Metrics?
+### 2.4. What Do I Need to Configure the NGINX Amplify Agent to Properly Report Metrics?
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
@@ -128,7 +130,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   2. The `amplify-agent` process is running and updating its [log file](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#logging).
   3. The agent is running under the same user as your NGINX worker processes.
   4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
-  5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
+  5. The [user ID that is used by the agent and the NGINX ](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can run *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
   6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graphs.
   7. *stub_status* is [properly configured](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-metric-collection), and the *stub_status module* is included in the NGINX build (this can be checked with `nginx -V`).
   8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) set in NGINX config).
@@ -145,15 +147,15 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
   1. On Ubuntu/Debian use:
 
-  ```
-  # dpkg -s nginx-amplify-agent
-  ```
+```
+# dpkg -s nginx-amplify-agent
+```
 
   2. On CentOS and Red Hat use:
 
-  ```
-  # yum info nginx-amplify-agent
-  ```
+```
+# yum info nginx-amplify-agent
+```
 
 ### 2.6. How Can I Update NGINX Amplify Agent?
 
@@ -161,17 +163,17 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
   1. On Ubuntu/Debian use:
 
-  ```
-  # apt-get update && \
-  apt-get install nginx-amplify-agent
-  ```
+```
+# apt-get update && \
+apt-get install nginx-amplify-agent
+```
 
   2. On CentOS use:
 
-  ```
-  # yum makecache && \
-  yum update nginx-amplify-agent
-  ```
+```
+# yum makecache && \
+yum update nginx-amplify-agent
+```
 
 ### 2.7. What System Resources Are Required?
 
@@ -191,15 +193,15 @@ It's as simple as
 
   1. On Ubuntu/Debian use:
 
-  ```
-  apt-get remove nginx-amplify-agent
-  ```
+```
+apt-get remove nginx-amplify-agent
+```
 
   2. On CentOS and Red Hat use:
 
-  ```
-  yum remove nginx-amplify-agent
-  ```
+```
+yum remove nginx-amplify-agent
+```
 
 ### 2.10. How Can I Override System Hostname?
 
@@ -285,6 +287,6 @@ To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) fun
 The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed — and their parameters ARE NOT exported to the SaaS backend:
 [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
-For more information on configuration analysis and reports see the [Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer).
+For more information on configuration analysis and reports see the [NGINX Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer).
 
 <!-- /section:4 -->
