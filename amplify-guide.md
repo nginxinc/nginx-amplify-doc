@@ -1446,8 +1446,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
 
   ```
   Type:        counter, integer
-  Description: Number of client requests forwarded to the upstream servers, and responses
-               obtained.
+  Description: Number of client requests forwarded to the upstream servers, and responses obtained.
   Source:      NGINX Plus extended status
   ```
 
@@ -1511,7 +1510,7 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   ```
   Type:        counter, integer
   Description: Number of unsuccessful attempts to communicate with upstream servers, and
-               number of times upstream servers became unavailable for client requests.
+               how many times upstream servers became unavailable for client requests.
   Source:      NGINX Plus extended status
   ```
 
