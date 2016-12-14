@@ -241,17 +241,17 @@ If you configured the agent for syslog metric collection (see [below](https://gi
   1. Check that you are using NGINX version 1.9.5 or newer (or NGINX Plus Release 8 or newer).
   2. Edit the NGINX configuration file and specify the syslog listener address as the first parameter to the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive. Include the `amplify` tag, and your preferred log format:
 
-```
-access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info main_ext;
-```
+  ```
+  access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info main_ext;
+  ```
 
   (see also how to extend the NGINX log format to collect [additional metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics))
 
   3. Reload NGINX:
 
-```
-# nginx -s reload
-```
+  ```
+  # nginx -s reload
+  ```
 
   (or `service nginx reload`)
 

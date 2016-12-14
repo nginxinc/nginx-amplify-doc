@@ -103,20 +103,20 @@ Python 3 is not supported yet.
 
   1. Download and run the install script.
 
-```
-# curl -sS -L -O \
-https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-API_KEY='ffeedd0102030405060708' sh ./install.sh
-```
+  ```
+  # curl -sS -L -O \
+  https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
+  API_KEY='ffeedd0102030405060708' sh ./install.sh
+  ```
 
   where API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
 
   2. Verify that the Agent has started.
 
-```
-# ps ax | grep -i 'amplify\-'
-2552 ?        S      0:00 amplify-agent
-```
+  ```
+  # ps ax | grep -i 'amplify\-'
+  2552 ?        S      0:00 amplify-agent
+  ```
 
 For manual installation, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-the-agent-manually).
 
@@ -147,15 +147,15 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
   1. On Ubuntu/Debian use:
 
-```
-# dpkg -s nginx-amplify-agent
-```
+  ```
+  # dpkg -s nginx-amplify-agent
+  ```
 
   2. On CentOS and Red Hat use:
 
-```
-# yum info nginx-amplify-agent
-```
+  ```
+  # yum info nginx-amplify-agent
+  ```
 
 ### 2.6. How Can I Update NGINX Amplify Agent?
 
@@ -163,17 +163,17 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
   1. On Ubuntu/Debian use:
 
-```
-# apt-get update && \
-apt-get install nginx-amplify-agent
-```
+  ```
+  # apt-get update && \
+  apt-get install nginx-amplify-agent
+  ```
 
   2. On CentOS use:
 
-```
-# yum makecache && \
-yum update nginx-amplify-agent
-```
+  ```
+  # yum makecache && \
+  yum update nginx-amplify-agent
+  ```
 
 ### 2.7. What System Resources Are Required?
 
@@ -193,15 +193,15 @@ It's as simple as
 
   1. On Ubuntu/Debian use:
 
-```
-apt-get remove nginx-amplify-agent
-```
+  ```
+  apt-get remove nginx-amplify-agent
+  ```
 
   2. On CentOS and Red Hat use:
 
-```
-yum remove nginx-amplify-agent
-```
+  ```
+  yum remove nginx-amplify-agent
+  ```
 
 ### 2.10. How Can I Override System Hostname?
 
