@@ -41,29 +41,29 @@
 
 ### 1.1. What Is NGINX Amplify?
 
-NGINX Amplify is a tool for comprehensive NGINX monitoring. With Amplify it becomes possible to proactively analyze and fix problems related to running and scaling NGINX-based web application architectures.
+NGINX Amplify is a tool for comprehensive NGINX monitoring. With NGINX Amplify it's easy to proactively analyze and fix problems related to running and scaling NGINX-based web applications.
 
 You can use NGINX Amplify to do the following:
 
   * Visualize and identify NGINX performance bottlenecks, overloaded servers, or potential DDoS attacks
   * Improve and optimize NGINX performance with intelligent advice and recommendations
-  * Get notified when something is wrong with application delivery
+  * Get notified when something is wrong with the application infrastructure
   * Plan web application capacity and performance
   * Keep track of the systems running NGINX
 
-### 1.2. Where Is the Main System Hosted?
+### 1.2. Where Is NGINX Amplify Hosted?
 
-NGINX Amplify SaaS is currently hosted in [AWS us-west-1](http://docs.aws.amazon.com/general/latest/gr/rande.html) (US West, N. California).
+NGINX Amplify is a SaaS and it is currently hosted in [AWS us-west-1](http://docs.aws.amazon.com/general/latest/gr/rande.html) (US West, N. California).
 
-### 1.3. Is the Traffic from the Agent to the SaaS Protected?
+### 1.3. Is the NGINX Amplify Agent Traffic Protected?
 
-All communications between the Amplify Agent and the Amplify SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent. The backend system doesn't set up any connections back to the agent.
+All communications between the agent and the backend are done securely over SSL/TLS. All traffic is always initiated by the agent. The backend system doesn't set up any connections back to the agent.
 
-### 1.4. Is the Amplify Agent Code Publicly Available?
+### 1.4. Is the NGINX Amplify Agent Code Publicly Available?
 
-Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available [here](https://github.com/nginxinc/nginx-amplify-agent).
+NGINX Amplify Agent is an open source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and is available [here](https://github.com/nginxinc/nginx-amplify-agent).
 
-### 1.5. What is This Question About My Password When Installing the Agent?
+### 1.5. What is This Question About My Password When Installing NGINX Amplify Agent?
 
 It could be that you're starting the install script from a non-root account. In this case you will need *sudo* rights. While it depends on a particular system configuration, with a non-root account *sudo* will typically ask for a password.
 
@@ -75,7 +75,7 @@ It could be that you're starting the install script from a non-root account. In 
 
 ### 2.1. What Operating Systems Are Supported?
 
-NGINX Amplify Agent currently works on the following Linux flavors only:
+The agent is currently officially packaged and supported for the following Linux flavors only:
 
   * Ubuntu 12.04, 14.04, 16.04
   * Debian 7, 8
@@ -84,11 +84,18 @@ NGINX Amplify Agent currently works on the following Linux flavors only:
   * Amazon Linux (latest release)
   * Gentoo Linux (experimental Ebuild)
 
+The following OS and distributions are not fully supported yet (and no agent packages are available yet), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Feel free to submit an issue or a PR if you find something that has to be fixed.
+
+  * FreeBSD 10
+  * SLES 12
+  * Alpine 3.3
+  * Fedora 24
+
 ### 2.2. What Version of Python is Required?
 
 NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported yet.
 
-### 2.3. How Do I Activate Monitoring for a System?
+### 2.3. How Do I Start to Monitor my Systems with NGINX Amplify?
 
 <!-- advancedList -->
 
@@ -100,18 +107,18 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7. Python 3 is not supported
   API_KEY='ffeedd0102030405060708' sh ./install.sh
   ```
 
-  where API_KEY is a unique API key assigned when you create an account with Amplify. You can also find the API key in the **Account Information** menu.
+  where API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
 
-  2. Verify that Amplify Agent has started.
+  2. Verify that the Agent has started.
 
   ```
   # ps ax | grep -i 'amplify\-'
   2552 ?        S      0:00 amplify-agent
   ```
 
-For manual installation instructions, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-the-agent-manually).
+For manual installation, please check the user guide [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-the-agent-manually).
 
-### 2.4. What Do I Need to Configure for the Amplify Agent to Properly Report Metrics?
+### 2.4. What Do I Need to Configure for NGINX Amplify Agent to Properly Report Metrics?
 
 After you install and start the agent, normally it should just start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
 
@@ -122,17 +129,17 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   3. The agent is running under the same user as your NGINX worker processes.
   4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
   5. The [user ID that the agent and the NGINX run as](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can use *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
-  6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graphs properly.
+  6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graphs.
   7. *stub_status* is [properly configured](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-metric-collection), and the *stub_status module* is included in the NGINX build (this can be checked with `nginx -V`).
-  8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) configured in NGINX config).
-  9. All NGINX configuration files are readable by the agent's user ID (check owner, group and permissions).
+  8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) set in NGINX config).
+  9. All NGINX configuration files are readable by the agent user ID (check owner, group and permissions).
   10. Extra [configuration steps have been performed as required](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) for the additional metrics to be collected.
-  11. The system DNS resolver is properly configured, and *receiver.amplify.nginx.com* can be successfully resolved.
-  12. Oubound TLS/SSL from the system to *receiver.amplify.nginx.com* is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent to use if required.
+  11. The system DNS resolver is correctly configured, and *receiver.amplify.nginx.com* can be successfully resolved.
+  12. Oubound TLS/SSL from the system to *receiver.amplify.nginx.com* is not restricted. This can be checked with *curl(1)*. [Configure a proxy server](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#setting-up-a-proxy) for the agent if required.
   13. *selinux(8)*, *apparmor(7)* or [grsecurity](https://grsecurity.net) are not interfering with the metric collection. E.g. for *selinux(8)* check **/etc/selinux/config**, try `setenforce 0` temporarily and see if it improves the situation for certain metrics.
   14. Some VPS providers use hardened Linux kernels that may restrict non-root users from accessing */proc* and */sys*. Metrics describing system and NGINX disk I/O are usually affected. There is no an easy workaround for this except for allowing the agent to run as `root`. Sometimes fixing permissions for */proc* and */sys/block* may work.
 
-### 2.5. How Do I Verify that the Amplify Agent Is Correctly Installed?
+### 2.5. How Do I Verify that NGINX Amplify Agent Is Correctly Installed?
 
 <!-- advancedList -->
 
@@ -148,7 +155,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   # yum info nginx-amplify-agent
   ```
 
-### 2.6. How Can I Update the Amplify Agent?
+### 2.6. How Can I Update NGINX Amplify Agent?
 
 <!-- advancedList -->
 
@@ -168,9 +175,9 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### 2.7. What System Resources Are Required?
 
-We worked very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
+We work very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
 
-### 2.8. How Do I Restart the Amplify Agent?
+### 2.8. How Do I Restart NGINX Amplify Agent?
 
 It's as simple as
 
@@ -178,7 +185,7 @@ It's as simple as
 # service amplify-agent restart
 ```
 
-### 2.9. How Can I Uninstall the Amplify Agent?
+### 2.9. How Can I Uninstall NGINX Amplify Agent?
 
 <!-- advancedList -->
 
@@ -194,7 +201,7 @@ It's as simple as
   yum remove nginx-amplify-agent
   ```
 
-### 2.10. How Can I Override a System's Hostname?
+### 2.10. How Can I Override System Hostname?
 
 If the agent is not able to determine the system's hostname, you can define it manually in **/etc/amplify-agent/agent.conf**
 
@@ -206,41 +213,41 @@ Check for the following section, and fill in the desired hostname:
 hostname = myhostname1
 ```
 
-The hostname should be something real—the following aren't valid hostnames:
+The hostname should be something real — the following aren't valid hostnames:
 
   * localhost
   * localhost.localdomain
   * localhost6.localdomain6
   * ip6-localhost
 
-### 2.11. How Can I Override the user ID for the Amplify Agent to use?
+### 2.11. How Can I Override the User ID for the Agent to Use?
 
 Please check the following [section](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id) of the NGINX Amplify public documentation.
 
-### 2.12. Can I Use Amplify Agent with Docker?
+### 2.12. Can I Use NGINX Amplify Agent with Docker?
 
-Although the support for a Docker environment is currently somewhat limited, in general the answer is yes, you can. Please check the following part of the Amplify Agent repository to find out [more](https://github.com/nginxinc/docker-nginx-amplify).
+Although the support for a Docker environment is currently experimental, in general the answer is yes. Please check the following part of the agent repository to find out [more](https://github.com/nginxinc/docker-nginx-amplify).
 
 <!-- /section:2 -->
 
 <!-- section:3 -->
 
-## 3. User Interface
+## 3. NGINX Amplify User Interface
 
 ### 3.1. What Browsers are Supported?
 
-Currently the following desktop browsers are fully supported:
+Currently the following desktop browsers are officially supported:
 
   * Chrome
   * Firefox
   * Safari
   * Opera
 
-### 3.2. Is the Web Interface Traffic Secure?
+### 3.2. Is the Traffic to the Web Interface Secure?
 
 We only support SSL/TLS connections to the Amplify web interface.
 
-### 3.3. How Can I Delete a System or an NGINX Instance from Monitoring?
+### 3.3. How Can I Delete a System or an NGINX Instance from NGINX Amplify?
 
 If the goal is to completely delete a previously monitored object, then do the following:
 
@@ -250,32 +257,32 @@ If the goal is to completely delete a previously monitored object, then do the f
 
 To delete a system using the web interface — find it in the [Inventory](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory), and choose the [i] icon. You can delete objects from the popup window that appears next.
 
-Bear in mind—deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alerts.
+Bear in mind — deleting objects there will not stop the agent. To completely remove a system from monitoring, please stop or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alerts.
 
 <!-- /section:3 -->
 
 <!-- section:4 -->
 
-## 4. Metrics and Metadata
+## 4. NGINX Amplify Metrics and Metadata
 
 ### 4.1. What Metrics and Metadata Are Collected?
 
 NGINX Amplify Agent collects the following types of data:
 
-  * **System metadata.** This is basic information about the OS environment where the agent runs. This could be the hostname, uptime information, OS flavor, and other data.
-  * **System metrics.** This is various data describing key system characteristics, e.g. CPU usage, memory usage, network traffic, etc.
+  * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
+  * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
-  * **NGINX metrics.** Amplify Agent collects NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), and also from the NGINX log files.
+  * **System metadata.** This is the basic information about the OS environment where the agent runs. This could be the hostname, uptime, OS flavor, and other data.
 
-Amplify Agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the data, but may occasionally invoke certain system utilities like *ps(1)*.
+The agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the metrics, but occasionally it may also invoke certain system utilities like *ps(1)*.
 
 ### 4.2. How Is the NGINX Configuration Parsed and Analyzed?
 
-Amplify Agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting.
+The agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting.
 
 To parse SSL certificate metadata the Amplify Agent uses standard openssl(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#account-settings) are turned on. SSL certificate analysis is *off* by default.
 
-The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed—and their parameters ARE NOT exported to the SaaS backend:
+The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed — and their parameters ARE NOT exported to the SaaS backend:
 [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 For more information on configuration analysis and reports see the [Amplify documentation](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer).
