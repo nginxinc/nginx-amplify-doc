@@ -242,12 +242,10 @@ If you configured the agent for syslog metric collection (see [below](https://gi
   2. Edit the NGINX configuration file and specify the syslog listener address as the first parameter to the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive. Include the `amplify` tag, and your preferred log format:
 
 ```
-access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info
+access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info main_ext;
 ```
 
-(see also how to extend the NGINX log format to collect [additional metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics))
-
-*Note*: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate **access_log** directive for each destination.
+  (see also how to extend the NGINX log format to collect [additional metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics))
 
   3. Reload NGINX:
 
@@ -256,6 +254,8 @@ access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info
 ```
 
   (or `service nginx reload`)
+
+**Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate *access_log* directive for each destination.
 
 ### What to Check if the Agent Isn't Reporting Metrics
 
@@ -541,7 +541,7 @@ The hostname should be something real. The agent won't start unless a valid host
 
 The agent can collect the NGINX log files via `syslog`. This could be useful when you don't keep the NGINX logs on disk, or when monitoring a container environment such as [Docker](https://github.com/nginxinc/docker-nginx-amplify) with NGINX Amplify.
 
-To configure the agent for syslog, add the following to the */etc/amplify-agent/agent.conf*:
+To configure the agent for syslog, add the following to the **/etc/amplify-agent/agent.conf**:
 
 ```
 [listeners]
@@ -557,7 +557,7 @@ Restart the agent to have it reparse the configuration and start listening on th
 # service amplify-agent restart
 ```
 
-Make sure to [add the `syslog` settings](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#using-syslog-for-metric-collection) to your NGINX configuration as well.
+Make sure to [add](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#using-syslog-for-metric-collection) the `syslog` settings to your NGINX configuration as well.
 
 #### Setting Up a Proxy
 
