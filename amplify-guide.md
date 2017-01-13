@@ -862,8 +862,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
   * **system.cpu.idle**
   * **system.cpu.iowait**
-  * **system.cpu.system**
-  * **system.cpu.user**
+  * **system.cpu.system**<!-- anchor:system.cpu.system -->
+  * **system.cpu.user**<!-- anchor:system.cpu.user -->
 
   ```
   Type:        gauge, percent
@@ -918,8 +918,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Description: Time spent reading from or writing to disk.
   ```
 
-  * **system.load.1**
-  * **system.load.5**
+  * **system.load.1**<!-- anchor:system.load.1 -->
+  * **system.load.5**<!-- anchor:system.load.5 -->
   * **system.load.15**
 
   ```
@@ -934,7 +934,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.mem.free**
   * **system.mem.shared**
   * **system.mem.total**
-  * **system.mem.used**
+  * **system.mem.used**<!-- anchor:system.mem.used -->
 
   ```
   Type:        gauge, bytes
@@ -948,8 +948,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Description: Statistics about system memory usage, percentage.
   ```
 
-  * **system.net.bytes_rcvd**
-  * **system.net.bytes_sent**
+  * **system.net.bytes_rcvd**<!-- anchor:system.net.bytes_rcvd -->
+  * **system.net.bytes_sent**<!-- anchor:system.net.bytes_sent -->
 
   ```
   Type:        counter, bytes
@@ -1011,8 +1011,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### HTTP Connections and Requests
 
-  * **nginx.http.conn.accepted**
-  * **nginx.http.conn.dropped**
+  * **nginx.http.conn.accepted**<!-- anchor:nginx.http.conn.accepted -->
+  * **nginx.http.conn.dropped**<!-- anchor:nginx.http.conn.dropped -->
 
   ```
   Type:        counter, integer
@@ -1021,7 +1021,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 
   * **nginx.http.conn.active**
-  * **nginx.http.conn.current**
+  * **nginx.http.conn.current**<!-- anchor:nginx.http.conn.current -->
   * **nginx.http.conn.idle**
 
   ```
@@ -1030,7 +1030,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Source:      stub_status (or N+ extended status)
   ```
 
-  * **nginx.http.request.count**
+  * **nginx.http.request.count**<!-- anchor:nginx.http.request.count -->
 
   ```
   Type:        counter, integer
@@ -1038,7 +1038,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Source:      stub_status (or N+ extended status)
   ```
 
-  * **nginx.http.request.current**
+  * **nginx.http.request.current**<!-- anchor:nginx.http.request.current -->
   * **nginx.http.request.reading**
   * **nginx.http.request.writing**
 
@@ -1085,8 +1085,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.status.1xx**
   * **nginx.http.status.2xx**
   * **nginx.http.status.3xx**
-  * **nginx.http.status.4xx**
-  * **nginx.http.status.5xx**
+  * **nginx.http.status.4xx**<!-- anchor:nginx.http.status.4xx -->
+  * **nginx.http.status.5xx**<!-- anchor:nginx.http.status.5xx -->
 
   ```
   Type:        counter, integer
@@ -1227,11 +1227,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   Variable:    $request_length
   ```
 
-  * **nginx.http.request.time**
+  * **nginx.http.request.time**<!-- anchor:nginx.http.request.time -->
   * **nginx.http.request.time.count**
   * **nginx.http.request.time.max**
   * **nginx.http.request.time.median**
-  * **nginx.http.request.time.pctl95**
+  * **nginx.http.request.time.pctl95**<!-- anchor:nginx.http.request.time.pctl95 -->
 
   ```
   Type:        gauge, seconds.milliseconds
@@ -1324,11 +1324,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   Variable:    $upstream_response_length
   ```
 
-  * **nginx.upstream.response.time**
+  * **nginx.upstream.response.time**<!-- anchor:nginx.upstream.response.time -->
   * **nginx.upstream.response.time.count**
   * **nginx.upstream.response.time.max**
   * **nginx.upstream.response.time.median**
-  * **nginx.upstream.response.time.pctl95**
+  * **nginx.upstream.response.time.pctl95**<!-- anchor:nginx.upstream.response.time.pctl95 -->
 
   ```
   Type:        gauge, seconds.milliseconds
