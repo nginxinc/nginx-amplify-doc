@@ -1094,7 +1094,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Source:      access.log
   ```
 
-  * **nginx.http.status.discarded**
+  * **nginx.http.status.discarded**<!-- anchor:nginx.http.status.discarded -->
 
   ```
   Type:        counter, integer
