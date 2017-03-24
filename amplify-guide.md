@@ -839,94 +839,116 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
   * **amplify.agent.status**
 
+<!-- json:metric["amplify.agent.status"] -->
   ```
   Type:        internal, integer
   Description: 1 - agent is up, 0 - agent is down.
   ```
+<!-- /json:metric -->
 
   * **amplify.agent.cpu.system**
   * **amplify.agent.cpu.user**
 
+<!-- json:metric["amplify.agent.cpu.system","amplify.agent.cpu.user"] -->
   ```
   Type:        gauge, percent
   Description: CPU utilization percentage observed from the agent process.
   ```
+<!-- /json:metric -->
 
   * **amplify.agent.mem.rss**
   * **amplify.agent.mem.vms**
 
+<!-- json:metric["amplify.agent.mem.rss","amplify.agent.mem.vms"] -->
   ```
   Type:        gauge, bytes
   Description: Memory utilized by the agent process.
   ```
+<!-- /json:metric -->
 
   * **system.cpu.idle**
   * **system.cpu.iowait**
   * **system.cpu.system**<!-- anchor:system.cpu.system -->
   * **system.cpu.user**<!-- anchor:system.cpu.user -->
 
+<!-- json:metric["system.cpu.idle","system.cpu.iowait","system.cpu.system","system.cpu.user"] -->
   ```
   Type:        gauge, percent
   Description: System CPU utilization.
   ```
+<!-- /json:metric -->
 
   * **system.cpu.stolen**
 
+<!-- json:metric["system.cpu.stolen"] -->
   ```
   Type:        gauge, percent
   Description: System CPU stolen. Represents time when the real CPU was not available to
                the current VM.
   ```
+<!-- /json:metric -->
 
   * **system.disk.free**
   * **system.disk.total**
   * **system.disk.used**
 
+<!-- json:metric["system.disk.free","system.disk.total","system.disk.used"] -->
   ```
   Type:        gauge, bytes
   Description: System disk usage statistics.
   ```
+<!-- /json:metric -->
 
   * **system.disk.in_use**
 
+<!-- json:metric["system.disk.in_use"] -->
   ```
   Type:        gauge, percent
   Description: System disk usage statistics, percentage.
   ```
+<!-- /json:metric -->
 
   * **system.io.iops_r**
   * **system.io.iops_w**
 
+<!-- json:metric["system.io.iops_r","system.io.iops_w"] -->
   ```
   Type:        counter, integer
   Description: Number of reads or writes per sampling window.
   ```
+<!-- /json:metric -->
 
   * **system.io.kbs_r**
   * **system.io.kbs_w**
 
+<!-- json:metric["system.io.kbs_r","system.io.kbs_w"] -->
   ```
   Type:        counter, kilobytes
   Description: Number of kilobytes read or written.
   ```
+<!-- /json:metric -->
 
   * **system.io.wait_r**
   * **system.io.wait_w**
 
+<!-- json:metric["system.io.wait_r","system.io.wait_w"] -->
   ```
   Type:        gauge, milliseconds
   Description: Time spent reading from or writing to disk.
   ```
+<!-- /json:metric -->
 
   * **system.load.1**<!-- anchor:system.load.1 -->
   * **system.load.5**<!-- anchor:system.load.5 -->
   * **system.load.15**
 
+<!-- json:metric["system.load.1","system.load.5","system.load.15"] -->
   ```
   Type:        gauge, float
   Description: Number of processes in the system run queue, averaged over the last 1, 5,
                and 15 min.
   ```
+<!-- /json:metric -->
 
   * **system.mem.available**
   * **system.mem.buffered**
@@ -936,76 +958,94 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **system.mem.total**
   * **system.mem.used**<!-- anchor:system.mem.used -->
 
+<!-- json:metric["system.mem.available","system.mem.buffered","system.mem.cached","system.mem.free","system.mem.shared","system.mem.total","system.mem.used"] -->
   ```
   Type:        gauge, bytes
   Description: Statistics about system memory usage.
   ```
+<!-- /json:metric -->
 
   * **system.mem.pct_used**
 
+<!-- json:metric["ystem.mem.pct_used"] -->
   ```
   Type:        gauge, percent
   Description: Statistics about system memory usage, percentage.
   ```
+<!-- /json:metric -->
 
   * **system.net.bytes_rcvd**<!-- anchor:system.net.bytes_rcvd -->
   * **system.net.bytes_sent**<!-- anchor:system.net.bytes_sent -->
 
+<!-- json:metric["system.net.bytes_rcvd","system.net.bytes_sent"] -->
   ```
   Type:        counter, bytes
   Description: Network I/O statistics. Number of bytes received or sent, per network
                interface.
   ```
+<!-- /json:metric -->
 
   * **system.net.drops_in.count**
   * **system.net.drops_out.count**
 
+<!-- json:metric["system.net.drops_in.count","system.net.drops_out.count"] -->
   ```
   Type:        counter, integer
   Description: Network I/O statistics. Total number of inbound or outbound packets
                dropped, per network interface.
   ```
+<!-- /json:metric -->
 
   * **system.net.packets_in.count**
   * **system.net.packets_out.count**
 
+<!-- json:metric["system.net.packets_in.count","system.net.packets_out.count"] -->
   ```
   Type:        counter, integer
   Description: Network I/O statistics. Number of packets received or sent, per network
                interface.
   ```
+<!-- /json:metric -->
 
   * **system.net.packets_in.error**
   * **system.net.packets_out.error**
 
+<!-- json:metric["system.net.packets_in.error","system.net.packets_out.error"] -->
   ```
   Type:        counter, integer
   Description: Network I/O statistics. Total number of errors while receiving or sending,
                per network interface.
   ```
+<!-- /json:metric -->
 
   * **system.net.listen_overflows**
 
+<!-- json:metric["system.net.listen_overflows"] -->
   ```
   Type:        counter, integer
   Description: Number of times the listen queue of a socket overflowed.
   ```
+<!-- /json:metric -->
 
   * **system.swap.free**
   * **system.swap.total**
   * **system.swap.used**
 
+<!-- json:metric["system.swap.free","system.swap.total","system.swap.used"] -->
   ```
   Type:        gauge, bytes
   Description: System swap memory statistics.
   ```
+<!-- /json:metric -->
 
   * **system.swap.pct_free**
 
+<!-- json:metric["system.swap.pct_free"] -->
   ```
   Type:        gauge, percent
   Description: System swap memory statistics, percentage.
   ```
+<!-- /json:metric -->
 
 ### NGINX Metrics
 
@@ -1014,56 +1054,68 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.conn.accepted**<!-- anchor:nginx.http.conn.accepted -->
   * **nginx.http.conn.dropped**<!-- anchor:nginx.http.conn.dropped -->
 
+<!-- json:metric["nginx.http.conn.accepted","nginx.http.conn.dropped"] -->
   ```
   Type:        counter, integer
   Description: NGINX-wide statistics describing HTTP connections.
   Source:      stub_status (or N+ extended status)
   ```
+<!-- /json:metric -->
 
   * **nginx.http.conn.active**
   * **nginx.http.conn.current**<!-- anchor:nginx.http.conn.current -->
   * **nginx.http.conn.idle**
 
+<!-- json:metric["nginx.http.conn.active","nginx.http.conn.current","nginx.http.conn.idle"] -->
   ```
   Type:        gauge, integer
   Description: NGINX-wide statistics describing HTTP connections.
   Source:      stub_status (or N+ extended status)
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.count**<!-- anchor:nginx.http.request.count -->
 
+<!-- json:metric["nginx.http.request.count"] -->
   ```
   Type:        counter, integer
   Description: Total number of client requests.
   Source:      stub_status (or N+ extended status)
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.current**<!-- anchor:nginx.http.request.current -->
   * **nginx.http.request.reading**
   * **nginx.http.request.writing**
 
+<!-- json:metric["nginx.http.request.current","nginx.http.request.reading","nginx.http.request.writing"] -->
   ```
   Type:        gauge, integer
   Description: Number of currently active requests (reading and writing). Number of
                requests reading headers or writing responses to clients.
   Source:      stub_status (or N+ extended status)
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.malformed**
 
+<!-- json:metric["nginx.http.request.malformed"] -->
   ```
   Type:        counter, integer
   Description: Number of malformed requests.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.body_bytes_sent**
 
+<!-- json:metric["nginx.http.request.body_bytes_sent"] -->
   ```
   Type:        counter, integer
   Description: Number of bytes sent to clients, not counting response headers.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
 #### HTTP Methods
 
@@ -1074,11 +1126,13 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.method.delete**
   * **nginx.http.method.options**
 
+<!-- json:metric["nginx.http.method.get","nginx.http.method.head","nginx.http.method.post","nginx.http.method.put","nginx.http.method.delete","nginx.http.method.options"] -->
   ```
   Type:        counter, integer
   Description: Statistics about observed request methods.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
 #### HTTP Status Codes
 
@@ -1088,20 +1142,24 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.status.4xx**<!-- anchor:nginx.http.status.4xx -->
   * **nginx.http.status.5xx**<!-- anchor:nginx.http.status.5xx -->
 
+<!-- json:metric["nginx.http.status.1xx","nginx.http.status.2xx","nginx.http.status.3xx","nginx.http.status.4xx","nginx.http.status.5xx"] -->
   ```
   Type:        counter, integer
   Description: Number of requests with specific HTTP status codes.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
   * **nginx.http.status.discarded**<!-- anchor:nginx.http.status.discarded -->
 
+<!-- json:metric["nginx.http.status.discarded"] -->
   ```
   Type:        counter, integer
   Description: Number of requests finalized with status code 499 which is logged when the
                client closes the connection.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
 #### HTTP Protocol Versions
 
@@ -1110,67 +1168,83 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   * **nginx.http.v1_1**
   * **nginx.http.v2**
 
+<!-- json:metric["nginx.http.v0_9","nginx.http.v1_0","nginx.http.v1_1","nginx.http.v2"] -->
   ```
   Type:        counter, integer
   Description: Number of requests using a specific version of the HTTP protocol.
   Source:      access.log
   ```
+<!-- /json:metric -->
 
 #### NGINX Process Metrics
 
   * **nginx.workers.count**
 
+<!-- json:metric["nginx.workers.count"] -->
   ```
   Type:        gauge, integer
   Description: Number of NGINX worker processes observed.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.cpu.system**
   * **nginx.workers.cpu.total**
   * **nginx.workers.cpu.user**
 
+<!-- json:metric["nginx.workers.cpu.system","nginx.workers.cpu.total","nginx.workers.cpu.user"] -->
   ```
   Type:        gauge, percent
   Description: CPU utilization percentage observed for NGINX worker processes.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.fds_count**
 
+<!-- json:metric["nginx.workers.fds_count"] -->
   ```
   Type:        gauge, integer
   Description: Number of file descriptors utilized by NGINX worker processes.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.io.kbs_r**
   * **nginx.workers.io.kbs_w**
 
+<!-- json:metric["nginx.workers.io.kbs_r","nginx.workers.io.kbs_w"] -->
   ```
   Type:        counter, integer
   Description: Number of kilobytes read from or written to disk by NGINX worker processes.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.mem.rss**
   * **nginx.workers.mem.vms**
 
+<!-- json:metric["nginx.workers.mem.rss","nginx.workers.mem.vms"] -->
   ```
   Type:        gauge, bytes
   Description: Memory utilized by NGINX worker processes.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.mem.rss_pct**
 
+<!-- json:metric["nginx.workers.mem.rss_pct"] -->
   ```
   Type:        gauge, percent
   Description: Memory utilization percentage for NGINX worker processes.
   ```
+<!-- /json:metric -->
 
   * **nginx.workers.rlimit_nofile**
 
+<!-- json:metric["nginx.workers.rlimit_nofile"] -->
   ```
   Type:        gauge, integer
   Description: Hard limit on the number of file descriptors as seen by NGINX worker
                processes.
   ```
+<!-- /json:metric -->
 
 #### Additional NGINX Metrics
 
@@ -1211,21 +1285,25 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 
   * **nginx.http.request.bytes_sent**
 
+<!-- json:metric["nginx.http.request.bytes_sent"] -->
   ```
   Type:        counter, integer
   Description: Number of bytes sent to clients.
   Source:      access.log (requires custom log format)
   Variable:    $bytes_sent
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.length**
 
+<!-- json:metric["nginx.http.request.length"] -->
   ```
   Type:        gauge, integer
   Description: Request length, including request line, header, and body.
   Source:      access.log (requires custom log format)
   Variable:    $request_length
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.time**<!-- anchor:nginx.http.request.time -->
   * **nginx.http.request.time.count**
@@ -1233,6 +1311,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.http.request.time.median**
   * **nginx.http.request.time.pctl95**<!-- anchor:nginx.http.request.time.pctl95 -->
 
+<!-- json:metric["nginx.http.request.time","nginx.http.request.time.count","nginx.http.request.time.max","nginx.http.request.time.median","nginx.http.request.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Request processing time — time elapsed between reading the first bytes from
@@ -1240,17 +1319,21 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   Source:      access.log (requires custom log format)
   Variable:    $request_time
   ```
+<!-- /json:metric -->
 
   * **nginx.http.request.buffered**
 
+<!-- json:metric["nginx.http.request.buffered"] -->
   ```
   Type:        counter, integer
   Description: Number of requests that were buffered to disk.
   Source:      error.log (requires 'warn' log level)
   ```
+<!-- /json:metric -->
 
   * **nginx.http.gzip.ratio**
 
+<!-- json:metric["nginx.http.gzip.ratio"] -->
   ```
   Type:        gauge, float
   Description: Achieved compression ratio, calculated as the ratio between the original
@@ -1258,6 +1341,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   Source:      access.log (requires custom log format)
   Variable:    $gzip_ratio
   ```
+<!-- /json:metric -->
 
 ##### Upstream Metrics
 
@@ -1267,6 +1351,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.connect.time.median**
   * **nginx.upstream.connect.time.pctl95**
 
+<!-- json:metric["nginx.upstream.connect.time","nginx.upstream.connect.time.count","nginx.upstream.connect.time.max","nginx.upstream.connect.time.median","nginx.upstream.connect.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Time spent on establishing connections with upstream servers. With SSL, it
@@ -1274,6 +1359,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   Source:      access.log (requires custom log format)
   Variable:    $upstream_connect_time
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.header.time**
   * **nginx.upstream.header.time.count**
@@ -1281,48 +1367,58 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.header.time.median**
   * **nginx.upstream.header.time.pctl95**
 
+<!-- json:metric["nginx.upstream.header.time","nginx.upstream.header.time.count","nginx.upstream.header.time.max","nginx.upstream.header.time.median","nginx.upstream.header.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Time spent on receiving response headers from upstream servers.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_header_time
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.response.buffered**
 
+<!-- json:metric["nginx.upstream.response.buffered"] -->
   ```
   Type:        counter, integer
   Description: Number of upstream responses buffered to disk.
   Source:      error.log (requires 'warn' log level)
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.request.count**
   * **nginx.upstream.next.count**
 
+<!-- json:metric["nginx.upstream.request.count","nginx.upstream.next.count"] -->
   ```
   Type:        counter, integer
   Description: Number of requests that were sent to upstream servers.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_*
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.request.failed**
   * **nginx.upstream.response.failed**
 
+<!-- json:metric["nginx.upstream.request.failed","nginx.upstream.response.failed"] -->
   ```
   Type:        counter, integer
   Description: Number of requests and responses that failed while proxying.
   Source:      error.log (requires 'error' log level)
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.response.length**
 
+<!-- json:metric["nginx.upstream.response.length"] -->
   ```
   Type:        gauge, bytes
   Description: Average length of the responses obtained from the upstream servers.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_response_length
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.response.time**<!-- anchor:nginx.upstream.response.time -->
   * **nginx.upstream.response.time.count**
@@ -1330,12 +1426,14 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.response.time.median**
   * **nginx.upstream.response.time.pctl95**<!-- anchor:nginx.upstream.response.time.pctl95 -->
 
+<!-- json:metric["nginx.upstream.response.time","nginx.upstream.response.time.count","nginx.upstream.response.time.max","nginx.upstream.response.time.median","nginx.upstream.response.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Time spent on receiving responses from upstream servers.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_response_time
   ```
+<!-- /json:metric -->
 
   * **nginx.upstream.status.1xx**
   * **nginx.upstream.status.2xx**
@@ -1343,12 +1441,14 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.upstream.status.4xx**
   * **nginx.upstream.status.5xx**
 
+<!-- json:metric["nginx.upstream.status.1xx","nginx.upstream.status.2xx","nginx.upstream.status.3xx","nginx.upstream.status.4xx","nginx.upstream.status.5xx"] -->
   ```
   Type:        counter, integer
   Description: Number of responses from upstream servers with specific HTTP status codes.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_status
   ```
+<!-- /json:metric -->
 
 ##### Cache Metrics
 
@@ -1360,12 +1460,14 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   * **nginx.cache.stale**
   * **nginx.cache.updating**
 
+<!-- json:metric["nginx.cache.bypass","nginx.cache.expired","nginx.cache.hit","nginx.cache.miss","nginx.cache.revalidated","nginx.cache.stale","nginx.cache.updating"] -->
   ```
   Type:        counter, integer
   Description: Various statistics about NGINX cache usage.
   Source:      access.log (requires custom log format)
   Variable:    $upstream_cache_status
   ```
+<!-- /json:metric -->
 
 #### NGINX Plus Metrics
 
@@ -1394,20 +1496,24 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.http.request.count**
   * **plus.http.response.count**
 
+<!-- json:metric["plus.http.request.count","plus.http.response.count"] -->
   ```
   Type:        counter, integer
   Description: Number of client requests received, and responses sent to clients.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.http.request.bytes_rcvd**
   * **plus.http.request.bytes_sent**
 
+<!-- json:metric["plus.http.request.bytes_rcvd","plus.http.request.bytes_sent"] -->
   ```
   Type:        counter, bytes
   Description: Number of bytes received from clients, and bytes sent to clients.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.http.status.1xx**
   * **plus.http.status.2xx**
@@ -1415,24 +1521,29 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.http.status.4xx**
   * **plus.http.status.5xx**
 
+<!-- json:metric["plus.http.status.1xx","plus.http.status.2xx","plus.http.status.3xx","plus.http.status.4xx","plus.http.status.5xx"] -->
   ```
   Type:        counter, integer
   Description: Number of responses with status codes 1xx, 2xx, 3xx, 4xx, and 5xx.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.http.status.discarded**
 
+<!-- json:metric["plus.http.status.discarded"] -->
   ```
   Type:        counter, integer
   Description: Number of requests completed without sending a response.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
 ##### Upstream Zone Metrics
 
   * **plus.upstream.peer.count**
 
+<!-- json:metric["plus.upstream.peer.count"] -->
   ```
   Type:        gauge, integer
   Description: Current number of live upstream servers in an upstream group. If
@@ -1440,32 +1551,39 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
                number of all live upstream servers in all upstream groups.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.request.count**
   * **plus.upstream.response.count**
 
+<!-- json:metric["plus.upstream.request.count","plus.upstream.response.count"] -->
   ```
   Type:        counter, integer
   Description: Number of client requests forwarded to the upstream servers, and responses obtained.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.conn.active**
 
+<!-- json:metric["plus.upstream.conn.active"] -->
   ```
   Type:        gauge, integer
   Description: Current number of active connections to the upstream servers.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.bytes_rcvd**
   * **plus.upstream.bytes_sent**
 
+<!-- json:metric["plus.upstream.bytes_rcvd","plus.upstream.bytes_sent"] -->
   ```
   Type:        counter, integer
   Description: Number of bytes received from the upstream servers, and bytes sent.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.status.1xx**
   * **plus.upstream.status.2xx**
@@ -1473,12 +1591,14 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.status.4xx**
   * **plus.upstream.status.5xx**
 
+<!-- json:metric["plus.upstream.status.1xx","plus.upstream.status.2xx","plus.upstream.status.3xx","plus.upstream.status.4xx","plus.upstream.status.5xx"] -->
   ```
   Type:        counter, integer
   Description: Number of responses from the upstream servers with status codes 1xx, 2xx,
                3xx, 4xx, and 5xx.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.header.time**
   * **plus.upstream.header.time.count**
@@ -1486,11 +1606,13 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.header.time.median**
   * **plus.upstream.header.time.pctl95**
 
+<!-- json:metric["plus.upstream.header.time","plus.upstream.header.time.count","plus.upstream.header.time.max","plus.upstream.header.time.median","plus.upstream.header.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Average time to get the response header from the upstream servers.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.response.time**
   * **plus.upstream.response.time.count**
@@ -1498,48 +1620,58 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.upstream.response.time.median**
   * **plus.upstream.response.time.pctl95**
 
+<!-- json:metric["plus.upstream.response.time","plus.upstream.response.time.count","plus.upstream.response.time.max","plus.upstream.response.time.median","plus.upstream.response.time.pctl95"] -->
   ```
   Type:        gauge, seconds.milliseconds
   Description: Average time to get the full response from the upstream servers.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.fails.count**
   * **plus.upstream.unavail.count**
 
+<!-- json:metric["plus.upstream.fails.count","plus.upstream.unavail.count"] -->
   ```
   Type:        counter, integer
   Description: Number of unsuccessful attempts to communicate with upstream servers, and
                how many times upstream servers became unavailable for client requests.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.health.checks**
   * **plus.upstream.health.fails**
   * **plus.upstream.health.unhealthy**
 
+<!-- json:metric["plus.upstream.health.checks","plus.upstream.health.fails","plus.upstream.health.unhealthy"] -->
   ```
   Type:        counter, integer
   Description: Number of performed health check requests, failed health checks, and
                how many times the upstream servers became unhealthy.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.queue.size**
 
+<!-- json:metric["plus.upstream.queue.size"] -->
   ```
   Type:        gauge, integer
   Description: Current number of queued requests.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
   * **plus.upstream.queue.overflows**
 
+<!-- json:metric["plus.upstream.queue.overflows"] -->
   ```
   Type:        counter, integer
   Description: Number of requests rejected due to queue overflows.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
 ##### Cache Zone Metrics
 
@@ -1559,10 +1691,12 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   * **plus.cache.updating**
   * **plus.cache.updating.bytes**
 
+<!-- json:metric["plus.cache.bypass","plus.cache.bypass.bytes","plus.cache.expired","plus.cache.expired.bytes","plus.cache.hit","plus.cache.hit.bytes","plus.cache.miss","plus.cache.miss.bytes","plus.cache.revalidated","plus.cache.revalidated.bytes","plus.cache.size","plus.cache.stale","plus.cache.stale.bytes","plus.cache.updating","plus.cache.updating.bytes"] -->
   ```
   Type:        counter, integer; counter, bytes
   Description: Various statistics about NGINX Plus cache usage.
   Source:      NGINX Plus extended status
   ```
+<!-- /json:metric -->
 
 <!-- /section:5 -->
