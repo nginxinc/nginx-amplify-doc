@@ -60,6 +60,8 @@
       - [Server Zone Metrics](#server-zone-metrics)
       - [Upstream Zone Metrics](#upstream-zone-metrics)
       - [Cache Zone Metrics](#cache-zone-metrics)
+  - [Other metrics](#other-metrics)
+    - [PHP-FPM metrics](#php-fpm-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -109,14 +111,15 @@ You will need to install the Amplify Agent on all hosts that you have to monitor
 
 After proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the NGINX Amplify web interface in about a minute or so.
 
-The agent collects metrics on a "per-object" basis. Currently the following object types exist:
+NGINX Amplify can currently monitor and collect performance metrics for:
 
-  1. Operating system (this is the parent object)
-  2. NGINX instance
+  1. Operating system (Linux, FreeBSD)
+  2. NGINX and NGINX Plus
+  3. PHP-FPM
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
-**Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You DO NOT have to manually add or configure NGINX instances in the web interface after installing the agent.
+**Note.**  There's no need to manually add or configure anything in the web interface after installing the agent. When the agent is started, the metrics and the metadata are automatically reported to the Amplify backend, and visualized in the web interface.
 
 When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup — see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
 
@@ -126,6 +129,7 @@ NGINX Amplify Agent collects the following types of data:
 
   * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
   * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
+  * **PHP-FPM metrics.** The agent can obtain sets of metrics from the PHP-FPM pool status, if it detects a PHP-FPM master running.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **System metadata.** This is the basic information about the OS environment where the agent runs. This could be the hostname, uptime, OS flavor, and other data.
 
@@ -137,7 +141,7 @@ Metadata is also reported every minute. Changes in the metadata can be examined 
 
 NGINX config updates are reported only when a configuration change is detected.
 
-If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way is about 2 hour's worth.
+If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered by the agent is about 2 hour's worth.
 
 ### Detecting and Monitoring NGINX Instances
 
@@ -151,7 +155,7 @@ A separate instance of NGINX as seen by the agent would be the following:
   * A unique master process and its workers, started with an **absolute path** to a distinct NGINX binary
   * A master process running with a default config path, or with a custom path set in the command-line parameters
 
-**Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* objects for monitoring. On a single system several NGINX objects always have the same parent object (the OS).
+**Note.** The agent will try to detect and monitor all unique NGINX instances currently running on a host. Separate sets of metrics and metadata are collected for each unique NGINX instance.
 
 ### Configuring NGINX for Metric Collection
 
@@ -161,9 +165,11 @@ In order to monitor an NGINX instance, the agent should be able to [find the rel
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to configure either the *stub_status* module OR the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
+If you're using NGINX Plus, then you need to configure either the *stub_status* module -or- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
 
-Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
+Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
+
+Add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
 ```
 
@@ -190,7 +196,7 @@ server {
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
+**Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually somewhere where it's appropriate.
 
 **Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
 
@@ -228,7 +234,7 @@ For more information about the metric list, please refer to [**Metrics and Metad
 
 #### Metrics From access.log and error.log
 
-NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read the log files. Please also make sure that the log files are being written normally.
+NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
 
 You don't have to specifically point the agent to either the NGINX configuration or the NGINX log files — it should detect their location automatically.
 
@@ -257,7 +263,7 @@ If you configured the agent for syslog metric collection (see [below](https://gi
 
   (or `service nginx reload`)
 
-**Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate *access_log* directive for each destination.
+**Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.
 
 ### What to Check if the Agent Isn't Reporting Metrics
 
