@@ -115,7 +115,7 @@ NGINX Amplify can currently monitor and collect performance metrics for:
 
   1. Operating system (Linux, FreeBSD)
   2. NGINX and NGINX Plus
-  3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/backlog/amplify-guide.md#php-fpm-metrics)
+  3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
@@ -687,6 +687,8 @@ When you log in to Amplify, you’re presented with a collection of predefined g
 
 If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into tabs such as "System", "NGINX" and so on.
 
+![Add Graph](images/amplify-graphs.png)
+
 Some graphs have an additional selector. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing.
 
 On the right, above the graphs, you will find the time range selector, which helps to display different time periods for the graphs.
@@ -699,7 +701,7 @@ Check the [Metrics and Metadata](https://github.com/nginxinc/nginx-amplify-doc/b
 
 From the top menu bar, you can always open the inventory of the systems that are being monitored. When the agent is properly installed on a new system and reporting, it's automatically visible in the system index on the left and in the **Inventory**.
 
-![Add Graph](images/systems.png)
+![Add Graph](images/amplify-inventory.png.png)
 
 The **Inventory** allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
@@ -726,7 +728,7 @@ To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** d
 
 When adding or editing a graph, the following dialog appears:
 
-![Add Graph](images/add-graph.png)
+![Add Graph](images/amplify-custom-graph-filter.png)
 
 To define a graph, perform these steps:
 
@@ -1736,11 +1738,11 @@ To start monitoring PHP-FPM, follow the steps below:
   # SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
   ```
 
-  and that the above command (or alike) returns the proper list of the PHP-FPM metrics.
+  and that the above command (or alike) returns the proper set of PHP-FPM metrics.
 
   **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
 
-  6. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/backlog/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+  6. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
 
   7. Check that the following options are set in **/etc/amplify-agent/agent.conf**
 
@@ -1751,13 +1753,13 @@ To start monitoring PHP-FPM, follow the steps below:
 
   8. Restart the agent.
 
-If everything of the above works, then the agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
+The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
   * No status enabled for any of the pools.
   * Wrong permissions for the PHP-FPM listen sockets.
-  * Using variables like `$pool` in the socket configuration (we don't support it yet, but we will).
+  * Using variables like `$pool` in the socket configuration.
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
 
