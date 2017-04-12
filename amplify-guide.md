@@ -129,7 +129,7 @@ NGINX Amplify Agent collects the following types of data:
 
   * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
   * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
-  * **PHP-FPM metrics.** The agent can obtain sets of metrics from the PHP-FPM pool status, if it detects a PHP-FPM master running.
+  * **PHP-FPM metrics.** The agent can obtain metrics from the PHP-FPM pool status, if it detects a running PHP-FPM master process.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **System metadata.** This is the basic information about the OS environment where the agent runs. This could be the hostname, uptime, OS flavor, and other data.
 
@@ -707,7 +707,7 @@ In the rightmost column of the **Inventory** you will also find the settings and
 
 You can apply sorting, search, and filters to the **Inventory** to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. You can use regular expressions with the search function.
 
-**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring— otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
+**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring, otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 ### Dashboards
 
@@ -1714,7 +1714,54 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
 
 #### PHP-FPM metrics
 
-NGINX Amplify Agent can collect metrics from the PHP-FPM processes, provided the necessary configuration steps are done.
+You can also monitor your PHP-FPM applications with NGINX Amplify.
+
+When the agent finds a PHP-FPM master process, it then tries to auto-detect the path to the PHP-FPM configuration. When the PHP-FPM configuration is found, the agent will look up the pool definitions, and the corresponding `pm.status_path` directives.
+
+The agent will try to find all pools and status URIs currently configured. The agent will then try to query the PHP-FPM pool status(es) via FastCGI. There's no need to define HTTP proxy in your NGINX configuration that will point to the PHP-FPM status URIs.
+
+To start monitoring PHP-FPM, follow the steps below:
+
+  1. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/backlog/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  2. Check that the following options are set in **/etc/amplify-agent/agent.conf**
+
+```
+[extensions]
+phpfpm = True
+```
+
+  3. Restart the agent.
+
+  4. Make sure that your PHP-FPM status is enabled for at least one pool (if not, uncomment the `pm.status_path` directive for the pool, and restart PHP-FPM).
+
+  5. Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`).
+
+  6. Check that the listen socket for the PHP-FPM pool you want to monitor (and for which you enabled `pm.status_path`) is properly configured with `listen.owner` and `listen.group` (should be the user ID from step #5 above, e.g. `www-data`).
+
+  7. Check that the PHP-FPM listen socket for the pool is properly created and has the right permissions.
+
+  8. Check that you can query the PHP-FPM status for the pool from the command line, e.g.
+
+```
+# SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
+```
+
+and that the above command (or alike) returns the proper list of the PHP-FPM metrics.
+
+**Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
+
+  9. If everything of the above works, then the agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
+
+Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
+
+  * No status enabled for any of the pools.
+  * Wrong permissions for the PHP-FPM listen sockets.
+  * Using variables in the socket configuration (we don't support it yet, but we will).
+
+With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
+
+The PHP-FPM metrics on the **Graphs** page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to "Dashboards" and create custom graphs per pool.
 
 Below is the list of the currently supported PHP-FPM metrics.
 
