@@ -701,7 +701,7 @@ Check the [Metrics and Metadata](https://github.com/nginxinc/nginx-amplify-doc/b
 
 From the top menu bar, you can always open the inventory of the systems that are being monitored. When the agent is properly installed on a new system and reporting, it's automatically visible in the system index on the left and in the **Inventory**.
 
-![Add Graph](images/amplify-inventory.png.png)
+![Add Graph](images/amplify-inventory.png)
 
 The **Inventory** allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
@@ -735,8 +735,8 @@ To define a graph, perform these steps:
   1. Enter the graph title.
   2. Pick one or more metrics. You can combine multiple metrics on the same graph using the "Add another metric" button.
   3. After the metric is selected, you are able to see the systems for which the metric has been observed. Select one or multiple systems here. You can also use tags to specify the systems.
-  4. Select either "Sum" or "Avg" as the aggregation function.
-  5. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Add metric filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
+  4. When aggregating across multiple systems, select either "Sum" or "Avg" as the aggregation function.
+  5. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Add metric filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by an URI of **/api/feed/reports**. You can also build other filters, e.g. displaying metric **nginx.http.status.2xx** for the responses with the status code 201.
   6. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
 
 **Note.** When using filters, all the "metric dimensions" aren't stored in the NGINX Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
