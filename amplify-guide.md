@@ -115,7 +115,7 @@ NGINX Amplify can currently monitor and collect performance metrics for:
 
   1. Operating system (Linux, FreeBSD)
   2. NGINX and NGINX Plus
-  3. PHP-FPM
+  3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/backlog/amplify-guide.md#php-fpm-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
@@ -1743,13 +1743,13 @@ phpfpm = True
 
   8. Check that you can query the PHP-FPM status for the pool from the command line, e.g.
 
-```
-# SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
-```
+  ```
+  # SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
+  ```
 
-and that the above command (or alike) returns the proper list of the PHP-FPM metrics.
+  and that the above command (or alike) returns the proper list of the PHP-FPM metrics.
 
-**Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
+  **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
 
   9. If everything of the above works, then the agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
@@ -1757,7 +1757,7 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
 
   * No status enabled for any of the pools.
   * Wrong permissions for the PHP-FPM listen sockets.
-  * Using variables in the socket configuration (we don't support it yet, but we will).
+  * Using variables like `$pool` in the socket configuration (we don't support it yet, but we will).
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
 
