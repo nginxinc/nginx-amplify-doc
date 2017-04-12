@@ -1699,4 +1699,113 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   ```
 <!-- /json:metric -->
 
+### Other metrics
+
+#### PHP-FPM metrics
+
+NGINX Amplify Agent can collect metrics from the PHP-FPM processes, provided the necessary configuration steps are done.
+
+Below is the list of the currently supported PHP-FPM metrics.
+
+  * **php.fpm.conn.accepted**
+
+<!-- json:metric["php.fpm.conn.accepted"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of requests accepted by the pool.
+  Source:      PHP-FPM status (accepted conn)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.current**
+
+<!-- json:metric["php.fpm.queue.current"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of requests in the queue of pending connections.
+  Source:      PHP-FPM status (listen queue)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.max**
+
+<!-- json:metric["php.fpm.queue.max"] -->
+  ```
+  Type:        gauge, integer
+  Description: The maximum number of requests in the queue of pending connections since FPM has started.
+  Source:      PHP-FPM status (max listen queue)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.len**
+
+<!-- json:metric["php.fpm.queue.len"] -->
+  ```
+  Type:        gauge, integer
+  Description: The size of the socket queue of pending connections.
+  Source:      PHP-FPM status (listen queue len)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.idle**
+
+<!-- json:metric["php.fpm.proc.idle"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of idle processes.
+  Source:      PHP-FPM status (idle processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.active**
+
+<!-- json:metric["php.fpm.proc.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of active processes.
+  Source:      PHP-FPM status (active processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.total**
+
+<!-- json:metric["php.fpm.proc.total"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of idle + active processes.
+  Source:      PHP-FPM status (total processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.max_active**
+
+<!-- json:metric["php.fpm.proc.max_active"] -->
+  ```
+  Type:        gauge, integer
+  Description: The maximum number of active processes since FPM has started.
+  Source:      PHP-FPM status (max active processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.max_child**
+
+<!-- json:metric["php.fpm.proc.max_child"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of times, the process limit has been reached.
+  Source:      PHP-FPM status (max children reached)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.slow_req**
+
+<!-- json:metric["php.fpm.slow_req"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of requests that exceeded request_slowlog_timeout value.
+  Source:      PHP-FPM status (slow requests)
+  ```
+<!-- /json:metric -->
+
+
 <!-- /section:5 -->
