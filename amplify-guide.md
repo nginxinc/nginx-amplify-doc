@@ -679,9 +679,9 @@ To completely delete a previously monitored object, perform the following steps:
 
 When you log in to Amplify, you’re presented with a collection of predefined graphs on the **Graphs** page. Here you can see an overview of the key metric stats, such as CPU, memory, and disk usage for all of your systems.
 
-If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into categories such as "System", "NGINX" and so on.
+If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into tabs such as "System", "NGINX" and so on.
 
-Some graphs have an additional selector for the "label" associated with a metric. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing. Switching between labels changes the graph to display the corresponding data.
+Some graphs have an additional selector. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing.
 
 On the right, above the graphs, you will find the time range selector, which helps to display different time periods for the graphs.
 
@@ -714,9 +714,9 @@ Some of the use cases for a custom set of graphs are the following:
   * Visualizing the performance of a group of NGINX servers — for example, front-end load balancers, or an NGINX edge caching layer
   * Analyzing a detailed breakdown of HTTP status codes per application
 
-When building a custom graph, metrics can be summed or averaged across several NGINX servers. It is also possible to create additional “metric dimensions”, for example, reporting the number of POST requests for a specific URI.
+When building a custom graph, metrics can be summed or averaged across several NGINX servers. By using metric filters it is also possible to create additional “metric dimensions” — for example, reporting the number of POST requests for a specific URI.
 
-To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **Add Graph** in the upper right corner to start adding graphs to the dashboard.
+To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **New Graph** in the upper right corner to start adding graphs to the dashboard.
 
 When adding or editing a graph, the following dialog appears:
 
@@ -724,13 +724,14 @@ When adding or editing a graph, the following dialog appears:
 
 To define a graph, perform these steps:
 
-  1. First pick one or more metrics. You can combine multiple metrics on the same graph using the "Add another metric" button at the bottom.
-  2. After the metric is selected, NGINX Amplify lists the objects for which it has already observed this metric. Select one or multiple objects here. In the example above the objects are the NGINX instances on "astra" and "otter".
-  3. Select either "sum" or "avg" as the aggregation function.
-  4. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Apply filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
-  5. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
+  1. Enter the graph title.
+  2. Pick one or more metrics. You can combine multiple metrics on the same graph using the "Add another metric" button.
+  3. After the metric is selected, you are able to see the systems for which the metric has been observed. Select one or multiple systems here. You can also use tags to specify the systems.
+  4. Select either "Sum" or "Avg" as the aggregation function.
+  5. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Add metric filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
+  6. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
 
-**Note.** For filters, all the "metric dimensions" aren't stored in the Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
+**Note.** When using filters, all the "metric dimensions" aren't stored in the NGINX Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
 
 Because NGINX Amplify is **not** a SaaS log analyzer, the additional slicing for "metric dimensions" is implemented inside the agent. The agent can parse the NGINX access logs on-the-fly and extract all the necessary metrics **without** sending the raw log entries elsewhere. Moreover, the agent understands custom log formats automatically, and will start looking for various newly defined "metric dimensions" following a particular [log_format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) specification.
 
@@ -738,7 +739,9 @@ Essentially, the agent performs a combination of real-time log analytics and sta
 
 Metric filters can be really powerful. By using the filters and creating additional "metric dimensions", it is possible to build highly granular and very informative graphs. To enable the agent to slice the metrics you must add the corresponding log variables to the active NGINX log format. Please see the [Additional NGINX metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) section below.
 
-Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph.
+Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the extended status zones to build more detailed visualizations.
+
+When editing a custom dashboard, you can also use additional features like "Clone" or "New Set" to streamline the worklow. The "New Set" function in particular can be very helpful to quickly create various metric visualizations for NGINX or the operating system.
 
 ### Analyzer
 
@@ -795,7 +798,7 @@ The way rules and alerts work is the following:
   3. If the threshold is met, an alert notification is generated, and the rule will continue to be monitored.
   4. If subsequent metric updates show that the metric no longer violates the threshold for the configured period, the alert is cleared.
 
-By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
+By default there's no filtering by hostname. If a specific alert should only be raised for a particular system, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
 
 There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
@@ -823,7 +826,9 @@ Per-system settings are accessible via the "Settings" icon that can be found for
 
 Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the per-system settings menu.
 
-Last but not least, in the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
+In the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
+
+Last but not least, inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
 
 <!-- /section:4 -->
 
@@ -1801,7 +1806,7 @@ Below is the list of the currently supported PHP-FPM metrics.
 
 <!-- json:metric["php.fpm.slow_req"] -->
   ```
-  Type:        gauge, integer
+  Type:        counter, integer
   Description: The number of requests that exceeded request_slowlog_timeout value.
   Source:      PHP-FPM status (slow requests)
   ```
