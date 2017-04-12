@@ -1744,10 +1744,10 @@ To start monitoring PHP-FPM, follow the steps below:
 
   7. Check that the following options are set in **/etc/amplify-agent/agent.conf**
 
-```
+  ```
   [extensions]
   phpfpm = True
-```
+  ```
 
   8. Restart the agent.
 
