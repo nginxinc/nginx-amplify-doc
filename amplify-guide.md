@@ -60,6 +60,8 @@
       - [Server Zone Metrics](#server-zone-metrics)
       - [Upstream Zone Metrics](#upstream-zone-metrics)
       - [Cache Zone Metrics](#cache-zone-metrics)
+  - [Other metrics](#other-metrics)
+    - [PHP-FPM metrics](#php-fpm-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -109,14 +111,15 @@ You will need to install the Amplify Agent on all hosts that you have to monitor
 
 After proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the NGINX Amplify web interface in about a minute or so.
 
-The agent collects metrics on a "per-object" basis. Currently the following object types exist:
+NGINX Amplify can currently monitor and collect performance metrics for:
 
-  1. Operating system (this is the parent object)
-  2. NGINX instance
+  1. Operating system (Linux, FreeBSD)
+  2. NGINX and NGINX Plus
+  3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
-**Note.** When objects are first seen by the agent, they are automatically created in the Amplify backend, and visualized in the web interface. You DO NOT have to manually add or configure NGINX instances in the web interface after installing the agent.
+**Note.**  There's no need to manually add or configure anything in the web interface after installing the agent. When the agent is started, the metrics and the metadata are automatically reported to the Amplify backend, and visualized in the web interface.
 
 When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup — see [**User Interface**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#user-interface) below.
 
@@ -126,6 +129,7 @@ NGINX Amplify Agent collects the following types of data:
 
   * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
   * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
+  * **PHP-FPM metrics.** The agent can obtain metrics from the PHP-FPM pool status, if it detects a running PHP-FPM master process.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **System metadata.** This is the basic information about the OS environment where the agent runs. This could be the hostname, uptime, OS flavor, and other data.
 
@@ -137,7 +141,7 @@ Metadata is also reported every minute. Changes in the metadata can be examined 
 
 NGINX config updates are reported only when a configuration change is detected.
 
-If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered this way is about 2 hour's worth.
+If the agent is not able to reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics, and will send them over to Amplify as soon as connectivity is re-established. The maximum amount of data that could be buffered by the agent is about 2 hour's worth.
 
 ### Detecting and Monitoring NGINX Instances
 
@@ -151,7 +155,7 @@ A separate instance of NGINX as seen by the agent would be the following:
   * A unique master process and its workers, started with an **absolute path** to a distinct NGINX binary
   * A master process running with a default config path, or with a custom path set in the command-line parameters
 
-**Note.** The agent will try to detect all unique NGINX instances currently running on a host, and will create *separate* objects for monitoring. On a single system several NGINX objects always have the same parent object (the OS).
+**Note.** The agent will try to detect and monitor all unique NGINX instances currently running on a host. Separate sets of metrics and metadata are collected for each unique NGINX instance.
 
 ### Configuring NGINX for Metric Collection
 
@@ -161,9 +165,11 @@ In order to monitor an NGINX instance, the agent should be able to [find the rel
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to configure either the *stub_status* module OR the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
+If you're using NGINX Plus, then you need to configure either the *stub_status* module -or- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
 
-Otherwise, add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
+Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
+
+Add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
 ```
 
@@ -190,7 +196,7 @@ server {
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
+**Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
 **Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
 
@@ -228,7 +234,7 @@ For more information about the metric list, please refer to [**Metrics and Metad
 
 #### Metrics From access.log and error.log
 
-NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) can read the log files. Please also make sure that the log files are being written normally.
+NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
 
 You don't have to specifically point the agent to either the NGINX configuration or the NGINX log files — it should detect their location automatically.
 
@@ -257,7 +263,7 @@ If you configured the agent for syslog metric collection (see [below](https://gi
 
   (or `service nginx reload`)
 
-**Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate *access_log* directive for each destination.
+**Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.
 
 ### What to Check if the Agent Isn't Reporting Metrics
 
@@ -679,9 +685,11 @@ To completely delete a previously monitored object, perform the following steps:
 
 When you log in to Amplify, you’re presented with a collection of predefined graphs on the **Graphs** page. Here you can see an overview of the key metric stats, such as CPU, memory, and disk usage for all of your systems.
 
-If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into categories such as "System", "NGINX" and so on.
+If you click on a system on the left, the graphs will change to reflect the metrics for the selected system. The graphs are further split into tabs such as "System", "NGINX" and so on.
 
-Some graphs have an additional selector for the "label" associated with a metric. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing. Switching between labels changes the graph to display the corresponding data.
+![Add Graph](images/amplify-graphs.png)
+
+Some graphs have an additional selector. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing.
 
 On the right, above the graphs, you will find the time range selector, which helps to display different time periods for the graphs.
 
@@ -693,7 +701,7 @@ Check the [Metrics and Metadata](https://github.com/nginxinc/nginx-amplify-doc/b
 
 From the top menu bar, you can always open the inventory of the systems that are being monitored. When the agent is properly installed on a new system and reporting, it's automatically visible in the system index on the left and in the **Inventory**.
 
-![Add Graph](images/systems.png)
+![Add Graph](images/amplify-inventory.png)
 
 The **Inventory** allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
@@ -701,7 +709,7 @@ In the rightmost column of the **Inventory** you will also find the settings and
 
 You can apply sorting, search, and filters to the **Inventory** to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. You can use regular expressions with the search function.
 
-**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring— otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
+**Note.** Bear in mind, that you'd also need to stop or uninstall the agent on the systems being removed from the monitoring, otherwise the objects will reappear in the UI. Be sure to delete any system specific alert rules too.
 
 ### Dashboards
 
@@ -714,23 +722,24 @@ Some of the use cases for a custom set of graphs are the following:
   * Visualizing the performance of a group of NGINX servers — for example, front-end load balancers, or an NGINX edge caching layer
   * Analyzing a detailed breakdown of HTTP status codes per application
 
-When building a custom graph, metrics can be summed or averaged across several NGINX servers. It is also possible to create additional “metric dimensions”, for example, reporting the number of POST requests for a specific URI.
+When building a custom graph, metrics can be summed or averaged across several NGINX servers. By using metric filters it is also possible to create additional “metric dimensions” — for example, reporting the number of POST requests for a specific URI.
 
-To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **Add Graph** in the upper right corner to start adding graphs to the dashboard.
+To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **New Graph** in the upper right corner to start adding graphs to the dashboard.
 
 When adding or editing a graph, the following dialog appears:
 
-![Add Graph](images/add-graph.png)
+![Add Graph](images/amplify-custom-graph-filter.png)
 
 To define a graph, perform these steps:
 
-  1. First pick one or more metrics. You can combine multiple metrics on the same graph using the "Add another metric" button at the bottom.
-  2. After the metric is selected, NGINX Amplify lists the objects for which it has already observed this metric. Select one or multiple objects here. In the example above the objects are the NGINX instances on "astra" and "otter".
-  3. Select either "sum" or "avg" as the aggregation function.
-  4. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Apply filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are filtering by HTTP status code 201.
-  5. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
+  1. Enter the graph title.
+  2. Pick one or more metrics. You can combine multiple metrics on the same graph using the "Add another metric" button.
+  3. After the metric is selected, you are able to see the systems for which the metric has been observed. Select one or multiple systems here. You can also use tags to specify the systems.
+  4. When aggregating across multiple systems, select either "Sum" or "Avg" as the aggregation function.
+  5. Last but not least, the “filter” functionality is also available for NGINX metrics collected from the log files. If you click on "Add metric filter", you can then add multiple criteria in order to define specific "metric dimensions". In the example above, we are matching the NGINX upstream response time against the **/api/feed/reports** URI. You can also build other filters, e.g. displaying metric **nginx.http.status.2xx** for the responses with the status code 201.
+  6. Click "Save" when you're done, and the graph is added to the dashboard. You can also edit the graph later on if needed, move it around, resize, stack the graphs on top of each other, etc.
 
-**Note.** For filters, all the "metric dimensions" aren't stored in the Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
+**Note.** When using filters, all the "metric dimensions" aren't stored in the NGINX Amplify backend by default. A particular filter starts to slice the metric according to the specification only after the graph is created. Hence, it can be a while before the "filtered" metric is displayed on the graph — the end result depends on how quickly the log files are being populated with the new entries, but typically you should see the first data points in under 5 minutes.
 
 Because NGINX Amplify is **not** a SaaS log analyzer, the additional slicing for "metric dimensions" is implemented inside the agent. The agent can parse the NGINX access logs on-the-fly and extract all the necessary metrics **without** sending the raw log entries elsewhere. Moreover, the agent understands custom log formats automatically, and will start looking for various newly defined "metric dimensions" following a particular [log_format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) specification.
 
@@ -738,7 +747,9 @@ Essentially, the agent performs a combination of real-time log analytics and sta
 
 Metric filters can be really powerful. By using the filters and creating additional "metric dimensions", it is possible to build highly granular and very informative graphs. To enable the agent to slice the metrics you must add the corresponding log variables to the active NGINX log format. Please see the [Additional NGINX metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) section below.
 
-Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph.
+Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the extended status zones to build more detailed visualizations.
+
+When editing a custom dashboard, you can also use additional features like "Clone" or "New Set" to streamline the worklow. The "New Set" function in particular can be very helpful to quickly create various metric visualizations for NGINX or the operating system.
 
 ### Analyzer
 
@@ -795,7 +806,7 @@ The way rules and alerts work is the following:
   3. If the threshold is met, an alert notification is generated, and the rule will continue to be monitored.
   4. If subsequent metric updates show that the metric no longer violates the threshold for the configured period, the alert is cleared.
 
-By default there's no filtering by hostname. If a specific alert should only be raised for a particular host, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
+By default there's no filtering by hostname. If a specific alert should only be raised for a particular system, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
 
 There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
@@ -823,7 +834,9 @@ Per-system settings are accessible via the "Settings" icon that can be found for
 
 Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the per-system settings menu.
 
-Last but not least, in the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
+In the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
+
+Last but not least, inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
 
 <!-- /section:4 -->
 
@@ -1698,5 +1711,161 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
   Source:      NGINX Plus extended status
   ```
 <!-- /json:metric -->
+
+### Other metrics
+
+#### PHP-FPM metrics
+
+You can also monitor your PHP-FPM applications with NGINX Amplify.
+
+When the agent finds a PHP-FPM master process, it then tries to auto-detect the path to the PHP-FPM configuration. When the PHP-FPM configuration is found, the agent will look up the pool definitions, and the corresponding `pm.status_path` directives.
+
+The agent will try to find all pools and status URIs currently configured. The agent will then try to query the PHP-FPM pool status(es) via FastCGI. There's no need to define HTTP proxy in your NGINX configuration that will point to the PHP-FPM status URIs.
+
+To start monitoring PHP-FPM, follow the steps below:
+
+  1. Make sure that your PHP-FPM status is enabled for at least one pool (if not, uncomment the `pm.status_path` directive for the pool, and restart PHP-FPM).
+
+  2. Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`).
+
+  3. Check that the listen socket for the PHP-FPM pool you want to monitor (and for which you enabled `pm.status_path`) is properly configured with `listen.owner` and `listen.group` (should be the user ID from step #2 above, e.g. `www-data`).
+
+  4. Check that the PHP-FPM listen socket for the pool is properly created and has the right permissions.
+
+  5. Check that you can query the PHP-FPM status for the pool from the command line, e.g.
+
+  ```
+  # SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
+  ```
+
+  and that the above command (or alike) returns the proper set of PHP-FPM metrics.
+
+  **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
+
+  6. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  7. Check that the following options are set in **/etc/amplify-agent/agent.conf**
+
+  ```
+  [extensions]
+  phpfpm = True
+  ```
+
+  8. Restart the agent.
+
+The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
+
+Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
+
+  * No status enabled for any of the pools.
+  * Wrong permissions for the PHP-FPM listen sockets.
+  * Using variables like `$pool` in the socket configuration.
+
+With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
+
+The PHP-FPM metrics on the **Graphs** page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to "Dashboards" and create custom graphs per pool.
+
+Below is the list of the currently supported PHP-FPM metrics.
+
+  * **php.fpm.conn.accepted**
+
+<!-- json:metric["php.fpm.conn.accepted"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of requests accepted by the pool.
+  Source:      PHP-FPM status (accepted conn)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.current**
+
+<!-- json:metric["php.fpm.queue.current"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of requests in the queue of pending connections.
+  Source:      PHP-FPM status (listen queue)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.max**
+
+<!-- json:metric["php.fpm.queue.max"] -->
+  ```
+  Type:        gauge, integer
+  Description: The maximum number of requests in the queue of pending connections since FPM has started.
+  Source:      PHP-FPM status (max listen queue)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.queue.len**
+
+<!-- json:metric["php.fpm.queue.len"] -->
+  ```
+  Type:        gauge, integer
+  Description: The size of the socket queue of pending connections.
+  Source:      PHP-FPM status (listen queue len)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.idle**
+
+<!-- json:metric["php.fpm.proc.idle"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of idle processes.
+  Source:      PHP-FPM status (idle processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.active**
+
+<!-- json:metric["php.fpm.proc.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of active processes.
+  Source:      PHP-FPM status (active processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.total**
+
+<!-- json:metric["php.fpm.proc.total"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of idle + active processes.
+  Source:      PHP-FPM status (total processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.max_active**
+
+<!-- json:metric["php.fpm.proc.max_active"] -->
+  ```
+  Type:        gauge, integer
+  Description: The maximum number of active processes since FPM has started.
+  Source:      PHP-FPM status (max active processes)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.proc.max_child**
+
+<!-- json:metric["php.fpm.proc.max_child"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of times, the process limit has been reached.
+  Source:      PHP-FPM status (max children reached)
+  ```
+<!-- /json:metric -->
+
+  * **php.fpm.slow_req**
+
+<!-- json:metric["php.fpm.slow_req"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of requests that exceeded request_slowlog_timeout value.
+  Source:      PHP-FPM status (slow requests)
+  ```
+<!-- /json:metric -->
+
 
 <!-- /section:5 -->
