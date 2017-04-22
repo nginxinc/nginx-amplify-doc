@@ -193,8 +193,14 @@ server {
 # ls -la conf.d/stub_status.conf
 -rw-r--r-- 1 root root 162 Nov  4 02:40 conf.d/stub_status.conf
 
+# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
 # kill -HUP `cat /var/run/nginx.pid`
 ```
+
+Don't forget to test your nginx configuration after you've added the *stub_status* section above.
 
 **Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
