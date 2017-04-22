@@ -11,13 +11,13 @@
   - [1.4. Is the NGINX Amplify Agent Code Publicly Available?](#14-is-the-nginx-amplify-agent-code-publicly-available)
   - [1.5. What is This Question About My Password When Installing NGINX Amplify Agent?](#15-what-is-this-question-about-my-password-when-installing-nginx-amplify-agent)
 - [2. NGINX Amplify Agent](#2-nginx-amplify-agent)
-  - [2.1. What Operating Systems Are Supported?](#21-what-operating-systems-are-supported)
+  - [2.1. What Operating Systems are Supported?](#21-what-operating-systems-are-supported)
   - [2.2. What Version of Python is Required?](#22-what-version-of-python-is-required)
-  - [2.3. How Do I Start to Monitor my Systems with NGINX Amplify?](#23-how-do-i-start-to-monitor-my-systems-with-nginx-amplify)
+  - [2.3. How Do I Start to Monitor My Systems with NGINX Amplify?](#23-how-do-i-start-to-monitor-my-systems-with-nginx-amplify)
   - [2.4. What Do I Need to Configure the NGINX Amplify Agent to Properly Report Metrics?](#24-what-do-i-need-to-configure-the-nginx-amplify-agent-to-properly-report-metrics)
   - [2.5. How Do I Verify that NGINX Amplify Agent Is Correctly Installed?](#25-how-do-i-verify-that-nginx-amplify-agent-is-correctly-installed)
   - [2.6. How Can I Update NGINX Amplify Agent?](#26-how-can-i-update-nginx-amplify-agent)
-  - [2.7. What System Resources Are Required?](#27-what-system-resources-are-required)
+  - [2.7. What System Resources are Required?](#27-what-system-resources-are-required)
   - [2.8. How Do I Restart NGINX Amplify Agent?](#28-how-do-i-restart-nginx-amplify-agent)
   - [2.9. How Can I Uninstall NGINX Amplify Agent?](#29-how-can-i-uninstall-nginx-amplify-agent)
   - [2.10. How Can I Override System Hostname?](#210-how-can-i-override-system-hostname)
@@ -28,7 +28,7 @@
   - [3.2. Is the Traffic to the Web Interface Secure?](#32-is-the-traffic-to-the-web-interface-secure)
   - [3.3. How Can I Delete a System or an NGINX Instance from NGINX Amplify?](#33-how-can-i-delete-a-system-or-an-nginx-instance-from-nginx-amplify)
 - [4. NGINX Amplify Metrics and Metadata](#4-nginx-amplify-metrics-and-metadata)
-  - [4.1. What Metrics and Metadata Are Collected?](#41-what-metrics-and-metadata-are-collected)
+  - [4.1. What Metrics and Metadata are Collected?](#41-what-metrics-and-metadata-are-collected)
   - [4.2. How Is the NGINX Configuration Parsed and Analyzed?](#42-how-is-the-nginx-configuration-parsed-and-analyzed)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -73,7 +73,7 @@ It could be that you're starting the install script from a non-root account. In 
 
 ## 2. NGINX Amplify Agent
 
-### 2.1. What Operating Systems Are Supported?
+### 2.1. What Operating Systems are Supported?
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
@@ -97,7 +97,7 @@ NGINX Amplify Agent will work with Python 2.6 and 2.7.
 
 Python 3 is not supported yet.
 
-### 2.3. How Do I Start to Monitor my Systems with NGINX Amplify?
+### 2.3. How Do I Start to Monitor My Systems with NGINX Amplify?
 
 <!-- advancedList -->
 
@@ -175,7 +175,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   yum update nginx-amplify-agent
   ```
 
-### 2.7. What System Resources Are Required?
+### 2.7. What System Resources are Required?
 
 We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
 
@@ -267,7 +267,7 @@ Bear in mind — deleting objects there will not stop the agent. To completely r
 
 ## 4. NGINX Amplify Metrics and Metadata
 
-### 4.1. What Metrics and Metadata Are Collected?
+### 4.1. What Metrics and Metadata are Collected?
 
 NGINX Amplify Agent collects the following types of data:
 

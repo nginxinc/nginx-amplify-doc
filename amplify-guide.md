@@ -11,8 +11,8 @@
   - [Metadata and Metrics Collection](#metadata-and-metrics-collection)
   - [Detecting and Monitoring NGINX Instances](#detecting-and-monitoring-nginx-instances)
   - [Configuring NGINX for Metric Collection](#configuring-nginx-for-metric-collection)
-    - [Metrics From stub_status](#metrics-from-stub_status)
-    - [Metrics From access.log and error.log](#metrics-from-accesslog-and-errorlog)
+    - [Metrics from stub_status](#metrics-from-stub_status)
+    - [Metrics from access.log and error.log](#metrics-from-accesslog-and-errorlog)
     - [Using Syslog for Metric Collection](#using-syslog-for-metric-collection)
   - [What to Check if the Agent Isn't Reporting Metrics](#what-to-check-if-the-agent-isnt-reporting-metrics)
   - [NGINX Configuration Analysis](#nginx-configuration-analysis)
@@ -161,7 +161,7 @@ A separate instance of NGINX as seen by the agent would be the following:
 
 In order to monitor an NGINX instance, the agent should be able to [find the relevant NGINX master process](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#detecting-and-monitoring-nginx-instances) first, and determine its key characteristics.
 
-#### Metrics From stub_status
+#### Metrics from stub_status
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
@@ -238,7 +238,7 @@ For NGINX Plus the agent will automatically use similar metrics available from t
 
 For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
 
-#### Metrics From access.log and error.log
+#### Metrics from access.log and error.log
 
 NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. In order to do that, the agent should be able to read the logs. Make sure that either the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
 
