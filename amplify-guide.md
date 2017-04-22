@@ -95,7 +95,7 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
   The user interface compatible with all major browsers. The web interface is accessible only via TLS/SSL.
 
-  * **Backend** (implemented as a SaaS)
+  * **NGINX Amplify Backend** (implemented as a SaaS)
 
   The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, an analytics engine, and a core API.
 
@@ -109,11 +109,11 @@ NGINX Amplify Agent is a compact application written in Python. Its role is to c
 
 You will need to install the Amplify Agent on all hosts that you have to monitor.
 
-After proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the NGINX Amplify web interface in about a minute or so.
+After proper installation, the agent will automatically start to report metrics, and you should see the real-time metrics data in the NGINX Amplify web interface in about 60 seconds or so.
 
 NGINX Amplify can currently monitor and collect performance metrics for:
 
-  1. Operating system (Linux, FreeBSD)
+  1. Operating system (see the list of supported OSes [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported))
   2. NGINX and NGINX Plus
   3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
 
@@ -795,24 +795,24 @@ In the future, the **Analyzer** page will also include *dynamic analysis*, effec
 
 ### Alerts
 
-The **Alerts** page describes the configuration of system monitors and associated triggers used to notify you of any anomalies in the behavior of your systems.
+The **Alerts** page describes the configuration of the alert rules used to notify you of any anomalies in the behavior of your systems.
 
-Alerts are based on setting a rule to monitor a particular metric. When the rule is being set you will also be able to specify the threshold, and the email for notifications.
+Alerts are based on setting a rule to monitor a particular metric. Alert rules allow the user to specify the metric, the trigger condition, the threshold, and the email for notifications.
 
-The way rules and alerts work is the following:
+The way alert rules work is the following:
 
-  1. Metrics are being continuously monitored against the set of rules.
+  1. Incoming metric updates are being continuously monitored against the set of rules.
   2. If there's a rule for a metric, the new metric update is checked against the threshold.
   3. If the threshold is met, an alert notification is generated, and the rule will continue to be monitored.
   4. If subsequent metric updates show that the metric no longer violates the threshold for the configured period, the alert is cleared.
 
-By default there's no filtering by hostname. If a specific alert should only be raised for a particular system, you should specify the hostname when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a hostname is specified.
+By default there's no filtering by host. If a specific alert should only be raised for a particular system, you should specify the hostname(s) or tags when configuring the alert. Currently metrics can't be aggregated across all systems; instead any system will match a particular rule unless a host is specified.
 
 There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
 You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing which alerts were generated and which ones were cleared.
 
-**Note.** Gauges are *averaged* over the interval configured in the ruleset. Counters are *summed up*. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
+**Note.** Gauges are *averaged* over the interval configured in the rule. Counters are *summed up*. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
 
 **Note.** Emails are sent using [AWS SES](https://aws.amazon.com/ses/). Make sure your mail relay accepts their traffic. Also make sure to verify the specified email and check the verification status in the Account menu.
 

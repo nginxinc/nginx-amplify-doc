@@ -86,7 +86,7 @@ The agent is currently officially packaged and supported for the following Linux
 
 The following OS and distributions are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Feel free to submit an issue or a PR if you find something that has to be fixed.
 
-  * FreeBSD 10
+  * FreeBSD 10, 11
   * SLES 12
   * Alpine 3.3
   * Fedora 24
@@ -177,7 +177,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### 2.7. What System Resources Are Required?
 
-We work very hard to make the agent consume as little memory and CPU as possible. Normally it shouldn't be more than a few % of CPU time and around 25–30MB of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
+We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
 
 ### 2.8. How Do I Restart NGINX Amplify Agent?
 
