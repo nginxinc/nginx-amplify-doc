@@ -1724,17 +1724,26 @@ The NGINX Plus metrics below are collected *per zone*. When configuring a graph 
 
 You can also monitor your PHP-FPM applications with NGINX Amplify.
 
-When the agent finds a PHP-FPM master process, it then tries to auto-detect the path to the PHP-FPM configuration. When the PHP-FPM configuration is found, the agent will look up the pool definitions, and the corresponding `pm.status_path` directives.
+When the agent finds a PHP-FPM master process, it tries to auto-detect the path to the PHP-FPM configuration. When the PHP-FPM configuration is found, the agent will look up the pool definitions, and the corresponding `pm.status_path` directives.
 
-The agent will try to find all pools and status URIs currently configured. The agent will then try to query the PHP-FPM pool status(es) via FastCGI. There's no need to define HTTP proxy in your NGINX configuration that will point to the PHP-FPM status URIs.
+The agent will find all pools and status URIs currently configured. The agent then queries the PHP-FPM pool status(es) via FastCGI. There's no need to define HTTP proxy in your NGINX configuration that will point to the PHP-FPM status URIs.
 
 To start monitoring PHP-FPM, follow the steps below:
 
   1. Make sure that your PHP-FPM status is enabled for at least one pool (if not, uncomment the `pm.status_path` directive for the pool, and restart PHP-FPM).
 
-  2. Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`).
+  2. Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). If there are multiple pools configured with different user IDs, make sure there's a single group containing the user IDs of the Amplify Agent and the PHP-FPM workers. This is required in order for the agent to be able to access the PHP-FPM pool socket(s) when querying for metrics.
 
-  3. Check that the listen socket for the PHP-FPM pool you want to monitor (and for which you enabled `pm.status_path`) is properly configured with `listen.owner` and `listen.group` (should be the user ID from step #2 above, e.g. `www-data`).
+  3. Check that the listen socket for the PHP-FPM pool you want to monitor (and for which you enabled `pm.status_path`) is properly configured with `listen.owner` and `listen.group` (should be the user ID and the group from step #2 above, e.g. `www-data`).
+
+  ```
+  ; Set permissions for unix socket, if one is used. In Linux, read/write
+  ; permissions must be set in order to allow connections from a web server. Many
+  ; BSD-derived systems allow connections regardless of permissions.
+  listen.owner = www-data
+  listen.group = www-data
+  listen.mode = 0660
+  ```
 
   4. Check that the PHP-FPM listen socket for the pool is properly created and has the right permissions.
 
@@ -1746,7 +1755,7 @@ To start monitoring PHP-FPM, follow the steps below:
 
   and that the above command (or alike) returns the proper set of PHP-FPM metrics.
 
-  **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics. It can be used to diagnose possible issues though.
+  **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics, however it can be used to quickly diagnose possible issues with PHP-FPM metric collection.
 
   6. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
 
@@ -1763,9 +1772,10 @@ The agent should be able to detect the PHP-FPM master and workers, obtain the ac
 
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
+  * Amplify Agent can't parse the PHP-FPM configuration (a possible workaround is to not have any ungrouped directives — moving ungrouped directives under [global] and pool section headers).
   * No status enabled for any of the pools.
+  * Different user IDs used by the agent and the PHP-FPM workers (or lack of a single group).
   * Wrong permissions for the PHP-FPM listen sockets.
-  * Using variables like `$pool` in the socket configuration.
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
 
