@@ -1737,9 +1737,6 @@ To start monitoring PHP-FPM, follow the steps below:
   3. Check that the listen socket for the PHP-FPM pool you want to monitor (and for which you enabled `pm.status_path`) is properly configured with `listen.owner` and `listen.group` (should be the user ID and the group from step #2 above, e.g. `www-data`).
 
   ```
-  ; Set permissions for unix socket, if one is used. In Linux, read/write
-  ; permissions must be set in order to allow connections from a web server. Many
-  ; BSD-derived systems allow connections regardless of permissions.
   listen.owner = www-data
   listen.group = www-data
   listen.mode = 0660
@@ -1772,10 +1769,12 @@ The agent should be able to detect the PHP-FPM master and workers, obtain the ac
 
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
-  * Amplify Agent can't parse the PHP-FPM configuration (a possible workaround is to not have any ungrouped directives — moving ungrouped directives under [global] and pool section headers).
+  * Amplify Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
   * No status enabled for any of the pools.
   * Different user IDs used by the agent and the PHP-FPM workers (or lack of a single group).
   * Wrong permissions for the PHP-FPM listen sockets.
+
+If checking the above issues didn't help, please enable the agent's debug log, restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the agent's debug log to the Intecom chat.
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
 
