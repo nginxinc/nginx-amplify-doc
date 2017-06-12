@@ -1510,6 +1510,8 @@ Please see the following [reference documentation](http://nginx.org/en/docs/http
 
 The NGINX Plus metrics below are collected *per zone*. When configuring a graph using these metrics, please make sure to pick the correct server, upstream or cache zone. A more granular peer-specific breakdown of the metrics below is currently not supported in NGINX Amplify.
 
+A cumulative metric set is also maintained internally by summing up the per-zone metrics. If you don't configure a specific zone when building graphs, this will result in an "all zones" visualization. E.g. for something like **plus.http.status.2xx** omitting zone will display the instance-wide sum of the successful requests across all zones.
+
 ##### Server Zone Metrics
 
   * **plus.http.request.count**
