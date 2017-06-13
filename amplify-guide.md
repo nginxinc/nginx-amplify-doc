@@ -856,7 +856,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 ### OS Metrics
 
-  * **amplify.agent.status**
+  * **amplify.agent.status**<!-- anchor:amplify.agent.status -->
 
 <!-- json:metric["amplify.agent.status"] -->
   ```
@@ -865,8 +865,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **amplify.agent.cpu.system**
-  * **amplify.agent.cpu.user**
+  * **amplify.agent.cpu.system**<!-- anchor:amplify.agent.cpu.system -->
+  * **amplify.agent.cpu.user**<!-- anchor:amplify.agent.cpu.user -->
 
 <!-- json:metric["amplify.agent.cpu.system","amplify.agent.cpu.user"] -->
   ```
@@ -875,8 +875,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **amplify.agent.mem.rss**
-  * **amplify.agent.mem.vms**
+  * **amplify.agent.mem.rss**<!-- anchor:amplify.agent.mem.rss -->
+  * **amplify.agent.mem.vms**<!-- anchor:amplify.agent.mem.vms -->
 
 <!-- json:metric["amplify.agent.mem.rss","amplify.agent.mem.vms"] -->
   ```
@@ -885,8 +885,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.cpu.idle**
-  * **system.cpu.iowait**
+  * **system.cpu.idle**<!-- anchor:system.cpu.idle -->
+  * **system.cpu.iowait**<!-- anchor:system.cpu.iowait -->
   * **system.cpu.system**<!-- anchor:system.cpu.system -->
   * **system.cpu.user**<!-- anchor:system.cpu.user -->
 
@@ -897,7 +897,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.cpu.stolen**
+  * **system.cpu.stolen**<!-- anchor:system.cpu.stolen -->
 
 <!-- json:metric["system.cpu.stolen"] -->
   ```
@@ -907,9 +907,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.disk.free**
-  * **system.disk.total**
-  * **system.disk.used**
+  * **system.disk.free**<!-- anchor:system.disk.free -->
+  * **system.disk.total**<!-- anchor:system.disk.total -->
+  * **system.disk.used**<!-- anchor:system.disk.used -->
 
 <!-- json:metric["system.disk.free","system.disk.total","system.disk.used"] -->
   ```
@@ -918,7 +918,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.disk.in_use**
+  * **system.disk.in_use**<!-- anchor:system.disk.in_use -->
 
 <!-- json:metric["system.disk.in_use"] -->
   ```
@@ -927,8 +927,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.io.iops_r**
-  * **system.io.iops_w**
+  * **system.io.iops_r**<!-- anchor:system.io.iops_r -->
+  * **system.io.iops_w**<!-- anchor:system.io.iops_w -->
 
 <!-- json:metric["system.io.iops_r","system.io.iops_w"] -->
   ```
@@ -937,8 +937,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.io.kbs_r**
-  * **system.io.kbs_w**
+  * **system.io.kbs_r**<!-- anchor:system.io.kbs_r -->
+  * **system.io.kbs_w**<!-- anchor:system.io.kbs_w -->
 
 <!-- json:metric["system.io.kbs_r","system.io.kbs_w"] -->
   ```
@@ -947,8 +947,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.io.wait_r**
-  * **system.io.wait_w**
+  * **system.io.wait_r**<!-- anchor:system.io.wait_r -->
+  * **system.io.wait_w**<!-- anchor:system.io.wait_w -->
 
 <!-- json:metric["system.io.wait_r","system.io.wait_w"] -->
   ```
@@ -959,7 +959,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
   * **system.load.1**<!-- anchor:system.load.1 -->
   * **system.load.5**<!-- anchor:system.load.5 -->
-  * **system.load.15**
+  * **system.load.15**<!-- anchor:system.load.15 -->
 
 <!-- json:metric["system.load.1","system.load.5","system.load.15"] -->
   ```
@@ -969,12 +969,12 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.mem.available**
-  * **system.mem.buffered**
-  * **system.mem.cached**
-  * **system.mem.free**
-  * **system.mem.shared**
-  * **system.mem.total**
+  * **system.mem.available**<!-- anchor:system.mem.available -->
+  * **system.mem.buffered**<!-- anchor:system.mem.buffered -->
+  * **system.mem.cached**<!-- anchor:system.mem.cached -->
+  * **system.mem.free**<!-- anchor:system.mem.free -->
+  * **system.mem.shared**<!-- anchor:system.mem.shared -->
+  * **system.mem.total**<!-- anchor:system.mem.total -->
   * **system.mem.used**<!-- anchor:system.mem.used -->
 
 <!-- json:metric["system.mem.available","system.mem.buffered","system.mem.cached","system.mem.free","system.mem.shared","system.mem.total","system.mem.used"] -->
@@ -984,7 +984,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.mem.pct_used**
+  * **system.mem.pct_used**<!-- anchor:system.mem.pct_used -->
 
 <!-- json:metric["ystem.mem.pct_used"] -->
   ```
@@ -1004,8 +1004,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.net.drops_in.count**
-  * **system.net.drops_out.count**
+  * **system.net.drops_in.count**<!-- anchor:system.net.drops_in.count -->
+  * **system.net.drops_out.count**<!-- anchor:system.net.drops_out.count -->
 
 <!-- json:metric["system.net.drops_in.count","system.net.drops_out.count"] -->
   ```
@@ -1015,8 +1015,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.net.packets_in.count**
-  * **system.net.packets_out.count**
+  * **system.net.packets_in.count**<!-- anchor:system.net.packets_in.count -->
+  * **system.net.packets_out.count**<!-- anchor:system.net.packets_out.count -->
 
 <!-- json:metric["system.net.packets_in.count","system.net.packets_out.count"] -->
   ```
@@ -1026,8 +1026,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.net.packets_in.error**
-  * **system.net.packets_out.error**
+  * **system.net.packets_in.error**<!-- anchor:system.net.packets_in.error -->
+  * **system.net.packets_out.error**<!-- anchor:system.net.packets_out.error -->
 
 <!-- json:metric["system.net.packets_in.error","system.net.packets_out.error"] -->
   ```
@@ -1037,7 +1037,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.net.listen_overflows**
+  * **system.net.listen_overflows**<!-- anchor:system.net.listen_overflows -->
 
 <!-- json:metric["system.net.listen_overflows"] -->
   ```
@@ -1046,9 +1046,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.swap.free**
-  * **system.swap.total**
-  * **system.swap.used**
+  * **system.swap.free**<!-- anchor:system.swap.free -->
+  * **system.swap.total**<!-- anchor:system.swap.total -->
+  * **system.swap.used**<!-- anchor:system.swap.used -->
 
 <!-- json:metric["system.swap.free","system.swap.total","system.swap.used"] -->
   ```
@@ -1057,7 +1057,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **system.swap.pct_free**
+  * **system.swap.pct_free**<!-- anchor:system.swap.pct_free -->
 
 <!-- json:metric["system.swap.pct_free"] -->
   ```
@@ -1081,9 +1081,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.conn.active**
+  * **nginx.http.conn.active**<!-- anchor:nginx.http.conn.active -->
   * **nginx.http.conn.current**<!-- anchor:nginx.http.conn.current -->
-  * **nginx.http.conn.idle**
+  * **nginx.http.conn.idle**<!-- anchor:nginx.http.conn.idle -->
 
 <!-- json:metric["nginx.http.conn.active","nginx.http.conn.current","nginx.http.conn.idle"] -->
   ```
@@ -1104,8 +1104,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 <!-- /json:metric -->
 
   * **nginx.http.request.current**<!-- anchor:nginx.http.request.current -->
-  * **nginx.http.request.reading**
-  * **nginx.http.request.writing**
+  * **nginx.http.request.reading**<!-- anchor:nginx.http.request.reading -->
+  * **nginx.http.request.writing**<!-- anchor:nginx.http.request.writing -->
 
 <!-- json:metric["nginx.http.request.current","nginx.http.request.reading","nginx.http.request.writing"] -->
   ```
@@ -1116,7 +1116,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.request.malformed**
+  * **nginx.http.request.malformed**<!-- anchor:nginx.http.request.malformed -->
 
 <!-- json:metric["nginx.http.request.malformed"] -->
   ```
@@ -1126,7 +1126,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.request.body_bytes_sent**
+  * **nginx.http.request.body_bytes_sent**<!-- anchor:nginx.http.request.body_bytes_sent -->
 
 <!-- json:metric["nginx.http.request.body_bytes_sent"] -->
   ```
@@ -1138,12 +1138,12 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### HTTP Methods
 
-  * **nginx.http.method.get**
-  * **nginx.http.method.head**
-  * **nginx.http.method.post**
-  * **nginx.http.method.put**
-  * **nginx.http.method.delete**
-  * **nginx.http.method.options**
+  * **nginx.http.method.get**<!-- anchor:nginx.http.method.get -->
+  * **nginx.http.method.head**<!-- anchor:nginx.http.method.head -->
+  * **nginx.http.method.post**<!-- anchor:nginx.http.method.post -->
+  * **nginx.http.method.put**<!-- anchor:nginx.http.method.put -->
+  * **nginx.http.method.delete**<!-- anchor:nginx.http.method.delete -->
+  * **nginx.http.method.options**<!-- anchor:nginx.http.method.options -->
 
 <!-- json:metric["nginx.http.method.get","nginx.http.method.head","nginx.http.method.post","nginx.http.method.put","nginx.http.method.delete","nginx.http.method.options"] -->
   ```
@@ -1155,9 +1155,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### HTTP Status Codes
 
-  * **nginx.http.status.1xx**
-  * **nginx.http.status.2xx**
-  * **nginx.http.status.3xx**
+  * **nginx.http.status.1xx**<!-- anchor:nginx.http.status.1xx -->
+  * **nginx.http.status.2xx**<!-- anchor:nginx.http.status.2xx -->
+  * **nginx.http.status.3xx**<!-- anchor:nginx.http.status.3xx -->
   * **nginx.http.status.4xx**<!-- anchor:nginx.http.status.4xx -->
   * **nginx.http.status.5xx**<!-- anchor:nginx.http.status.5xx -->
 
@@ -1182,10 +1182,10 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### HTTP Protocol Versions
 
-  * **nginx.http.v0_9**
-  * **nginx.http.v1_0**
-  * **nginx.http.v1_1**
-  * **nginx.http.v2**
+  * **nginx.http.v0_9**<!-- anchor:nginx.http.v0_9 -->
+  * **nginx.http.v1_0**<!-- anchor:nginx.http.v1_0 -->
+  * **nginx.http.v1_1**<!-- anchor:nginx.http.v1_1 -->
+  * **nginx.http.v2**<!-- anchor:nginx.http.v2 -->
 
 <!-- json:metric["nginx.http.v0_9","nginx.http.v1_0","nginx.http.v1_1","nginx.http.v2"] -->
   ```
@@ -1197,7 +1197,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 
 #### NGINX Process Metrics
 
-  * **nginx.workers.count**
+  * **nginx.workers.count**<!-- anchor:nginx.workers.count -->
 
 <!-- json:metric["nginx.workers.count"] -->
   ```
@@ -1206,9 +1206,9 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.cpu.system**
-  * **nginx.workers.cpu.total**
-  * **nginx.workers.cpu.user**
+  * **nginx.workers.cpu.system**<!-- anchor:nginx.workers.cpu.system -->
+  * **nginx.workers.cpu.total**<!-- anchor:nginx.workers.cpu.total -->
+  * **nginx.workers.cpu.user**<!-- anchor:nginx.workers.cpu.user -->
 
 <!-- json:metric["nginx.workers.cpu.system","nginx.workers.cpu.total","nginx.workers.cpu.user"] -->
   ```
@@ -1217,7 +1217,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.fds_count**
+  * **nginx.workers.fds_count**<!-- anchor:nginx.workers.fds_count -->
 
 <!-- json:metric["nginx.workers.fds_count"] -->
   ```
@@ -1226,8 +1226,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.io.kbs_r**
-  * **nginx.workers.io.kbs_w**
+  * **nginx.workers.io.kbs_r**<!-- anchor:nginx.workers.io.kbs_r -->
+  * **nginx.workers.io.kbs_w**<!-- anchor:nginx.workers.io.kbs_w -->
 
 <!-- json:metric["nginx.workers.io.kbs_r","nginx.workers.io.kbs_w"] -->
   ```
@@ -1236,8 +1236,8 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.mem.rss**
-  * **nginx.workers.mem.vms**
+  * **nginx.workers.mem.rss**<!-- anchor:nginx.workers.mem.rss -->
+  * **nginx.workers.mem.vms**<!-- anchor:nginx.workers.mem.vms -->
 
 <!-- json:metric["nginx.workers.mem.rss","nginx.workers.mem.vms"] -->
   ```
@@ -1246,7 +1246,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.mem.rss_pct**
+  * **nginx.workers.mem.rss_pct**<!-- anchor:nginx.workers.mem.rss_pct -->
 
 <!-- json:metric["nginx.workers.mem.rss_pct"] -->
   ```
@@ -1255,7 +1255,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
 <!-- /json:metric -->
 
-  * **nginx.workers.rlimit_nofile**
+  * **nginx.workers.rlimit_nofile**<!-- anchor:nginx.workers.rlimit_nofile -->
 
 <!-- json:metric["nginx.workers.rlimit_nofile"] -->
   ```
@@ -1302,7 +1302,7 @@ NGINX Amplify Agent can collect a number of additional useful metrics described 
 
 Here is the list of additional metrics that can be collected from the NGINX log files:
 
-  * **nginx.http.request.bytes_sent**
+  * **nginx.http.request.bytes_sent**<!-- anchor:nginx.http.request.bytes_sent -->
 
 <!-- json:metric["nginx.http.request.bytes_sent"] -->
   ```
@@ -1313,7 +1313,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.request.length**
+  * **nginx.http.request.length**<!-- anchor:nginx.http.request.length -->
 
 <!-- json:metric["nginx.http.request.length"] -->
   ```
@@ -1325,9 +1325,9 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 <!-- /json:metric -->
 
   * **nginx.http.request.time**<!-- anchor:nginx.http.request.time -->
-  * **nginx.http.request.time.count**
-  * **nginx.http.request.time.max**
-  * **nginx.http.request.time.median**
+  * **nginx.http.request.time.count**<!-- anchor:nginx.http.request.time.count -->
+  * **nginx.http.request.time.max**<!-- anchor:nginx.http.request.time.max -->
+  * **nginx.http.request.time.median**<!-- anchor:nginx.http.request.time.median -->
   * **nginx.http.request.time.pctl95**<!-- anchor:nginx.http.request.time.pctl95 -->
 
 <!-- json:metric["nginx.http.request.time","nginx.http.request.time.count","nginx.http.request.time.max","nginx.http.request.time.median","nginx.http.request.time.pctl95"] -->
@@ -1340,7 +1340,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.request.buffered**
+  * **nginx.http.request.buffered**<!-- anchor:nginx.http.request.buffered -->
 
 <!-- json:metric["nginx.http.request.buffered"] -->
   ```
@@ -1350,7 +1350,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.http.gzip.ratio**
+  * **nginx.http.gzip.ratio**<!-- anchor:nginx.http.gzip.ratio -->
 
 <!-- json:metric["nginx.http.gzip.ratio"] -->
   ```
@@ -1364,11 +1364,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 
 ##### Upstream Metrics
 
-  * **nginx.upstream.connect.time**
-  * **nginx.upstream.connect.time.count**
-  * **nginx.upstream.connect.time.max**
-  * **nginx.upstream.connect.time.median**
-  * **nginx.upstream.connect.time.pctl95**
+  * **nginx.upstream.connect.time**<!-- anchor:nginx.upstream.connect.time -->
+  * **nginx.upstream.connect.time.count**<!-- anchor:nginx.upstream.connect.time.count -->
+  * **nginx.upstream.connect.time.max**<!-- anchor:nginx.upstream.connect.time.max -->
+  * **nginx.upstream.connect.time.median**<!-- anchor:nginx.upstream.connect.time.median -->
+  * **nginx.upstream.connect.time.pctl95**<!-- anchor:nginx.upstream.connect.time.pctl95 -->
 
 <!-- json:metric["nginx.upstream.connect.time","nginx.upstream.connect.time.count","nginx.upstream.connect.time.max","nginx.upstream.connect.time.median","nginx.upstream.connect.time.pctl95"] -->
   ```
@@ -1380,11 +1380,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.header.time**
-  * **nginx.upstream.header.time.count**
-  * **nginx.upstream.header.time.max**
-  * **nginx.upstream.header.time.median**
-  * **nginx.upstream.header.time.pctl95**
+  * **nginx.upstream.header.time**<!-- anchor:nginx.upstream.header.time -->
+  * **nginx.upstream.header.time.count**<!-- anchor:nginx.upstream.header.time.count -->
+  * **nginx.upstream.header.time.max**<!-- anchor:nginx.upstream.header.time.max -->
+  * **nginx.upstream.header.time.median**<!-- anchor:nginx.upstream.header.time.median -->
+  * **nginx.upstream.header.time.pctl95**<!-- anchor:nginx.upstream.header.time.pctl95 -->
 
 <!-- json:metric["nginx.upstream.header.time","nginx.upstream.header.time.count","nginx.upstream.header.time.max","nginx.upstream.header.time.median","nginx.upstream.header.time.pctl95"] -->
   ```
@@ -1395,7 +1395,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.response.buffered**
+  * **nginx.upstream.response.buffered**<!-- anchor:nginx.upstream.response.buffered -->
 
 <!-- json:metric["nginx.upstream.response.buffered"] -->
   ```
@@ -1405,8 +1405,8 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.request.count**
-  * **nginx.upstream.next.count**
+  * **nginx.upstream.request.count**<!-- anchor:nginx.upstream.request.count -->
+  * **nginx.upstream.next.count**<!-- anchor:nginx.upstream.next.count -->
 
 <!-- json:metric["nginx.upstream.request.count","nginx.upstream.next.count"] -->
   ```
@@ -1417,8 +1417,8 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.request.failed**
-  * **nginx.upstream.response.failed**
+  * **nginx.upstream.request.failed**<!-- anchor:nginx.upstream.request.failed -->
+  * **nginx.upstream.response.failed**<!-- anchor:nginx.upstream.response.failed -->
 
 <!-- json:metric["nginx.upstream.request.failed","nginx.upstream.response.failed"] -->
   ```
@@ -1428,7 +1428,7 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.response.length**
+  * **nginx.upstream.response.length**<!-- anchor:nginx.upstream.response.length -->
 
 <!-- json:metric["nginx.upstream.response.length"] -->
   ```
@@ -1440,9 +1440,9 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 <!-- /json:metric -->
 
   * **nginx.upstream.response.time**<!-- anchor:nginx.upstream.response.time -->
-  * **nginx.upstream.response.time.count**
-  * **nginx.upstream.response.time.max**
-  * **nginx.upstream.response.time.median**
+  * **nginx.upstream.response.time.count**<!-- anchor:nginx.upstream.response.time.count -->
+  * **nginx.upstream.response.time.max**<!-- anchor:nginx.upstream.response.time.max -->
+  * **nginx.upstream.response.time.median**<!-- anchor:nginx.upstream.response.time.median -->
   * **nginx.upstream.response.time.pctl95**<!-- anchor:nginx.upstream.response.time.pctl95 -->
 
 <!-- json:metric["nginx.upstream.response.time","nginx.upstream.response.time.count","nginx.upstream.response.time.max","nginx.upstream.response.time.median","nginx.upstream.response.time.pctl95"] -->
@@ -1454,11 +1454,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
   ```
 <!-- /json:metric -->
 
-  * **nginx.upstream.status.1xx**
-  * **nginx.upstream.status.2xx**
-  * **nginx.upstream.status.3xx**
-  * **nginx.upstream.status.4xx**
-  * **nginx.upstream.status.5xx**
+  * **nginx.upstream.status.1xx**<!-- anchor:nginx.upstream.status.1xx -->
+  * **nginx.upstream.status.2xx**<!-- anchor:nginx.upstream.status.2xx -->
+  * **nginx.upstream.status.3xx**<!-- anchor:nginx.upstream.status.3xx -->
+  * **nginx.upstream.status.4xx**<!-- anchor:nginx.upstream.status.4xx -->
+  * **nginx.upstream.status.5xx**<!-- anchor:nginx.upstream.status.5xx -->
 
 <!-- json:metric["nginx.upstream.status.1xx","nginx.upstream.status.2xx","nginx.upstream.status.3xx","nginx.upstream.status.4xx","nginx.upstream.status.5xx"] -->
   ```
@@ -1471,13 +1471,13 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 
 ##### Cache Metrics
 
-  * **nginx.cache.bypass**
-  * **nginx.cache.expired**
-  * **nginx.cache.hit**
-  * **nginx.cache.miss**
-  * **nginx.cache.revalidated**
-  * **nginx.cache.stale**
-  * **nginx.cache.updating**
+  * **nginx.cache.bypass**<!-- anchor:nginx.cache.bypass -->
+  * **nginx.cache.expired**<!-- anchor:nginx.cache.expired -->
+  * **nginx.cache.hit**<!-- anchor:nginx.cache.hit -->
+  * **nginx.cache.miss**<!-- anchor:nginx.cache.miss -->
+  * **nginx.cache.revalidated**<!-- anchor:nginx.cache.revalidated -->
+  * **nginx.cache.stale**<!-- anchor:nginx.cache.stale -->
+  * **nginx.cache.updating**<!-- anchor:nginx.cache.updating -->
 
 <!-- json:metric["nginx.cache.bypass","nginx.cache.expired","nginx.cache.hit","nginx.cache.miss","nginx.cache.revalidated","nginx.cache.stale","nginx.cache.updating"] -->
   ```
@@ -1514,8 +1514,8 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 
 ##### Server Zone Metrics
 
-  * **plus.http.request.count**
-  * **plus.http.response.count**
+  * **plus.http.request.count**<!-- anchor:plus.http.request.count -->
+  * **plus.http.response.count**<!-- anchor:plus.http.response.count -->
 
 <!-- json:metric["plus.http.request.count","plus.http.response.count"] -->
   ```
@@ -1525,8 +1525,8 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.http.request.bytes_rcvd**
-  * **plus.http.request.bytes_sent**
+  * **plus.http.request.bytes_rcvd**<!-- anchor:plus.http.request.bytes_rcvd -->
+  * **plus.http.request.bytes_sent**<!-- anchor:plus.http.request.bytes_sent -->
 
 <!-- json:metric["plus.http.request.bytes_rcvd","plus.http.request.bytes_sent"] -->
   ```
@@ -1536,11 +1536,11 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.http.status.1xx**
-  * **plus.http.status.2xx**
-  * **plus.http.status.3xx**
-  * **plus.http.status.4xx**
-  * **plus.http.status.5xx**
+  * **plus.http.status.1xx**<!-- anchor:plus.http.status.1xx -->
+  * **plus.http.status.2xx**<!-- anchor:plus.http.status.2xx -->
+  * **plus.http.status.3xx**<!-- anchor:plus.http.status.3xx -->
+  * **plus.http.status.4xx**<!-- anchor:plus.http.status.4xx -->
+  * **plus.http.status.5xx**<!-- anchor:plus.http.status.5xx -->
 
 <!-- json:metric["plus.http.status.1xx","plus.http.status.2xx","plus.http.status.3xx","plus.http.status.4xx","plus.http.status.5xx"] -->
   ```
@@ -1550,7 +1550,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.http.status.discarded**
+  * **plus.http.status.discarded**<!-- anchor:plus.http.status.discarded -->
 
 <!-- json:metric["plus.http.status.discarded"] -->
   ```
@@ -1562,7 +1562,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 
 ##### Upstream Zone Metrics
 
-  * **plus.upstream.peer.count**
+  * **plus.upstream.peer.count**<!-- anchor:plus.upstream.peer.count -->
 
 <!-- json:metric["plus.upstream.peer.count"] -->
   ```
@@ -1574,8 +1574,8 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.request.count**
-  * **plus.upstream.response.count**
+  * **plus.upstream.request.count**<!-- anchor:plus.upstream.request.count -->
+  * **plus.upstream.response.count**<!-- anchor:plus.upstream.response.count -->
 
 <!-- json:metric["plus.upstream.request.count","plus.upstream.response.count"] -->
   ```
@@ -1585,7 +1585,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.conn.active**
+  * **plus.upstream.conn.active**<!-- anchor:plus.upstream.conn.active -->
 
 <!-- json:metric["plus.upstream.conn.active"] -->
   ```
@@ -1595,8 +1595,8 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.bytes_rcvd**
-  * **plus.upstream.bytes_sent**
+  * **plus.upstream.bytes_rcvd**<!-- anchor:plus.upstream.bytes_rcvd -->
+  * **plus.upstream.bytes_sent**<!-- anchor:plus.upstream.bytes_sent -->
 
 <!-- json:metric["plus.upstream.bytes_rcvd","plus.upstream.bytes_sent"] -->
   ```
@@ -1606,11 +1606,11 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.status.1xx**
-  * **plus.upstream.status.2xx**
-  * **plus.upstream.status.3xx**
-  * **plus.upstream.status.4xx**
-  * **plus.upstream.status.5xx**
+  * **plus.upstream.status.1xx**<!-- anchor:plus.upstream.status.1xx -->
+  * **plus.upstream.status.2xx**<!-- anchor:plus.upstream.status.2xx -->
+  * **plus.upstream.status.3xx**<!-- anchor:plus.upstream.status.3xx -->
+  * **plus.upstream.status.4xx**<!-- anchor:plus.upstream.status.4xx -->
+  * **plus.upstream.status.5xx**<!-- anchor:plus.upstream.status.5xx -->
 
 <!-- json:metric["plus.upstream.status.1xx","plus.upstream.status.2xx","plus.upstream.status.3xx","plus.upstream.status.4xx","plus.upstream.status.5xx"] -->
   ```
@@ -1621,11 +1621,11 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.header.time**
-  * **plus.upstream.header.time.count**
-  * **plus.upstream.header.time.max**
-  * **plus.upstream.header.time.median**
-  * **plus.upstream.header.time.pctl95**
+  * **plus.upstream.header.time**<!-- anchor:plus.upstream.header.time -->
+  * **plus.upstream.header.time.count**<!-- anchor:plus.upstream.header.time.count -->
+  * **plus.upstream.header.time.max**<!-- anchor:plus.upstream.header.time.max -->
+  * **plus.upstream.header.time.median**<!-- anchor:plus.upstream.header.time.median -->
+  * **plus.upstream.header.time.pctl95**<!-- anchor:plus.upstream.header.time.pctl95 -->
 
 <!-- json:metric["plus.upstream.header.time","plus.upstream.header.time.count","plus.upstream.header.time.max","plus.upstream.header.time.median","plus.upstream.header.time.pctl95"] -->
   ```
@@ -1635,11 +1635,11 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.response.time**
-  * **plus.upstream.response.time.count**
-  * **plus.upstream.response.time.max**
-  * **plus.upstream.response.time.median**
-  * **plus.upstream.response.time.pctl95**
+  * **plus.upstream.response.time**<!-- anchor:plus.upstream.response.time -->
+  * **plus.upstream.response.time.count**<!-- anchor:plus.upstream.response.time.count -->
+  * **plus.upstream.response.time.max**<!-- anchor:plus.upstream.response.time.max -->
+  * **plus.upstream.response.time.median**<!-- anchor:plus.upstream.response.time.median -->
+  * **plus.upstream.response.time.pctl95**<!-- anchor:plus.upstream.response.time.pctl95 -->
 
 <!-- json:metric["plus.upstream.response.time","plus.upstream.response.time.count","plus.upstream.response.time.max","plus.upstream.response.time.median","plus.upstream.response.time.pctl95"] -->
   ```
@@ -1649,8 +1649,8 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.fails.count**
-  * **plus.upstream.unavail.count**
+  * **plus.upstream.fails.count**<!-- anchor:plus.upstream.fails.count -->
+  * **plus.upstream.unavail.count**<!-- anchor:plus.upstream.unavail.count -->
 
 <!-- json:metric["plus.upstream.fails.count","plus.upstream.unavail.count"] -->
   ```
@@ -1661,9 +1661,9 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.health.checks**
-  * **plus.upstream.health.fails**
-  * **plus.upstream.health.unhealthy**
+  * **plus.upstream.health.checks**<!-- anchor:plus.upstream.health.checks -->
+  * **plus.upstream.health.fails**<!-- anchor:plus.upstream.health.fails -->
+  * **plus.upstream.health.unhealthy**<!-- anchor:plus.upstream.health.unhealthy -->
 
 <!-- json:metric["plus.upstream.health.checks","plus.upstream.health.fails","plus.upstream.health.unhealthy"] -->
   ```
@@ -1674,7 +1674,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.queue.size**
+  * **plus.upstream.queue.size**<!-- anchor:plus.upstream.queue.size -->
 
 <!-- json:metric["plus.upstream.queue.size"] -->
   ```
@@ -1684,7 +1684,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
-  * **plus.upstream.queue.overflows**
+  * **plus.upstream.queue.overflows**<!-- anchor:plus.upstream.queue.overflows -->
 
 <!-- json:metric["plus.upstream.queue.overflows"] -->
   ```
@@ -1696,21 +1696,21 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 
 ##### Cache Zone Metrics
 
-  * **plus.cache.bypass**
-  * **plus.cache.bypass.bytes**
-  * **plus.cache.expired**
-  * **plus.cache.expired.bytes**
-  * **plus.cache.hit**
-  * **plus.cache.hit.bytes**
-  * **plus.cache.miss**
-  * **plus.cache.miss.bytes**
-  * **plus.cache.revalidated**
-  * **plus.cache.revalidated.bytes**
-  * **plus.cache.size**
-  * **plus.cache.stale**
-  * **plus.cache.stale.bytes**
-  * **plus.cache.updating**
-  * **plus.cache.updating.bytes**
+  * **plus.cache.bypass**<!-- anchor:plus.cache.bypass -->
+  * **plus.cache.bypass.bytes**<!-- anchor:plus.cache.bypass.bytes -->
+  * **plus.cache.expired**<!-- anchor:plus.cache.expired -->
+  * **plus.cache.expired.bytes**<!-- anchor:plus.cache.expired.bytes -->
+  * **plus.cache.hit**<!-- anchor:plus.cache.hit -->
+  * **plus.cache.hit.bytes**<!-- anchor:plus.cache.hit.bytes -->
+  * **plus.cache.miss**<!-- anchor:plus.cache.miss -->
+  * **plus.cache.miss.bytes**<!-- anchor:plus.cache.miss.bytes -->
+  * **plus.cache.revalidated**<!-- anchor:plus.cache.revalidated -->
+  * **plus.cache.revalidated.bytes**<!-- anchor:plus.cache.revalidated.bytes -->
+  * **plus.cache.size**<!-- anchor:plus.cache.size -->
+  * **plus.cache.stale**<!-- anchor:plus.cache.stale -->
+  * **plus.cache.stale.bytes**<!-- anchor:plus.cache.stale.bytes -->
+  * **plus.cache.updating**<!-- anchor:plus.cache.updating -->
+  * **plus.cache.updating.bytes**<!-- anchor:plus.cache.updating.bytes -->
 
 <!-- json:metric["plus.cache.bypass","plus.cache.bypass.bytes","plus.cache.expired","plus.cache.expired.bytes","plus.cache.hit","plus.cache.hit.bytes","plus.cache.miss","plus.cache.miss.bytes","plus.cache.revalidated","plus.cache.revalidated.bytes","plus.cache.size","plus.cache.stale","plus.cache.stale.bytes","plus.cache.updating","plus.cache.updating.bytes"] -->
   ```
@@ -1784,7 +1784,7 @@ The PHP-FPM metrics on the **Graphs** page are cumulative, across all automatica
 
 Below is the list of the currently supported PHP-FPM metrics.
 
-  * **php.fpm.conn.accepted**
+  * **php.fpm.conn.accepted**<!-- anchor:php.fpm.conn.accepted -->
 
 <!-- json:metric["php.fpm.conn.accepted"] -->
   ```
@@ -1794,7 +1794,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.queue.current**
+  * **php.fpm.queue.current**<!-- anchor:php.fpm.queue.current -->
 
 <!-- json:metric["php.fpm.queue.current"] -->
   ```
@@ -1804,7 +1804,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.queue.max**
+  * **php.fpm.queue.max**<!-- anchor:php.fpm.queue.max -->
 
 <!-- json:metric["php.fpm.queue.max"] -->
   ```
@@ -1814,7 +1814,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.queue.len**
+  * **php.fpm.queue.len**<!-- anchor:php.fpm.queue.len -->
 
 <!-- json:metric["php.fpm.queue.len"] -->
   ```
@@ -1824,7 +1824,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.proc.idle**
+  * **php.fpm.proc.idle**<!-- anchor:php.fpm.proc.idle -->
 
 <!-- json:metric["php.fpm.proc.idle"] -->
   ```
@@ -1834,7 +1834,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.proc.active**
+  * **php.fpm.proc.active**<!-- anchor:php.fpm.proc.active -->
 
 <!-- json:metric["php.fpm.proc.active"] -->
   ```
@@ -1844,7 +1844,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.proc.total**
+  * **php.fpm.proc.total**<!-- anchor:php.fpm.proc.total -->
 
 <!-- json:metric["php.fpm.proc.total"] -->
   ```
@@ -1854,7 +1854,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.proc.max_active**
+  * **php.fpm.proc.max_active**<!-- anchor:php.fpm.proc.max_active -->
 
 <!-- json:metric["php.fpm.proc.max_active"] -->
   ```
@@ -1864,7 +1864,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.proc.max_child**
+  * **php.fpm.proc.max_child**<!-- anchor:php.fpm.proc.max_child -->
 
 <!-- json:metric["php.fpm.proc.max_child"] -->
   ```
@@ -1874,7 +1874,7 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
-  * **php.fpm.slow_req**
+  * **php.fpm.slow_req**<!-- anchor:php.fpm.slow_req -->
 
 <!-- json:metric["php.fpm.slow_req"] -->
   ```
