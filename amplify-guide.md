@@ -4,7 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Overview](#overview)
+- [Introduction](#introduction)
   - [What Is NGINX Amplify?](#what-is-nginx-amplify)
   - [Main Components](#main-components)
 - [How NGINX Amplify Agent Works](#how-nginx-amplify-agent-works)
@@ -41,6 +41,8 @@
     - [Agent Logfile](#agent-logfile)
   - [Uninstalling the Agent](#uninstalling-the-agent)
 - [User Interface](#user-interface)
+  - [Overview](#overview)
+    - [Application Health Score](#application-health-score)
   - [Graphs](#graphs)
   - [Inventory](#inventory)
   - [Dashboards](#dashboards)
@@ -71,7 +73,7 @@
 
 <!-- section:1 -->
 
-## Overview
+## Introduction
 
 ### What Is NGINX Amplify?
 
@@ -707,6 +709,65 @@ To completely delete a previously monitored object, perform the following steps:
 <!-- section:4 -->
 
 ## User Interface
+
+### Overview
+
+The Overview page is designed to provide a quick summary about the state of your NGINX infrastructure. E.g. you can quickly check what is the total sum of HTTP 5xx errors over the past 24 hours, and compare it to what it was during the previous 24 hours.
+
+Five key overlay graphs are displayed for the selected time period. By switching over various time periods you can compare trends and see if anything abnormal pops up.
+
+The cumulative [metrics](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#metrics-and-metadata) displayed on the **Overview** page are:
+
+  * Total requests — sum of **nginx.http.request.count**
+  * HTTP 5xx errors — sum of **nginx.http.status.5xx**
+  * Request time (P95) — average of **nginx.http.request.time.pctl95**
+  * Traffic — sum of **system.net.bytes_sent** rate
+  * CPU Usage — average of **system.cpu.user**
+
+By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment"). You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#additional-nginx-metrics) collection.
+
+The upper left block displays a total score that reflects your web app performance. It's called Application Health Score (AHS).
+
+![Add Graph](images/amplify-overview.png)
+
+#### Application Health Score
+
+Application Health Score (AHS) is an Apdex-like numerical measure that can be used to estimate the quality of experience for your web application.
+
+AHS is a product of 3 derivative service level indicators (SLI) — percentage of successful requests, percentage of "timely" requests, and agent availability. The "timely" requests are those with the total observed average request time P95 either below the low threshold (100% satisfying) or between the low and high threshold (partially satisfying).
+
+A simplified formula for AHS is the following:
+
+AHS = (Successful Requests %) * (Timely Requests %) * (Agent Availability %)
+
+Each individual SLI in this formula can be turned on or off. By default only the percentage of successful requests is on.
+
+There are T1 and T2 thresholds for the total observed average request time P95, that you can configure for AHS:
+
+  * T1 is the low threshold for satisfying requests
+  * T2 is the high threshold for partially satisfying requests
+
+If the average request time (P95) for the selected time period is below T1, this is considered 100% satisfying state of requests. If the request time is above T1 and below T2, a "satisfaction ratio" is calculated accordingly. Requests above T2 are considered totally unsatisfying. E.g. with T1=0.2s and T2=1s, a request time greater than 1s would be considered unsatisfying, and the resulting score would be 0%.
+
+The detailed algorithm for the AHS is the following:
+
+```
+successful_req_pct = (nginx.http.request.count - nginx.http.status.5xx) / nginx.http.request.count
+
+if (nginx.http.request.time.pctl95 < T1)
+   timely_req_pct = 1
+else
+   if (nginx.http.request.time.pctl95 < T2)
+       timely_req_pct = 1 - (nginx.http.request.time.pctl95 - T1) / (T2 - T1)
+   else
+       timely_req_pct = 0
+
+m1 = successful_req_pct
+m2 = timely_req_pct
+m3 = agent_up_pct
+
+app_health_score = m1 * m2 * m3
+```
 
 ### Graphs
 
