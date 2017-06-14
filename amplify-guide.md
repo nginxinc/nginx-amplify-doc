@@ -27,16 +27,18 @@
       - [Starting and Stopping the Agent](#starting-and-stopping-the-agent)
       - [Verifying that the Agent Has Started](#verifying-that-the-agent-has-started)
   - [Updating the Agent](#updating-the-agent)
+  - [Using Amplify Agent with Docker](#using-amplify-agent-with-docker)
   - [Configuring the Agent](#configuring-the-agent)
     - [Overriding the Effective User ID](#overriding-the-effective-user-id)
     - [Changing the API Key](#changing-the-api-key)
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
     - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
     - [Configuring the Path to the NGINX Configuration File](#configuring-the-path-to-the-nginx-configuration-file)
+    - [Configuring Host Tags](#configuring-host-tags)
     - [Configuring Syslog](#configuring-syslog)
     - [Excluding Certain NGINX Log Files](#excluding-certain-nginx-log-files)
     - [Setting Up a Proxy](#setting-up-a-proxy)
-    - [Logging](#logging)
+    - [Agent Logfile](#agent-logfile)
   - [Uninstalling the Agent](#uninstalling-the-agent)
 - [User Interface](#user-interface)
   - [Graphs](#graphs)
@@ -497,6 +499,12 @@ It is *highly* recommended that you periodically check for updates and install t
   yum update nginx-amplify-agent
   ```
 
+### Using Amplify Agent with Docker
+
+You can use Amplify in a Docker environment. Although it's still work-in-progress, the agent can collect most of the metrics, and send them over to the Amplify backend in either "standalone" or "aggregate" mode. The standalone mode of operation is the simplest one, where there's a separate "host" created for each Docker container. Alternatively the metrics from the agents running in different containers can be aggregated on a "per-image" basis — this is the aggregate mode of deploying the Amplify Agent with Docker.
+
+For more information, please refer to [Docker](https://github.com/nginxinc/docker-nginx-amplify).
+
 ### Configuring the Agent
 
 NGINX Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
@@ -551,6 +559,8 @@ The hostname should be something real. The agent won't start unless a valid host
 
 **Note.** You can also use the above method to replace the system's hostname with an arbitrary alias. Keep in mind that if you redefine the hostname for a live object, the existing object will be marked as failed in the web interface. Redefining the hostname in the agent's configuration essentially creates a new UUID, and a new system for monitoring.
 
+Alternatively you can define an "alias" for the host in the UI (see the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) section below).
+
 #### Configuring the URL for stub_status or Extended Status
 
 When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
@@ -585,6 +595,17 @@ configfile = /etc/nginx/nginx.conf
 ```
 
 **Note**. It is better to avoid using this option and only add it as a workaround. Please take some time to fill out a support ticket in case you had to manually add the path to the NGINX config file. (this would be really much appreciated!)
+
+#### Configuring Host Tags
+
+You can define arbitrary tags on a "per-host" basis. Tags can be configured in the UI (see the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) section below), or set up in the **/etc/amplify-agent.conf** file:
+
+```
+[tags]
+tags = foo,bar,foo:bar
+```
+
+You can use tags to build custom graphs, configure alerts, and filter the systems on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page.
 
 #### Configuring Syslog
 
@@ -631,7 +652,7 @@ https = https://10.20.30.40:3030
 ..
 ```
 
-#### Logging
+#### Agent Logfile
 
 The agent maintains its log file in **/var/log/amplify-agent/agent.log**
 
@@ -697,7 +718,12 @@ If you click on a system on the left, the graphs will change to reflect the metr
 
 Some graphs have an additional selector. E.g., with "Disk Latency" or "Network Traffic" you can select what device or interface you're analyzing.
 
-On the right, above the graphs, you will find the time range selector, which helps to display different time periods for the graphs.
+Above the graphs, you will find the following:
+
+  * Hostname or alias for the selected system
+  * System properties editor where you can set up an alias for the host, and/or assign host tags 
+  * List of tags assigned to the system
+  * Time range selector, which helps to display different time periods for the graphs
 
 You can also copy a predefined graph to a custom dashboard by focusing on the graph and clicking on the arrow in the top right corner.
 
