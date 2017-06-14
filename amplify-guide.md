@@ -27,7 +27,7 @@
       - [Starting and Stopping the Agent](#starting-and-stopping-the-agent)
       - [Verifying that the Agent Has Started](#verifying-that-the-agent-has-started)
   - [Updating the Agent](#updating-the-agent)
-  - [Using Amplify Agent with Docker](#using-amplify-agent-with-docker)
+  - [Using the Agent with Docker](#using-the-agent-with-docker)
   - [Configuring the Agent](#configuring-the-agent)
     - [Overriding the Effective User ID](#overriding-the-effective-user-id)
     - [Changing the API Key](#changing-the-api-key)
@@ -499,15 +499,15 @@ It is *highly* recommended that you periodically check for updates and install t
   yum update nginx-amplify-agent
   ```
 
-### Using Amplify Agent with Docker
+### Using the Agent with Docker
 
-You can use Amplify in a Docker environment. Although it's still work-in-progress, the agent can collect most of the metrics, and send them over to the Amplify backend in either "standalone" or "aggregate" mode. The standalone mode of operation is the simplest one, where there's a separate "host" created for each Docker container. Alternatively the metrics from the agents running in different containers can be aggregated on a "per-image" basis — this is the aggregate mode of deploying the Amplify Agent with Docker.
+You can use NGINX Amplify Agent in a Docker environment. Although it's still work-in-progress, the agent can collect most of the metrics, and send them over to the Amplify backend in either "standalone" or "aggregate" mode. The standalone mode of operation is the simplest one, where there's a separate "host" created for each Docker container. Alternatively the metrics from the agents running in different containers can be aggregated on a "per-image" basis — this is the aggregate mode of deploying the Amplify Agent with Docker.
 
-For more information, please refer to [Docker](https://github.com/nginxinc/docker-nginx-amplify).
+For more information, please refer to our [Amplify Dockerfile](https://github.com/nginxinc/docker-nginx-amplify) repository.
 
 ### Configuring the Agent
 
-NGINX Amplify Agent's configuration file is **/etc/amplify-agent/agent.conf**
+NGINX Amplify Agent keeps its configuration in **/etc/amplify-agent/agent.conf**. The agent configuration is a text-based file.
 
 #### Overriding the Effective User ID
 
@@ -598,7 +598,7 @@ configfile = /etc/nginx/nginx.conf
 
 #### Configuring Host Tags
 
-You can define arbitrary tags on a "per-host" basis. Tags can be configured in the UI (see the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) section below), or set up in the **/etc/amplify-agent.conf** file:
+You can define arbitrary tags on a "per-host" basis. Tags can be configured in the UI (see the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) section below), or set in the **/etc/amplify-agent.conf** file:
 
 ```
 [tags]
