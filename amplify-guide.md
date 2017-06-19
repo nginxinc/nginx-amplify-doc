@@ -472,6 +472,10 @@ API_KEY is a unique API key assigned to your Amplify account. You will see your 
 # service amplify-agent stop
 ```
 
+```
+# service amplify-agent restart
+```
+
 ##### Verifying that the Agent Has Started
 
 ```
@@ -621,7 +625,7 @@ keys = syslog-default
 address = 127.0.0.1:12000
 ```
 
-Restart the agent to have it reparse the configuration and start listening on the specified IP address and port:
+Restart the agent to have it reload the configuration and start listening on the specified IP address and port:
 
 ```
 # service amplify-agent restart
@@ -658,7 +662,7 @@ The agent maintains its log file in **/var/log/amplify-agent/agent.log**
 
 Upon installation, the agent's log rotation schedule is added to **/etc/logrotate.d/amplify-agent**
 
-The normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as follows. Bear in mind, the size of the agent's log file can grow really fast with `DEBUG`:
+The normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as follows. Bear in mind, the size of the agent's log file can grow really fast with `DEBUG`. After you change the log level, please [restart](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#starting-and-stopping-the-agent) the agent.
 
 ```
 
