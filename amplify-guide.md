@@ -712,9 +712,9 @@ To completely delete a previously monitored object, perform the following steps:
 
 ### Overview
 
-The Overview page is designed to provide a quick summary about the state of your NGINX infrastructure. E.g. you can quickly check what is the total sum of HTTP 5xx errors over the past 24 hours, and compare it to what it was during the previous 24 hours.
+The Overview page is designed to provide a quick summary about the state of your NGINX infrastructure. Here you can quickly check what is the total sum of HTTP 5xx errors over the past 24 hours, and compare it to what it was during the previous 24 hours.
 
-Five key overlay graphs are displayed for the selected time period. By switching over various time periods you can compare trends and see if anything abnormal pops up.
+Five key overlay graphs are displayed for the selected time period. By switching over various time periods you can compare trends and see if anything abnormal shows up.
 
 The cumulative [metrics](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#metrics-and-metadata) displayed on the **Overview** page are:
 
