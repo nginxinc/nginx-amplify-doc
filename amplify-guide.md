@@ -726,11 +726,11 @@ The cumulative [metrics](https://github.com/ptreyes/nginx-amplify-doc/blob/new_o
 
 By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment"). You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#additional-nginx-metrics) collection.
 
-The upper left block displays a total score that reflects your web app performance. It's called Application Health Score (AHS).
-
 ![Add Graph](images/amplify-overview.png)
 
 #### Application Health Score
+
+The upper left block displays a total score that reflects your web app performance. It's called Application Health Score (AHS).
 
 Application Health Score (AHS) is an Apdex-like numerical measure that can be used to estimate the quality of experience for your web application.
 
