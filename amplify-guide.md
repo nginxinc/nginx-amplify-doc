@@ -1805,11 +1805,11 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
   * Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
   * Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the agent's debug log to the Intercom chat.
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
 
-With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
+With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
 
-The PHP-FPM metrics on the **Graphs** page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to "Dashboards" and create custom graphs per pool.
+The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
 
 Below is the list of the currently supported PHP-FPM metrics.
 
