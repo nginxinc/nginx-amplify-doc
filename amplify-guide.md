@@ -1801,11 +1801,11 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
 
   * No status enabled for any of the pools.
   * Different user IDs used by the agent and the PHP-FPM workers, or lack of a single group (when using PHP-FPM with a Unix domain socket).
-  * Wrong permissions for the PHP-FPM listen sockets (when using PHP-FPM with a Unix domain socket).
+  * Wrong permissions configured for the PHP-FPM listen socket (when using PHP-FPM with a Unix domain socket).
   * Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
   * Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's debug log, restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the agent's debug log to the Intercom chat.
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the agent's debug log to the Intercom chat.
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
 
