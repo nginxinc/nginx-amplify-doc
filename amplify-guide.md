@@ -1841,33 +1841,36 @@ To start monitoring PHP-FPM, follow the steps below:
 
   and that the above command (or alike) returns the proper set of PHP-FPM metrics.
 
-  **Note.** the *cgi-fcgi* tool has to be installed separately (e.g. from the *fcgi* package). This tool is not required for the agent to collect and report PHP-FPM metrics, however it can be used to quickly diagnose possible issues with PHP-FPM metric collection.
+  **Note.** the *cgi-fcgi* tool has to be installed separately (usually from the *libfcgi-dev* package). This tool is not required for the agent to collect and report PHP-FPM metrics, however it can be used to quickly diagnose possible issues with PHP-FPM metric collection.
 
-  6. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+  6. If your PHP-FPM is configured to use a TCP socket instead of a Unix domain socket, make sure you can query the PHP-FPM metrics manually with *cgi-fcgi*. Double check that your TCP socket configuration is secure (ideally, PHP-FPM pool listening on 127.0.0.1, and *listen.allowed_clients* enabled as well).
 
-  7. Check that the following options are set in **/etc/amplify-agent/agent.conf**
+  7. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  8. Check that the following options are set in **/etc/amplify-agent/agent.conf**
 
   ```
   [extensions]
   phpfpm = True
   ```
 
-  8. Restart the agent.
+  9. Restart the agent.
 
 The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
-  * Amplify Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
   * No status enabled for any of the pools.
-  * Different user IDs used by the agent and the PHP-FPM workers (or lack of a single group).
-  * Wrong permissions for the PHP-FPM listen sockets.
+  * Different user IDs used by the agent and the PHP-FPM workers, or lack of a single group (when using PHP-FPM with a Unix domain socket).
+  * Wrong permissions configured for the PHP-FPM listen socket (when using PHP-FPM with a Unix domain socket).
+  * Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
+  * Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's debug log, restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the agent's debug log to the Intecom chat.
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
 
-With all of the above successfully configured, the end result should be an additional tab displayed on the **Graphs** page, with the pre-defined visualization of the PHP-FPM metrics.
+With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
 
-The PHP-FPM metrics on the **Graphs** page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to "Dashboards" and create custom graphs per pool.
+The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
 
 Below is the list of the currently supported PHP-FPM metrics.
 
