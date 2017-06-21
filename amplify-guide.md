@@ -720,7 +720,7 @@ The Overview page is designed to provide a quick summary about the state of your
 
 Five key overlay graphs are displayed for the selected time period. By switching over various time periods you can compare trends and see if anything abnormal shows up.
 
-The cumulative [metrics](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#metrics-and-metadata) displayed on the **Overview** page are:
+The cumulative [metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata) displayed on the **Overview** page are:
 
   * Total requests — sum of **nginx.http.request.count**
   * HTTP 5xx errors — sum of **nginx.http.status.5xx**
@@ -728,7 +728,7 @@ The cumulative [metrics](https://github.com/ptreyes/nginx-amplify-doc/blob/new_o
   * Traffic — sum of **system.net.bytes_sent** rate
   * CPU Usage — average of **system.cpu.user**
 
-By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment"). You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/ptreyes/nginx-amplify-doc/blob/new_overview_page/amplify-guide.md#additional-nginx-metrics) collection.
+By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment"). You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) collection.
 
 ![Add Graph](images/amplify-overview.png)
 
