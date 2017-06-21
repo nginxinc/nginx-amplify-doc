@@ -712,7 +712,7 @@ To completely delete a previously monitored object, perform the following steps:
 
 ### Overview
 
-The Overview page is designed to provide a quick summary about the state of your NGINX infrastructure. Here you can quickly check what is the total sum of HTTP 5xx errors over the past 24 hours, and compare it to what it was during the previous 24 hours.
+The Overview page is designed to provide a quick summary about the state of your NGINX infrastructure. Here you can quickly check what is the total sum of HTTP 5xx errors over the past 24 hours, and compare it to the previous 24 hours.
 
 Five key overlay graphs are displayed for the selected time period. By switching over various time periods you can compare trends and see if anything abnormal shows up.
 
@@ -732,7 +732,7 @@ By default the metrics above are calculated for all monitored hosts. You can con
 
 The upper left block displays a total score that reflects your web app performance. It's called Application Health Score (AHS).
 
-Application Health Score (AHS) is an Apdex-like numerical measure that can be used to estimate the quality of experience for your web application.
+The Application Health Score (AHS) is an Apdex-like numerical measure that can be used to estimate the quality of experience for your web application.
 
 AHS is a product of 3 derivative service level indicators (SLI) — percentage of successful requests, percentage of "timely" requests, and agent availability. The "timely" requests are those with the total observed average request time P95 either below the low threshold (100% satisfying) or between the low and high threshold (partially satisfying).
 
