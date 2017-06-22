@@ -77,8 +77,8 @@ It could be that you're starting the install script from a non-root account. In 
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
-  * Ubuntu 12.04, 14.04, 16.04, 16.10
-  * Debian 7, 8
+  * Ubuntu 14.04, 16.04, 16.10, 17.04
+  * Debian 7, 8, 9
   * CentOS 6, 7
   * Red Hat 6, 7 (and systems based on it, e.g. Oracle Server)
   * Amazon Linux (latest release)
