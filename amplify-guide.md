@@ -1815,7 +1815,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 
 #### PHP-FPM metrics
 
-You can also monitor your PHP-FPM applications with NGINX Amplify.
+You can also monitor your PHP-FPM applications with NGINX Amplify. The agent should run in the same process environment as PHP-FPM, and be able to find the php-fpm processes with *ps(1)*, otherwise the PHP-FPM metric collection won't work.
 
 When the agent finds a PHP-FPM master process, it tries to auto-detect the path to the PHP-FPM configuration. When the PHP-FPM configuration is found, the agent will look up the pool definitions, and the corresponding `pm.status_path` directives.
 
