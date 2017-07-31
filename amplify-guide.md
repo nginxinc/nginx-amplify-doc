@@ -169,7 +169,7 @@ In order to monitor an NGINX instance, the agent should be able to [find the rel
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to configure either the *stub_status* module -or- the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
+If you're using NGINX Plus, then you need to configure either the *stub_status* module, or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
 
 Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
 
@@ -204,15 +204,15 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Don't forget to test your nginx configuration after you've added the *stub_status* section above.
+Don't forget to test your nginx configuration after you've added the *stub_status* section above. Make sure, there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to clearly identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use *localhost* if the configuration is incomplete.
 
 **Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
-**Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL.
+**Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL. If the agent fails to find *stub_status*, please refer to the workaround described [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-the-url-for-stub_status-or-extended-status).
 
 For more information about *stub_status*, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration. That is, don't test it against localhost if *stub_status* is configured for a server that doesn't listen on 127.0.0.1.
+Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration. That is, don't test it against localhost unless *stub_status* is configured for a server listening on 127.0.0.1.
 
 If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
 
@@ -786,7 +786,7 @@ Some graphs have an additional selector. E.g., with "Disk Latency" or "Network T
 Above the graphs, you will find the following:
 
   * Hostname or alias for the selected system
-  * System properties editor where you can set up an alias for the host, and/or assign host tags 
+  * System properties editor where you can set up an alias for the host, and/or assign host tags
   * List of tags assigned to the system
   * Time range selector, which helps to display different time periods for the graphs
 
