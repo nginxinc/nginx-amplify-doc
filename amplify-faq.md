@@ -84,12 +84,14 @@ The agent is currently officially packaged and supported for the following Linux
   * Amazon Linux (latest release)
   * Gentoo Linux (experimental Ebuild)
 
-The following OS and distributions are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Feel free to submit an issue or a PR if you find something that has to be fixed.
+The following OS and distributions are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Use [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) instead of *install.sh* and follow the dialog.
 
   * FreeBSD 10, 11
   * SLES 12
   * Alpine 3.3
   * Fedora 24
+
+Feel free to submit an issue or a PR if you find something that has to be fixed.
 
 ### 2.2. What Version of Python is Required?
 
