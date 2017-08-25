@@ -77,21 +77,22 @@ It could be that you're starting the install script from a non-root account. In 
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
-  * Ubuntu 14.04, 16.04, 16.10, 17.04
+  * Ubuntu 14.04, 16.04, 17.04
   * Debian 7, 8, 9
   * CentOS 6, 7
   * Red Hat 6, 7 (and systems based on it, e.g. Oracle Server)
   * Amazon Linux (latest release)
-  * Gentoo Linux (experimental Ebuild)
 
-The following OS and distributions are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Use [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) instead of *install.sh* and follow the dialog.
+Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Use [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) instead of *install.sh* and follow the dialog.
 
-  * FreeBSD 10, 11
+  * FreeBSD 10
   * SLES 12
   * Alpine 3.3
   * Fedora 24
 
 Feel free to submit an issue or a PR if you find something that has to be fixed.
+
+We also have an experimental Ebuild for Gentoo.
 
 ### 2.2. What Version of Python is Required?
 
