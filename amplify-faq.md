@@ -83,9 +83,9 @@ The agent is currently officially packaged and supported for the following Linux
   * Red Hat 6, 7 (and systems based on it, e.g. Oracle Server)
   * Amazon Linux (latest release)
 
-Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Use [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) instead of *install.sh* and follow the dialog.
+Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Run [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) (as root) instead of *install.sh* and follow the dialog. You can copy the API key from the Amplify UI (find it in the *Settings* or in the *New System* popup).
 
-  * FreeBSD 10
+  * FreeBSD 10, 11
   * SLES 12
   * Alpine 3.3
   * Fedora 24
