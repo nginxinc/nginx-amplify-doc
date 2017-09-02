@@ -88,7 +88,7 @@ Other OS and distributions below are not fully supported yet (and no agent packa
   * FreeBSD 10, 11
   * SLES 12
   * Alpine 3.3
-  * Fedora 24
+  * Fedora 24, 26
 
 Feel free to [submit](https://github.com/nginxinc/nginx-amplify-agent/) an issue or a PR if you find something that has to be fixed.
 
