@@ -204,7 +204,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Don't forget to test your nginx configuration after you've added the *stub_status* section above. Make sure, there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to clearly identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use *localhost* if the configuration is incomplete.
+Don't forget to test your nginx configuration after you've added the *stub_status* section above. Make sure, there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to clearly identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use *127.0.0.1* if the configuration is incomplete.
 
 **Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
@@ -212,12 +212,12 @@ Don't forget to test your nginx configuration after you've added the *stub_statu
 
 For more information about *stub_status*, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration. That is, don't test it against localhost unless *stub_status* is configured for a server listening on 127.0.0.1.
+Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration.
 
 If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
 
 ```
-$ curl http://localhost/nginx_status
+$ curl http://127.0.0.1/nginx_status
 Active connections: 2
 server accepts handled requests
  344014 344014 661581
