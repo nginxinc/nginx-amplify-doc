@@ -204,7 +204,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Don't forget to test your nginx configuration after you've added the *stub_status* section above. Make sure, there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to clearly identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use *127.0.0.1* if the configuration is incomplete.
+Don't forget to test your nginx configuration after you've added the *stub_status* section above. Make sure, there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to clearly identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use 127.0.0.1 if the configuration is incomplete.
 
 **Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
@@ -223,6 +223,8 @@ server accepts handled requests
  344014 344014 661581
 Reading: 0 Writing: 1 Waiting: 1
 ```
+
+If the above doesn't work, make sure to check where the requests to /nginx_status are being routed. In many cases other [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) blocks can be the reason you (and the agent) can't access *stub_status*.
 
 The agent uses data from *stub_status* to calculate metrics related to server-wide HTTP connections and requests as described below:
 
