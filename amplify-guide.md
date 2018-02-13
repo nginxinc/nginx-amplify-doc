@@ -121,6 +121,7 @@ NGINX Amplify can currently monitor and collect performance metrics for:
   1. Operating system (see the list of supported OSes [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported))
   2. NGINX and NGINX Plus
   3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
+  4. [MySQL] (https://github.com/ptreyes/nginx-amplify-doc/blob/master/amplify-guide.md#mysql-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
@@ -792,6 +793,7 @@ Above the graphs, you will find the following:
   * System properties editor where you can set up an alias for the host, and/or assign host tags
   * List of tags assigned to the system
   * Time range selector, which helps to display different time periods for the graphs
+  * Time zone selector
 
 You can also copy a predefined graph to a custom dashboard by focusing on the graph and clicking on the arrow in the top right corner.
 
@@ -1258,7 +1260,22 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 <!-- json:metric["nginx.http.status.1xx","nginx.http.status.2xx","nginx.http.status.3xx","nginx.http.status.4xx","nginx.http.status.5xx"] -->
   ```
   Type:        counter, integer
-  Description: Number of requests with specific HTTP status codes.
+  Description: Number of requests with HTTP status codes per class.
+  Source:      access.log
+  ```
+<!-- /json:metric -->
+
+  * **nginx.http.status.403**<!-- anchor:nginx.http.status.403 -->
+  * **nginx.http.status.404**<!-- anchor:nginx.http.status.404 -->
+  * **nginx.http.status.500**<!-- anchor:nginx.http.status.500 -->
+  * **nginx.http.status.502**<!-- anchor:nginx.http.status.502 -->
+  * **nginx.http.status.503**<!-- anchor:nginx.http.status.503 -->
+  * **nginx.http.status.504**<!-- anchor:nginx.http.status.504 -->
+
+<!-- json:metric["nginx.http.status.403","nginx.http.status.404","nginx.http.status.500","nginx.http.status.502","nginx.http.status.503","nginx.http.status.504"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of requests with specific HTTP status codes above.
   Source:      access.log
   ```
 <!-- /json:metric -->
@@ -1654,6 +1671,36 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
+  * **plus.http.ssl.handshakes**<!-- anchor:plus.http.ssl.handshakes -->
+
+<!-- json:metric["plus.http.ssl.handshakes"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of successful SSL handshakes.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.http.ssl.failed**<!-- anchor:plus.http.ssl.failed -->
+
+<!-- json:metric["plus.http.ssl.failed"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of failed SSL handshakes.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.http.ssl.reuses**<!-- anchor:plus.http.ssl.reuses -->
+
+<!-- json:metric["plus.http.ssl.reuses"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of session reuses during SSL handshake.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
 ##### Upstream Zone Metrics
 
   * **plus.upstream.peer.count**<!-- anchor:plus.upstream.peer.count -->
@@ -1685,6 +1732,27 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of active connections to the upstream servers.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.upstream.conn.keepalive**<!-- anchor:plus.upstream.conn.keepalive -->
+
+<!-- json:metric["plus.upstream.conn.keepalive"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of idle keepalive connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.upstream.zombies**<!-- anchor:plus.upstream.zombies -->
+
+<!-- json:metric["plus.upstream.zombies"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of servers removed from the group but still processing
+               active client requests.
   Source:      NGINX Plus extended status
   ```
 <!-- /json:metric -->
@@ -1811,6 +1879,239 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer; counter, bytes
   Description: Various statistics about NGINX Plus cache usage.
   Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+##### Stream Zone Metrics
+
+  * **plus.stream.conn.active**<!-- anchor:plus.stream.conn.active -->
+
+<!-- json:metric["plus.stream.conn.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of client connections that are currently being processed.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.conn.accepted**<!-- anchor:plus.stream.conn.accepted -->
+
+<!-- json:metric["plus.stream.conn.accepted"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of connections accepted from clients.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.status.2xx**<!-- anchor:plus.stream.status.2xx -->
+  * **plus.stream.status.4xx**<!-- anchor:plus.stream.status.4xx -->
+  * **plus.stream.status.5xx**<!-- anchor:plus.stream.status.5xx -->
+
+<!-- json:metric["plus.stream.status.2xx","plus.stream.status.4xx","plus.stream.status.5xx"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of sessions completed with status codes 2xx, 4xx, or 5xx.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.discarded**<!-- anchor:plus.stream.discarded -->
+
+<!-- json:metric["plus.stream.discarded"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of connections completed without creating a session.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.bytes_rcvd**<!-- anchor:plus.stream.bytes_rcvd -->
+  * **plus.stream.bytes_sent**<!-- anchor:plus.stream.bytes_sent -->
+
+<!-- json:metric["plus.stream.bytes_rcvd","plus.stream.bytes_sent"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of bytes received from clients, and bytes sent.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.peers**<!-- anchor:plus.stream.upstream.peers -->
+
+<!-- json:metric["plus.stream.upstream.peers"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of live ("up") upstream servers in an upstream group.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.active**<!-- anchor:plus.stream.upstream.conn.active -->
+
+<!-- json:metric["plus.stream.upstream.conn.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.count**<!-- anchor:plus.stream.upstream.conn.count -->
+
+<!-- json:metric["plus.stream.upstream.conn.count"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of client connections forwarded to this server.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.time**<!-- anchor:plus.stream.upstream.conn.time -->
+  * **plus.stream.upstream.conn.time.count**<!-- anchor:plus.stream.upstream.conn.time.count -->
+  * **plus.stream.upstream.conn.time.max**<!-- anchor:plus.stream.upstream.conn.time.max -->
+  * **plus.stream.upstream.conn.time.median**<!-- anchor:plus.stream.upstream.conn.time.median -->
+  * **plus.stream.upstream.conn.time.pctl95**<!-- anchor:plus.stream.upstream.conn.time.pctl95 -->
+
+<!-- json:metric["plus.stream.upstream.conn.time","plus.stream.upstream.conn.time.count","plus.stream.upstream.conn.time.max","plus.stream.upstream.conn.time.median","plus.stream.upstream.conn.time.pctl95"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to connect to an upstream server.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.ttfb**<!-- anchor:plus.stream.upstream.conn.ttfb -->
+
+<!-- json:metric["plus.stream.upstream.conn.ttfb"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to receive the first byte of data.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.response.time**<!-- anchor:plus.stream.upstream.response.time -->
+
+<!-- json:metric["plus.stream.upstream.response.time"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to receive the last byte of data.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.bytes_sent**<!-- anchor:plus.stream.upstream.bytes_sent -->
+  * **plus.stream.upstream.bytes_rcvd**<!-- anchor:plus.stream.upstream.bytes_rcvd -->
+
+<!-- json:metric["plus.stream.upstream.bytes_sent","plus.stream.upstream.bytes_rcvd"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of bytes received from upstream servers, and bytes sent.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.fails.count**<!-- anchor:plus.stream.upstream.fails.count -->
+
+<!-- json:metric["plus.stream.upstream.fails.count"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of unsuccessful attempts to communicate with the server.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.unavail.count**<!-- anchor:plus.stream.upstream.unavail.count -->
+
+<!-- json:metric["plus.stream.upstream.unavail.count"] -->
+  ```
+  Type:        counter, integer
+  Description: How many times the server became unavailable for client connections (state
+               "unavail") due to the number of unsuccessful attempts reaching
+               the max_fails threshold.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.health.checks**<!-- anchor:plus.stream.upstream.health.checks -->
+
+<!-- json:metric["plus.stream.upstream.health.checks"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of health check requests made.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.health.fails**<!-- anchor:plus.stream.upstream.health.fails -->
+
+<!-- json:metric["plus.stream.upstream.health.fails"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of failed health checks.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
+
+<!-- json:metric["plus.stream.upstream.health.unhealthy"] -->
+  ```
+  Type:        counter, integer
+  Description: How many times the server became unhealthy (state "unhealthy").
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
+
+<!-- json:metric["plus.stream.upstream.health.unhealthy"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of servers removed from the group but still
+               processing active client connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+##### Slab Zone Metrics
+
+  * **plus.slab.pages.used**<!-- anchor:plus.slab.pages.used -->
+
+<!-- json:metric["plus.slab.pages.used"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of used memory pages.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.free**<!-- anchor:plus.slab.pages.free -->
+
+<!-- json:metric["plus.slab.pages.free"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of free memory pages.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.total**<!-- anchor:plus.slab.pages.total -->
+
+<!-- json:metric["plus.slab.pages.total"] -->
+  ```
+  Type:        gauge, integer
+  Description: Sum of free and used memory pages above.
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.pct_used**<!-- anchor:plus.slab.pages.pct_used -->
+
+<!-- json:metric["plus.slab.pages.pct_used"] -->
+  ```
+  Type:        gauge, percentage
+  Description: Percentage of free pages.
   ```
 <!-- /json:metric -->
 
@@ -2033,7 +2334,7 @@ To start monitoring MySQL, follow the instructions below.
   password = xxxxxx
   ```
 
-  where password option is the password from the step #1 above.
+  where the password option mirrors the password from the step #1 above.
 
   5. Restart the agent.
 
@@ -2041,7 +2342,9 @@ With the above configuration steps the agent should be able to detect the MySQL 
 
 If the above didn't work, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
-Below is the list of supported MySQL metrics. The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
+The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
+
+Below is the list of supported MySQL metrics.
 
   * **mysql.global.connections**<!-- anchor:mysql.global.connections -->
 
@@ -2167,7 +2470,8 @@ Below is the list of supported MySQL metrics. The agent retrieves most of the me
 <!-- json:metric["mysql.global.innodb_buffer_pool_reads"] -->
   ```
   Type:        counter, integer
-  Description: The number of logical reads that InnoDB could not satisfy from the buffer pool, and had to read directly from disk.
+  Description: The number of logical reads that InnoDB could not satisfy from the buffer
+               pool, and had to read directly from disk.
   Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";
   ```
 <!-- /json:metric -->
