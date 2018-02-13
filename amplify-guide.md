@@ -66,6 +66,7 @@
       - [Cache Zone Metrics](#cache-zone-metrics)
   - [Other metrics](#other-metrics)
     - [PHP-FPM metrics](#php-fpm-metrics)
+    - [MySQL metrics](#mysql-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -1864,6 +1865,10 @@ To start monitoring PHP-FPM, follow the steps below:
 
 The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
+With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
+
+The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
+
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
   * No status enabled for any of the pools.
@@ -1872,11 +1877,7 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
   * Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
   * Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
-
-With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
-
-The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
 Below is the list of supported PHP-FPM metrics.
 
@@ -1982,11 +1983,11 @@ Below is the list of supported PHP-FPM metrics.
 
 #### MySQL metrics
 
-Starting with version 1.1.0 the Amplify agent can also monitor MySQL databases. As usual, the agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*, otherwise the MySQL metric collection won't work.
+Version 1.1.0 and above of the Amplify agent has a plugin for monitoring MySQL databases. Again, the agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*, otherwise the MySQL metric collection won't work.
 
-The agent doesn't try to find and parse any existing MySQL configuration files. In order for the agent to connect to MySQL and collect metrics, do the following.
+The agent doesn't try to find and parse any existing MySQL configuration files. In order for the agent to connect to MySQL and collect the metrics, a few simple configuration steps should be performed.
 
-To start monitoring MySQL, follow the steps below.
+To start monitoring MySQL, follow the instructions below.
 
   1. Create a new user for the Amplify agent.
 
@@ -2017,7 +2018,7 @@ To start monitoring MySQL, follow the steps below.
 
   3. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
 
-  4. Add the following to /etc/amplify-agent/agent.conf
+  4. Add the following to **/etc/amplify-agent/agent.conf**
 
   ```
   [extensions]
@@ -2034,13 +2035,9 @@ To start monitoring MySQL, follow the steps below.
 
   5. Restart the agent.
 
-With the above completed The agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics.
+With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the key MySQL metrics.
 
-Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
-
-If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
-
-With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the MySQL metrics.
+If the above didn't work, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
 Below is the list of supported MySQL metrics.
 
@@ -2178,9 +2175,8 @@ Below is the list of supported MySQL metrics.
 
 <!-- json:metric["mysql.global.innodb_buffer_pool.hit_ratio"] -->
   ```
-  Type:        gauge, integer
-  Description: xxxx
-  Source:      pool-read-requests / (pool-read-requests + pool-reads) * 100
+  Type:        gauge, percentage
+  Description: Hit ratio reflecting the efficiency of the InnoDB buffer pool.
   ```
 <!-- /json:metric -->
 
@@ -2208,9 +2204,8 @@ Below is the list of supported MySQL metrics.
 
 <!-- json:metric["mysql.global.innodb_buffer_pool_util"] -->
   ```
-  Type:        gauge, integer
-  Description: xxxx
-  Source:      xxxx (total - free)/total * 100
+  Type:        gauge, percentage
+  Description: InnoDB buffer pool utilization
   ```
 <!-- /json:metric -->
 
