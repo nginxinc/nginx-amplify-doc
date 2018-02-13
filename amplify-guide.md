@@ -64,6 +64,8 @@
       - [Server Zone Metrics](#server-zone-metrics)
       - [Upstream Zone Metrics](#upstream-zone-metrics)
       - [Cache Zone Metrics](#cache-zone-metrics)
+      - [Stream Zone Metrics](#stream-zone-metrics)
+      - [Slab Zone Metrics](#slab-zone-metrics)
   - [Other metrics](#other-metrics)
     - [PHP-FPM metrics](#php-fpm-metrics)
     - [MySQL metrics](#mysql-metrics)
