@@ -1660,7 +1660,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 <!-- json:metric["plus.upstream.peer.count"] -->
   ```
   Type:        gauge, integer
-  Description: Current number of live upstream servers in an upstream group. If
+  Description: Current number of live ("up") upstream servers in an upstream group. If
                graphed/monitored without specifying an upstream, it's the current
                number of all live upstream servers in all upstream groups.
   Source:      NGINX Plus extended status
@@ -1980,5 +1980,238 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
+#### MySQL metrics
+
+Starting with version 1.1.0 the Amplify agent can also monitor MySQL databases. As usual, the agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*, otherwise the MySQL metric collection won't work.
+
+The agent doesn't try to find and parse any existing MySQL configuration files. In order for the agent to connect to MySQL and collect metrics, do the following.
+
+To start monitoring MySQL, follow the steps below:
+
+
+  1. Add a separate user for the agent to use.
+
+  2. Check that the user can read MySQL metrics:
+
+  ```
+  $ xxx
+  ```
+
+
+  If your MySQL is configured to use a TCP socket instead of a Unix domain socket, make sure you can query the PHP-FPM metrics manually with *cgi-fcgi*. Double check that your TCP socket configuration is secure (ideally, PHP-FPM pool listening on 127.0.0.1, and *listen.allowed_clients* enabled as well).
+  **Note.** The agent doesn't use *mysql(1)* for metric collection.
+
+  1.   7. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  2. Add the following to /etc/amplify-agent/agent.conf
+
+  ```
+  [extensions]
+  phpfpm = True
+  ```
+
+
+  9. Restart the agent.
+
+
+With the above completed The agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics.
+
+Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
+
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
+
+With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the MySQL metrics.
+
+Below is the list of the currently supported MySQL metrics.
+
+  * **mysql.global.connections**<!-- anchor:mysql.global.connections -->
+
+<!-- json:metric["mysql.global.connections"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Connections";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.questions**<!-- anchor:mysql.global.questions -->
+
+<!-- json:metric["mysql.global.questions"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Questions";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.select**<!-- anchor:mysql.global.select -->
+
+<!-- json:metric["mysql.global.select"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_select";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.insert**<!-- anchor:mysql.global.insert -->
+
+<!-- json:metric["mysql.global.insert"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_insert";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.update**<!-- anchor:mysql.global.update -->
+
+<!-- json:metric["mysql.global.update"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_update";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.delete**<!-- anchor:mysql.global.delete -->
+
+<!-- json:metric["mysql.global.delete"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_delete";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.writes**<!-- anchor:mysql.global.writes -->
+
+<!-- json:metric["mysql.global.writes"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      Sum of insert, update, and delete counters above.
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.commit**<!-- anchor:mysql.global.commit -->
+
+<!-- json:metric["mysql.global.commit"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_commit";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.slow_queries**<!-- anchor:mysql.global.slow_queries -->
+
+<!-- json:metric["mysql.global.slow_queries"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Slow_queries";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.uptime**<!-- anchor:mysql.global.uptime -->
+
+<!-- json:metric["mysql.global.uptime"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Uptime";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.aborted_connects**<!-- anchor:mysql.global.aborted_connects -->
+
+<!-- json:metric["mysql.global.aborted_connects"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Aborted_connects";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_read_requests**<!-- anchor:mysql.global.innodb_buffer_pool_read_requests -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_read_requests"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_read_requests";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_reads**<!-- anchor:mysql.global.innodb_buffer_pool_reads -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_reads"] -->
+  ```
+  Type:        counter, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool.hit_ratio**<!-- anchor:mysql.global.innodb_buffer_pool.hit_ratio -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool.hit_ratio"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      yyyy
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_pages_total**<!-- anchor:mysql.global.innodb_buffer_pool_pages_total -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_pages_total"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_total";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_pages_free**<!-- anchor:mysql.global.innodb_buffer_pool_pages_free -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_pages_free"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_free";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_util**<!-- anchor:mysql.global.innodb_buffer_pool_util -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_util"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      xxxx (total - free)/total * 100
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.threads_connected**<!-- anchor:mysql.global.threads_connected -->
+
+<!-- json:metric["mysql.global.threads_connected"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Threads_connected";)
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.threads_running**<!-- anchor:mysql.global.threads_running -->
+
+<!-- json:metric["mysql.global.threads_running"] -->
+  ```
+  Type:        gauge, integer
+  Description: xxxx
+  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Threads_running";)
+  ```
+<!-- /json:metric -->
 
 <!-- /section:5 -->
