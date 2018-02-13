@@ -2033,6 +2033,8 @@ To start monitoring MySQL, follow the instructions below.
   password = xxxxxx
   ```
 
+  where password option is the password from the step #1 above.
+
   5. Restart the agent.
 
 With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the key MySQL metrics.
