@@ -123,7 +123,7 @@ NGINX Amplify can currently monitor and collect performance metrics for:
   1. Operating system (see the list of supported OS [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported))
   2. NGINX and NGINX Plus
   3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
-  4. [MySQL] (https://github.com/ptreyes/nginx-amplify-doc/blob/master/amplify-guide.md#mysql-metrics)
+  4. [MySQL](https://github.com/ptreyes/nginx-amplify-doc/blob/master/amplify-guide.md#mysql-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
@@ -843,8 +843,6 @@ When adding or editing a graph, the following dialog appears:
 
 ![Add Graph](images/amplify-custom-graph-filter.png)
 
-You can also use additional features like "Clone" to streamline the worklow.
-
 To define a graph, perform these steps:
 
   1. Enter the graph title.
@@ -863,6 +861,8 @@ Essentially, the agent performs a combination of real-time log analytics and sta
 Metric filters can be really powerful. By using the filters and creating additional "metric dimensions", it is possible to build highly granular and very informative graphs. To enable the agent to slice the metrics you must add the corresponding log variables to the active NGINX log format. Please see the [Additional NGINX metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) section below.
 
 Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the extended status zones to build more detailed visualizations.
+
+While editing the dashboard, you can also use additional features like "Clone" to streamline the worklow.
 
 ### Analyzer
 
@@ -953,7 +953,7 @@ In the **Emails** section you will find the information about the emails current
 
 Last but not least, inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
 
-XXXX ROLES ROLES ROLES XXXXX
+Users can be assigned one of the three roles — Admin, User, or Read-Only. Admin users are allowed to use all the functions in the Amplify UI, can add/remove users, and modify everything. The User role is almost unrestricted with the exception of managing other users. Read-only users can't modify graphs, or manage users — this role can be useful for your support team members.
 
 <!-- /section:4 -->
 
