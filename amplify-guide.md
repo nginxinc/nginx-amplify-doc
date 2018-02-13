@@ -2015,60 +2015,33 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 <!-- /json:metric -->
 
   * **plus.stream.upstream.fails.count**<!-- anchor:plus.stream.upstream.fails.count -->
-
-<!-- json:metric["plus.stream.upstream.fails.count"] -->
-  ```
-  Type:        counter, integer
-  Description: Total number of unsuccessful attempts to communicate with the server.
-  Source:      NGINX Plus extended status
-  ```
-<!-- /json:metric -->
-
   * **plus.stream.upstream.unavail.count**<!-- anchor:plus.stream.upstream.unavail.count -->
 
-<!-- json:metric["plus.stream.upstream.unavail.count"] -->
+<!-- json:metric["plus.stream.upstream.fails.count","plus.stream.upstream.unavail.count"] -->
   ```
   Type:        counter, integer
-  Description: How many times the server became unavailable for client connections (state
-               "unavail") due to the number of unsuccessful attempts reaching
-               the max_fails threshold.
+  Description: Number of unsuccessful attempts to communicate with upstream servers, and
+               how many times upstream servers became unavailable for client requests.
   Source:      NGINX Plus extended status
   ```
 <!-- /json:metric -->
 
   * **plus.stream.upstream.health.checks**<!-- anchor:plus.stream.upstream.health.checks -->
-
-<!-- json:metric["plus.stream.upstream.health.checks"] -->
-  ```
-  Type:        counter, integer
-  Description: Total number of health check requests made.
-  Source:      NGINX Plus extended status
-  ```
-<!-- /json:metric -->
-
   * **plus.stream.upstream.health.fails**<!-- anchor:plus.stream.upstream.health.fails -->
+  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
 
-<!-- json:metric["plus.stream.upstream.health.fails"] -->
+<!-- json:metric["plus.stream.upstream.health.checks","plus.stream.upstream.health.fails","plus.stream.upstream.health.unhealthy"] -->
   ```
   Type:        counter, integer
-  Description: Total number of failed health checks.
+  Description: Number of performed health check requests, failed health checks, and
+               how many times the upstream servers became unhealthy.
   Source:      NGINX Plus extended status
   ```
 <!-- /json:metric -->
 
-  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
+  * **plus.stream.upstream.zombies**<!-- anchor:plus.stream.upstream.zombies -->
 
-<!-- json:metric["plus.stream.upstream.health.unhealthy"] -->
-  ```
-  Type:        counter, integer
-  Description: How many times the server became unhealthy (state "unhealthy").
-  Source:      NGINX Plus extended status
-  ```
-<!-- /json:metric -->
-
-  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
-
-<!-- json:metric["plus.stream.upstream.health.unhealthy"] -->
+<!-- json:metric["plus.stream.upstream.zombies"] -->
   ```
   Type:        gauge, integer
   Description: Current number of servers removed from the group but still
