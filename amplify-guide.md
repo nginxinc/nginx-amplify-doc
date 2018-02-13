@@ -2039,14 +2039,14 @@ With the above configuration steps the agent should be able to detect the MySQL 
 
 If the above didn't work, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
-Below is the list of supported MySQL metrics.
+Below is the list of supported MySQL metrics. The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
 
   * **mysql.global.connections**<!-- anchor:mysql.global.connections -->
 
 <!-- json:metric["mysql.global.connections"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of connection attempts (successful or not) to the MySQL server.
   Source:      SHOW GLOBAL STATUS LIKE "Connections";
   ```
 <!-- /json:metric -->
@@ -2056,7 +2056,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.questions"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of statements executed by the server. See MySQL reference manual for details.
   Source:      SHOW GLOBAL STATUS LIKE "Questions";
   ```
 <!-- /json:metric -->
@@ -2066,7 +2066,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.select"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of times a select statement has been executed.
   Source:      SHOW GLOBAL STATUS LIKE "Com_select";
   ```
 <!-- /json:metric -->
@@ -2076,7 +2076,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.insert"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of times an insert statement has been executed.
   Source:      SHOW GLOBAL STATUS LIKE "Com_insert";
   ```
 <!-- /json:metric -->
@@ -2086,7 +2086,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.update"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of times an update statement has been executed.
   Source:      SHOW GLOBAL STATUS LIKE "Com_update";
   ```
 <!-- /json:metric -->
@@ -2096,7 +2096,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.delete"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of times a delete statement has been executed.
   Source:      SHOW GLOBAL STATUS LIKE "Com_delete";
   ```
 <!-- /json:metric -->
@@ -2106,8 +2106,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.writes"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
-  Source:      Sum of insert, update, and delete counters above.
+  Description: Sum of insert, update, and delete counters above.
   ```
 <!-- /json:metric -->
 
@@ -2116,7 +2115,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.commit"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of times a commit statement has been executed.
   Source:      SHOW GLOBAL STATUS LIKE "Com_commit";
   ```
 <!-- /json:metric -->
@@ -2126,7 +2125,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.slow_queries"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of queries that have taken more than long_query_time seconds.
   Source:      SHOW GLOBAL STATUS LIKE "Slow_queries";
   ```
 <!-- /json:metric -->
@@ -2136,7 +2135,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.uptime"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of seconds that the server has been up.
   Source:      SHOW GLOBAL STATUS LIKE "Uptime";
   ```
 <!-- /json:metric -->
@@ -2146,7 +2145,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.aborted_connects"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of failed attempts to connect to the MySQL server.
   Source:      SHOW GLOBAL STATUS LIKE "Aborted_connects";
   ```
 <!-- /json:metric -->
@@ -2156,7 +2155,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.innodb_buffer_pool_read_requests"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of logical read requests.
   Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_read_requests";
   ```
 <!-- /json:metric -->
@@ -2166,7 +2165,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.innodb_buffer_pool_reads"] -->
   ```
   Type:        counter, integer
-  Description: xxxx
+  Description: The number of logical reads that InnoDB could not satisfy from the buffer pool, and had to read directly from disk.
   Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";
   ```
 <!-- /json:metric -->
@@ -2185,7 +2184,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.innodb_buffer_pool_pages_total"] -->
   ```
   Type:        gauge, integer
-  Description: xxxx
+  Description: The total size of the InnoDB buffer pool, in pages.
   Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_total";
   ```
 <!-- /json:metric -->
@@ -2195,7 +2194,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.innodb_buffer_pool_pages_free"] -->
   ```
   Type:        gauge, integer
-  Description: xxxx
+  Description: The number of free pages in the InnoDB buffer pool.
   Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_free";
   ```
 <!-- /json:metric -->
@@ -2205,7 +2204,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.innodb_buffer_pool_util"] -->
   ```
   Type:        gauge, percentage
-  Description: InnoDB buffer pool utilization
+  Description: InnoDB buffer pool utilization.
   ```
 <!-- /json:metric -->
 
@@ -2214,7 +2213,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.threads_connected"] -->
   ```
   Type:        gauge, integer
-  Description: xxxx
+  Description: The number of currently open connections.
   Source:      SHOW GLOBAL STATUS LIKE "Threads_connected";
   ```
 <!-- /json:metric -->
@@ -2224,7 +2223,7 @@ Below is the list of supported MySQL metrics.
 <!-- json:metric["mysql.global.threads_running"] -->
   ```
   Type:        gauge, integer
-  Description: xxxx
+  Description: The number of threads that are not sleeping.
   Source:      SHOW GLOBAL STATUS LIKE "Threads_running";
   ```
 <!-- /json:metric -->
