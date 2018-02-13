@@ -1878,7 +1878,7 @@ With all of the above successfully configured, the end result should be an addit
 
 The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
 
-Below is the list of the currently supported PHP-FPM metrics.
+Below is the list of supported PHP-FPM metrics.
 
   * **php.fpm.conn.accepted**<!-- anchor:php.fpm.conn.accepted -->
 
@@ -1986,33 +1986,53 @@ Starting with version 1.1.0 the Amplify agent can also monitor MySQL databases. 
 
 The agent doesn't try to find and parse any existing MySQL configuration files. In order for the agent to connect to MySQL and collect metrics, do the following.
 
-To start monitoring MySQL, follow the steps below:
+To start monitoring MySQL, follow the steps below.
 
-
-  1. Add a separate user for the agent to use.
-
-  2. Check that the user can read MySQL metrics:
+  1. Create a new user for the Amplify agent.
 
   ```
-  $ xxx
+  $ mysql -u root -p
+  [..]
+  mysql> CREATE USER 'amplify-agent'@'localhost' IDENTIFIED BY 'xxxxxx';
+  Query OK, 0 rows affected (0.01 sec)
   ```
 
+  2. Check that the user can read MySQL metrics.
 
-  If your MySQL is configured to use a TCP socket instead of a Unix domain socket, make sure you can query the PHP-FPM metrics manually with *cgi-fcgi*. Double check that your TCP socket configuration is secure (ideally, PHP-FPM pool listening on 127.0.0.1, and *listen.allowed_clients* enabled as well).
-  **Note.** The agent doesn't use *mysql(1)* for metric collection.
+  ```
+  $ mysql -u amplify-agent -p
+  ..
+  mysql> show global status;
+  +-----------------------------------------------+--------------------------------------------------+
+  | Variable_name                                 | Value                                            |
+  +-----------------------------------------------+--------------------------------------------------+
+  | Aborted_clients                               | 0                                                |
+  ..
+  | Uptime_since_flush_status                     | 1993                                             |
+  +-----------------------------------------------+--------------------------------------------------+
+  353 rows in set (0.01 sec)
+  ```
 
-  1.   7. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+  **Note.** The agent doesn't use *mysql(1)* for metric collection, however it implements a similar query mechanism via a Python module.
 
-  2. Add the following to /etc/amplify-agent/agent.conf
+  3. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  4. Add the following to /etc/amplify-agent/agent.conf
 
   ```
   [extensions]
-  phpfpm = True
+  ..
+  mysql = True
+
+  [mysql]
+  #host =
+  #port =
+  unix_socket = /var/run/mysqld/mysqld.sock
+  user = amplify-agent
+  password = xxxxxx
   ```
 
-
-  9. Restart the agent.
-
+  5. Restart the agent.
 
 With the above completed The agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics.
 
@@ -2022,7 +2042,7 @@ If checking the above issues didn't help, please enable the agent's [debug log](
 
 With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the MySQL metrics.
 
-Below is the list of the currently supported MySQL metrics.
+Below is the list of supported MySQL metrics.
 
   * **mysql.global.connections**<!-- anchor:mysql.global.connections -->
 
@@ -2030,7 +2050,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Connections";)
+  Source:      SHOW GLOBAL STATUS LIKE "Connections";
   ```
 <!-- /json:metric -->
 
@@ -2040,7 +2060,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Questions";)
+  Source:      SHOW GLOBAL STATUS LIKE "Questions";
   ```
 <!-- /json:metric -->
 
@@ -2050,7 +2070,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_select";)
+  Source:      SHOW GLOBAL STATUS LIKE "Com_select";
   ```
 <!-- /json:metric -->
 
@@ -2060,7 +2080,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_insert";)
+  Source:      SHOW GLOBAL STATUS LIKE "Com_insert";
   ```
 <!-- /json:metric -->
 
@@ -2070,7 +2090,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_update";)
+  Source:      SHOW GLOBAL STATUS LIKE "Com_update";
   ```
 <!-- /json:metric -->
 
@@ -2080,7 +2100,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_delete";)
+  Source:      SHOW GLOBAL STATUS LIKE "Com_delete";
   ```
 <!-- /json:metric -->
 
@@ -2100,7 +2120,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Com_commit";)
+  Source:      SHOW GLOBAL STATUS LIKE "Com_commit";
   ```
 <!-- /json:metric -->
 
@@ -2110,7 +2130,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Slow_queries";)
+  Source:      SHOW GLOBAL STATUS LIKE "Slow_queries";
   ```
 <!-- /json:metric -->
 
@@ -2120,7 +2140,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Uptime";)
+  Source:      SHOW GLOBAL STATUS LIKE "Uptime";
   ```
 <!-- /json:metric -->
 
@@ -2130,7 +2150,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Aborted_connects";)
+  Source:      SHOW GLOBAL STATUS LIKE "Aborted_connects";
   ```
 <!-- /json:metric -->
 
@@ -2140,7 +2160,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_read_requests";)
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_read_requests";
   ```
 <!-- /json:metric -->
 
@@ -2150,7 +2170,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        counter, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";)
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";
   ```
 <!-- /json:metric -->
 
@@ -2160,7 +2180,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        gauge, integer
   Description: xxxx
-  Source:      yyyy
+  Source:      pool-read-requests / (pool-read-requests + pool-reads) * 100
   ```
 <!-- /json:metric -->
 
@@ -2170,7 +2190,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        gauge, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_total";)
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_total";
   ```
 <!-- /json:metric -->
 
@@ -2180,7 +2200,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        gauge, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_free";)
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_free";
   ```
 <!-- /json:metric -->
 
@@ -2200,7 +2220,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        gauge, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Threads_connected";)
+  Source:      SHOW GLOBAL STATUS LIKE "Threads_connected";
   ```
 <!-- /json:metric -->
 
@@ -2210,7 +2230,7 @@ Below is the list of the currently supported MySQL metrics.
   ```
   Type:        gauge, integer
   Description: xxxx
-  Source:      MySQL global status (SHOW GLOBAL STATUS LIKE "Threads_running";)
+  Source:      SHOW GLOBAL STATUS LIKE "Threads_running";
   ```
 <!-- /json:metric -->
 
