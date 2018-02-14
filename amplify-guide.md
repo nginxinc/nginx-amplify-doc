@@ -64,8 +64,11 @@
       - [Server Zone Metrics](#server-zone-metrics)
       - [Upstream Zone Metrics](#upstream-zone-metrics)
       - [Cache Zone Metrics](#cache-zone-metrics)
+      - [Stream Zone Metrics](#stream-zone-metrics)
+      - [Slab Zone Metrics](#slab-zone-metrics)
   - [Other metrics](#other-metrics)
     - [PHP-FPM metrics](#php-fpm-metrics)
+    - [MySQL metrics](#mysql-metrics)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -117,9 +120,10 @@ After proper installation, the agent will automatically start to report metrics,
 
 NGINX Amplify can currently monitor and collect performance metrics for:
 
-  1. Operating system (see the list of supported OSes [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported))
+  1. Operating system (see the list of supported OS [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported))
   2. NGINX and NGINX Plus
   3. [PHP-FPM](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#php-fpm-metrics)
+  4. [MySQL](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#mysql-metrics)
 
 The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
 
@@ -134,6 +138,7 @@ NGINX Amplify Agent collects the following types of data:
   * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
   * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
   * **PHP-FPM metrics.** The agent can obtain metrics from the PHP-FPM pool status, if it detects a running PHP-FPM master process.
+  * **MySQL metrics.** The agent can obtain metrics from the MySQL global status set of variables.
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **System metadata.** This is the basic information about the OS environment where the agent runs. This could be the hostname, uptime, OS flavor, and other data.
 
@@ -210,9 +215,9 @@ Don't forget to test your nginx configuration after you've added the *stub_statu
 
 **Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL. If the agent fails to find *stub_status*, please refer to the workaround described [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-the-url-for-stub_status-or-extended-status).
 
-For more information about *stub_status*, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
+Please make sure the *stub_status* [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html) is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration.
 
-Please make sure the *stub_status* ACL is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration.
+For more information about *stub_status*, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
 If everything is configured properly, you should see something along these lines when testing it with *curl(1)*:
 
@@ -224,7 +229,7 @@ server accepts handled requests
 Reading: 0 Writing: 1 Waiting: 1
 ```
 
-If the above doesn't work, make sure to check where the requests to /nginx_status are being routed. In many cases other [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) blocks can be the reason you (and the agent) can't access *stub_status*.
+If the above doesn't work, make sure to check where the requests to /nginx_status are being routed. In many cases other [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) blocks can be the reason you can't access *stub_status*.
 
 The agent uses data from *stub_status* to calculate metrics related to server-wide HTTP connections and requests as described below:
 
@@ -270,10 +275,10 @@ If you configured the agent for syslog metric collection (see [below](https://gi
   3. Reload NGINX:
 
   ```
-  # nginx -s reload
+  # service nginx reload
   ```
 
-  (or `service nginx reload`)
+  (see more [here](http://nginx.org/en/docs/control.html))
 
 **Note**: To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.
 
@@ -286,7 +291,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
   1. The Amplify Agent package has been successfully [installed](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#installing-and-managing-nginx-amplify-agent), and no warnings were seen upon the installation.
   2. The `amplify-agent` process is running and updating its [log file](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile).
   3. The agent is running under the same user as your NGINX worker processes.
-  4. The NGINX is started with an absolute path. Currently the agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
+  4. The NGINX is started with an absolute path. The agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").
   5. The [user ID that is used by the agent and the NGINX ](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#overriding-the-effective-user-id), can run *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, the agent won't be able to find and properly detect the NGINX master process.
   6. The time is set correctly. If the time on the system where the agent runs is ahead or behind the world's clock, you won't be able to see the graphs.
   7. *stub_status* is [properly configured](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-nginx-for-metric-collection), and the *stub_status module* is included in the NGINX build (this can be checked with `nginx -V`).
@@ -304,7 +309,7 @@ NGINX Amplify Agent is able to automatically find all relevant NGINX configurati
 
 After the agent finds a particular NGINX configuration, it then automatically starts to keep track of its changes. When a change is detected with NGINX — e.g. a master process restarts, or the NGINX config is edited, an update is sent to the Amplify backend.
 
-**Note.** The agent DOES NOT ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are NOT analyzed — and their parameters ARE NOT exported to the SaaS backend:
+**Note.** The agent doesn't ever send the raw unprocessed config files to the backend system. In addition, the following directives in the NGINX configuration are never analyzed — and their parameters aren't exported to the SaaS backend:
 [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key), [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate), [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file), [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file), [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate), [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file), [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret).
 
 ### Source Code for NGINX Amplify Agent
@@ -548,7 +553,7 @@ api_key = ffeedd0102030405060708
 
 In order to create unique objects for monitoring, the agent must be able to extract a valid hostname from the system. The hostname is also utilized as one of the components for generating a unique identifier. Essentially, the hostname and the UUID unambiguously identify a particular instance of the agent to the Amplify backend. If the hostname or the UUID are changed, the agent and the backend will register a new object for monitoring.
 
-When first generated, the uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects the hostname for the first time. Normally you SHOULD NOT change the UUID in `agent.conf`.
+When first generated, the uuid is written to `agent.conf`. Typically this happens automatically when the agent starts and successfully detects the hostname for the first time. Normally you shouldn't change the UUID in `agent.conf`.
 
 The agent will try its best to determine the correct hostname. If it fails to determine the hostname, you can set the hostname manually in the `agent.conf` file. Check for the following section, and put the desired hostname in here:
 
@@ -593,7 +598,7 @@ plus_status = /status
 
 #### Configuring the Path to the NGINX Configuration File
 
-The agent detects the NGINX configuration file *automatically*. You DO NOT need to explicitly point the agent to the **nginx.conf**.
+The agent detects the NGINX configuration file *automatically*. You don't need to explicitly point the agent to the **nginx.conf**.
 
 If for some reason the agent is not able to find the NGINX configuration, use the following option in **/etc/amplify-agent/agent.conf**:
 
@@ -602,7 +607,7 @@ If for some reason the agent is not able to find the NGINX configuration, use th
 configfile = /etc/nginx/nginx.conf
 ```
 
-**Note**. It is better to avoid using this option and only add it as a workaround. Please take some time to fill out a support ticket in case you had to manually add the path to the NGINX config file. (this would be really much appreciated!)
+**Note**. It is better to avoid using this option and only add it as a workaround. We'd appreciate if you take some time to fill out a support ticket in case you had to manually add the path to the NGINX config file.
 
 #### Configuring Host Tags
 
@@ -652,7 +657,7 @@ exclude_logs=/var/log/nginx/app1/*,access-app1-*.log,sender1-*.log
 
 If your system is in a DMZ environment without direct access to the Internet, the only way for the agent to report collected metrics to Amplify would be through a proxy.
 
-The agent obeys the usual environment variables that are common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However, you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
+The agent will use the usual environment variables that are common on Linux systems (e.g. `https_proxy` or `HTTP_PROXY`). However, you can also define HTTPS proxy manually in `agent.conf`. This could be done as follows:
 
 ```
 [proxies]
@@ -666,7 +671,7 @@ The agent maintains its log file in **/var/log/amplify-agent/agent.log**
 
 Upon installation, the agent's log rotation schedule is added to **/etc/logrotate.d/amplify-agent**
 
-The normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as follows. Bear in mind, the size of the agent's log file can grow really fast with `DEBUG`. After you change the log level, please [restart](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#starting-and-stopping-the-agent) the agent.
+The normal level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as described below. Bear in mind, the size of the agent's log file can grow really fast with `DEBUG`. After you change the log level, please [restart](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#starting-and-stopping-the-agent) the agent.
 
 ```
 
@@ -702,7 +707,7 @@ To completely delete a previously monitored object, perform the following steps:
 
   2. Delete objects from the web interface
 
-  To delete a system using the web interface — find it in the [Inventory](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory), and choose the [i] icon. You can delete objects from the popup window that appears next.
+  To delete a system using the web interface — find it in the [Inventory](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory), and click on the "trash" icon.
 
   Bear in mind — deleting objects in the UI will not stop the agent. To completely remove a system from monitoring, stop and/or uninstall the agent first, and then clean it up in the web interface. Don't forget to also clean up any alert rules.
 
@@ -730,7 +735,9 @@ The cumulative [metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/mast
   * Traffic — sum of **system.net.bytes_sent** rate
   * CPU Usage — average of **system.cpu.user**
 
-By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment"). You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) collection.
+**Note.** By default the metrics above are calculated for all monitored hosts. You can configure specific tags in the **Overview** settings popup to display the metrics for a set of hosts (e.g. only the "production environment").
+
+You may see zero numbers if some metrics are not being gathered. E.g. if the request time (P95) is 0.000s, please check that you have properly configured NGINX log for [additional metric](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) collection.
 
 ![Add Graph](images/amplify-overview.png)
 
@@ -755,7 +762,7 @@ There are T1 and T2 thresholds for the total observed average request time P95, 
 
 If the average request time (P95) for the selected time period is below T1, this is considered 100% satisfying state of requests. If the request time is above T1 and below T2, a "satisfaction ratio" is calculated accordingly. Requests above T2 are considered totally unsatisfying. E.g. with T1=0.2s and T2=1s, a request time greater than 1s would be considered unsatisfying, and the resulting score would be 0%.
 
-The detailed algorithm for the AHS is the following:
+The algorithm for calculating the AHS is:
 
 ```
 successful_req_pct = (nginx.http.request.count - nginx.http.status.5xx) / nginx.http.request.count
@@ -791,6 +798,7 @@ Above the graphs, you will find the following:
   * System properties editor where you can set up an alias for the host, and/or assign host tags
   * List of tags assigned to the system
   * Time range selector, which helps to display different time periods for the graphs
+  * Time zone selector
 
 You can also copy a predefined graph to a custom dashboard by focusing on the graph and clicking on the arrow in the top right corner.
 
@@ -804,7 +812,7 @@ From the top menu bar, you can always open the inventory of the systems that are
 
 The **Inventory** allows you to check the status of all systems at a glance. It also provides a quick overview of the key metrics.
 
-In the rightmost column of the **Inventory** you will also find the settings and the metadata viewer icons. Click on the [i] icon and the popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, it's in the metadata viewer popup where you can find the "Remove object" buttons. Removing the OS object will delete the NGINX objects too.
+In the rightmost column of the **Inventory** you will also find the settings and the metadata viewer icons. Click on the "info" icon and a popup will appear with various useful information about the OS and the monitored NGINX instances. If you need to remove an object from the monitoring, use the "trash" icon.
 
 You can apply sorting, search, and filters to the **Inventory** to quickly find the system in question. You can search and filter by hostname, IP address, architecture etc. You can use regular expressions with the search function.
 
@@ -823,7 +831,13 @@ Some of the use cases for a custom set of graphs are the following:
 
 When building a custom graph, metrics can be summed or averaged across several NGINX servers. By using metric filters it is also possible to create additional “metric dimensions” — for example, reporting the number of POST requests for a specific URI.
 
-To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. Then click **New Graph** in the upper right corner to start adding graphs to the dashboard.
+To create a custom dashboard, click **CREATE DASHBOARD** on the **Dashboards** drop-down menu. You can choose to quickly build several graphs from a preset to populate your custom dashboard with useful visualizations, or you can create your own graphs from scratch.
+
+To start with a graph set wizard, click **New Set**.
+
+![Add Set](images/amplify-custom-new-set.png)
+
+If you'd like to add individual graphs, click **New Graph** in the upper right corner to start adding graphs to the dashboard.
 
 When adding or editing a graph, the following dialog appears:
 
@@ -848,13 +862,15 @@ Metric filters can be really powerful. By using the filters and creating additio
 
 Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the extended status zones to build more detailed visualizations.
 
-When editing a custom dashboard, you can also use additional features like "Clone" or "New Set" to streamline the worklow. The "New Set" function in particular can be very helpful to quickly create various metric visualizations for NGINX or the operating system.
+While editing the dashboard, you can also use additional features like "Clone" to streamline the worklow.
 
 ### Analyzer
 
 NGINX Amplify Agent parses NGINX configuration files and transmits them to the backend component for further analysis. This is where Amplify offers configuration recommendations to help improve the performance, reliability, and security of your applications. With well-thought-out and detailed recommendations you’ll know exactly where the problem is, why it is a problem, and how to fix it.
 
 When you switch to the **Analyzer** page, click on a particular system on the left in order to see the associated report. Unless an NGINX instance is found on a system, there will be no report for it.
+
+![Analyzer Page](images/amplify-analyzer.png)
 
 The following information is provided when a report is run against an NGINX config structure:
 
@@ -892,6 +908,8 @@ In the future, the **Analyzer** page will also include *dynamic analysis*, effec
 
 **Note.** Config analysis is *on* by default. If you don't want your NGINX configuration to be checked, unset the corresponding setting in either Global, or Local (per-system) settings. See [**Settings**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#account-settings) below.
 
+![Analyzer Settings](images/amplify-analyzer-settings.png)
+
 ### Alerts
 
 The **Alerts** page describes the configuration of the alert rules used to notify you of any anomalies in the behavior of your systems.
@@ -909,7 +927,7 @@ By default there's no filtering by host. If a specific alert should only be rais
 
 There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
-You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 30 minutes*, describing which alerts were generated and which ones were cleared.
+You shouldn't see consecutive notifications about the same alert over and over again. Instead there will be digest information sent out *every 60 minutes*, describing which alerts were generated and which ones were cleared.
 
 **Note.** Gauges are *averaged* over the interval configured in the rule. Counters are *summed up*. Currently that's not user configurable and these are the only reduce functions available for configuring metric thresholds.
 
@@ -929,13 +947,13 @@ The global settings section is used to enable or disable account-wide behavior f
   * Periodic NGINX configuration syntax checking with "nginx -t"
   * Analyzing SSL certs
 
-Per-system settings are accessible via the "Settings" icon that can be found for a particular system in the [**Inventory**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#inventory).
-
-Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings in the per-system settings menu.
+Per-system settings are accessible via the "Settings" icon that can be found for a particular NGINX on the [**Analyzer**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer) page. Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings.
 
 In the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
 
 Last but not least, inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
+
+Users can be assigned one of the three roles — Admin, User, or Read-Only. Admin users are allowed to use all the functions in the Amplify UI, can add/remove users, and modify everything. The User role is almost unrestricted with the exception of managing other users. Read-only users can't modify graphs, or manage users — this role can be useful for your support team members.
 
 <!-- /section:4 -->
 
@@ -1257,7 +1275,22 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
 <!-- json:metric["nginx.http.status.1xx","nginx.http.status.2xx","nginx.http.status.3xx","nginx.http.status.4xx","nginx.http.status.5xx"] -->
   ```
   Type:        counter, integer
-  Description: Number of requests with specific HTTP status codes.
+  Description: Number of requests with HTTP status codes per class.
+  Source:      access.log
+  ```
+<!-- /json:metric -->
+
+  * **nginx.http.status.403**<!-- anchor:nginx.http.status.403 -->
+  * **nginx.http.status.404**<!-- anchor:nginx.http.status.404 -->
+  * **nginx.http.status.500**<!-- anchor:nginx.http.status.500 -->
+  * **nginx.http.status.502**<!-- anchor:nginx.http.status.502 -->
+  * **nginx.http.status.503**<!-- anchor:nginx.http.status.503 -->
+  * **nginx.http.status.504**<!-- anchor:nginx.http.status.504 -->
+
+<!-- json:metric["nginx.http.status.403","nginx.http.status.404","nginx.http.status.500","nginx.http.status.502","nginx.http.status.503","nginx.http.status.504"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of requests with specific HTTP status codes above.
   Source:      access.log
   ```
 <!-- /json:metric -->
@@ -1653,6 +1686,36 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
+  * **plus.http.ssl.handshakes**<!-- anchor:plus.http.ssl.handshakes -->
+
+<!-- json:metric["plus.http.ssl.handshakes"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of successful SSL handshakes.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.http.ssl.failed**<!-- anchor:plus.http.ssl.failed -->
+
+<!-- json:metric["plus.http.ssl.failed"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of failed SSL handshakes.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.http.ssl.reuses**<!-- anchor:plus.http.ssl.reuses -->
+
+<!-- json:metric["plus.http.ssl.reuses"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of session reuses during SSL handshake.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
 ##### Upstream Zone Metrics
 
   * **plus.upstream.peer.count**<!-- anchor:plus.upstream.peer.count -->
@@ -1660,7 +1723,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
 <!-- json:metric["plus.upstream.peer.count"] -->
   ```
   Type:        gauge, integer
-  Description: Current number of live upstream servers in an upstream group. If
+  Description: Current number of live ("up") upstream servers in an upstream group. If
                graphed/monitored without specifying an upstream, it's the current
                number of all live upstream servers in all upstream groups.
   Source:      NGINX Plus extended status
@@ -1684,6 +1747,27 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of active connections to the upstream servers.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.upstream.conn.keepalive**<!-- anchor:plus.upstream.conn.keepalive -->
+
+<!-- json:metric["plus.upstream.conn.keepalive"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of idle keepalive connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.upstream.zombies**<!-- anchor:plus.upstream.zombies -->
+
+<!-- json:metric["plus.upstream.zombies"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of servers removed from the group but still processing
+               active client requests.
   Source:      NGINX Plus extended status
   ```
 <!-- /json:metric -->
@@ -1813,6 +1897,212 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
 <!-- /json:metric -->
 
+##### Stream Zone Metrics
+
+  * **plus.stream.conn.active**<!-- anchor:plus.stream.conn.active -->
+
+<!-- json:metric["plus.stream.conn.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of client connections that are currently being processed.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.conn.accepted**<!-- anchor:plus.stream.conn.accepted -->
+
+<!-- json:metric["plus.stream.conn.accepted"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of connections accepted from clients.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.status.2xx**<!-- anchor:plus.stream.status.2xx -->
+  * **plus.stream.status.4xx**<!-- anchor:plus.stream.status.4xx -->
+  * **plus.stream.status.5xx**<!-- anchor:plus.stream.status.5xx -->
+
+<!-- json:metric["plus.stream.status.2xx","plus.stream.status.4xx","plus.stream.status.5xx"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of sessions completed with status codes 2xx, 4xx, or 5xx.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.discarded**<!-- anchor:plus.stream.discarded -->
+
+<!-- json:metric["plus.stream.discarded"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of connections completed without creating a session.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.bytes_rcvd**<!-- anchor:plus.stream.bytes_rcvd -->
+  * **plus.stream.bytes_sent**<!-- anchor:plus.stream.bytes_sent -->
+
+<!-- json:metric["plus.stream.bytes_rcvd","plus.stream.bytes_sent"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of bytes received from clients, and bytes sent.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.peers**<!-- anchor:plus.stream.upstream.peers -->
+
+<!-- json:metric["plus.stream.upstream.peers"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of live ("up") upstream servers in an upstream group.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.active**<!-- anchor:plus.stream.upstream.conn.active -->
+
+<!-- json:metric["plus.stream.upstream.conn.active"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.count**<!-- anchor:plus.stream.upstream.conn.count -->
+
+<!-- json:metric["plus.stream.upstream.conn.count"] -->
+  ```
+  Type:        counter, integer
+  Description: Total number of client connections forwarded to this server.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.time**<!-- anchor:plus.stream.upstream.conn.time -->
+  * **plus.stream.upstream.conn.time.count**<!-- anchor:plus.stream.upstream.conn.time.count -->
+  * **plus.stream.upstream.conn.time.max**<!-- anchor:plus.stream.upstream.conn.time.max -->
+  * **plus.stream.upstream.conn.time.median**<!-- anchor:plus.stream.upstream.conn.time.median -->
+  * **plus.stream.upstream.conn.time.pctl95**<!-- anchor:plus.stream.upstream.conn.time.pctl95 -->
+
+<!-- json:metric["plus.stream.upstream.conn.time","plus.stream.upstream.conn.time.count","plus.stream.upstream.conn.time.max","plus.stream.upstream.conn.time.median","plus.stream.upstream.conn.time.pctl95"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to connect to an upstream server.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.conn.ttfb**<!-- anchor:plus.stream.upstream.conn.ttfb -->
+
+<!-- json:metric["plus.stream.upstream.conn.ttfb"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to receive the first byte of data.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.response.time**<!-- anchor:plus.stream.upstream.response.time -->
+
+<!-- json:metric["plus.stream.upstream.response.time"] -->
+  ```
+  Type:        timer, integer
+  Description: Average time to receive the last byte of data.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.bytes_sent**<!-- anchor:plus.stream.upstream.bytes_sent -->
+  * **plus.stream.upstream.bytes_rcvd**<!-- anchor:plus.stream.upstream.bytes_rcvd -->
+
+<!-- json:metric["plus.stream.upstream.bytes_sent","plus.stream.upstream.bytes_rcvd"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of bytes received from upstream servers, and bytes sent.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.fails.count**<!-- anchor:plus.stream.upstream.fails.count -->
+  * **plus.stream.upstream.unavail.count**<!-- anchor:plus.stream.upstream.unavail.count -->
+
+<!-- json:metric["plus.stream.upstream.fails.count","plus.stream.upstream.unavail.count"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of unsuccessful attempts to communicate with upstream servers, and
+               how many times upstream servers became unavailable for client requests.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.health.checks**<!-- anchor:plus.stream.upstream.health.checks -->
+  * **plus.stream.upstream.health.fails**<!-- anchor:plus.stream.upstream.health.fails -->
+  * **plus.stream.upstream.health.unhealthy**<!-- anchor:plus.stream.upstream.health.unhealthy -->
+
+<!-- json:metric["plus.stream.upstream.health.checks","plus.stream.upstream.health.fails","plus.stream.upstream.health.unhealthy"] -->
+  ```
+  Type:        counter, integer
+  Description: Number of performed health check requests, failed health checks, and
+               how many times the upstream servers became unhealthy.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.stream.upstream.zombies**<!-- anchor:plus.stream.upstream.zombies -->
+
+<!-- json:metric["plus.stream.upstream.zombies"] -->
+  ```
+  Type:        gauge, integer
+  Description: Current number of servers removed from the group but still
+               processing active client connections.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+##### Slab Zone Metrics
+
+  * **plus.slab.pages.used**<!-- anchor:plus.slab.pages.used -->
+
+<!-- json:metric["plus.slab.pages.used"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of used memory pages.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.free**<!-- anchor:plus.slab.pages.free -->
+
+<!-- json:metric["plus.slab.pages.free"] -->
+  ```
+  Type:        gauge, integer
+  Description: Сurrent number of free memory pages.
+  Source:      NGINX Plus extended status
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.total**<!-- anchor:plus.slab.pages.total -->
+
+<!-- json:metric["plus.slab.pages.total"] -->
+  ```
+  Type:        gauge, integer
+  Description: Sum of free and used memory pages above.
+  ```
+<!-- /json:metric -->
+
+  * **plus.slab.pages.pct_used**<!-- anchor:plus.slab.pages.pct_used -->
+
+<!-- json:metric["plus.slab.pages.pct_used"] -->
+  ```
+  Type:        gauge, percentage
+  Description: Percentage of free pages.
+  ```
+<!-- /json:metric -->
+
 ### Other metrics
 
 #### PHP-FPM metrics
@@ -1864,6 +2154,10 @@ To start monitoring PHP-FPM, follow the steps below:
 
 The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
+With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
+
+The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
+
 Here is the list of caveats to look for if the PHP-FPM metrics are not being collected:
 
   * No status enabled for any of the pools.
@@ -1872,13 +2166,9 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
   * Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
   * Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the log to the Intercom chat.
+If checking the above issues didn't help, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
-With all of the above successfully configured, the end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the PHP-FPM metrics.
-
-The PHP-FPM metrics on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page are cumulative, across all automatically detected pools. If you need per-pool graphs, go to [Dashboards](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#dashboards) and create custom graphs per pool.
-
-Below is the list of the currently supported PHP-FPM metrics.
+Below is the list of supported PHP-FPM metrics.
 
   * **php.fpm.conn.accepted**<!-- anchor:php.fpm.conn.accepted -->
 
@@ -1980,5 +2270,256 @@ Below is the list of the currently supported PHP-FPM metrics.
   ```
 <!-- /json:metric -->
 
+#### MySQL metrics
+
+Version 1.1.0 and above of the Amplify agent has a plugin for monitoring MySQL databases. Again, the agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*, otherwise the MySQL metric collection won't work.
+
+The agent doesn't try to find and parse any existing MySQL configuration files. In order for the agent to connect to MySQL and collect the metrics, a few simple configuration steps should be performed.
+
+To start monitoring MySQL, follow the instructions below.
+
+  1. Create a new user for the Amplify agent.
+
+  ```
+  $ mysql -u root -p
+  [..]
+  mysql> CREATE USER 'amplify-agent'@'localhost' IDENTIFIED BY 'xxxxxx';
+  Query OK, 0 rows affected (0.01 sec)
+  ```
+
+  2. Check that the user can read MySQL metrics.
+
+  ```
+  $ mysql -u amplify-agent -p
+  ..
+  mysql> show global status;
+  +-----------------------------------------------+--------------------------------------------------+
+  | Variable_name                                 | Value                                            |
+  +-----------------------------------------------+--------------------------------------------------+
+  | Aborted_clients                               | 0                                                |
+  ..
+  | Uptime_since_flush_status                     | 1993                                             |
+  +-----------------------------------------------+--------------------------------------------------+
+  353 rows in set (0.01 sec)
+  ```
+
+  **Note.** The agent doesn't use *mysql(1)* for metric collection, however it implements a similar query mechanism via a Python module.
+
+  3. [Update](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#updating-the-agent) the agent to the most recent version.
+
+  4. Add the following to **/etc/amplify-agent/agent.conf**
+
+  ```
+  [extensions]
+  ..
+  mysql = True
+
+  [mysql]
+  #host =
+  #port =
+  unix_socket = /var/run/mysqld/mysqld.sock
+  user = amplify-agent
+  password = xxxxxx
+  ```
+
+  where the password option mirrors the password from the step #1 above.
+
+  5. Restart the agent.
+
+With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the key MySQL metrics.
+
+If the above didn't work, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
+
+The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
+
+Below is the list of supported MySQL metrics.
+
+  * **mysql.global.connections**<!-- anchor:mysql.global.connections -->
+
+<!-- json:metric["mysql.global.connections"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of connection attempts (successful or not) to the MySQL server.
+  Source:      SHOW GLOBAL STATUS LIKE "Connections";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.questions**<!-- anchor:mysql.global.questions -->
+
+<!-- json:metric["mysql.global.questions"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of statements executed by the server. See MySQL reference manual for details.
+  Source:      SHOW GLOBAL STATUS LIKE "Questions";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.select**<!-- anchor:mysql.global.select -->
+
+<!-- json:metric["mysql.global.select"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of times a select statement has been executed.
+  Source:      SHOW GLOBAL STATUS LIKE "Com_select";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.insert**<!-- anchor:mysql.global.insert -->
+
+<!-- json:metric["mysql.global.insert"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of times an insert statement has been executed.
+  Source:      SHOW GLOBAL STATUS LIKE "Com_insert";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.update**<!-- anchor:mysql.global.update -->
+
+<!-- json:metric["mysql.global.update"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of times an update statement has been executed.
+  Source:      SHOW GLOBAL STATUS LIKE "Com_update";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.delete**<!-- anchor:mysql.global.delete -->
+
+<!-- json:metric["mysql.global.delete"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of times a delete statement has been executed.
+  Source:      SHOW GLOBAL STATUS LIKE "Com_delete";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.writes**<!-- anchor:mysql.global.writes -->
+
+<!-- json:metric["mysql.global.writes"] -->
+  ```
+  Type:        counter, integer
+  Description: Sum of insert, update, and delete counters above.
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.commit**<!-- anchor:mysql.global.commit -->
+
+<!-- json:metric["mysql.global.commit"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of times a commit statement has been executed.
+  Source:      SHOW GLOBAL STATUS LIKE "Com_commit";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.slow_queries**<!-- anchor:mysql.global.slow_queries -->
+
+<!-- json:metric["mysql.global.slow_queries"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of queries that have taken more than long_query_time seconds.
+  Source:      SHOW GLOBAL STATUS LIKE "Slow_queries";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.uptime**<!-- anchor:mysql.global.uptime -->
+
+<!-- json:metric["mysql.global.uptime"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of seconds that the server has been up.
+  Source:      SHOW GLOBAL STATUS LIKE "Uptime";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.aborted_connects**<!-- anchor:mysql.global.aborted_connects -->
+
+<!-- json:metric["mysql.global.aborted_connects"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of failed attempts to connect to the MySQL server.
+  Source:      SHOW GLOBAL STATUS LIKE "Aborted_connects";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_read_requests**<!-- anchor:mysql.global.innodb_buffer_pool_read_requests -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_read_requests"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of logical read requests.
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_read_requests";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_reads**<!-- anchor:mysql.global.innodb_buffer_pool_reads -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_reads"] -->
+  ```
+  Type:        counter, integer
+  Description: The number of logical reads that InnoDB could not satisfy from the buffer
+               pool, and had to read directly from disk.
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_reads";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool.hit_ratio**<!-- anchor:mysql.global.innodb_buffer_pool.hit_ratio -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool.hit_ratio"] -->
+  ```
+  Type:        gauge, percentage
+  Description: Hit ratio reflecting the efficiency of the InnoDB buffer pool.
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_pages_total**<!-- anchor:mysql.global.innodb_buffer_pool_pages_total -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_pages_total"] -->
+  ```
+  Type:        gauge, integer
+  Description: The total size of the InnoDB buffer pool, in pages.
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_total";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_pages_free**<!-- anchor:mysql.global.innodb_buffer_pool_pages_free -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_pages_free"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of free pages in the InnoDB buffer pool.
+  Source:      SHOW GLOBAL STATUS LIKE "Innodb_buffer_pool_pages_free";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.innodb_buffer_pool_util**<!-- anchor:mysql.global.innodb_buffer_pool_util -->
+
+<!-- json:metric["mysql.global.innodb_buffer_pool_util"] -->
+  ```
+  Type:        gauge, percentage
+  Description: InnoDB buffer pool utilization.
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.threads_connected**<!-- anchor:mysql.global.threads_connected -->
+
+<!-- json:metric["mysql.global.threads_connected"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of currently open connections.
+  Source:      SHOW GLOBAL STATUS LIKE "Threads_connected";
+  ```
+<!-- /json:metric -->
+
+  * **mysql.global.threads_running**<!-- anchor:mysql.global.threads_running -->
+
+<!-- json:metric["mysql.global.threads_running"] -->
+  ```
+  Type:        gauge, integer
+  Description: The number of threads that are not sleeping.
+  Source:      SHOW GLOBAL STATUS LIKE "Threads_running";
+  ```
+<!-- /json:metric -->
 
 <!-- /section:5 -->
