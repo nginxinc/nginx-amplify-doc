@@ -287,6 +287,8 @@ NGINX Amplify Agent collects the following types of data:
 
 The agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the metrics, but occasionally it may also invoke certain system utilities like *ps(1)*.
 
+To see the full list of metrics, please check the documentation [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
+
 ### 4.2. How Is the NGINX Configuration Parsed and Analyzed?
 
 The agent is able to automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting.
