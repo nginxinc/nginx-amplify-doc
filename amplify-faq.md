@@ -114,10 +114,10 @@ Python 3 is not supported yet.
   ```
   # curl -sS -L -O \
   https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-  API_KEY='ffeedd0102030405060708' sh ./install.sh
+  API_KEY='YOUR_API_KEY' sh ./install.sh
   ```
 
-  where API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
+  where YOUR_API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
 
   2. Verify that the Agent has started.
 

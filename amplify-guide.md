@@ -349,10 +349,10 @@ The installation procedure can be as simple as this.
   ```
   # curl -sS -L -O \
   https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
-  API_KEY='ffeedd0102030405060708' sh ./install.sh
+  API_KEY='YOUR_API_KEY' sh ./install.sh
   ```
 
-  where API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system in the Amplify web interface. You can also find the API key in the **Account** menu.
+  where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
 
   2. Verify that the agent has started.
 
@@ -468,7 +468,7 @@ The installation procedure can be as simple as this.
 ##### Creating the Config File from a Template
 
 ```
-# api_key="ffeedd0102030405060708" && \
+# api_key="YOUR_API_KEY" && \
 sed "s/api_key.*$/api_key = ${api_key}/" \
 /etc/amplify-agent/agent.conf.default > \
 /etc/amplify-agent/agent.conf
@@ -551,7 +551,7 @@ When you first install the agent using the procedure above, your API key is writ
 
 ```
 [credentials]
-api_key = ffeedd0102030405060708
+api_key = YOUR_API_KEY
 ```
 
 #### Changing the Hostname and UUID
