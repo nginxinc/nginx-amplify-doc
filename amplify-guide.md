@@ -960,7 +960,9 @@ Users can be assigned one of the three roles — Admin, User, or Read-Only. Admi
 
 In the **Notifications** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
 
-In addition to the email alert notifications, you can optionally configure the integration with your Slack team and workspace. Under the registered emails section, click the "Add to Slack" button to allow Amplify to send you certain notifications on Slack. You will have to login and provide the necessary details about your team, and what channels you'd like to add to Amplify notifications. Both direct messages and channels can be used for notifications. If configured successfully, Amplify is able to send alert information to Slack. A few more additional notifications are available — notably, about the agent not finding a running nginx instance, but also proactive messages about the issues with the SSL certs.
+In addition to the email alert notifications, you can optionally configure the integration with your Slack team and workspace. Under the registered emails section, click the "Add to Slack" button to allow Amplify to send you certain notifications on Slack. You will have to login and provide the necessary details about your team, and what channels you'd like to add to Amplify notifications. Both direct messages and channels can be used for notifications. If configured successfully, Amplify is able to send alert information to Slack. A few more additional notifications are available — e.g. the agent not finding a running nginx instance, but also proactive messages about the issues with the SSL certs.
+
+![Notifications](images/amplify-notifications.png)
 
 #### Agent Settings
 
