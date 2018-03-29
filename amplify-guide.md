@@ -49,6 +49,11 @@
   - [Analyzer](#analyzer)
   - [Alerts](#alerts)
   - [Account Settings](#account-settings)
+    - [Account Information](#account-information)
+    - [Limits](#limits)
+    - [User Roles](#user-roles)
+    - [Notifications](#notifications)
+    - [Agent Settings](#agent-settings)
 - [Metrics and Metadata](#metrics-and-metadata)
   - [OS Metrics](#os-metrics)
   - [NGINX Metrics](#nginx-metrics)
@@ -935,25 +940,37 @@ You shouldn't see consecutive notifications about the same alert over and over a
 
 ### Account Settings
 
+#### Account Information
+
 The **Account** option in the "hamburger" menu at the top right corner of the web interface contains various important settings.
 
 First of all, you can always check the information you provided upon signing up, and edit specific fields.
 
+#### Limits
+
 You can also see the current limits such as "maximum number of agents", "maximum number of custom dashboards", etc.
 
-The global settings section is used to enable or disable account-wide behavior for:
+#### User Roles
+
+Inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
+
+Users can be assigned one of the three roles — Admin, User, or Read-Only. Admin users are allowed to use all the functions in the Amplify UI, can add/remove users, and modify everything. The User role is almost unrestricted with the exception of managing other users. Read-only users can't modify graphs, or manage users — this role can be useful for your support team members.
+
+#### Notifications
+
+In the **Notifications** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
+
+In addition to the email alert notifications, you can optionally configure the integration with your Slack team and workspace. Under the registered emails section, click the "Add to Slack" button to allow Amplify to send you certain notifications on Slack. You will have to login and provide the necessary details about your team, and what channels you'd like to add to Amplify notifications. Both direct messages and channels can be used for notifications. If configured successfully, Amplify is able to send alert information to Slack. A few more additional notifications are available — notably, about the agent not finding a running nginx instance, but also proactive messages about the issues with the SSL certs.
+
+#### Agent Settings
+
+The "Agent settings section is where you enable or disable account-wide behavior for:
 
   * NGINX configuration files analysis
   * Periodic NGINX configuration syntax checking with "nginx -t"
   * Analyzing SSL certs
 
 Per-system settings are accessible via the "Settings" icon that can be found for a particular NGINX on the [**Analyzer**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#analyzer) page. Per-system settings override the global settings. If you generally prefer to monitor your NGINX configurations on all but some specific systems, you can uncheck the corresponding settings.
-
-In the **Emails** section you will find the information about the emails currently registered with your account, and whether they are verified or not. The alert notifications are only sent to verified emails.
-
-Last but not least, inside the **Users** section you will see the list of the user logins that are associated with this particular account. If you are the admin user, you can also invite your team members to the account.
-
-Users can be assigned one of the three roles — Admin, User, or Read-Only. Admin users are allowed to use all the functions in the Amplify UI, can add/remove users, and modify everything. The User role is almost unrestricted with the exception of managing other users. Read-only users can't modify graphs, or manage users — this role can be useful for your support team members.
 
 <!-- /section:4 -->
 
