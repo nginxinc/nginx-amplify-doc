@@ -198,6 +198,7 @@ server {
     server_name 127.0.0.1;
     location /nginx_status {
         stub_status on;
+        access_log off;
         allow 127.0.0.1;
         deny all;
     }
