@@ -2140,7 +2140,7 @@ To start monitoring PHP-FPM, follow the steps below:
   # service php7.0-fpm restart
   ```
 
-  2. **This step is very important!** Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). You may have to change the used ID for the nginx workers, fix the nginx directories permissions, and then restart the Amplify Agent too. If there are multiple PHP-FPM pools configured with different user IDs, make sure the agent's user ID is included in the group IDs of the PHP-FPM workers. This is required in order for the agent to access the PHP-FPM pool socket when querying for metrics.
+  2. **This step is very important!** Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). You may have to change the used ID for the nginx workers, fix the nginx directories permissions, and then restart the agent too. If there are multiple PHP-FPM pools configured with different user IDs, make sure the agent's user ID is included in the group IDs of the PHP-FPM workers. This is required in order for the agent to access the PHP-FPM pool socket when querying for metrics.
 
   3. Check that the listen socket for the PHP-FPM pool you want to monitor, and for which you enabled `pm.status_path`, is properly configured with `listen.owner` and `listen.group`. Look for the following directives inside the pool configuration file.
 
