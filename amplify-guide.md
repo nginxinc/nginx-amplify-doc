@@ -2134,7 +2134,11 @@ The agent will find all pools and status URIs currently configured. The agent th
 
 To start monitoring PHP-FPM, follow the steps below:
 
-  1. Make sure that your PHP-FPM status is enabled for at least one pool (if not, uncomment the `pm.status_path` directive for the pool, and restart PHP-FPM).
+  1. Make sure that your PHP-FPM status is enabled for at least one pool — if it's not, uncomment the `pm.status_path` directive for the pool. For PHP7 on Ubuntu, look inside the */etc/php/7.0/fpm/pool.d* directory to find the pool configuration files. After you've uncommented the `pm.status_path`, please make sure to restart PHP-FPM:
+
+  ```
+  # service php7.0-fpm restart
+  ```
 
   2. Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). If there are multiple pools configured with different user IDs, make sure the agent's user ID is included in the group IDs of the PHP-FPM workers. This is required in order for the agent to access the PHP-FPM pool socket(s) when querying for metrics.
 
@@ -2146,17 +2150,22 @@ To start monitoring PHP-FPM, follow the steps below:
   listen.mode = 0660
   ```
 
-  4. Check that the PHP-FPM listen socket for the pool is properly created and has the right permissions.
-
-  5. Check that you can query the PHP-FPM status for the pool from the command line, e.g.
+  4. Check that the PHP-FPM listen socket for the pool is properly created and has the right permissions:
 
   ```
-  # SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php5-fpm.sock
+  ls -la /etc/init.d/php7.0-fpm
+  -rwxr-xr-x 1 root root 4987 May 10 12:20 /etc/init.d/php7.0-fpm
   ```
 
-  and that the above command (or alike) returns the proper set of PHP-FPM metrics.
+  5. Check that you can query the PHP-FPM status for the pool from the command line:
 
-  **Note.** the *cgi-fcgi* tool has to be installed separately (usually from the *libfcgi-dev* package). This tool is not required for the agent to collect and report PHP-FPM metrics, however it can be used to quickly diagnose possible issues with PHP-FPM metric collection.
+  ```
+  # SCRIPT_NAME=/status SCRIPT_FILENAME=/status QUERY_STRING= REQUEST_METHOD=GET cgi-fcgi -bind -connect /var/run/php/php7.0-fpm.sock
+  ```
+
+  and that the above command returns the proper set of PHP-FPM metrics.
+
+  **Note.** the *cgi-fcgi* tool has to be installed separately, usually from the *libfcgi-dev* package. This tool is not required for the agent to collect and report PHP-FPM metrics, however it can be used to quickly diagnose possible issues with PHP-FPM metric collection.
 
   6. If your PHP-FPM is configured to use a TCP socket instead of a Unix domain socket, make sure you can query the PHP-FPM metrics manually with *cgi-fcgi*. Double check that your TCP socket configuration is secure (ideally, PHP-FPM pool listening on 127.0.0.1, and *listen.allowed_clients* enabled as well).
 
@@ -2170,6 +2179,10 @@ To start monitoring PHP-FPM, follow the steps below:
   ```
 
   9. Restart the agent.
+
+  ```
+  # service nginx-amplify-agent restart
+  ```
 
 The agent should be able to detect the PHP-FPM master and workers, obtain the access to status, and collect the necessary metrics.
 
