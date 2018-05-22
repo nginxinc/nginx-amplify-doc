@@ -79,9 +79,8 @@ The agent is currently officially packaged and supported for the following Linux
 
   * Ubuntu 14.04 "trusty" (i386/amd64/arm64)
   * Ubuntu 16.04 "xenial" (i386/amd64/arm64)
-  * Ubuntu 17.04 "zesty" (i386/amd64)
   * Ubuntu 17.10 "artful" (i386/amd64)
-  * Debian 7 "wheezy" (i386/amd64)
+  * Ubuntu 18.04 "bionic" (amd64)
   * Debian 8 "jessie" (i386/amd64)
   * Debian 9 "stretch" (i386/amd64)
   * RHEL/CentOS/OEL 6 (i386/amd64)
