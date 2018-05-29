@@ -32,7 +32,7 @@
     - [Overriding the Effective User ID](#overriding-the-effective-user-id)
     - [Changing the API Key](#changing-the-api-key)
     - [Changing the Hostname and UUID](#changing-the-hostname-and-uuid)
-    - [Configuring the URL for stub_status or Extended Status](#configuring-the-url-for-stub_status-or-extended-status)
+    - [Configuring the URL for stub_status or Status API](#configuring-the-url-for-stub_status-or-status-api)
     - [Configuring the Path to the NGINX Configuration File](#configuring-the-path-to-the-nginx-configuration-file)
     - [Configuring Host Tags](#configuring-host-tags)
     - [Configuring Syslog](#configuring-syslog)
@@ -140,7 +140,7 @@ When a system or an NGINX instance is removed from the infrastructure for whatev
 
 NGINX Amplify Agent collects the following types of data:
 
-  * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus extended status, the NGINX log files, and from the NGINX process state.
+  * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus status API, the NGINX log files, and from the NGINX process state.
   * **System metrics.** These are various key metrics describing the system, e.g. CPU usage, memory usage, network traffic, etc.
   * **PHP-FPM metrics.** The agent can obtain metrics from the PHP-FPM pool status, if it detects a running PHP-FPM master process.
   * **MySQL metrics.** The agent can obtain metrics from the MySQL global status set of variables.
@@ -179,9 +179,9 @@ In order to monitor an NGINX instance, the agent should be able to [find the rel
 
 You need to define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) is already enabled, the agent should be able to locate it automatically.
 
-If you're using NGINX Plus, then you need to configure either the *stub_status* module, or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) monitoring.
+If you're using NGINX Plus, then you need to configure either the *stub_status* module, or the NGINX Plus [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html).
 
-Without *stub_status* or the NGINX Plus extended status, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
+Without *stub_status* or the NGINX Plus status API, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
 
 Add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
 
@@ -218,7 +218,7 @@ Don't forget to test your nginx configuration after you've added the *stub_statu
 
 **Note.** If you use **conf.d** directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block.
 
-**Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL. If the agent fails to find *stub_status*, please refer to the workaround described [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-the-url-for-stub_status-or-extended-status).
+**Note.** There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with *stub_status* are readable by the agent, otherwise the agent won't be able to correctly determine the *stub_status* URL. If the agent fails to find *stub_status*, please refer to the workaround described [here](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#configuring-the-url-for-stub_status-or-status-api).
 
 Please make sure the *stub_status* [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html) is correctly configured, especially if your system is IPv6-enabled. Test the reachability of *stub_status* metrics with *wget(1)* or *curl(1)*. When testing, use the exact URL matching your NGINX configuration.
 
@@ -250,7 +250,7 @@ nginx.http.request.reading = stub_status.reading
 nginx.http.request.writing = stub_status.writing
 ```
 
-For NGINX Plus the agent will automatically use similar metrics available from the extended status output.
+For NGINX Plus the agent will automatically use similar metrics available from the status API.
 
 For more information about the metric list, please refer to [**Metrics and Metadata**](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#metrics-and-metadata).
 
@@ -579,9 +579,9 @@ The hostname should be something real. The agent won't start unless a valid host
 
 Alternatively you can define an "alias" for the host in the UI (see the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) section below).
 
-#### Configuring the URL for stub_status or Extended Status
+#### Configuring the URL for stub_status or Status API
 
-When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [extended status](https://www.nginx.com/products/live-activity-monitoring/) locations from the NGINX configuration.
+When the agent finds a running NGINX instance, it automatically detects the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) or the NGINX Plus [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html) locations from the NGINX configuration.
 
 To override the *stub_status* URI/URL, use the `stub_status` configuration option.
 
@@ -591,7 +591,7 @@ To override the *stub_status* URI/URL, use the `stub_status` configuration optio
 stub_status = http://127.0.0.1/nginx_status
 ```
 
-To override the extended status URI/URL, use the `plus_status` option.
+To override the URI detection of the status API, use the `plus_status` option.
 
 ```
 [nginx]
@@ -599,7 +599,7 @@ To override the extended status URI/URL, use the `plus_status` option.
 plus_status = /status
 ```
 
-**Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus extended status metrics.
+**Note.** If only the URI part is specified with the options above, the agent will use `http://127.0.0.1` to construct the full URL to access either the *stub_status* or the NGINX Plus status API metrics.
 
 #### Configuring the Path to the NGINX Configuration File
 
@@ -865,7 +865,7 @@ Essentially, the agent performs a combination of real-time log analytics and sta
 
 Metric filters can be really powerful. By using the filters and creating additional "metric dimensions", it is possible to build highly granular and very informative graphs. To enable the agent to slice the metrics you must add the corresponding log variables to the active NGINX log format. Please see the [Additional NGINX metrics](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#additional-nginx-metrics) section below.
 
-Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the extended status zones to build more detailed visualizations.
+Metric filters are available only for the metrics generated from the log files. For other metrics some additional modifiers can be set when editing a graph. E.g. for NGINX Plus it is possible to specify the status API zones to build more detailed visualizations.
 
 While editing the dashboard, you can also use additional features like "Clone" to streamline the worklow.
 
@@ -1207,7 +1207,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
   Type:        counter, integer
   Description: NGINX-wide statistics describing HTTP connections.
-  Source:      stub_status (or N+ extended status)
+  Source:      stub_status (or NGINX Plus status API)
   ```
 <!-- /json:metric -->
 
@@ -1219,7 +1219,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
   Type:        gauge, integer
   Description: NGINX-wide statistics describing HTTP connections.
-  Source:      stub_status (or N+ extended status)
+  Source:      stub_status (or NGINX Plus status API)
   ```
 <!-- /json:metric -->
 
@@ -1229,7 +1229,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   ```
   Type:        counter, integer
   Description: Total number of client requests.
-  Source:      stub_status (or N+ extended status)
+  Source:      stub_status (or NGINX Plus status API)
   ```
 <!-- /json:metric -->
 
@@ -1242,7 +1242,7 @@ Some additional metrics for NGINX monitoring will only be reported if the NGINX 
   Type:        gauge, integer
   Description: Number of currently active requests (reading and writing). Number of
                requests reading headers or writing responses to clients.
-  Source:      stub_status (or N+ extended status)
+  Source:      stub_status (or NGINX Plus status API)
   ```
 <!-- /json:metric -->
 
@@ -1635,11 +1635,11 @@ Here is the list of additional metrics that can be collected from the NGINX log 
 
 #### NGINX Plus Metrics
 
-In [NGINX Plus](https://www.nginx.com/products/) a number of additional metrics describing various aspects of NGINX performance are available. The [extended status](http://nginx.org/en/docs/http/ngx_http_status_module.html) module in NGINX Plus is responsible for collecting and exposing all of the additional counters and gauges.
+In [NGINX Plus](https://www.nginx.com/products/) a number of additional metrics describing various aspects of NGINX performance are available. The [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html) in NGINX Plus is responsible for collecting and exposing all of the additional counters and gauges.
 
-The NGINX Plus metrics currently supported by the agent are described below. The NGINX Plus extended status metrics have the "plus" prefix in their names.
+The NGINX Plus metrics currently supported by the agent are described below. The NGINX Plus metrics have the "plus" prefix in their names.
 
-Some of the NGINX Plus extended metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics (instead of using the *stub_status* metrics):
+Some of the NGINX Plus metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics (instead of using the *stub_status* metrics):
 
 ```
 nginx.http.conn.accepted = connections.accepted
@@ -1650,8 +1650,6 @@ nginx.http.conn.idle = connections.idle
 nginx.http.request.count = requests.total
 nginx.http.request.current = requests.current
 ```
-
-Please see the following [reference documentation](http://nginx.org/en/docs/http/ngx_http_status_module.html) and a [solution brief](https://www.nginx.com/products/live-activity-monitoring/) for more information about the NGINX Plus extended status.
 
 The NGINX Plus metrics below are collected *per zone*. When configuring a graph using these metrics, please make sure to pick the correct server, upstream or cache zone. A more granular peer-specific breakdown of the metrics below is currently not supported in NGINX Amplify.
 
@@ -1666,7 +1664,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of client requests received, and responses sent to clients.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1677,7 +1675,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, bytes
   Description: Number of bytes received from clients, and bytes sent to clients.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1691,7 +1689,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of responses with status codes 1xx, 2xx, 3xx, 4xx, and 5xx.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1701,7 +1699,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of requests completed without sending a response.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1711,7 +1709,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of successful SSL handshakes.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1721,7 +1719,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of failed SSL handshakes.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1731,7 +1729,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of session reuses during SSL handshake.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1745,7 +1743,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Description: Current number of live ("up") upstream servers in an upstream group. If
                graphed/monitored without specifying an upstream, it's the current
                number of all live upstream servers in all upstream groups.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1756,7 +1754,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of client requests forwarded to the upstream servers, and responses obtained.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1766,7 +1764,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of active connections to the upstream servers.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1776,7 +1774,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Сurrent number of idle keepalive connections.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1787,7 +1785,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        gauge, integer
   Description: Current number of servers removed from the group but still processing
                active client requests.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1798,7 +1796,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of bytes received from the upstream servers, and bytes sent.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1813,7 +1811,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer
   Description: Number of responses from the upstream servers with status codes 1xx, 2xx,
                3xx, 4xx, and 5xx.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1827,7 +1825,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, seconds.milliseconds
   Description: Average time to get the response header from the upstream servers.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1841,7 +1839,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, seconds.milliseconds
   Description: Average time to get the full response from the upstream servers.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1853,7 +1851,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer
   Description: Number of unsuccessful attempts to communicate with upstream servers, and
                how many times upstream servers became unavailable for client requests.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1866,7 +1864,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer
   Description: Number of performed health check requests, failed health checks, and
                how many times the upstream servers became unhealthy.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1876,7 +1874,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of queued requests.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1886,7 +1884,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of requests rejected due to queue overflows.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1912,7 +1910,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer; counter, bytes
   Description: Various statistics about NGINX Plus cache usage.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1924,7 +1922,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of client connections that are currently being processed.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1934,7 +1932,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of connections accepted from clients.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1946,7 +1944,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of sessions completed with status codes 2xx, 4xx, or 5xx.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1956,7 +1954,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of connections completed without creating a session.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1967,7 +1965,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of bytes received from clients, and bytes sent.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1977,7 +1975,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of live ("up") upstream servers in an upstream group.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1987,7 +1985,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Current number of connections.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -1997,7 +1995,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Total number of client connections forwarded to this server.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2011,7 +2009,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        timer, integer
   Description: Average time to connect to an upstream server.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2021,7 +2019,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        timer, integer
   Description: Average time to receive the first byte of data.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2031,7 +2029,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        timer, integer
   Description: Average time to receive the last byte of data.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2042,7 +2040,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        counter, integer
   Description: Number of bytes received from upstream servers, and bytes sent.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2054,7 +2052,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer
   Description: Number of unsuccessful attempts to communicate with upstream servers, and
                how many times upstream servers became unavailable for client requests.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2067,7 +2065,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        counter, integer
   Description: Number of performed health check requests, failed health checks, and
                how many times the upstream servers became unhealthy.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2078,7 +2076,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   Type:        gauge, integer
   Description: Current number of servers removed from the group but still
                processing active client connections.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2090,7 +2088,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Сurrent number of used memory pages.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
@@ -2100,7 +2098,7 @@ A cumulative metric set is also maintained internally by summing up the per-zone
   ```
   Type:        gauge, integer
   Description: Сurrent number of free memory pages.
-  Source:      NGINX Plus extended status
+  Source:      NGINX Plus status API
   ```
 <!-- /json:metric -->
 
