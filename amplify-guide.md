@@ -183,7 +183,7 @@ If you're using NGINX Plus, then you need to configure either the *stub_status* 
 
 Without *stub_status* or the NGINX Plus status API, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
 
-Add the *stub_status* configuration as follows. You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf):
+Add the *stub_status* configuration as follows:
 
 ```
 
