@@ -77,16 +77,15 @@ It could be that you're starting the install script from a non-root account. In 
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
-  * Ubuntu 14.04 "trusty" (i386/amd64/arm64)
   * Ubuntu 16.04 "xenial" (i386/amd64/arm64)
-  * Ubuntu 17.10 "artful" (i386/amd64)
-  * Ubuntu 18.04 "bionic" (amd64)
-  * Debian 8 "jessie" (i386/amd64)
+  * Ubuntu 18.04 "bionic" (amd64/arm64)
   * Debian 9 "stretch" (i386/amd64)
   * Debian 10 "buster" (i386/amd64)
   * RHEL/CentOS/OEL 6 (i386/amd64)
-  * RHEL/CentOS/OEL 7 (i386/amd64)
-  * Amazon Linux 2017.09 (amd64)
+  * RHEL/CentOS/OEL 7 (amd64)
+  * RHEL/CentOS/OEL 8 (amd64)
+  * Amazon Linux 2018.03 (amd64)
+  * Amazon Linux 2 LTS (amd64)
 
 Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Run [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) (as root) instead of *install.sh* and follow the dialog. You can copy the API key from the Amplify UI (find it in the **Settings** or in the **New System** pop-up).
 
