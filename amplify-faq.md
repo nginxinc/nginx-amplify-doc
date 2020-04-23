@@ -83,6 +83,7 @@ The agent is currently officially packaged and supported for the following Linux
   * Ubuntu 18.04 "bionic" (amd64)
   * Debian 8 "jessie" (i386/amd64)
   * Debian 9 "stretch" (i386/amd64)
+  * Debian 10 "buster" (i386/amd64)
   * RHEL/CentOS/OEL 6 (i386/amd64)
   * RHEL/CentOS/OEL 7 (i386/amd64)
   * Amazon Linux 2017.09 (amd64)
