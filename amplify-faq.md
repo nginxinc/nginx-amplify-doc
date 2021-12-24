@@ -82,6 +82,7 @@ The agent is currently officially packaged and supported for the following Linux
   * Debian 11 "bullseye" (amd64/arm64)
   * Debian 10 "buster" (amd64/arm64)
   * RHEL/CentOS/OEL 8 (amd64/arm64)
+  * Amazon Linux 2 LTS (amd64/arm64)
 
 The following platforms are no longer supported but still can be used with older agent packages powered by Python 2:
 
@@ -90,7 +91,6 @@ The following platforms are no longer supported but still can be used with older
   * RHEL/CentOS/OEL 6 (i386/amd64)
   * RHEL/CentOS/OEL 7 (amd64)
   * Amazon Linux (amd64)
-  * Amazon Linux 2 LTS (amd64)
 
 Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Run [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) (as root) instead of *install.sh* and follow the dialog. You can copy the API key from the Amplify UI (find it in the **Settings** or in the **New System** pop-up).
 
