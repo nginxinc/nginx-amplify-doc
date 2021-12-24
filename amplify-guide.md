@@ -518,6 +518,8 @@ It is *highly* recommended that you periodically check for updates and install t
   yum update nginx-amplify-agent
   ```
 
+**Note.** Starting from version 1.8.0 agent is running on Python 3 on [supported platforms](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-faq.md#21-what-operating-systems-are-supported). In order to keep existing configurations in working state and avoid mixing of older Python 2 agent packages with new Python 3 ones, we've placed new packages in the dedicated location `/py3` of the [Amplify agent packages repository](https://packages.amplify.nginx.com/py3/). Please adjust your local repository configuration accordingly if you are upgrading from versions < 1.8.0. [Install script](https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh) has been updated to configure new installations to point to the appropriate location automatically.
+
 ### Using the Agent with Docker
 
 You can use NGINX Amplify Agent in a Docker environment. Although it's still work-in-progress, the agent can collect most of the metrics, and send them over to the Amplify backend in either "standalone" or "aggregate" mode. The standalone mode of operation is the simplest one, where there's a separate "host" created for each Docker container. Alternatively the metrics from the agents running in different containers can be aggregated on a "per-image" basis — this is the aggregate mode of deploying the Amplify Agent with Docker.
