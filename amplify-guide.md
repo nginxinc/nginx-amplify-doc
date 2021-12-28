@@ -2363,7 +2363,7 @@ To start monitoring MySQL, follow the instructions below.
 
 With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#graphs) page, with the pre-defined visualization of the key MySQL metrics.
 
-If the MySQL netrics are not visible check if **unix_socket** under **\[mysql\]** in **agent.conf** corresponds to the path of **mysql.sock** file.
+If the MySQL metrics are not visible check if **unix_socket** under **\[mysql\]** in **agent.conf** corresponds to the path of **mysql.sock** file.
 
 If the above didn't work, please enable the agent's [debug log](https://github.com/nginxinc/nginx-amplify-doc/blob/master/amplify-guide.md#agent-logfile), restart the agent, wait a few minutes, and then create an issue at [nginx-amplify-agent](https://github.com/nginxinc/nginx-amplify-agent/issues) repo along with the relevant debug log.
 

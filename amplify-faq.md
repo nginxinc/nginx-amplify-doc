@@ -189,7 +189,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### 2.7. What System Resources are Required?
 
-We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
+We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please create an issue at [nginx-amplify-agent](https://github.com/nginxinc/nginx-amplify-agent/issues) repo.
 
 ### 2.8. How Do I Restart NGINX Amplify Agent?
 
