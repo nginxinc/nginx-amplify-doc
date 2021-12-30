@@ -77,22 +77,27 @@ It could be that you're starting the install script from a non-root account. In 
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
-  * Ubuntu 16.04 "xenial" (i386/amd64/arm64)
+  * Ubuntu 20.04 "focal" (amd64/arm64)
   * Ubuntu 18.04 "bionic" (amd64/arm64)
+  * Debian 11 "bullseye" (amd64/arm64)
+  * Debian 10 "buster" (amd64/arm64)
+  * RHEL/CentOS/OEL 8 (amd64/arm64)
+  * Amazon Linux 2 LTS (amd64/arm64)
+
+The following platforms are no longer supported but still can be used with older agent packages powered by Python 2:
+
+  * Ubuntu 16.04 "xenial" (i386/amd64/arm64)
   * Debian 9 "stretch" (i386/amd64)
-  * Debian 10 "buster" (i386/amd64)
   * RHEL/CentOS/OEL 6 (i386/amd64)
   * RHEL/CentOS/OEL 7 (amd64)
-  * RHEL/CentOS/OEL 8 (amd64)
-  * Amazon Linux 2018.03 (amd64)
-  * Amazon Linux 2 LTS (amd64)
+  * Amazon Linux (amd64)
 
 Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) and see if it works for you. Run [install-source.sh](https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh) (as root) instead of *install.sh* and follow the dialog. You can copy the API key from the Amplify UI (find it in the **Settings** or in the **New System** pop-up).
 
-  * FreeBSD 10, 11
-  * SLES 12
-  * Alpine 3.3
-  * Fedora 24, 26
+  * FreeBSD
+  * SLES
+  * Alpine
+  * Fedora
 
 Feel free to [submit](https://github.com/nginxinc/nginx-amplify-agent/) an issue or a PR if you find something that has to be fixed.
 
@@ -100,9 +105,9 @@ We also have an experimental Ebuild for Gentoo.
 
 ### 2.2. What Version of Python is Required?
 
-NGINX Amplify Agent will work with Python 2.6 and 2.7.
+NGINX Amplify Agent starting from version 1.8.0 works with Python >= 3.6.
 
-Python 3 is not supported yet.
+Previous versions were powered by Python 2.6 and 2.7 depending on the target platform.
 
 ### 2.3. How Do I Start to Monitor My Systems with NGINX Amplify?
 
@@ -184,7 +189,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### 2.7. What System Resources are Required?
 
-We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
+We work very hard to make the agent consume as little memory and CPU as possible. Normally it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please create an issue at [nginx-amplify-agent](https://github.com/nginxinc/nginx-amplify-agent/issues) repo.
 
 ### 2.8. How Do I Restart NGINX Amplify Agent?
 
