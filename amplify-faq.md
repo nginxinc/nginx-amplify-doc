@@ -77,6 +77,7 @@ It could be that you're starting the install script from a non-root account. In 
 
 The agent is currently officially packaged and supported for the following Linux flavors only:
 
+  * Ubuntu 22.04 "jammy" (amd64/arm64)
   * Ubuntu 20.04 "focal" (amd64/arm64)
   * Ubuntu 18.04 "bionic" (amd64/arm64)
   * Debian 11 "bullseye" (amd64/arm64)
