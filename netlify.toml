@@ -1,0 +1,40 @@
+[build]
+  publish = "public"
+  command = "hugo --gc"
+
+[build.environment]
+  HUGO_VERSION = "0.91.1"
+
+# Use only for builds that publish to docs.nginx.com
+[context.production]
+  command = "hugo --gc -e production"
+
+# Use only for builds that publish to docs-staging.nginx.com
+[context.staging]
+  command = "hugo --gc -e staging"
+
+# Safe for all branch/mr deploys -- development is the default Hugo build environment
+[context.deploy-preview]
+  command = "hugo --gc -e development"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://docs.nginx.com"
+
+#[[redirects]]
+#  from = "/"
+#  to = "/nginx-management-suite/"
+#  status = 301
+#  force = true
+
+[[redirects]]
+  from = "*"
+  to = "/404.html"
+  status = 404
+
+#[[redirects]]
+#  from = "robots.txt"
+#  to = "https://docs.nginx.com/robots.txt"
+#  status = 301
+#  force = true
