@@ -62,7 +62,7 @@ baseURL = ""
     "taxonomy",
     "taxonomyTerm"
   ]
-  logo = "NGINX-Amplify-product-icon-RGB.svg"
+  logo = "/NGINX-Amplify-product-icon-RGB.svg"
 
 
 sectionPagesMenu = "docs"
