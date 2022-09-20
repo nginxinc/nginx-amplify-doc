@@ -15,10 +15,10 @@
   command = "hugo --gc -e staging"
 
 [context.branch-deploy]
-  command = "hugo --gc -d public/nginx-for-azure -b $DEPLOY_PRIME_URL/nginx-amplify"
+  command = "hugo --gc -d public/nginx-amplify -b $DEPLOY_PRIME_URL/nginx-amplify"
 
 [context.deploy-preview]
-  command = "hugo --gc -d public/nginx-for-azure -b $DEPLOY_PRIME_URL/nginx-amplify"
+  command = "hugo --gc -d public/nginx-amplify -b $DEPLOY_PRIME_URL/nginx-amplify"
 
 [[headers]]
   for = "/*"
