@@ -13,20 +13,22 @@
 [context.staging]
   command = "hugo --gc -e staging"
 
-# Safe for all branch/mr deploys -- development is the default Hugo build environment
+[context.branch-deploy]
+  command = "hugo --gc -d public/nginx-for-azure -b $DEPLOY_PRIME_URL/nginx-amplify"
+
 [context.deploy-preview]
-  command = "hugo --gc -e development"
+  command = "hugo --gc -d public/nginx-for-azure -b $DEPLOY_PRIME_URL/nginx-amplify"
 
 [[headers]]
   for = "/*"
   [headers.values]
     Access-Control-Allow-Origin = "https://docs.nginx.com"
 
-#[[redirects]]
-#  from = "/"
-#  to = "/nginx-management-suite/"
-#  status = 301
-#  force = true
+[[redirects]]
+  from = "/"
+  to = "/nginx-amplify/"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "*"
