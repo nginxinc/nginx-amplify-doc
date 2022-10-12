@@ -6,7 +6,7 @@ tags: ["docs"]
 docs: "DOCS-000"
 ---
 
-If you are interested in learning more about NGINX Amplify, visit the [NGINX Amplify Resources Page](https://amplify.nginx.com/), where you will find links to:
+If you are interested in learning more about NGINX Amplify, visit the [NGINX Amplify Resources Page](https://amplify.nginx.com/docs/), where you will find links to:
 
 - The Amplify Blog
 - Amplify Videos
