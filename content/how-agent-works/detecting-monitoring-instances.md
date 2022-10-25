@@ -4,7 +4,7 @@ description: Learn how the NGINX Amplify Agent detects NGINX Instances.
 weight: 300
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-962"
 ---
 
 NGINX Amplify Agent is capable of detecting several types of NGINX instances:

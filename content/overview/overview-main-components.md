@@ -4,7 +4,7 @@ description: Learn about NGINX Amplify and its main components.
 weight: 10
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-976"
 ---
 
 ## What Is NGINX Amplify?

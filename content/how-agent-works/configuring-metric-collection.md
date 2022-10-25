@@ -4,7 +4,7 @@ description: Learn how to configure NGINX Instances to collect data.
 weight: 400
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-963"
 ---
 
 To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/how-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.

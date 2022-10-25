@@ -4,7 +4,7 @@ description: Questions about NGINX Amplify's Metrics and Metadata
 weight: 40
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-957"
 ---
 
 ### What Metrics and Metadata are Collected?

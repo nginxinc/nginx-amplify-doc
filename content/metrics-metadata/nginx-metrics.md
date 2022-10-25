@@ -4,7 +4,7 @@ description: List of NGINX Metrics
 weight: 30
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-973"
 ---
 
 ## HTTP Connections and Requests
