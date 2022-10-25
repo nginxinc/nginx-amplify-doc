@@ -4,7 +4,7 @@ description: Learn about the Alerts page of the User Interface.
 weight: 60
 toc: false
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-979"
 ---
 
 The **Alerts** page describes the configuration of the alert rules used to notify you of any anomalies in the behavior of your systems.
