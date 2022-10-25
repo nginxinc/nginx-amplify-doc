@@ -4,7 +4,7 @@ description: Learn about the NGINX Amplify Agent.
 weight: 100
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-960"
 ---
 
 NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.

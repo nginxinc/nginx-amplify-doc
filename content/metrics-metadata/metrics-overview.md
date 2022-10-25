@@ -4,7 +4,7 @@ description: Learn about the metrics and metadata NGINX Amplify collects.
 weight: 10
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-972"
 ---
 
 Most metrics are collected by the agent without requiring the user to perform any additional setup. For troubleshooting, see [Troubleshooting Metrics Collection]({{< relref "/troubleshooting-metrics-collection.md" >}}).

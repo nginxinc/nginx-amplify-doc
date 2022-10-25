@@ -4,7 +4,7 @@ description: Learn how to uninstall the NGINX Agent.
 weight: 500
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-969"
 ---
 
 To completely delete a previously monitored object, perform the following steps:

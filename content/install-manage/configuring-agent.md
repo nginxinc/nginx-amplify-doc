@@ -4,7 +4,7 @@ description: Learn how to configure the NGINX Agent.
 weight: 300
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-967"
 ---
 
 NGINX Amplify Agent keeps its configuration in `/etc/amplify-agent/agent.conf`. The agent configuration is a text-based file.

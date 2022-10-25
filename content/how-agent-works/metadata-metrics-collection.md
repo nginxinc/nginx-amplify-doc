@@ -4,7 +4,7 @@ description: Learn how the Amplify Agent collects data.
 weight: 200
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-964"
 ---
 
 NGINX Amplify Agent collects the following types of data:

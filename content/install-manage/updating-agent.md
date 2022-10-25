@@ -4,7 +4,7 @@ description: Learn how to update the NGINX Amplify Agent.
 weight: 200
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-970"
 ---
 
 {{< important >}}

@@ -4,7 +4,7 @@ description: Learn how to install the NGINX Amplify Agent.
 weight: 100
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-968"
 ---
 
 To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system that has to be checked.

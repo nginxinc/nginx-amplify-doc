@@ -4,7 +4,7 @@ description: Learn what to check if the NGINX Amplify Agent isn't reporting metr
 weight: 500
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-966"
 ---
 
 After you [install and start]({{< relref "/install-manage/installing-agent" >}}) the agent, it should start reporting right away, pushing aggregated data to the Amplify backend at regular 1 minute intervals. It'll take about a minute for a new system to appear in the Amplify web interface.

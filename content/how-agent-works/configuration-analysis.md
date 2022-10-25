@@ -4,7 +4,7 @@ description: Learn about NGINX Amplify Agent's configuration analysis feature.
 weight: 600
 toc: true
 tags: ["docs"]
-docs: "DOCS-000"
+docs: "DOCS-961"
 ---
 
 NGINX Amplify Agent can automatically find all relevant NGINX configuration files, parse them, extract their logical structure, and send the associated JSON data to the Amplify backend for further analysis and reporting. For more information on configuration analysis, please see the [Analyzer]({{< relref "/user-interface/analyzer.md" >}})) documentation.
