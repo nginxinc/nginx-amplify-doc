@@ -17,6 +17,7 @@ The agent is currently officially packaged and supported for the following Linux
   * Debian 11 "bullseye" (amd64/arm64)
   * Debian 10 "buster" (amd64/arm64)
   * RHEL/CentOS/OEL 8 (amd64/arm64)
+  * RHEL/CentOS/OEL 9 (amd64/arm64)
   * Amazon Linux 2 LTS (amd64/arm64)
 
 The following platforms are no longer supported but still can be used with older agent packages powered by Python 2:
