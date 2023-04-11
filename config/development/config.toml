@@ -1,0 +1,4 @@
+baseURL = "https://docs-dev.nginx.com/nginx-amplify"
+title = "DEV -- NGINX Amplify"
+publishDir = "public/nginx-amplify"
+canonifyURLs = false

@@ -6,7 +6,8 @@ description = ""
 refLinksErrorLevel = "ERROR"
 enableRobotsTXT = "true"
 pluralizeListTitles = false
-baseURL = ""
+baseURL = "/"
+canonifyURLs = true
 
 [caches]
   [caches.modules]
@@ -15,7 +16,7 @@ baseURL = ""
 
 [module]
 [[module.imports]]
-  path="gitlab.com/f5/nginx/controller/poc/f5-hugo"  
+  path="github.com/nginxinc/nginx-hugo-theme"  
 
 [[module.mounts]]
   source = "data"
