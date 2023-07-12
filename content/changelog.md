@@ -1,6 +1,6 @@
 ---
 title: "Changelog"
-description: "Learn about the latest updates, new features, and resolved bugs in NGINX Amplify"
+description: "These release notes list and describe the new features, enhancements, and resolved issues in NGINX Amplify"
 weight: 800
 toc: true
 ---
@@ -8,7 +8,9 @@ toc: true
 ## July 12th, 2023
 
  ### What's New
- 
+
+This release includes the following updates:
+
 - {{% icon-feature %}} **NGINX Amplify Beta UI**
 
   The new Amplify user interface is in beta!  To enable it, you can select the  **Try New UI** button in the upper right corner of your browser.  Please give it a try and let us know what you think by selecting **Give Feedback** in the upper right corner of your browser window.
