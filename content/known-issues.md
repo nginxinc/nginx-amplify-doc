@@ -9,7 +9,7 @@ tags: ["docs"]
 {{<rn-styles>}}
 
 ---
-## July 12th, 2023
+## July 13th, 2023
 
 ### {{% icon-bug %}} Custom Time Ranges are Not Supported {#507}
 
