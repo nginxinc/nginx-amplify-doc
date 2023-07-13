@@ -11,6 +11,24 @@ tags: ["docs"]
 ---
 ## July 13th, 2023
 
+### {{% icon-bug %}} Adding new Slack integration not supported in Beta user interface. {#907}
+
+{{<bootstrap-table "table table-striped table-bordered">}}
+| Issue ID | Status |
+|----------|--------|
+| 907      | Open   |
+{{</bootstrap-table>}}
+
+#### Description
+
+Adding a new Slack channel in the Notifications Settings page does not work in the Beta user interface.
+
+#### Workaround
+
+Add any new Slack channel integrations in the Classic user interface.
+
+---
+
 ### {{% icon-bug %}} Custom Time Ranges are Not Supported {#507}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
