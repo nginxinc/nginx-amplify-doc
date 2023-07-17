@@ -19,17 +19,17 @@ hugo-mod:
 
 # Builds using the Hugo "staging" environment
 # For deploys to docs.nginx.com only
-build-production:
+build-production: hugo-mod
 	hugo --gc -e production
 	
 # Builds using the Hugo "staging" environment
 # For deploys to docs-staging.nginx.com only
-build-staging:
+build-staging: hugo-mod
 	hugo --gc -e staging
 
 # Builds using the Hugo "development" environment
 # For deploys to docs-dev.nginx.com only
-build-dev:
+build-dev: hugo-mod
 	hugo --gc -e development
 
 # Runs the Hugo server with content marked as draft
@@ -47,3 +47,6 @@ docs:
 # Requires a netlify login.
 netlify: clean
 	netlify deploy --build -d public --alias $(shell git branch --show-current)-branch 
+
+deploy-preview: hugo-mod
+	hugo --gc -d public/nginxaas/azure/ -b ${NETLIFY_DEPLOY_URL}/nginx-amplify
