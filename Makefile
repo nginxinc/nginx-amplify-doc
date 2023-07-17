@@ -49,4 +49,4 @@ netlify: clean
 	netlify deploy --build -d public --alias $(shell git branch --show-current)-branch 
 
 deploy-preview: hugo-mod
-	hugo --gc -d public/nginxaas/azure/ -b ${NETLIFY_DEPLOY_URL}/nginx-amplify
+	hugo --gc -d public/nginx-amplify -b ${NETLIFY_DEPLOY_URL}/nginx-amplify
