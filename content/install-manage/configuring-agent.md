@@ -124,7 +124,7 @@ address = 127.0.0.1:12000
 Restart the agent to have it reload the configuration and start listening on the specified IP address and port:
 
 ```bash
-# service amplify-agent restart
+service amplify-agent restart
 ```
 
 Make sure to [add the `syslog` settings]({{< relref "/install-manage/configuring-agent#configuring-syslog" >}}) to your NGINX configuration as well.
