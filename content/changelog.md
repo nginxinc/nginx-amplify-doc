@@ -9,7 +9,7 @@ toc: true
 
 ### What's New
  
-- {{% icon-resolved %}} **Configure Slack Notifications in Beta UI and other bug fixes**
+- {{% icon-feature %}} **Configure Slack Notifications in Beta UI and other bug fixes**
 
   The Beta UI now supports adding Slack channels when configuring notifications in the Settings -> Notifications page. (Issue 907)
 
