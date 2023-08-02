@@ -5,6 +5,16 @@ weight: 800
 toc: true
 ---
 
+## July 26, 2023
+
+### What's New
+ 
+- {{% icon-feature %}} **Configure Slack Notifications in Beta UI and other bug fixes**
+
+  The Beta UI now supports adding Slack channels when configuring notifications in the Settings -> Notifications page. (Issue 907)
+
+  A number of cosmetic and performance related bugs have also been fixed.
+
 ## July 14th, 2023
 
  ### What's New

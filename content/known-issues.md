@@ -9,14 +9,13 @@ tags: ["docs"]
 {{<rn-styles>}}
 
 ---
-## July 13th, 2023
 
-### {{% icon-bug %}} Adding new Slack integration not supported in Beta user interface. {#907}
+### {{% icon-resolved %}} Adding new Slack integration not supported in Beta user interface. {#907}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
 |----------|--------|
-| 907      | Open   |
+| 907      | Resolved   |
 {{</bootstrap-table>}}
 
 #### Description
@@ -29,7 +28,7 @@ Add any new Slack channel integrations in the Classic user interface.
 
 ---
 
-### {{% icon-bug %}} Custom Time Ranges are Not Supported {#507}
+### {{% icon-bug %}} Custom Time Ranges are Not Supported in Beta user interface {#507}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -43,7 +42,7 @@ Graphs and custom dashboards only support selecting a time range from a predefin
 
 ---
 
-### {{% icon-bug %}} Unable to Copy Existing Dashboard Widgets {#859}
+### {{% icon-bug %}} Unable to Copy Existing Dashboard Widgets in Beta user interface {#859}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
