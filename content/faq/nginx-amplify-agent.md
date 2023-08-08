@@ -50,7 +50,7 @@ Previous versions were powered by Python 2.6 and 2.7, depending on the target pl
 1. Download and run the install script.
 
   ```bash
-    # curl -sS -L -O \
+    curl -sS -L -O \
     https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && \
     API_KEY='YOUR_API_KEY' sh ./install.sh
   ```
@@ -60,7 +60,7 @@ Previous versions were powered by Python 2.6 and 2.7, depending on the target pl
 2. Verify that the Agent has started.
 
    ```bash
-   # ps ax | grep -i 'amplify\-'
+   ps ax | grep -i 'amplify\-'
    2552 ?        S      0:00 amplify-agent
    ```
 
@@ -105,13 +105,13 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 1. On Ubuntu/Debian use:
 
    ```bash
-   # dpkg -s nginx-amplify-agent
+   dpkg -s nginx-amplify-agent
    ```
 
 2. On CentOS and Red Hat use:
 
    ```bash
-   # yum info nginx-amplify-agent
+   yum info nginx-amplify-agent
    ```
 
 ### How Can I Update NGINX Amplify Agent?
@@ -119,14 +119,14 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 1. On Ubuntu/Debian use:
 
    ```bash
-   # apt-get update && \
+   apt-get update && \
    apt-get install nginx-amplify-agent
    ```
 
 2. On CentOS use:
 
    ```bash
-   # yum makecache && \
+   yum makecache && \
    yum update nginx-amplify-agent
    ```
 
