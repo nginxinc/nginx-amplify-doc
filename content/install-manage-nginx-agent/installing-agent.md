@@ -21,7 +21,7 @@ Take the following steps to install the Agent:
 1. Download and run the install script.
 
    ```bash
-   # curl -sS -L -O \
+   curl -sS -L -O \
    https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install-nginx-agent.sh && \
    API_KEY='YOUR_API_KEY' sh ./install-nginx-agent.sh
    ```
@@ -31,7 +31,7 @@ Take the following steps to install the Agent:
 2. Verify that the agent has started.
 
    ```bash
-   # ps ax | grep -i 'nginx-agent'
+   ps ax | grep -i 'nginx-agent'
    2552 ?        S      0:00 amplify-agent
    ```
 
@@ -56,20 +56,20 @@ API_KEY is a unique API key assigned to your Amplify account. You will see your 
 ## Starting and Stopping the Agent
 
 ```bash
-# service nginx-agent start
+service nginx-agent start
 ```
 
 ```bash
-# service nginx-agent stop
+service nginx-agent stop
 ```
 
 ```bash
-# service nginx-agent restart
+service nginx-agent restart
 ```
 
 ## Verifying that the Agent Has Started
 
 ```bash
-# ps ax | grep -i 'nginx-agent'
+ps ax | grep -i 'nginx-agent'
 1729782 ?        Ssl    0:00 /usr/bin/nginx-agent
 ```
