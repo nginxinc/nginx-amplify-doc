@@ -32,26 +32,28 @@ Take the following steps to install the Agent:
 
    ```bash
    ps ax | grep -i 'nginx-agent'
-   2552 ?        S      0:00 amplify-agent
+   2552 ?        S      0:00 /usr/bin/nginx-agent
    ```
 
 ## Installing the Agent Manually
 
-### Installing the NGINX Agent
+Take the following steps to install the Agent manually:
 
-Follow the instructions provided here to install the NGINX Agent manually: [NGINX Agent install instructions](https://docs.nginx.com/nginx-agent/installation-oss/)
+1. ### Installing the NGINX Agent
 
-### Edit the Agent config file
+    Follow the instructions provided here to install the NGINX Agent manually: [NGINX Agent install instructions](https://docs.nginx.com/nginx-agent/installation-oss/)
 
-After successfully installing the NGINX Agent edit the config file at `/etc/nginx-agent/nginx-agent.conf` to include the following block (substitute the <API_KEY> with the unique API key associated with your Amplify account):
+2. ### Edit the Agent config file
+
+   After successfully installing the NGINX Agent edit the config file present at `/etc/nginx-agent/nginx-agent.conf` to include the following block:
 
    ```yaml
    server:
-      token: "<API_KEY>"
+      token: "<YOUR_API_KEY>"
       host: receiver-grpc.amplify.nginx.com
-      grpcPort: 9001
+      grpcPort: 443
    ```
-API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system using the Amplify web interface. You can also find the API key in the *Account* menu.
+   Where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
 
 ## Starting and Stopping the Agent
 
@@ -71,5 +73,5 @@ service nginx-agent restart
 
 ```bash
 ps ax | grep -i 'nginx-agent'
-1729782 ?        Ssl    0:00 /usr/bin/nginx-agent
+2552 ?        Ssl    0:00 /usr/bin/nginx-agent
 ```
