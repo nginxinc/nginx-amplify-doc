@@ -53,7 +53,7 @@ To start monitoring PHP-FPM, follow the steps below:
 
 6. If your PHP-FPM is configured to use a TCP socket instead of a Unix domain socket, make sure you can query the PHP-FPM metrics manually with *cgi-fcgi*. Double check that your TCP socket configuration is secure (ideally, PHP-FPM pool listening on 127.0.0.1, and *listen.allowed_clients* enabled as well).
 
-7. [Update]({{< relref "/install-manage/updating-agent.md" >}}) the agent to the most recent version.
+7. [Update]({{< relref "/install-manage-amp-agent/updating-agent.md" >}}) the agent to the most recent version.
 
 8. Make sure that the following options are set in **/etc/amplify-agent/agent.conf**
 
@@ -82,7 +82,7 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
 - Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
 - Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's [debug log]({{< relref "/install-manage/configuring-agent.md" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
+If checking the above issues didn't help, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
 Below is the list of supported PHP-FPM metrics.
 
@@ -221,7 +221,7 @@ To start monitoring MySQL, follow the instructions below.
 
    {{< note >}} The agent doesn't use *mysql(1)* for metric collection, however it implements a similar query mechanism via a Python module.{{< /note >}}
 
-3. [Update]({{< relref "/install-manage/updating-agent.md" >}}) the agent to the most recent version.
+3. [Update]({{< relref "/install-manage-amp-agent/updating-agent.md" >}}) the agent to the most recent version.
 
 4. Add the following to **/etc/amplify-agent/agent.conf**
 
@@ -248,7 +248,7 @@ To start monitoring MySQL, follow the instructions below.
 
 With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs]({{< relref "/user-interface/graphs.md" >}})) page, with the pre-defined visualization of the key MySQL metrics.
 
-If the above didn't work, please enable the agent's [debug log]({{< relref "/install-manage/configuring-agent.md#agent-logfile" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
+If the above didn't work, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md#agent-logfile" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
 
 The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
 

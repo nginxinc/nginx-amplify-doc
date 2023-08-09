@@ -4,7 +4,6 @@ description: Learn how to install the NGINX Agent.
 weight: 100
 toc: true
 tags: ["docs"]
-docs: "DOCS-968"
 ---
 
 To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Agent on each system that has to be checked.
@@ -14,10 +13,6 @@ To use NGINX Amplify to monitor your infrastructure, you need to install NGINX A
 - NGINX installed. Once installed, ensure it is running. If you don't have it installed already, follow these steps to install [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
 - A [supported operating system and architecture](../technical-specifications/#supported-distributions)
 - `root` privilege
-
-<!-- TODO: check if this is true for Nginx agent? Most probably not. -->
-<!-- ROOT priviledges are prerequisite see: https://docs.nginx.com/nginx-agent/installation-oss/#prerequisites -->
-<!-- {{< note >}} The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`). {{< /note >}}  -->
 
 ## Using the Install Script
 
