@@ -23,10 +23,15 @@ You can use NGINX Amplify to do the following:
 
 NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It includes the following key components:
 
-### **NGINX Amplify Agent**
+### **Agents**
 
-- The agent is a Python application that runs on monitored systems. All communications between the agent and the SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent.
+#### **Amplify Agent**
 
+- The Amplify agent is a Python application that runs on monitored systems. All communications between the agent and the SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent.
+
+#### **Nginx Agent**
+
+- companion daemon for your NGINX instance. NGINX Agent interfaces with NGINX process information and parses NGINX logs to calculate and report metrics.
 
 ### **NGINX Amplify Web UI**
 
