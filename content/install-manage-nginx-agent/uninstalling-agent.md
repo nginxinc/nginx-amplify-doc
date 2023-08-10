@@ -4,7 +4,6 @@ description: Learn how to uninstall the NGINX Agent.
 weight: 500
 toc: true
 tags: ["docs"]
-docs: "DOCS-969"
 ---
 
 To completely delete a previously monitored object, perform the following steps:
@@ -12,17 +11,7 @@ To completely delete a previously monitored object, perform the following steps:
 
 ### Uninstall the agent
 
-- On Ubuntu/Debian use:
-
-    ```bash
-    apt-get remove nginx-amplify-agent
-    ```
-
-- On CentOS and Red Hat use:
-
-    ```bash
-    yum remove nginx-amplify-agent
-    ```
+- Follow these steps to [Uninstall NGINX Agent](https://docs.nginx.com/nginx-agent/uninstall/)
 
 ### Delete objects from the web interface
 

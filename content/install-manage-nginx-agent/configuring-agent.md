@@ -20,6 +20,7 @@ server:
 ## Excluding Certain NGINX Log Files
 
 By default, the agent will try to find and watch all the `access.log` files described in the NGINX configuration. If there are multiple log files where the same request is logged, the metrics may get counted more than once.
+<!-- Need to confirm if metrics getting counted twice is a problem in nginx agent too. -->
 
 To exclude specific NGINX log files from the metric collection, add an exclusion to the `/etc/nginx-agent/agent.conf` as in the following example:
 
