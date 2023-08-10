@@ -1,4 +1,4 @@
 ---
 title: Install and Manage NGINX Agent
-weight: 400
+weight: 500
 ---
