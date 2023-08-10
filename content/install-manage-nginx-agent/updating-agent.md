@@ -15,12 +15,12 @@ It is *highly* recommended that you periodically check for updates and install t
 
     ```bash
     apt-get update && \
-    apt-get install nginx-amplify-agent
+    apt-get install nginx-agent
     ```
 
  2. Updating the Agent On CentOS/Red Hat
 
     ```bash
     yum makecache && \
-    yum update nginx-amplify-agent
+    yum update nginx-agent
     ```
