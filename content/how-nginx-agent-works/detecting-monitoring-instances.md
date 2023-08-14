@@ -1,6 +1,6 @@
 ---
 title: Detecting and Monitoring NGINX Instances
-description: Learn how the NGINX Amplify Agent detects NGINX Instances.
+description: Learn how the NGINX Agent detects NGINX Instances.
 weight: 300
 toc: true
 tags: ["docs"]
