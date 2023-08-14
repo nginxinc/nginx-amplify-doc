@@ -55,6 +55,21 @@ Take the following steps to install the Agent manually:
    ```
    Where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
 
+3. ### Add Ignore Directives to the Agent config file
+
+   To prevent the NGINX Agent from sending sensitive information from your NGINX Config add the following directives to the `ignore_directives` list in the NGINX Agent config file at `/etc/nginx-agent/nginx-agent.conf`:
+   1. [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key)
+   2. [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate)
+   3. [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file)
+   4. [ssl_stapling_file](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_stapling_file)
+   5. [ssl_trusted_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate)
+   6. [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file)
+   7. [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret)
+
+   ```yaml
+   ignore_directives: [ssl_certificate_key, ssl_client_certificate, ssl_password_file, ssl_stapling_file, ssl_trusted_certificate, auth_basic_user_file, secure_link_secret]
+   ```
+
 ## Starting and Stopping the Agent
 
 ```bash

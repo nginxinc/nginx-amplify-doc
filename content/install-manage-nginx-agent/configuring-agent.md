@@ -34,7 +34,7 @@ nginx:
 The agent maintains its log file in `/var/log/nginx-agent/agent.log`.
 Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/nginx-agent`.
 
-The default level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as described below. The log file size can grow fast when using the `DEBUG` level. After you change the log level, please [restart]({{< relref "/install-manage-amp-agent/installing-agent#starting-and-stopping-the-agent" >}}) the agent.
+The default level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as described below. The log file size can grow fast when using the `DEBUG` level. After you change the log level, please [restart]({{< relref "/install-manage-nginx-agent/installing-agent#starting-and-stopping-the-agent" >}}) the agent.
 
 ```yaml
 log:

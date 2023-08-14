@@ -4,10 +4,9 @@ description: Learn how to configure NGINX Instances to collect data.
 weight: 400
 toc: true
 tags: ["docs"]
-docs: "DOCS-963"
 ---
 
-To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/how-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
+To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/how-nginx-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
 
 ## Metrics from stub_status
 
@@ -17,7 +16,7 @@ If you're using NGINX Plus, you must configure either the `stub_status` module o
 
 Without `stub_status` or the NGINX Plus status API, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
 
-Add the `stub_status` configuration as follows (You may also grab this config snippet [here](https://gist.githubusercontent.com/ptreyes/0b34d184de75f95478eb/raw/11f40f1ab7efb4278142054a11cea32323202320/stub_status.conf)):
+Add the `stub_status` configuration as follows:
 
 ```bash
 
@@ -52,7 +51,7 @@ Test your nginx configuration after you've added the `stub_status` section above
 
 {{< note >}} If you use the `conf.d*`directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead, you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block. {{< /note >}}
 
-There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with `stub_status` are readable by the agent; otherwise, the agent won't be able to determine the `stub_status` URL correctly. If the agent fails to find `stub_status`, please refer to the workaround described [here]({{< relref "/install-manage-amp-agent/configuring-agent#configuring-the-url-for-stub_status-or-status-api" >}}).
+There's no need to use exactly the above example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with `stub_status` are readable by the agent; otherwise, the agent won't be able to determine the `stub_status` URL correctly.
 
 Please ensure the `stub_status` [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html) is correctly configured, especially if your system is IPv6-enabled. Test the reachability of `stub_status` metrics with `wget(1)` or `curl(1)`. When testing, use the exact URL matching your NGINX configuration.
 
@@ -98,25 +97,6 @@ The agent will also try to detect the [log format](http://nginx.org/en/docs/http
 
 {{< note >}}Several metrics outlined in [Metrics and Metadata]({{< relref "metrics-metadata" >}}) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).{{< /note >}}
 
-## Using Syslog for Metric Collection
+{{< note >}}NGINX Agent does not support reading the access.log or error.log files from syslog.{{< /note >}}
 
-If you configured the agent for syslog metric collection (see the [configuring syslog]({{< relref "/install-manage-amp-agent/configuring-agent#configuring-syslog" >}}) documentation), make sure to add the following settings to the NGINX configuration:
-
-  1. Check that you are using NGINX version 1.9.5 or newer (or NGINX Plus Release 8 or newer).
-  2. Edit the NGINX configuration file and specify the syslog listener address as the first parameter to the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive. Include the `amplify` tag, and your preferred log format:
-
-     ```nginx
-     access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info main_ext;
-     ```
-
-     (see also how to extend the NGINX log format to collect [additional metrics]({{< relref "/metrics-metadata/nginx-metrics#additional-nginx-metrics" >}}))
-
-  3. Reload NGINX:
-
-      ```bash
-      # service nginx reload
-      ```
-
-      (see more [here](http://nginx.org/en/docs/control.html))
-
-{{< note >}}To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.{{< /note >}}
+{{< note >}}The support for reporting NGINX Plus metrics using NGINX Agent is limited. Displaying metrics specific to a `server_zone` is not supported. {{< /note >}}

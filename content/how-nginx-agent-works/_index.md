@@ -1,4 +1,4 @@
 ---
-title: How NGINX Amplify Agent Works
+title: How NGINX Agent Works
 weight: 300
 ---
