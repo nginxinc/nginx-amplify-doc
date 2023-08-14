@@ -10,7 +10,7 @@ NGINX Agent keeps its configuration in `/etc/nginx-agent/nginx-agent.conf`. The 
 
 ## Changing the API Key
 
-After following the documented [install procedures]({{< relref "/install-manage-nginx-agent/installing-agent/#using-the-install-script" >}}) your API key is written to the `nginx-agent.conf` file automatically. If you ever need to change the API key, please edit the following section in `nginx-agent.conf` accordingly:
+After following the documented [install procedures]({{< relref "/install-manage-nginx-agent/installing-agent#using-the-install-script" >}}) your API key is written to the `nginx-agent.conf` file automatically. If you ever need to change the API key, please edit the following section in `nginx-agent.conf` accordingly:
 
 ```yaml
 server:
