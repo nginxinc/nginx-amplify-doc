@@ -13,9 +13,9 @@ NGINX Agent collects the following types of data:
   * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
   * **System metadata.** This is the basic information about the OS environment where the agent runs. This can be the hostname, uptime, OS flavor, and other data.
 
-The agent will mostly use Python's [psutil()](https://github.com/giampaolo/psutil) to collect the metrics, but occasionally it may also invoke certain system utilities like *ps(1)*.
+The agent will mostly use Go's [gopsutil](https://github.com/shirou/gopsutil) to collect the metrics, but occasionally it may also invoke certain system utilities like *ps(1)*.
 
-While the agent is running on the host, it collects metrics at regular 20 second intervals. Metrics then get downsampled and sent to the Amplify backend once a minute.
+While the agent is running on the host, it collects metrics at regular 15 second intervals. Metrics then get downsampled and sent to the Amplify backend once a minute.
 
 Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify web interface.
 
