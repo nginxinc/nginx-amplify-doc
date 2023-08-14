@@ -8,6 +8,8 @@ enableRobotsTXT = "true"
 pluralizeListTitles = false
 baseURL = "/"
 canonifyURLs = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
 
 [caches]
   [caches.modules]
