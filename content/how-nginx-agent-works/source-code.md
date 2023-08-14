@@ -1,6 +1,6 @@
 ---
-title: NGINX Amplify Agent Source Code
-description: Learn where to find NGINX Amplify Agent's source code.
+title: NGINX Agent Source Code
+description: Learn where to find NGINX Agent's source code.
 weight: 700
 toc: true
 tags: ["docs"]

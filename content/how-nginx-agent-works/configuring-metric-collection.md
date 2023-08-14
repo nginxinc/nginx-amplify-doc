@@ -89,7 +89,7 @@ For more information about the metric list, please refer to [Metrics and Metadat
 
 ## Metrics from access.log and error.log
 
-NGINX Amplify Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. To do that, the agent should be able to read the logs. Ensure that the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
+NGINX Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. To do that, the agent should be able to read the logs. Ensure that the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
 
 You don't have to specifically point the agent to either the NGINX configuration or the NGINX log files — it should detect their location automatically.
 

@@ -1,6 +1,6 @@
 ---
 title: NGINX Configuration Analysis
-description: Learn about NGINX Amplify Agent's configuration analysis feature.
+description: Learn about NGINX Agent's configuration analysis feature.
 weight: 600
 toc: true
 tags: ["docs"]

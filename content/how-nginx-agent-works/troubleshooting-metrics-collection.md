@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting Metrics Collection
-description: Learn what to check if the NGINX Amplify Agent isn't reporting metrics.
+description: Learn what to check if the NGINX Agent isn't reporting metrics.
 weight: 500
 toc: true
 tags: ["docs"]
