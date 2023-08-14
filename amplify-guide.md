@@ -335,7 +335,7 @@ NGINX Amplify Agent is an open source application. It is licensed under the [2-c
 
 ### Installing the Agent
 
-In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system that has to be checked.
+In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system you wish to monitor.
 
 **Note.** The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 

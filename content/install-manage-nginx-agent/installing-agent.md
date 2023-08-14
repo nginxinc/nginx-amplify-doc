@@ -6,11 +6,11 @@ toc: true
 tags: ["docs"]
 ---
 
-To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Agent on each system that has to be checked.
+To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Agent on each system you wish to monitor.
 
 ## Prerequisites
 
-- NGINX installed. Once installed, ensure it is running. If you don't have it installed already, follow these steps to install [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
+- NGINX installed and running. If you don't have it installed already, follow these steps to install [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
 - A [supported operating system and architecture](../technical-specifications/#supported-distributions)
 - `root` privilege
 
