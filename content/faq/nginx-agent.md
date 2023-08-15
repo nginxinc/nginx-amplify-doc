@@ -64,7 +64,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 1. The Amplify Agent package has been successfully [installed]({{< relref "/install-manage" >}}), and no warnings were shown during the installation.
 
-2. The `amplify-agent` process is running and updating its [log file]({{< relref "/install-manage/configuring-agent#agent-logfile" >}}).
+2. The `nginx-agent` process is running and updating its [log file]({{< relref "/install-manage/configuring-agent#agent-logfile" >}}).
 
 3. The agent is running under the same user as your NGINX worker processes.
 
@@ -95,13 +95,13 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 1. On Ubuntu/Debian use:
 
    ```bash
-   dpkg -s nginx-amplify-agent
+   dpkg -s nginx-agent
    ```
 
 2. On CentOS and Red Hat use:
 
    ```bash
-   yum info nginx-amplify-agent
+   yum info nginx-agent
    ```
 
 ### How Can I Update NGINX Agent?
@@ -110,14 +110,14 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
    ```bash
    apt-get update && \
-   apt-get install nginx-amplify-agent
+   apt-get install nginx-agent
    ```
 
 2. On CentOS use:
 
    ```bash
    yum makecache && \
-   yum update nginx-amplify-agent
+   yum update nginx-agent
    ```
 
 ### What System Resources are Required?
