@@ -460,6 +460,8 @@ nginx.http.request.current = requests.current
 
 The NGINX Plus metrics below are collected *per zone*. When configuring a graph using these metrics, please make sure to pick the correct server, upstream, or cache zone. A more granular peer-specific breakdown of the metrics below is currently not supported in NGINX Amplify.
 
+{{< note >}}NGINX Agent does not support reporting the following metrics *per zone* but it can be used to display a cumulative sum of values from each zone.{{< /note >}}
+
 A cumulative metric set is also maintained internally by summing up the per-zone metrics. If you don't configure a specific zone when building graphs, this will result in an "all zones" visualization. E.g., for something like **plus.http.status.2xx** omitting zone will display the instance-wide sum of the successful requests across all zones.
 
 ### Server Zone Metrics

@@ -7,6 +7,7 @@ tags: ["docs"]
 docs: "DOCS-975"
 ---
 
+{{< note >}}Monitoring PHP-FPM and MySQL metrics is only supported by the Amplify Agent.{{< /note >}}
 
 ## PHP-FPM metrics
 
