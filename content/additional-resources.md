@@ -10,4 +10,3 @@ If you are interested in learning more about NGINX Amplify, visit the [NGINX Amp
 
 - The Amplify Blog
 - Amplify Videos
-- The NGINX Twitter feed
