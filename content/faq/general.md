@@ -28,9 +28,17 @@ NGINX Amplify is a SaaS and it is currently hosted in [AWS us-west-1](http://doc
 
 All communications between the agent and the backend are done securely over SSL/TLS. The agent always initiates all traffic. The backend system doesn't set up any connections back to the agent.
 
+### Is the NGINX Agent Traffic Protected?
+
+All communications between the agent and the backend are done over gRPC connections.
+
 ### Is the NGINX Amplify Agent Code Publicly Available?
 
 NGINX Amplify Agent is an open-source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and the code is available in [NGINX Amplify's GitHub repository](https://github.com/nginxinc/nginx-amplify-agent).
+
+### Is the NGINX Agent Code Publicly Available?
+
+NGINX Amplify Agent is an open-source application. It is licensed under the [Apache License 2.0](https://github.com/nginx/agent/blob/main/LICENSE), and the code is available in [NGINX Agent's GitHub repository](https://github.com/nginx/agent).
 
 ### What is This Question About My Password When Installing NGINX Amplify Agent?
 
