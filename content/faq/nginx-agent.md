@@ -116,7 +116,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### What System Resources are Required?
 
-We work hard to make the agent consume as little memory and CPU as possible. Usually, it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support request through my.f5.com, Instructions for submitting a support case to F5: https://support.f5.com/csp/article/K2633. Please attach the debug log to the support case. 
+We work hard to make the agent consume as little memory and CPU as possible. Usually, it should be under 10% of CPU usage and a few dozen MBs of RSS memory. If you notice any anomalies in the system resource consumption, please fill in a support request through https://my.f5.com, please attach the debug log to the support case. 
 
 ### How Do I Restart NGINX Agent?
 
