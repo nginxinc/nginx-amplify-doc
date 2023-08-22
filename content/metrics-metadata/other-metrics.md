@@ -82,7 +82,7 @@ Here is the list of caveats to look for if the PHP-FPM metrics are not being col
 - Agent can't connect to the TCP socket (when using PHP-FPM with a TCP socket).
 - Agent can't parse the PHP-FPM configuration. A possible workaround is to not have any ungrouped directives. Try to move any ungrouped directives under [global] and pool section headers.
 
-If checking the above issues didn't help, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
+If checking the above issues didn't help, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md" >}}), restart the agent, wait a few minutes, and then please submit a support request through my.f5.com, Instructions for submitting a support case to F5: https://support.f5.com/csp/article/K2633. Please attach the debug log to the support case.
 
 Below is the list of supported PHP-FPM metrics.
 
@@ -248,7 +248,7 @@ To start monitoring MySQL, follow the instructions below.
 
 With the above configuration steps the agent should be able to detect the MySQL master, obtain the access to status, and collect the necessary metrics. The end result should be an additional tab displayed on the [Graphs]({{< relref "/user-interface/graphs.md" >}})) page, with the pre-defined visualization of the key MySQL metrics.
 
-If the above didn't work, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md#agent-logfile" >}}), restart the agent, wait a few minutes, and then create an issue via Intercom. Please attach the debug log to the Intercom chat.
+If the above didn't work, please enable the agent's [debug log]({{< relref "/install-manage-amp-agent/configuring-agent.md#agent-logfile" >}}), restart the agent, wait a few minutes, and then create  a support request through my.f5.com, Instructions for submitting a support case to F5: https://support.f5.com/csp/article/K2633. Please attach the debug log to the support case. 
 
 The agent retrieves most of the metrics from the MySQL global [status variables](https://dev.mysql.com/doc/refman/5.7/en/server-status-variables.html).
 
