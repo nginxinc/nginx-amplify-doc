@@ -30,7 +30,7 @@ All communications between the agent and the backend are done securely over SSL/
 
 ### Is the NGINX Agent Traffic Protected?
 
-All communications between the agent and the backend are done over gRPC connections.
+All communications between the agent and the NGINX Amplify services are done over gRPC connections.
 
 ### Is the NGINX Amplify Agent Code Publicly Available?
 
