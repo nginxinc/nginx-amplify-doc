@@ -21,6 +21,6 @@ Metadata is also reported every minute. Changes in the metadata can be examined 
 
 NGINX config updates are reported only when a configuration change is detected.
 
-If the agent can't reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics. Once the connectivity is re-established, it will send them over to Amplify. The maximum amount of data the agent can buffer is about 20 minutes.
+If the agent can't reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics. Once the connectivity is re-established, it will send them over to Amplify. The maximum amount of data the agent can buffer is about 15 minutes.
 
 {{< note >}}NGINX Agent does not support reporting MySQL and PHP-FPM metrics to Amplify.{{< /note >}}
