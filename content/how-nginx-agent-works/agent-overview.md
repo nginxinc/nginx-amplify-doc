@@ -6,11 +6,11 @@ toc: true
 tags: ["docs"]
 ---
 
-NGINX Agent is a companion daemon for your NGINX Open Source of NGINX Plus instalce. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.
+NGINX Agent is a companion daemon for your NGINX Open Source or NGINX Plus instance. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.
 
-You will need to install the NGINX Agent on all hosts that you have to monitor.
+You will need to install the NGINX Agent on all hosts that you wish to monitor.
 
-After proper installation, the agent will automatically start to report metrics. You should see the real-time metrics data in the NGINX Amplify web interface in about 60 seconds.
+After installation, the agent will automatically start to report metrics. You should see the real-time metrics data in the NGINX Amplify web interface in about 2 minutes.
 
 NGINX Agent can currently monitor and collect performance metrics for:
 
@@ -19,10 +19,10 @@ NGINX Agent can currently monitor and collect performance metrics for:
 
 {{< note >}}The support for reporting NGINX Plus metrics using NGINX Agent is limited. Displaying metrics specific to a `server_zone` is not supported. {{< /note >}}
 
-The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
+The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary or a unique configuration.
 
 {{< note >}}There's no need to manually add or configure anything in the web interface after installing the agent. When the agent is started, the metrics and the metadata are automatically reported to the Amplify backend and visualized in the web interface.{{< /note >}}
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup — see the [User Interface]({{< relref "/user-interface/">}}) documentation.
+When a NGINX instance is no longer in use it must be manually deleted in the web interface. The "Remove object" button can be found in the metadata viewer popup — see the [User Interface]({{< relref "/user-interface/">}}) documentation.
 
 Check out the [NGINX Agent documentation](https://docs.nginx.com/nginx-agent/overview/) to learn more about how the NGINX Agent works. 
