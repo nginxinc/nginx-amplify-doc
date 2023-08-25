@@ -69,7 +69,7 @@ The [NGINX Agent](https://github.com/nginx/agent) does not yet support agent per
 The NGINX Agent does not yet support remote configuration as documented in [Account Settings]({{< relref "/user-interface/account-settings.md" >}}).
 
 #### Workaround
-NGINX configuration file analysis and SSL analysis is enabled by default.  To disable NGINX configuration upload remove the **nginx-config-async** string from the feature list in the [NGINX Agent Configuration](https://docs.nginx.com/nginx-agent/configuration-overview/).  To disable SSL analysis remove **nginx-ssl-config**.
+NGINX configuration file analysis and SSL analysis are enabled by default.  To disable NGINX configuration upload remove the **nginx-config-async** string from the feature list in the [NGINX Agent Configuration](https://docs.nginx.com/nginx-agent/configuration-overview/).  To disable SSL analysis remove **nginx-ssl-config**.
 
 ### NGINX Agent does not perform periodic `nginx -t`. {#711}
 
@@ -94,7 +94,7 @@ You can run the `nginx -t` command manually on your NGINX instance host.
 {{</bootstrap-table>}}
 
 #### Description
-The **NGINX Agent** can only manage one **NGINX** instance per system.
+The NGINX Agent can only manage one NGINX instance per system.
 
 ### NGINX Agent does not support Metric Filters. {#680}
 
@@ -105,7 +105,7 @@ The **NGINX Agent** can only manage one **NGINX** instance per system.
 {{</bootstrap-table>}}
 
 #### Description
-**NGINX Agent** does not support [metric filters](https://docs.nginx.com/nginx-amplify/user-interface/dashboards/).  If your NGINX instance is managed by the NGINX Agent, you will not be able to add a metric filter when you create a custom dashboard.
+The NGINX Agent does not support [metric filters](https://docs.nginx.com/nginx-amplify/user-interface/dashboards/).  If the NGINX Agent manages your NGINX instance, you cannot add a metric filter when you create a custom dashboard.
 
 ### {{% icon-bug %}} Inaccurate alert when NGINX agent disconnects {#988}
 
@@ -116,10 +116,10 @@ The **NGINX Agent** can only manage one **NGINX** instance per system.
 {{</bootstrap-table>}}
 
 #### Description
-When using the nginx-agent, host connectivity alerts may reference the incorrect server.
+Host connectivity alerts may reference the incorrect server when using the NGINX Agent.
 
 #### Workaround
-The correct server to check connectivity is receiver-grpc.amplify.nginx.com.
+The correct server to check connectivity is `receiver-grpc.amplify.nginx.com`.
 
 
 ### {{% icon-bug %}} NGINX Plus zone metrics not supported {#665}
@@ -131,7 +131,7 @@ The correct server to check connectivity is receiver-grpc.amplify.nginx.com.
 {{</bootstrap-table>}}
 
 #### Description
-NGINX Agent does not support reporting the plus.* metrics per zone but it can be used to display a cumulative sum of values from each zone.
+NGINX Agent does not support reporting the `plus.*`` metrics per zone, but it can be used to display a cumulative sum of values from each zone.
 
 ### {{% icon-bug %}} Configuration analysis fails when NGINX root configuration is not named `nginx.conf` {#658}
 
@@ -142,10 +142,10 @@ NGINX Agent does not support reporting the plus.* metrics per zone but it can be
 {{</bootstrap-table>}}
 
 #### Description
-Amplify will not be able to perform configuration analysis for NGINX instances mananged by the NGINX agent when the root NGINX configuration file is not named `nginx.conf`.
+Amplify cannot perform configuration analysis for NGINX instances managed by the NGINX agent when the root NGINX configuration file is not named `nginx.conf`.
 
 #### Workarand
-The Amplify Agent is not impacted by this issue.
+This issue does not affect the Amplify Agent.
 
 ### {{% icon-resolved %}} Adding new Slack integration not supported in Beta user interface. {#907}
 

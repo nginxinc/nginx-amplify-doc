@@ -5,16 +5,16 @@ weight: 800
 toc: true
 ---
 
-## August 23, 2023
+## August 28, 2023
 
 ### What's New
 
 - {{% icon-feature %}} **NGINX Agent Compatibility (Beta)**
 
-  The NGINX Amplify team is pleased to announce beta support for the [NGINX Agent](https://github.com/nginx/agent).  The NGINX Agent is an open source companion daemon for your NGINX Open Source or NGINX Plus instance. It enables remote management of NGINX configurations, collection and reporting of real-time NGINX performance and operating system metrics, and notifications of NGINX events. The NGINX Agent is written in Go and acts as a drop-in replacement for the Amplify Agent, with the benefit of not having a Python
+  The NGINX Amplify team is pleased to announce beta support for the [NGINX Agent](https://github.com/nginx/agent).  The NGINX Agent is an open-source companion daemon for your NGINX Open Source or NGINX Plus instance. It enables remote management of NGINX configurations, collection and reporting of real-time NGINX performance and operating system metrics, and notifications of NGINX events. The NGINX Agent is written in Go and acts as a drop-in replacement for the Amplify Agent, with the benefit of not having a Python
   dependency.
 
-  The NGINX Agent supports the same NGINX and OS metrics as the Amplify Agent, but does not yet provide full feature parity.  While we continue to add features please give it a try and let us know what you think.  You can learn more about NGINX Agent by referring to the [NGINX Agent Documentation](https://docs.nginx.com/nginx-agent/).  For more information about what features are not yet supported see the compatiblity table below or visit the [Known Issues]({{< relref "/known-issues.md" >}}) topic.
+  The NGINX Agent supports the same NGINX and OS metrics as the Amplify Agent, but does not yet provide full feature parity.  While we continue to add features please give it a try and let us know what you think.  You can learn more about NGINX Agent by referring to the [NGINX Agent Documentation](https://docs.nginx.com/nginx-agent/).  For more information about what features are not yet supported see the compatibility table below or visit the [Known Issues]({{< relref "/known-issues.md" >}}) topic.
 
   {{<bootstrap-table "table table-striped table-bordered">}}
 
