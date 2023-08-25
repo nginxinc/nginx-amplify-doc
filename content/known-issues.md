@@ -10,7 +10,7 @@ tags: ["docs"]
 
 ---
 
-### NGINX Agent does not support PHP-FPM metrics. {#647}
+### {{% icon-bug %}} NGINX Agent does not support PHP-FPM metrics. {#647}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -22,7 +22,7 @@ tags: ["docs"]
 
 The [NGINX Agent](https://github.com/nginx/agent) does not yet support [PHP-FPM metrics](https://docs.nginx.com/nginx-amplify/metrics-metadata/other-metrics/#php-fpm-metrics).
 
-### NGINX Agent does not support MySQL metrics. {#648}
+### {{% icon-bug %}} NGINX Agent does not support MySQL metrics. {#648}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -34,7 +34,7 @@ The [NGINX Agent](https://github.com/nginx/agent) does not yet support [PHP-FPM 
 
 The [NGINX Agent](https://github.com/nginx/agent) does not yet support [MySQL metrics](https://docs.nginx.com/nginx-amplify/metrics-metadata/other-metrics/#mysql-metrics).
 
-### NGINX Agent does not support Agent metrics. {#650}
+### {{% icon-bug %}} NGINX Agent does not support Agent metrics. {#650}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -56,7 +56,7 @@ The [NGINX Agent](https://github.com/nginx/agent) does not yet support agent per
 
 * amplify.agent.mem.vms
 
-### NGINX Agent does not support remote Agent Settings. {#679}
+### {{% icon-bug %}} NGINX Agent does not support remote Agent Settings. {#679}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -71,7 +71,7 @@ The NGINX Agent does not yet support remote configuration as documented in [Acco
 #### Workaround
 NGINX configuration file analysis and SSL analysis are enabled by default.  To disable NGINX configuration upload remove the **nginx-config-async** string from the feature list in the [NGINX Agent Configuration](https://docs.nginx.com/nginx-agent/configuration-overview/).  To disable SSL analysis remove **nginx-ssl-config**.
 
-### NGINX Agent does not perform periodic `nginx -t`. {#711}
+### {{% icon-bug %}} NGINX Agent does not perform periodic `nginx -t`. {#711}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -85,7 +85,7 @@ The NGINX Agent does not have the capability to run `nginx -t` periodically.
 #### Workaround
 You can run the `nginx -t` command manually on your NGINX instance host.
 
-### NGINX Agent does not manage multiple NGINX instances. {#683}
+### {{% icon-bug %}} NGINX Agent does not manage multiple NGINX instances. {#683}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
@@ -96,7 +96,7 @@ You can run the `nginx -t` command manually on your NGINX instance host.
 #### Description
 The NGINX Agent can only manage one NGINX instance per system.
 
-### NGINX Agent does not support Metric Filters. {#680}
+### {{% icon-bug %}} NGINX Agent does not support Metric Filters. {#680}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
 | Issue ID | Status |
