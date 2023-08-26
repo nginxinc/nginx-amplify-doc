@@ -111,6 +111,17 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
   The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, an analytics engine, and a core API.
 
+  * **NGINX Agent** (New)
+
+  Amplify support for the new NGINX Agent is in beta!
+
+  The NGINX Agent is a companion daemon for your NGINX Open Source or NGINX Plus instance. It enables remote management of NGINX
+  configurations, collection and reporting of real-time NGINX performance and operating system metrics, and notifications of NGINX
+  events.
+
+  The NGINX Agent is written in Go and acts as a drop-in replacement for the Amplify Agent, with the benefit of not having a Python
+  dependency. Learn more about the NGINX Agent on GitHub - https://github.com/nginx/agent
+
 <!-- /section:1 -->
 
 <!-- section:2 -->
