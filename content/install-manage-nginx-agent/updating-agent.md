@@ -1,23 +1,23 @@
 ---
-title: Updating the Agent
-description: Learn how to update the NGINX Agent.
+title: Updating NGINX Agent
+description: Learn how to update NGINX Agent.
 weight: 200
 toc: true
 tags: ["docs"]
 ---
 
 {{< important >}}
-It is *highly* recommended that you periodically check for updates and install the latest stable version of the agent.
+We **strongly recommend** that you regularly check for updates and install the most recent stable version of NGINX Agent.
 {{< /important >}}
 
- 1. Updating the Agent On Ubuntu/Debian
+ 1. Update NGINX Agent on Ubuntu/Debian:
 
     ```bash
     apt-get update && \
     apt-get install nginx-agent
     ```
 
- 2. Updating the Agent On CentOS/Red Hat
+ 2. Update NGINX Agent on CentOS/Red Hat:
 
     ```bash
     yum makecache && \
