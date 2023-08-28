@@ -1,6 +1,6 @@
 ---
-title: Installing the Agent
-description: Learn how to install the NGINX Agent.
+title: Installing NGINX Agent
+description: Learn how to install NGINX Agent.
 weight: 100
 toc: true
 tags: ["docs"]
@@ -10,15 +10,15 @@ To use NGINX Amplify to monitor your infrastructure, you need to install NGINX A
 
 ## Prerequisites
 
-- NGINX installed and running. If you don't have it installed already, follow these steps to install [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
+- NGINX is installed and running. If haven't yet, follow these steps to [install NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
 - A [supported operating system and architecture](../technical-specifications/#supported-distributions)
-- `root` privilege
+- `root` access
 
 ## Using the Install Script
 
-Take the following steps to install the Agent:
+To install NGINX Agent, follow these steps:
 
-1. Download and run the install script.
+1. Download the installation script and run it.
 
    ```bash
    curl -sS -L -O \
@@ -26,26 +26,26 @@ Take the following steps to install the Agent:
    API_KEY='YOUR_API_KEY' sh ./install-nginx-agent.sh
    ```
 
-   Where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
+   Replace `YOUR_API_KEY`` with the unique API key from your Amplify account. You'll see this key when you add a new system on the Amplify website. It's also in the **Account** menu.
 
-2. Verify that the agent has started.
+2. Verify NGINX Agent has started.
 
    ```bash
    ps ax | grep -i 'nginx-agent'
    2552 ?        S      0:00 /usr/bin/nginx-agent
    ```
 
-## Installing the Agent Manually
+## Installing NGINX Agent Manually
 
-Take the following steps to install the Agent manually:
+To manually install NGINX Agent, follow these steps:
 
-1. ### Installing the NGINX Agent
+1. ### Installing NGINX Agent
 
-    Follow the instructions provided here to install the NGINX Agent manually: [NGINX Agent install instructions](https://docs.nginx.com/nginx-agent/installation-oss/)
+    Follow the instructions provided here to install NGINX Agent manually: [NGINX Agent install instructions](https://docs.nginx.com/nginx-agent/installation-oss/)
 
-2. ### Edit the Agent config file
+2. ### Update the NGINX Agent Configuration File
 
-   After successfully installing the NGINX Agent edit the config file present at `/etc/nginx-agent/nginx-agent.conf` to include the following block:
+   After you install NGINX Agent, update the configuration file located at /etc/nginx-agent/nginx-agent.conf by adding the block below:
 
    ```yaml
    server:
@@ -53,11 +53,13 @@ Take the following steps to install the Agent manually:
       host: receiver-grpc.amplify.nginx.com
       grpcPort: 443
    ```
-   Where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
 
-3. ### Add Ignore Directives to the Agent config file
+   Replace `YOUR_API_KEY`` with the unique API key from your Amplify account. You'll see this key when you add a new system on the Amplify website. It's also in the **Account** menu.
 
-   To prevent the NGINX Agent from sending sensitive information from your NGINX Config add the following directives to the `ignore_directives` list in the NGINX Agent config file at `/etc/nginx-agent/nginx-agent.conf`:
+3. ### Add Ignore Directives to the NGINX Agent config file
+
+   To prevent NGINX Agent from sending sensitive information from your NGINX configuration, add these directives to the `ignore_directives` list at `/etc/nginx-agent/nginx-agent.conf`:
+
    1. [ssl_certificate_key](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_certificate_key)
    2. [ssl_client_certificate](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_client_certificate)
    3. [ssl_password_file](http://nginx.org/en/docs/mail/ngx_mail_ssl_module.html#ssl_password_file)
@@ -70,7 +72,9 @@ Take the following steps to install the Agent manually:
    ignore_directives: [ssl_certificate_key, ssl_client_certificate, ssl_password_file, ssl_stapling_file, ssl_trusted_certificate, auth_basic_user_file, secure_link_secret]
    ```
 
-## Starting and Stopping the Agent
+## Starting and Stopping NGINX Agent
+
+To start, stop, and restart NGINX Agent, run the following commands:
 
 ```bash
 service nginx-agent start
@@ -84,7 +88,7 @@ service nginx-agent stop
 service nginx-agent restart
 ```
 
-## Verifying that the Agent Has Started
+## Verifying NGINX Agent Has Started
 
 ```bash
 ps ax | grep -i 'nginx-agent'
