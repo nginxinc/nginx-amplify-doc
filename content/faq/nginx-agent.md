@@ -8,7 +8,7 @@ tags: ["docs"]
 
 ### What Operating Systems are Supported?
 
-The agent is currently officially packaged and supported for the following Linux flavors only:
+The NGINX Agent is officially packaged and supported only for the following Linux flavors:
 
   * Ubuntu 22.04 "jammy" (amd64/arm64)
   * Ubuntu 20.04 "focal" (amd64/arm64)
@@ -26,14 +26,14 @@ The following platforms are no longer supported but still can be used with older
   * RHEL/CentOS/OEL 7 (amd64)
   * Amazon Linux (amd64)
 
-Other OS and distributions below are not fully supported yet (and no agent packages are available), however you can grab a specialized install script [here](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh) and see if it works for you. Run [install-nginx-agent.sh](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh) (as root) and follow the dialog. You can copy the API key from the Amplify UI (find it in the **Settings** or in the **New System** pop-up).
+The following OS and distributions aren't fully supported yet, and no agent packages are available. However, you can try a specialized install script [here](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh). To use it, run [install-nginx-agent.sh](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh) as root and follow the prompts. You can find the API key in the Amplify web interface, either in the **Settings** or the **New System** pop-up window.
 
   * FreeBSD
   * SLES
   * Alpine
   * Fedora
 
-Feel free to [submit](https://github.com/nginx/agent/) an issue or a PR if you find something that has to be fixed.
+If you find something that needs fixing, you're welcome to [submit a PR](https://github.com/nginx/agent/) for the issue.
 
 ### How Do I Start to Monitor My Systems with NGINX Amplify?
 
@@ -47,20 +47,20 @@ Feel free to [submit](https://github.com/nginx/agent/) an issue or a PR if you f
 
    where YOUR_API_KEY is a unique API key assigned when you create an account with NGINX Amplify. You can also find the API key in the **Account** menu.
 
-2. Verify that the Agent has started.
+2. Verify that the NGINX Agent has started.
 
    ```bash
    ps ax | grep -i 'nginx-agent'
    3725474 ?        Ssl    0:00 /usr/bin/nginx-agent
    ```
 
-For manual installation, please check the [user guide]({{< relref "/install-manage-nginx-agent/installing-agent#installing-the-agent-manually" >}}).
+For manual installation, refer to the [user guide]({{< relref "/install-manage-nginx-agent/installing-agent#installing-the-agent-manually" >}}).
 
 ### What Do I Need to Configure the NGINX Agent to Report Metrics Correctly?
 
-After you install and start the agent, it should start reporting right away, pushing aggregated data to the NGINX Amplify services at regular 1-minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
+Once you install and launch NGINX Agent, it will immediately begin reporting, sending aggregated data to NGINX Amplify services every minute. Expect the new system to show up in the Amplify web interface within about a minute.
 
-If you don't see the new system or NGINX in the web interface, or (some) metrics aren't being collected, please check the following:
+If the new system or NGINX doesn't appear in the web interface, or if some metrics are missing, refer to the following steps:
 
 1. The NGINX Agent package has been successfully [installed]({{< relref "/install-manage-nginx-agent" >}}), and no warnings were shown during the installation.
 
@@ -116,7 +116,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 ### What System Resources are Required?
 
-Under 10% of the CPU and a few dozen MBs of RSS memory will be consumed. If you notice any anomalies in the system resource consumption, please fill in a support ticket through Intercom.
+Expect to use under 10% of the CPU and a few dozen MBs of RSS memory. If you notice any unusual resource consumption, submit a support ticket through Intercom.
 
 ### How Do I Restart NGINX Agent?
 
@@ -140,7 +140,7 @@ Under 10% of the CPU and a few dozen MBs of RSS memory will be consumed. If you 
 
 ### How Can I Override System Hostname?
 
-If the agent is not able to determine the system's hostname, you can define it manually in **/etc/nginx-agent/nginx-agent.conf**
+If NGINX Agent can't determine the system's hostname, manually define it in `/etc/nginx-agent/nginx-agent.conf`.
 
 Find the following section, and fill in the desired hostname:
 
@@ -150,7 +150,7 @@ Find the following section, and fill in the desired hostname:
 hostname = myhostname1
 ```
 
-The hostname should be valid — the following aren't valid hostnames:
+The hostname must be valid. The following are not valid hostnames:
 
   * localhost
   * localhost.localdomain
@@ -160,4 +160,4 @@ The hostname should be valid — the following aren't valid hostnames:
 
 ### Can I Use NGINX Agent with Docker?
 
-Please check the [following section](https://docs.nginx.com/nginx-agent/docker-images/) of the agent repository to find out more. Keep in mind that the support for a Docker environment is currently experimental.
+For details, refer to the [Docker Images](https://docs.nginx.com/nginx-agent/docker-images/) topic in the NGINX Agent documentation. Note that Docker environment support is currently experimental.

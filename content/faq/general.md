@@ -30,7 +30,7 @@ All communications between the agent and the backend are done securely over SSL/
 
 ### Is the NGINX Agent Traffic Protected?
 
-All communications between the agent and the NGINX Amplify services are done over gRPC connections.
+The NGINX Agent and NGINX Amplify services communicate using gRPC connections.
 
 ### Is the NGINX Amplify Agent Code Publicly Available?
 
@@ -38,7 +38,7 @@ NGINX Amplify Agent is an open-source application. It is licensed under the [2-c
 
 ### Is the NGINX Agent Code Publicly Available?
 
-NGINX Amplify Agent is an open-source application. It is licensed under the [Apache License 2.0](https://github.com/nginx/agent/blob/main/LICENSE), and the code is available in [NGINX Agent's GitHub repository](https://github.com/nginx/agent).
+NGINX Amplify Agent is an open-source application licensed under the [Apache License 2.0](https://github.com/nginx/agent/blob/main/LICENSE). You can find the code in the [NGINX Agent's GitHub repository](https://github.com/nginx/agent).
 
 ### What is This Question About My Password When Installing NGINX Amplify Agent?
 
