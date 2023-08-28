@@ -1,24 +1,23 @@
 ---
-title: Uninstalling the Agent
-description: Learn how to uninstall the NGINX Agent.
+title: Uninstalling NGINX Agent
+description: Learn how to uninstall NGINX Agent.
 weight: 500
 toc: true
 tags: ["docs"]
 ---
 
-To completely delete a previously monitored object, perform the following steps:
+To completely delete a previously monitored system, perform the following steps:
 
+## Uninstall NGINX
 
-### Uninstall the agent
+Follow the [Uninstall NGINX Agent](https://docs.nginx.com/nginx-agent/uninstall/) guide to uninstall NGINX Agent.
 
-- Follow these steps to [Uninstall NGINX Agent](https://docs.nginx.com/nginx-agent/uninstall/)
+## Delete Systems from the Web Interface
 
-### Delete objects from the web interface
+To delete a system using the web interface, find it in the [Inventory]({{< relref "/user-interface/inventory" >}}) and select the "Trash" icon.
 
-To delete a system using the web interface — find it in the [Inventory]({{< relref "/user-interface/inventory" >}}), and click on the "Trash" icon.
+Note: This action doesn't stop NGINX Agent. To fully remove a monitored system, first stop and uninstall NGINX Agent, then proceed to remove the system in the web interface.
 
-Deleting objects in the UI will not stop the agent. To completely remove a system from monitoring, stop and uninstall the agent first, then clean it up in the web interface.
+## Delete alerts
 
-### Delete alerts
-
-  Check the [Alerts]({{< relref "/user-interface/alerts" >}}) page and remove or mute the irrelevant rules.
+Check the [Alerts]({{< relref "/user-interface/alerts" >}}) page to delete or mute any irrelevant rules.
