@@ -1,22 +1,20 @@
 ---
-title: Configuring NGINX for Metric Collection
+title: Set Up NGINX for Metric Collection
 description: Learn how to configure NGINX Instances to collect data.
 weight: 400
 toc: true
 tags: ["docs"]
 ---
 
-To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/how-nginx-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
+To monitor an NGINX instance, NGINX Agent must [find the relevant NGINX master process]({{< relref "/how-nginx-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
 
 ## Metrics from stub_status
 
-You must define [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration for key NGINX graphs to appear in the web interface. If `stub_status` is already enabled, the agent should be able to locate it automatically.
+To see key NGINX graphs in the web interface, you need to enable [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration. If `stub_status` is already on, NGINX Agent will find it on its own.
 
-If you're using NGINX Plus, you must configure either the `stub_status` module or the NGINX Plus [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html).
+For NGINX Plus, you need to enable either the `stub_status` module or the NGINX Plus [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html) to report key NGINX metrics.
 
-Without `stub_status` or the NGINX Plus status API, the agent will NOT be able to collect key NGINX metrics required for further monitoring and analysis.
-
-Add the `stub_status` configuration as follows:
+Here’s how to add `stub_status` to your configuration:
 
 ```bash
 
@@ -47,17 +45,17 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 # kill -HUP `cat /var/run/nginx.pid`
 ```
 
-Test your nginx configuration after you've added the `stub_status` section above. Make sure there's no ambiguity with either [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) or [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) configuration. The agent should be able to identify the [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) URL and will default to use 127.0.0.1 if the configuration is incomplete.
+After adding the `stub_status`, test your NGINX configuration. Make sure the [listen](http://nginx.org/en/docs/http/ngx_http_core_module.html#listen) and [server_name](http://nginx.org/en/docs/http/ngx_http_core_module.html#server_name) settings are clear and unambiguous. NGINX Agent should recognize the `stub_status` URL, defaulting to `127.0.0.1` if incomplete.
 
-{{< note >}} If you use the `conf.d*`directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead, you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block. {{< /note >}}
+{{< note >}}If you group common elements in your NGINX setup under the `conf.d*` directory, skip the above snippet. Instead, manually set up [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) within an appropriate location or server block.{{< /note >}}
 
-The above is an example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with `stub_status` are readable by the agent; otherwise, the agent won't be able to determine the `stub_status` URL correctly.
+The example above shows an `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). NGINX Agent automatically determines the correct URI when it parses your NGINX configuration. Make sure NGINX Agent can read both the directory and the specific configuration file that contains `stub_status`. Otherwise, NGINX Agent won't accurately identify the `stub_status` URL.
 
-Please ensure the `stub_status` [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html) is correctly configured, especially if your system is IPv6-enabled. Test the reachability of `stub_status` metrics with `wget(1)` or `curl(1)`. When testing, use the exact URL matching your NGINX configuration.
+Make sure you've correctly set up the `stub_status` [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html), particularly if you're running an IPv6-enabled system. Test if you can reach the `stub_status` metrics using `wget(1)` or `curl(1)`. Use the exact URL that matches your NGINX configuration when testing.
 
-For more information about `stub_status`, please refer to the NGINX documentation [here](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
+For more information about `stub_status`, refer to the [NGINX documentation](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html).
 
-If everything is configured properly, you should see something along these lines when testing it with `curl(1)`:
+If you've set up everything correctly, running a test with `curl(1)` should produce output similar to the following:
 
 ```bash
 $ curl http://127.0.0.1/nginx_status
@@ -67,9 +65,9 @@ server accepts handled requests
 Reading: 0 Writing: 1 Waiting: 1
 ```
 
-If the command doesn't produce the expected output, confirm where the requests to `/nginx_status` are being routed. In many cases other [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) blocks can be why you can't access `stub_status`.
+If the command doesn't produce the expected output, confirm where `/nginx_status` requests are going. Often, other [server blocks](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) might be the reason you can't access `stub_status`.
 
-The agent uses data from `stub_status` to calculate metrics related to server-wide HTTP connections and requests as described below:
+NGINX Agent uses data from `stub_status` to calculate various metrics related to server-wide HTTP connections and requests, as described below:
 
 ```nginx  
 nginx.http.conn.accepted = stub_status.accepts
@@ -83,20 +81,20 @@ nginx.http.request.reading = stub_status.reading
 nginx.http.request.writing = stub_status.writing
 ```
 
-For NGINX Plus the agent will automatically use similar metrics available from the status API.
+For NGINX Plus, NGINX Agent automatically uses similar metrics from the status API.
 
-For more information about the metric list, please refer to [Metrics and Metadata]({{< relref "/metrics-metadata" >}}).
+For more information on the types of metrics collected, refer to [Metrics and Metadata]({{< relref "/metrics-metadata" >}}).
 
 ## Metrics from access.log and error.log
 
-NGINX Agent will also collect more NGINX metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and the [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. To do that, the agent should be able to read the logs. Ensure that the `nginx` user or the user [defined in the NGINX config](http://nginx.org/en/docs/ngx_core_module.html#user) (such as `www-data`) can read the log files. Please also make sure that the log files are being written normally.
+NGINX Agent also gathers additional metrics from the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files. To enable this, make sure the `nginx` user, or any user defined in the NGINX config like `www-data`, has read access to these logs. Confirm that the log files are writing data as expected.
 
-You don't have to specifically point the agent to either the NGINX configuration or the NGINX log files — it should detect their location automatically.
+There's no need to direct NGINX Agent to the NGINX configuration or log files—it automatically finds them.
 
-The agent will also try to detect the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for a particular log to parse it properly and try to extract even more useful metrics, e.g., [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
+NGINX Agent also attempts to identify the [log format](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format) for each log, enabling it to accurately parse and extract more valuable metrics, such as [$upstream_response_time](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_response_time).
 
-{{< note >}}Several metrics outlined in [Metrics and Metadata]({{< relref "metrics-metadata" >}}) will only be available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format used for logging requests. You can find a complete list of NGINX log variables [here](http://nginx.org/en/docs/varindex.html).{{< /note >}}
-
-{{< note >}}NGINX Agent does not support reading the access.log or error.log files from syslog.{{< /note >}}
-
-{{< note >}}The support for reporting NGINX Plus metrics using NGINX Agent is limited. Displaying metrics specific to a `server_zone` is not supported. {{< /note >}}
+{{<note>}}
+- Certain metrics listed in [Metrics and Metadata]({{< relref "metrics-metadata" >}}) are only available if the corresponding variables are included in a custom [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) format. A full list of NGINX log variables can be found [here](http://nginx.org/en/docs/varindex.html).
+- NGINX Agent can't read the access.log or error.log files if they're part of a syslog.
+- NGINX Agent has limited support for NGINX Plus metrics. Metrics tied to a specific `server_zone` aren't supported.
+{{</note>}}
