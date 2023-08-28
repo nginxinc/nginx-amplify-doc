@@ -1,6 +1,6 @@
 ---
 title: Metadata and Metrics Collection
-description: Learn how the Amplify Agent collects data.
+description: Learn how NGINX Agent collects data.
 weight: 200
 toc: true
 tags: ["docs"]
@@ -8,19 +8,17 @@ tags: ["docs"]
 
 NGINX Agent collects the following types of data:
 
-  * **NGINX metrics.** The agent collects a lot of NGINX related metrics from [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus status API, the NGINX log files, and from the NGINX process state.
-  * **System metrics.** These are various key metrics describing the system, e.g., CPU usage, memory usage, network traffic, etc.
-  * **NGINX metadata.** This is what describes your NGINX instances, and it includes package data, build information, the path to the binary, build configuration options, etc. NGINX metadata also includes the NGINX configuration elements.
-  * **System metadata.** This is the basic information about the OS environment where the agent runs. This can be the hostname, uptime, OS flavor, and other data.
+  * **NGINX metrics.** NGINX Agent pulls various metrics related to NGINX from sources like [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus status API, log files, and the process state.
+  * **System metrics.** These include key indicators like CPU usage, memory consumption, and network traffic.
+  * **NGINX metadata.** This covers details about your NGINX instances, such as package info, build data, binary paths, and configuration settings.
+  * **System metadata.** This captures basic details about the operating environment, including the hostname, uptime, OS type, and more.
 
-The agent will mostly use Go's [gopsutil](https://github.com/shirou/gopsutil) to collect the metrics, but occasionally it may also invoke certain system utilities like *ps(1)*.
+To collect these metrics, NGINX Agent mainly relies on Go's [gopsutil](https://github.com/shirou/gopsutil), although it sometimes calls system utilities like *ps(1)*.
 
-While the agent is running on the host, it collects metrics at regular 15 second intervals. Metrics then get downsampled and sent to the Amplify backend once a minute.
+NGINX Agent collects metrics every 15 seconds. It then aggregates this data and sends it to the Amplify backend once a minute. Metadata also updates every minute and you can review any changes on the Amplify web interface.
 
-Metadata is also reported every minute. Changes in the metadata can be examined through the Amplify web interface.
+If there's a change in the NGINX configuration, NGINX Agent reports it specifically.
 
-NGINX config updates are reported only when a configuration change is detected.
+Should NGINX Agent lose connection with the Amplify backend, it keeps collecting metrics. Once the connection is restored, it sends the buffered data, with a maximum buffer capacity of about 15 minutes.
 
-If the agent can't reach the Amplify backend to send the accumulated metrics, it will continue to collect metrics. Once the connectivity is re-established, it will send them over to Amplify. The maximum amount of data the agent can buffer is about 15 minutes.
-
-{{< note >}}NGINX Agent does not support reporting MySQL and PHP-FPM metrics to Amplify.{{< /note >}}
+{{< note >}}NGINX Agent does not support MySQL and PHP-FPM metrics reporting to Amplify.{{< /note >}}
