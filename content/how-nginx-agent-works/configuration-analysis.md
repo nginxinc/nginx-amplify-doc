@@ -20,4 +20,4 @@ Before sending the NGINX config to the Amplify backend, NGINX Agent reviews any 
 - [auth_basic_user_file](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic_user_file)
 - [secure_link_secret](http://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_secret)
 
-{{< note >}} To prevent certain file contents from being uploaded to the Amplify service, add those directives to the [`ignore_directive` section in the NGINX Agent config]({{< relref "/install-manage-nginx-agent/installing-agent#add-ignore-directives-to-the-agent-config-file" >}}).{{< /note >}}
+{{< note >}} To prevent specific file contents from being uploaded to the Amplify service, add those directives to the [`ignore_directives` section in the NGINX Agent config]({{< relref "/install-manage-nginx-agent/installing-agent#add-ignore-directives-to-the-agent-config-file" >}}).{{< /note >}}
