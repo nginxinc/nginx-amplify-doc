@@ -8,10 +8,10 @@ tags: ["docs"]
 
 NGINX Agent collects the following types of data:
 
-  * **NGINX metrics.** NGINX Agent pulls various metrics related to NGINX from sources like [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus status API, log files, and the process state.
-  * **System metrics.** These include key indicators like CPU usage, memory consumption, and network traffic.
-  * **NGINX metadata.** This covers details about your NGINX instances, such as package info, build data, binary paths, and configuration settings.
-  * **System metadata.** This captures basic details about the operating environment, including the hostname, uptime, OS type, and more.
+* **NGINX metrics.** NGINX Agent pulls various metrics related to NGINX from sources like [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html), the NGINX Plus status API, log files, and the process state.
+* **System metrics.** These include key indicators like CPU usage, memory consumption, and network traffic.
+* **NGINX metadata.** This covers details about your NGINX instances, such as package info, build data, binary paths, and configuration settings.
+* **System metadata.** This captures basic details about the operating environment, including the hostname, uptime, OS type, and more.
 
 To collect these metrics, NGINX Agent mainly relies on Go's [gopsutil](https://github.com/shirou/gopsutil), although it sometimes calls system utilities like *ps(1)*.
 
