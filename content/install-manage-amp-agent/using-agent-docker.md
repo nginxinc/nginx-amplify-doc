@@ -1,5 +1,5 @@
 ---
-title: Using the Agent with Docker
+title: Using Amplify Agent with Docker
 description: Learn how to use the NGINX Amplify Agent with Docker.
 weight: 400
 toc: true

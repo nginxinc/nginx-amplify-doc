@@ -18,21 +18,6 @@ The NGINX Agent is officially packaged and supported only for the following Linu
   * RHEL/CentOS/OEL 9 (amd64/arm64)
   * Amazon Linux 2 LTS (amd64/arm64)
 
-The following platforms are no longer supported but still can be used with older agent packages powered by Python 2:
-
-  * Ubuntu 16.04 "xenial" (i386/amd64/arm64)
-  * Debian 9 "stretch" (i386/amd64)
-  * RHEL/CentOS/OEL 6 (i386/amd64)
-  * RHEL/CentOS/OEL 7 (amd64)
-  * Amazon Linux (amd64)
-
-The following OS and distributions aren't fully supported yet, and no agent packages are available. However, you can try a specialized install script [here](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh). To use it, run [install-nginx-agent.sh](https://raw.githubusercontent.com/nginxinc/naas-agent/blob/main/packages/install-nginx-agent.sh) as root and follow the prompts. You can find the API key in the Amplify web interface, either in the **Settings** or the **New System** pop-up window.
-
-  * FreeBSD
-  * SLES
-  * Alpine
-  * Fedora
-
 If you find something that needs fixing, you're welcome to [submit a PR](https://github.com/nginx/agent/) for the issue.
 
 ### How Do I Start to Monitor My Systems with NGINX Amplify?
@@ -137,25 +122,6 @@ Expect to use under 10% of the CPU and a few dozen MBs of RSS memory. If you not
    ```bash
    yum remove nginx-agent
    ```
-
-### How Can I Override System Hostname?
-
-If NGINX Agent can't determine the system's hostname, manually define it in `/etc/nginx-agent/nginx-agent.conf`.
-
-Find the following section, and fill in the desired hostname:
-
-```nginx
-[credentials]
-..
-hostname = myhostname1
-```
-
-The hostname must be valid. The following are not valid hostnames:
-
-  * localhost
-  * localhost.localdomain
-  * localhost6.localdomain6
-  * ip6-localhost
 
 
 ### Can I Use NGINX Agent with Docker?

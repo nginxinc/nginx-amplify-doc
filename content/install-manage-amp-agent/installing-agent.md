@@ -1,5 +1,5 @@
 ---
-title: Installing the Agent
+title: Installing Amplify Agent
 description: Learn how to install the NGINX Amplify Agent.
 weight: 100
 toc: true

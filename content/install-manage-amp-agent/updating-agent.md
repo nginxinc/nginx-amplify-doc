@@ -1,5 +1,5 @@
 ---
-title: Updating the Agent
+title: Updating Amplify Agent
 description: Learn how to update the NGINX Amplify Agent.
 weight: 200
 toc: true

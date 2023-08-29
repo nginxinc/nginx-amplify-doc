@@ -68,7 +68,7 @@ For manual installation, please check the [user guide]({{< relref "/install-mana
 
 ### What Do I Need to Configure the NGINX Amplify Agent to Report Metrics Correctly?
 
-After you install and start the agent, it should start reporting right away, pushing aggregated data to the Amplify backend at regular 1-minute intervals. It'll take about a minute for the new system to appear in the Amplify web interface.
+Once you install NGINX Amplify Agent, it will automatically begin sending metrics. You can expect to see real-time metrics in the Amplify web interface within about a minute.
 
 If you don't see the new system or NGINX in the web interface, or (some) metrics aren't being collected, please check the following:
 
@@ -142,17 +142,7 @@ Under 10% of the CPU and a few dozen MBs of RSS memory will be consumed. If you 
 
 ### How Can I Uninstall NGINX Amplify Agent?
 
-1. On Ubuntu/Debian use:
-
-   ```bash
-   apt-get remove nginx-amplify-agent
-   ```
-
-2. On CentOS and Red Hat use:
-
-   ```bash
-   yum remove nginx-amplify-agent
-   ```
+Guide to [uninstall Amplify Agent]({{< relref "/install-manage-amp-agent/uninstalling-agent" >}})
 
 ### How Can I Override System Hostname?
 
@@ -175,7 +165,7 @@ The hostname should be valid — the following aren't valid hostnames:
 
 ### How Can I Override the User ID for the Agent to Use?
 
-Please check the [Configuring the Agent]({{< relref "/install-manage-amp-agent/configuring-agent#overriding-the-effective-user-id" >}}) section of the documentation.
+Refer to the [Configuring the Agent]({{< relref "/install-manage-amp-agent/configuring-agent#overriding-the-effective-user-id" >}}) section in the documentation.
 
 ### Can I Use NGINX Amplify Agent with Docker?
 

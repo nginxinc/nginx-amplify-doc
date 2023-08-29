@@ -1,5 +1,5 @@
 ---
-title: Configuring the Agent
+title: Configuring Amplify Agent
 description: Learn how to configure the NGINX Agent.
 weight: 300
 toc: true

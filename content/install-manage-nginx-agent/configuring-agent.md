@@ -20,7 +20,6 @@ server:
 ## Excluding Specific NGINX Log Files
 
 By default, NGINX Agent scans all `access.log` files listed in the NGINX configuration. If some log files record the same request, metrics might get counted more than once.
-<!-- Need to confirm if metrics getting counted twice is a problem in nginx agent too. -->
 
 To avoid this, you can specify which log files to exclude in `/etc/nginx-agent/agent.conf` like this:
 

@@ -11,7 +11,7 @@ To use NGINX Amplify to monitor your infrastructure, you need to install NGINX A
 ## Prerequisites
 
 - NGINX is installed and running. If haven't yet, follow these steps to [install NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
-- A [supported operating system and architecture](../technical-specifications/#supported-distributions)
+- A [supported operating system and architecture]({{< relref "/faq/nginx-agent#what-operating-systems-are-supported" >}})
 - `root` access
 
 ## Using the Install Script

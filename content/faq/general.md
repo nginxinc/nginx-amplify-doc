@@ -26,11 +26,11 @@ NGINX Amplify is a SaaS and it is currently hosted in [AWS us-west-1](http://doc
 
 ### Is the NGINX Amplify Agent Traffic Protected?
 
-All communications between the agent and the backend are done securely over SSL/TLS. The agent always initiates all traffic. The backend system doesn't set up any connections back to the agent.
+All communications between the Amplify Agent and the backend are done securely over SSL/TLS. The agent always initiates all traffic. The backend system doesn't set up any connections back to the agent.
 
 ### Is the NGINX Agent Traffic Protected?
 
-The NGINX Agent and NGINX Amplify services communicate using gRPC connections.
+The NGINX Agent and NGINX Amplify services communicate using gRPC connections securely over SSL/TLS.
 
 ### Is the NGINX Amplify Agent Code Publicly Available?
 
