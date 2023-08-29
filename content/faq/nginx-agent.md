@@ -4,6 +4,7 @@ description: Questions about NGINX Agent
 weight: 20
 toc: true
 tags: ["docs"]
+doctypes: ["beta"]
 ---
 
 ### What Operating Systems are Supported by NGINX Agent?
