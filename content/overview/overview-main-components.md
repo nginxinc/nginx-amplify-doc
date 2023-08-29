@@ -7,8 +7,6 @@ tags: ["docs"]
 docs: "DOCS-976"
 ---
 
-Your text provides a comprehensive overview of what NGINX Amplify is and its main components. However, to align with your guidelines for active voice, clarity, and engagement, here's a revised version:
-
 ## What Is NGINX Amplify?
 
 [NGINX Amplify](https://amplify.nginx.com/signup/) offers in-depth monitoring for NGINX-based web applications. It simplifies the process of analyzing and resolving issues related to performance and scalability.
