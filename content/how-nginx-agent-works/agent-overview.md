@@ -14,7 +14,7 @@ Once installed, NGINX Agent begins reporting metrics automatically. You can view
 
 Currently, NGINX Agent can monitor:
 
-- [Supported operating systems]({{< relref "/faq/nginx-amplify-agent#what-operating-systems-are-supported" >}})
+- [Supported operating systems]({{< relref "/faq/nginx-agent#what-operating-systems-are-supported" >}})
 - NGINX Open Source and NGINX Plus instances
 
 {{< note >}}Support for NGINX Plus metrics is limited in NGINX Agent. For example, metrics specific to a server_zone won't display.{{< /note >}}

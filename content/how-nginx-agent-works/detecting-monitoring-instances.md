@@ -11,4 +11,4 @@ NGINX Agent can detect two main types of NGINX instances:
 * Those installed from a repository package
 * Those you build and install manually
 
-{{< note >}}NGINX Agent can't report data from multiple NGINX instances. {{< /note >}}
+{{< note >}}NGINX Agent can't report data from multiple NGINX instances running on a single system.{{< /note >}}

@@ -9,7 +9,7 @@ docs: "DOCS-958"
 
 ### What Operating Systems are Supported?
 
-The agent is currently officially packaged and supported for the following Linux flavors only:
+The NGINX Amplify Agent is currently officially packaged and supported for the following Linux flavors only:
 
   * Ubuntu 22.04 "jammy" (amd64/arm64)
   * Ubuntu 20.04 "focal" (amd64/arm64)
