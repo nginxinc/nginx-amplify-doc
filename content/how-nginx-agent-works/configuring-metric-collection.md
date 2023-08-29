@@ -8,6 +8,8 @@ tags: ["docs"]
 
 To monitor an NGINX instance, NGINX Agent must [find the relevant NGINX master process]({{< relref "/how-nginx-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
 
+{{< note >}}If you are new to NGINX here is a [beginners guide](https://nginx.org/en/docs/beginners_guide.html) for managing and configuring NGINX.{{< /note >}}
+
 ## Metrics from stub_status
 
 To see key NGINX graphs in the web interface, you need to enable [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) in your NGINX configuration. If `stub_status` is already on, NGINX Agent will find it on its own.
