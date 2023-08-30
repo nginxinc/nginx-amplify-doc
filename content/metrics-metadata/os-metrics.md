@@ -7,52 +7,7 @@ tags: ["docs"]
 docs: "DOCS-974"
 ---
 
-- ####  **amplify.agent.status**
-  
-   ```
-   Type:        internal, integer
-   Description: 1 - agent is up, 0 - agent is down.
-   ```
-- ####  **amplify.agent.cpu.system**
-- ####  **amplify.agent.cpu.user**
-
-   ```
-   Type:        gauge, percent
-   Description: CPU utilization percentage observed from the agent process.
-   ```
-
-
-- ####  **amplify.agent.mem.rss**
-- ####  **amplify.agent.mem.vms**
-
-
-  ```
-  Type:        gauge, bytes
-  Description: Memory utilized by the agent process.
-  ```
-
-
-- ####  **system.cpu.idle**
-- ####  **system.cpu.iowait**
-- ####  **system.cpu.system**
-- ####  **system.cpu.user**
-
-
-  ```
-  Type:        gauge, percent
-  Description: System CPU utilization.
-  ```
-
-
-- ####  **system.cpu.stolen**
-
-
-  ```
-  Type:        gauge, percent
-  Description: System CPU stolen. Represents time when the real CPU was not available to
-               the current VM.
-  ```
-
+## System Metrics
 
 - ####  **system.disk.free**
 - ####  **system.disk.total**
@@ -210,4 +165,32 @@ docs: "DOCS-974"
   ```
   Type:        gauge, percent
   Description: System swap memory statistics, percentage.
+  ```
+
+## Agent Metrics
+
+{{< note >}} Agent metrics are available only if you are using the Amplify Agent.{{< /note >}}
+
+- ####  **amplify.agent.status**
+  
+   ```
+   Type:        internal, integer
+   Description: 1 - agent is up, 0 - agent is down.
+   ```
+- ####  **amplify.agent.cpu.system**
+- ####  **amplify.agent.cpu.user**
+
+   ```
+   Type:        gauge, percent
+   Description: CPU utilization percentage observed from the agent process.
+   ```
+
+
+- ####  **amplify.agent.mem.rss**
+- ####  **amplify.agent.mem.vms**
+
+
+  ```
+  Type:        gauge, bytes
+  Description: Memory utilized by the agent process.
   ```
