@@ -1,6 +1,6 @@
 ---
 title: Known Issues
-weight: 900
+weight: 1000
 description: "List of known issues in the latest release of NGINX Amplify"
 toc: true
 tags: ["docs"]

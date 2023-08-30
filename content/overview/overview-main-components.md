@@ -9,30 +9,29 @@ docs: "DOCS-976"
 
 ## What Is NGINX Amplify?
 
-[NGINX Amplify](https://amplify.nginx.com/signup/) is a tool for comprehensive NGINX monitoring. With NGINX Amplify it's easy to proactively analyze and fix problems related to running and scaling NGINX-based web applications.
+[NGINX Amplify](https://amplify.nginx.com/signup/) offers in-depth monitoring for NGINX-based web applications. It simplifies the process of analyzing and resolving issues related to performance and scalability.
 
-You can use NGINX Amplify to do the following:
+With NGINX Amplify, you can:
 
-  * Visualize and identify NGINX performance bottlenecks, overloaded servers, or potential DDoS attacks
-  * Improve and optimize NGINX performance with intelligent advice and recommendations
-  * Get notified when something is wrong with the application infrastructure
-  * Plan web application capacity and performance
-  * Keep track of the systems running NGINX
+- Spot performance issues, server overloads, and possible DDoS attacks easily.
+- Receive intelligent advice to boost NGINX performance.
+- Get alerts about issues in your application infrastructure.
+- Plan for your web application's performance and capacity needs.
+- Monitor all systems that run NGINX.
 
 ## Main Components
 
-NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It includes the following key components:
+Hosted on the AWS public cloud, NGINX Amplify consists of several key components:
 
-### **NGINX Amplify Agent**
+### Agents
 
-- The agent is a Python application that runs on monitored systems. All communications between the agent and the SaaS backend are done securely over SSL/TLS. All traffic is always initiated by the agent.
+- **NGINX Amplify Agent**: This Python app runs on the systems you're monitoring. It communicates securely with the SaaS backend using SSL/TLS. The Amplify Agent always initiates the traffic.
+- **NGINX Agent**: This daemon works alongside your NGINX instance. It interacts with NGINX processes and reads logs to measure and report metrics.
 
+### NGINX Amplify Web Interface
 
-### **NGINX Amplify Web UI**
+- Compatible with all major web browsers, this interface is only accessible through TLS/SSL.
 
-- The user interface compatible with all major browsers. The web interface is accessible only via TLS/SSL.
+### NGINX Amplify Backend (SaaS Implementation)
 
-
-### **NGINX Amplify Backend** (Implemented as a SaaS)
-
-- The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, an analytics engine, and a core API.
+- This core system component handles metrics collection, data storage, analytics, and the core API. It's implemented as a SaaS.

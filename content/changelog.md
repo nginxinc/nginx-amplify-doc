@@ -1,7 +1,7 @@
 ---
 title: "Changelog"
 description: "These release notes list and describe the new features, enhancements, and resolved issues in NGINX Amplify"
-weight: 800
+weight: 900
 toc: true
 ---
 

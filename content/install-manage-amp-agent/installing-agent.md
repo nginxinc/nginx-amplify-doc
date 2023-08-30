@@ -1,5 +1,5 @@
 ---
-title: Installing the Agent
+title: Installing Amplify Agent
 description: Learn how to install the NGINX Amplify Agent.
 weight: 100
 toc: true
@@ -7,7 +7,7 @@ tags: ["docs"]
 docs: "DOCS-968"
 ---
 
-To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system that has to be checked.
+To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system you wish to monitor.
 
 {{< note >}} The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`). {{< /note >}} 
 

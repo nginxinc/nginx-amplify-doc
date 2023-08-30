@@ -1,6 +1,6 @@
 ---
 title: Other NGINX Amplify Resources
-weight: 100
+weight: 899
 toc: true
 tags: ["docs"]
 docs: "DOCS-977"
