@@ -111,6 +111,17 @@ NGINX Amplify is a SaaS product, and it's hosted on AWS public cloud. It include
 
   The core system component, implemented as a SaaS. It encompasses scalable metrics collection infrastructure, a database, an analytics engine, and a core API.
 
+  * **NGINX Agent** (New)
+
+  Amplify support for the new NGINX Agent is in beta!
+
+  The NGINX Agent is a companion daemon for your NGINX Open Source or NGINX Plus instance. It enables remote management of NGINX
+  configurations, collection and reporting of real-time NGINX performance and operating system metrics, and notifications of NGINX
+  events.
+
+  The NGINX Agent is written in Go and acts as a drop-in replacement for the Amplify Agent, with the benefit of not having a Python
+  dependency. Learn more about the NGINX Agent on GitHub - https://github.com/nginx/agent
+
 <!-- /section:1 -->
 
 <!-- section:2 -->
@@ -335,7 +346,7 @@ NGINX Amplify Agent is an open source application. It is licensed under the [2-c
 
 ### Installing the Agent
 
-In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system that has to be checked.
+In order to be able to use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system you wish to monitor.
 
 **Note.** The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`).
 

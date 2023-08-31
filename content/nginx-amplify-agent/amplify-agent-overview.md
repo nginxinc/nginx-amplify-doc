@@ -1,7 +1,7 @@
 ---
 title: NGINX Amplify Agent Overview
 description: Learn about the NGINX Amplify Agent.
-weight: 100
+weight: 1
 toc: true
 tags: ["docs"]
 docs: "DOCS-960"
@@ -9,9 +9,9 @@ docs: "DOCS-960"
 
 NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.
 
-You will need to install the Amplify Agent on all hosts that you have to monitor.
+You need to install the Amplify Agent on all hosts you want to monitor.
 
-After proper installation, the agent will automatically start to report metrics. You should see the real-time metrics data in the NGINX Amplify web interface in about 60 seconds.
+Once you install the NGINX Amplify Agent, it will automatically begin sending metrics. You can expect to see real-time metrics in the NGINX Amplify web interface within about a minute.
 
 NGINX Amplify can currently monitor and collect performance metrics for:
 
@@ -20,8 +20,8 @@ NGINX Amplify can currently monitor and collect performance metrics for:
   3. [PHP-FPM]({{< relref "/metrics-metadata/other-metrics.md#php-fpm-metrics" >}})
   4. [MySQL]({{< relref "/metrics-metadata/other-metrics.md#mysql-metrics" >}})
 
-The agent considers an NGINX instance to be any running NGINX master process that has a unique path to the binary, and possibly a unique configuration.
+The NGINX Amplify Agent identifies an NGINX instance as any running NGINX master process with either a unique binary path or a unique configuration.
 
 {{< note >}}There's no need to manually add or configure anything in the web interface after installing the agent. When the agent is started, the metrics and the metadata are automatically reported to the Amplify backend and visualized in the web interface.{{< /note >}}
 
-When a system or an NGINX instance is removed from the infrastructure for whatever reason, and is no longer reporting (and therefore no longer necessary), you should manually delete it in the web interface. The "Remove object" button can be found in the metadata viewer popup — see the [User Interface]({{< relref "/user-interface/">}}) documentation.
+When an NGINX instance is no longer in use it must be manually deleted in the web interface. The "Remove object" button can be found in the metadata viewer popup — see the [User Interface]({{< relref "/user-interface/">}}) documentation.

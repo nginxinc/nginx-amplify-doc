@@ -1,5 +1,5 @@
 ---
-title: Configuring the Agent
+title: Configuring Amplify Agent
 description: Learn how to configure the NGINX Agent.
 weight: 300
 toc: true
@@ -124,10 +124,10 @@ address = 127.0.0.1:12000
 Restart the agent to have it reload the configuration and start listening on the specified IP address and port:
 
 ```bash
-# service amplify-agent restart
+service amplify-agent restart
 ```
 
-Make sure to [add the `syslog` settings]({{< relref "/install-manage/configuring-agent#configuring-syslog" >}}) to your NGINX configuration as well.
+Make sure to [add the `syslog` settings]({{< relref "/nginx-amplify-agent/install/configuring-amplify-agent#configuring-syslog" >}}) to your NGINX configuration as well.
 
 ## Excluding Certain NGINX Log Files
 
@@ -158,7 +158,7 @@ The agent maintains its log file in `/var/log/amplify-agent/agent.log`
 
 Upon installation, the agent's log rotation schedule is added to `/etc/logrotate.d/amplify-agent`.
 
-The default level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as described below. The log file size can grow fast when using the `DEBUG` level. After you change the log level, please [restart]({{< relref "/install-manage/installing-agent#starting-and-stopping-the-agent" >}}) the agent.
+The default level of logging for the agent is `INFO`. If you ever need to debug the agent, change the level to `DEBUG` as described below. The log file size can grow fast when using the `DEBUG` level. After you change the log level, please [restart]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent#starting-and-stopping-the-agent" >}}) the agent.
 
 ```nginx
 [logger_agent-default]

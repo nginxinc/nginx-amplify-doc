@@ -1,6 +1,6 @@
 ---
 title: Other NGINX Amplify Resources
-weight: 100
+weight: 899
 toc: true
 tags: ["docs"]
 docs: "DOCS-977"
@@ -10,4 +10,3 @@ If you are interested in learning more about NGINX Amplify, visit the [NGINX Amp
 
 - The Amplify Blog
 - Amplify Videos
-- The NGINX Twitter feed
