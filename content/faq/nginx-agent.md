@@ -23,7 +23,7 @@ If you find something that needs fixing, you're welcome to [submit a PR](https:/
 
 ### How Do I Start to Monitor My Systems with NGINX Amplify using NGINX Agent?
 
-Instructions to [install NGINX Agent]({{< relref "/nginx-agent/install-configure-nginx-agent/installing-agent" >}})
+Instructions to [install NGINX Agent]({{< relref "/nginx-agent/install/installing-nginx-agent" >}})
 
 ### What Do I Need to Configure the NGINX Agent to Report Metrics Correctly?
 
@@ -48,7 +48,7 @@ If the new system or NGINX doesn't appear in the web interface, or if some metri
 
 ### How Can I Update NGINX Agent?
 
-Instructions to [update NGINX Agent]({{< relref "/nginx-agent/install-configure-nginx-agent/updating-agent" >}})
+Instructions to [update NGINX Agent]({{< relref "/nginx-agent/install/updating-nginx-agent" >}})
 
 ### What System Resources are Required?
 
@@ -62,7 +62,7 @@ Expect to use under 10% of the CPU and a few dozen MBs of RSS memory. If you not
 
 ### How Can I Uninstall NGINX Agent?
 
-Instructions to [uninstall NGINX Agent]({{< relref "/nginx-agent/install-configure-nginx-agent/uninstalling-agent" >}})
+Instructions to [uninstall NGINX Agent]({{< relref "/nginx-agent/install/uninstalling-nginx-agent" >}})
 
 ### Can I Use NGINX Agent with Docker?
 
