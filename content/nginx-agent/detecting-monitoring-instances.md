@@ -13,6 +13,6 @@ NGINX Agent can detect two main types of NGINX instances:
 
 Once installed and running, NGINX Agent automatically detects the NGINX instance running on the system and begins reporting metrics. You can view real-time metrics data on the NGINX Amplify web interface within about two minutes.
 
-To enable NGINX Agent to report additional NGINX metrics follow the instructions to [configure metric collection.]({{< relref "/how-nginx-agent-works/configuring-metric-collection" >}})
+To enable NGINX Agent to report additional NGINX metrics follow the instructions to [configure metric collection.]({{< relref "/nginx-agent/configuring-metric-collection" >}})
 
 {{< note >}}NGINX Agent can't report data from multiple NGINX instances running on a single system.{{< /note >}}

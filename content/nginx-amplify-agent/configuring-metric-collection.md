@@ -7,7 +7,7 @@ tags: ["docs"]
 docs: "DOCS-963"
 ---
 
-To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/how-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
+To monitor an NGINX instance, the agent must [find the relevant NGINX master process]({{< relref "/nginx-amplify-agent/detecting-monitoring-instances" >}}) and determine its key characteristics.
 
 ## Metrics from stub_status
 
@@ -52,7 +52,7 @@ Test your nginx configuration after you've added the `stub_status` section above
 
 {{< note >}} If you use the `conf.d*`directory to keep common parts of your NGINX configuration that are then automatically included in the [server](http://nginx.org/en/docs/http/ngx_http_core_module.html#server) sections across your NGINX config, do not use the snippet above. Instead, you should configure [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) manually within an appropriate location or server block. {{< /note >}}
 
-The above is an example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with `stub_status` are readable by the agent; otherwise, the agent won't be able to determine the `stub_status` URL correctly. If the agent fails to find `stub_status`, please refer to the workaround described [here]({{< relref "/install-manage-amp-agent/configuring-agent#configuring-the-url-for-stub_status-or-status-api" >}}).
+The above is an example `nginx_status` URI for [stub_status](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html). The agent will determine the correct URI automatically upon parsing your NGINX configuration. Please make sure that the directory and the actual configuration file with `stub_status` are readable by the agent; otherwise, the agent won't be able to determine the `stub_status` URL correctly. If the agent fails to find `stub_status`, please refer to the workaround described [here]({{< relref "/nginx-amplify-agent/install-configure-amp-agent/configuring-agent#configuring-the-url-for-stub_status-or-status-api" >}}).
 
 Please ensure the `stub_status` [ACL](http://nginx.org/en/docs/http/ngx_http_access_module.html) is correctly configured, especially if your system is IPv6-enabled. Test the reachability of `stub_status` metrics with `wget(1)` or `curl(1)`. When testing, use the exact URL matching your NGINX configuration.
 
@@ -100,7 +100,7 @@ The agent will also try to detect the [log format](http://nginx.org/en/docs/http
 
 ## Using Syslog for Metric Collection
 
-If you configured the agent for syslog metric collection (see the [configuring syslog]({{< relref "/install-manage-amp-agent/configuring-agent#configuring-syslog" >}}) documentation), make sure to add the following settings to the NGINX configuration:
+If you configured the agent for syslog metric collection (see the [configuring syslog]({{< relref "/nginx-amplify-agent/install-configure-amp-agent/configuring-agent#configuring-syslog" >}}) documentation), make sure to add the following settings to the NGINX configuration:
 
   1. Check that you are using NGINX version 1.9.5 or newer (or NGINX Plus Release 8 or newer).
   2. Edit the NGINX configuration file and specify the syslog listener address as the first parameter to the [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive. Include the `amplify` tag, and your preferred log format:
