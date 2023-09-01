@@ -1,5 +1,5 @@
 ---
-title: Uninstalling NGINX Agent
+title: Uninstall NGINX Agent
 description: Learn how to uninstall NGINX Agent.
 weight: 500
 toc: true

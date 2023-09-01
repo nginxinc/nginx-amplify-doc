@@ -1,7 +1,7 @@
 ---
 title: NGINX Amplify Agent Overview
 description: Learn about the NGINX Amplify Agent.
-weight: 100
+weight: 1
 toc: true
 tags: ["docs"]
 docs: "DOCS-960"

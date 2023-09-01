@@ -1,5 +1,5 @@
 ---
-title: Installing NGINX Agent
+title: Install NGINX Agent
 description: Learn how to install NGINX Agent.
 weight: 100
 toc: true

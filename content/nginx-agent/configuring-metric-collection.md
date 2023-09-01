@@ -6,7 +6,7 @@ toc: true
 tags: ["docs"]
 ---
 
-To monitor an NGINX instance, NGINX Agent must [find the relevant NGINX master process]({{< relref "/how-nginx-agent-works/detecting-monitoring-instances" >}}) and determine its key characteristics.
+To monitor an NGINX instance, NGINX Agent must [find the relevant NGINX master process]({{< relref "/nginx-agent/detecting-monitoring-instances" >}}) and determine its key characteristics.
 
 {{< note >}}If you are new to NGINX here is a [beginners guide](https://nginx.org/en/docs/beginners_guide.html) for managing and configuring NGINX.{{< /note >}}
 

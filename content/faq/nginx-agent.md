@@ -23,13 +23,13 @@ If you find something that needs fixing, you're welcome to [submit a PR](https:/
 
 ### How Do I Start to Monitor My Systems with NGINX Amplify using NGINX Agent?
 
-Instructions to [install NGINX Agent]({{< relref "/install-manage-nginx-agent/installing-agent" >}})
+Instructions to [install NGINX Agent]({{< relref "/nginx-agent/install/installing-nginx-agent" >}})
 
 ### What Do I Need to Configure the NGINX Agent to Report Metrics Correctly?
 
 Once you install and launch NGINX Agent, it will immediately begin reporting, sending aggregated data to NGINX Amplify services every minute. Expect the new system to show up in the Amplify web interface within about a minute.
 
-If the new system or NGINX doesn't appear in the web interface, or if some metrics are missing, refer to the [troubleshooting guide]({{< relref "/how-nginx-agent-works/troubleshooting-metrics-collection" >}})
+If the new system or NGINX doesn't appear in the web interface, or if some metrics are missing, refer to the [troubleshooting guide]({{< relref "/nginx-agent/troubleshooting-metrics-collection" >}})
 
 
 ### How Do I Verify that NGINX Agent Is Correctly Installed?
@@ -48,7 +48,7 @@ If the new system or NGINX doesn't appear in the web interface, or if some metri
 
 ### How Can I Update NGINX Agent?
 
-Instructions to [update NGINX Agent]({{< relref "/install-manage-nginx-agent/updating-agent" >}})
+Instructions to [update NGINX Agent]({{< relref "/nginx-agent/install/updating-nginx-agent" >}})
 
 ### What System Resources are Required?
 
@@ -62,7 +62,7 @@ Expect to use under 10% of the CPU and a few dozen MBs of RSS memory. If you not
 
 ### How Can I Uninstall NGINX Agent?
 
-Instructions to [uninstall NGINX Agent]({{< relref "/install-manage-nginx-agent/uninstalling-agent" >}})
+Instructions to [uninstall NGINX Agent]({{< relref "/nginx-agent/install/uninstalling-nginx-agent" >}})
 
 ### Can I Use NGINX Agent with Docker?
 

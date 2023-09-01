@@ -1,7 +1,7 @@
 ---
 title: NGINX Agent Overview
 description: Learn about NGINX Agent.
-weight: 100
+weight: 1
 toc: true
 tags: ["docs"]
 ---
