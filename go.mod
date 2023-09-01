@@ -1,4 +1,4 @@
-module gitlab.com/f5/nginx/controller/product/nginx-amplify-doc
+module github.com/nginxinc/nginx-amplify-doc
 
 go 1.18
 
