@@ -1,7 +1,7 @@
 ---
 title: Configure NGINX Agent
 description: Learn how to configure the NGINX Agent.
-weight: 300
+weight: 400
 toc: true
 tags: ["docs"]
 ---

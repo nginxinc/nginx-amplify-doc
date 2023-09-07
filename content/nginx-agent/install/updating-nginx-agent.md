@@ -1,7 +1,7 @@
 ---
 title: Update NGINX Agent
 description: Learn how to update NGINX Agent.
-weight: 200
+weight: 300
 toc: true
 tags: ["docs"]
 ---
