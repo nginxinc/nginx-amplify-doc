@@ -1,5 +1,5 @@
 ---
-title: Migrate to NGINX Agent
+title: Migrating from Amplify Agent to NGINX Agent
 description: Learn how to migrate to the NGINX Agent from the Amplify Agent.
 weight: 200
 toc: true
