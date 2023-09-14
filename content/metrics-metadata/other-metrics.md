@@ -7,7 +7,7 @@ tags: ["docs"]
 docs: "DOCS-975"
 ---
 
-{{< note >}}Monitoring PHP-FPM and MySQL metrics is only supported by the Amplify Agent.{{< /note >}}
+{{< note >}}Monitoring PHP-FPM and MySQL metrics is only supported by NGINX Amplify Agent.{{< /note >}}
 
 ## PHP-FPM metrics
 
@@ -25,7 +25,7 @@ To start monitoring PHP-FPM, follow the steps below:
    service php7.0-fpm restart
    ```
 
-2. {{< important >}} Check that NGINX, the Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). You may have to change the used ID for the nginx workers, fix the nginx directories permissions, and then restart NGINX Amplify Agent too. If there are multiple PHP-FPM pools configured with different user IDs, make sure NGINX Amplify Agent's user ID is included in the group IDs of the PHP-FPM workers. This is required in order for NGINX Amplify Agent to access the PHP-FPM pool socket when querying for metrics.{{< /important >}}
+2. {{< important >}} Check that NGINX, NGINX Amplify Agent, and the PHP-FPM workers are all run under the same user ID (e.g. `www-data`). You may have to change the used ID for the nginx workers, fix the nginx directories permissions, and then restart NGINX Amplify Agent too. If there are multiple PHP-FPM pools configured with different user IDs, make sure NGINX Amplify Agent's user ID is included in the group IDs of the PHP-FPM workers. This is required in order for NGINX Amplify Agent to access the PHP-FPM pool socket when querying for metrics.{{< /important >}}
 
 3. Confirm that the listen socket for the PHP-FPM pool you want to monitor and for which you enabled `pm.status_path`, is correctly configured with `listen.owner` and `listen.group`. Look for the following directives inside the pool configuration file.
 
@@ -189,13 +189,13 @@ Below is the list of supported PHP-FPM metrics.
 
 ## MySQL metrics
 
-Version 1.1.0 and above of the Amplify agent has a plugin for monitoring MySQL databases. Again, NGINX Amplify Agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*. Otherwise, the MySQL metric collection won't work.
+Version 1.1.0 and above of NGINX Amplify Agent has a plugin for monitoring MySQL databases. Again, NGINX Amplify Agent should run in the same process environment as MySQL, and be able to find the mysqld processes with *ps(1)*. Otherwise, the MySQL metric collection won't work.
 
 NGINX Amplify Agent doesn't try to find and parse any existing MySQL configuration files. In order for NGINX Amplify Agent to connect to MySQL and collect the metrics, the following steps need to be performed.
 
 To start monitoring MySQL, follow the instructions below.
 
-1. Create a new user for the Amplify agent.
+1. Create a new user for NGINX Amplify Agent.
 
     ```bash
     $ mysql -u root -p

@@ -66,13 +66,13 @@ Previous versions were powered by Python 2.6 and 2.7, depending on the target pl
 
 For manual installation, please check the [user guide]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent#installing-the-agent-manually" >}}).
 
-### What Do I Need to Configure the NGINX Amplify Agent to Report Metrics Correctly?
+### What Do I Need to Configure NGINX Amplify Agent to Report Metrics Correctly?
 
 Once you install NGINX Amplify Agent, it will automatically begin sending metrics. You can expect to see real-time metrics in the Amplify web interface within about a minute.
 
 If you don't see the new system or NGINX in the web interface, or (some) metrics aren't being collected, please check the following:
 
-1. The Amplify Agent package has been successfully [installed]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent.md" >}}), and no warnings were shown during the installation.
+1. The NGINX Amplify Agent package has been successfully [installed]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent.md" >}}), and no warnings were shown during the installation.
 
 2. The `amplify-agent` process is running and updating its [log file]({{< relref "/nginx-amplify-agent/install/configuring-amplify-agent#agent-logfile" >}}).
 
@@ -142,7 +142,7 @@ Under 10% of the CPU and a few dozen MBs of RSS memory will be consumed. If you 
 
 ### How Can I Uninstall NGINX Amplify Agent?
 
-Guide to [uninstall Amplify Agent]({{< relref "/nginx-amplify-agent/install/uninstalling-amplify-agent" >}})
+Guide to [uninstall NGINX Amplify Agent]({{< relref "/nginx-amplify-agent/install/uninstalling-amplify-agent" >}})
 
 ### How Can I Override System Hostname?
 

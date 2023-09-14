@@ -169,7 +169,7 @@ docs: "DOCS-974"
 
 ## Agent Metrics
 
-{{< note >}} Agent metrics are available only if you are using the Amplify Agent.{{< /note >}}
+{{< note >}} Agent metrics are available only if you are using NGINX Amplify Agent.{{< /note >}}
 
 - ####  **amplify.agent.status**
   

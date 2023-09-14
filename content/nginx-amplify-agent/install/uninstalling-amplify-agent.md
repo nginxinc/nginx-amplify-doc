@@ -1,5 +1,5 @@
 ---
-title: Uninstall Amplify Agent
+title: Uninstall NGINX Amplify Agent
 description: Learn how to uninstall NGINX Amplify Agent.
 weight: 400
 toc: true

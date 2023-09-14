@@ -84,7 +84,7 @@ nginx.http.request.reading = stub_status.reading
 nginx.http.request.writing = stub_status.writing
 ```
 
-For NGINX Plus NGINX Amplify Agent will automatically use similar metrics available from the status API.
+For NGINX Plus, NGINX Amplify Agent will automatically use similar metrics available from the status API.
 
 For more information about the metric list, please refer to [Metrics and Metadata]({{< relref "/metrics-metadata" >}}).
 
@@ -119,4 +119,4 @@ If you configured NGINX Amplify Agent for syslog metric collection (see the [con
 
       (see more [here](http://nginx.org/en/docs/control.html))
 
-{{< note >}}To send the NGINX logs to both the existing logging facility and the Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.{{< /note >}}
+{{< note >}}To send the NGINX logs to both the existing logging facility and NGINX Amplify Agent, include a separate [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) directive for each destination.{{< /note >}}

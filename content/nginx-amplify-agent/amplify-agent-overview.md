@@ -1,6 +1,6 @@
 ---
 title: NGINX Amplify Agent Overview
-description: Learn about the NGINX Amplify Agent.
+description: Learn about NGINX Amplify Agent.
 weight: 1
 toc: true
 tags: ["docs"]
@@ -9,9 +9,9 @@ docs: "DOCS-960"
 
 NGINX Amplify Agent is a compact application written in Python. Its role is to collect various metrics and metadata and send them securely to the backend for storage and visualization.
 
-You need to install the Amplify Agent on all hosts you want to monitor.
+You need to install NGINX Amplify Agent on all hosts you want to monitor.
 
-Once you install the NGINX Amplify Agent, it will automatically begin sending metrics. You can expect to see real-time metrics in the NGINX Amplify web interface within about a minute.
+Once you install NGINX Amplify Agent, it will automatically begin sending metrics. You can expect to see real-time metrics in the NGINX Amplify web interface within about a minute.
 
 NGINX Amplify can currently monitor and collect performance metrics for:
 

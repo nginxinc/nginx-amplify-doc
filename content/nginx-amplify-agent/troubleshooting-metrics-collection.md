@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting Metrics Collection
-description: Learn what to check if the NGINX Amplify Agent isn't reporting metrics.
+description: Learn what to check if NGINX Amplify Agent isn't reporting metrics.
 weight: 500
 toc: true
 tags: ["docs"]
@@ -11,7 +11,7 @@ After you [install and start]({{< relref "/nginx-amplify-agent/install/installin
 
 If you don't see the new system or NGINX instance in the web interface, or (some) metrics aren't being collected, please review the following:
 
-  1. The Amplify Agent package has been successfully [installed]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent" >}}), and no warnings were reported during the installation.
+  1. The NGINX Amplify Agent package has been successfully [installed]({{< relref "/nginx-amplify-agent/install/installing-amplify-agent" >}}), and no warnings were reported during the installation.
   2. The `amplify-agent` process is running and updating its [log file]({{< relref "/nginx-amplify-agent/install/configuring-amplify-agent#agent-logfile" >}}).
   3. NGINX Amplify Agent is running under the same user as your NGINX worker processes.
   4. The NGINX instance is started with an absolute path. NGINX Amplify Agent **can't** detect NGINX instances launched with a relative path (e.g. "./nginx").

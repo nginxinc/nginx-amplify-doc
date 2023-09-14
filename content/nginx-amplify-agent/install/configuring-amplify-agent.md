@@ -1,6 +1,6 @@
 ---
-title: Configuring Amplify Agent
-description: Learn how to configure the NGINX Amplify Agent.
+title: Configuring NGINX Amplify Agent
+description: Learn how to configure NGINX Amplify Agent.
 weight: 300
 toc: true
 tags: ["docs"]
