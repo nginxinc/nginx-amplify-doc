@@ -88,7 +88,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 8. NGINX [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) and [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) files are readable by the user `nginx` (or by the [user](http://nginx.org/en/docs/ngx_core_module.html#user) set in NGINX config).
 
-9. All NGINX configuration files are readable by NGINX Amplify Agent user ID (check owner, group, and permissions).
+9. All NGINX configuration files are readable by the NGINX Amplify Agent user ID (check owner, group, and permissions).
 
 10. Extra [configuration steps have been performed as required]({{< relref "/metrics-metadata/nginx-metrics#additional-nginx-metrics" >}}) for the additional metrics to be collected.
 
@@ -169,4 +169,4 @@ Refer to the [Configuring NGINX Amplify Agent]({{< relref "/nginx-amplify-agent/
 
 ### Can I Use NGINX Amplify Agent with Docker?
 
-Please check the [following section](https://github.com/nginxinc/docker-nginx-amplify) of NGINX Amplify Agent repository to find out more. Keep in mind that the support for a Docker environment is currently experimental.
+Please check the [following section](https://github.com/nginxinc/docker-nginx-amplify) of the NGINX Amplify Agent repository to find out more. Keep in mind that the support for a Docker environment is currently experimental.

@@ -23,7 +23,7 @@ user =
 configfile = /etc/nginx/nginx.conf
 ```
 
-The first option allows to explicitly set the real user ID, which NGINX Amplify Agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, NGINX Amplify Agent startup script will use it to look up the real user ID.
+The first option allows to explicitly set the real user ID, which NGINX Amplify Agent should pick for its effective user ID. If the `user` directive has a non-empty parameter, the NGINX Amplify Agent startup script will use it to look up the real user ID.
 
 The second option explicitly tells NGINX Amplify Agent where to look for an NGINX configuration file suitable for detecting the real user ID, `/etc/nginx/nginx.conf` by default.
 

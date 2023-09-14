@@ -242,7 +242,7 @@ To use the extended log format with your access log configuration:
   access_log  /var/log/nginx/access.log  main_ext;
   ```
 
-{{< note >}} Please keep in mind that by default, NGINX Amplify Agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice. Please refer to NGINX Amplify Agent configuration section above to learn how to exclude specific log files from processing.{{< /note >}}
+{{< note >}} Please keep in mind that by default, NGINX Amplify Agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice. Please refer to the NGINX Amplify Agent configuration section above to learn how to exclude specific log files from processing.{{< /note >}}
 
 The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to `warn`.
 
