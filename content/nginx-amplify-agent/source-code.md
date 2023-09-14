@@ -12,4 +12,4 @@ NGINX Amplify Agent is an open source application. It is licensed under the [2-c
   * Sources: https://github.com/nginxinc/nginx-amplify-agent
   * Public package repository: http://packages.amplify.nginx.com
   * Install script for Linux: https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
-  * A script to install the agent when the package is not available: https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh
+  * A script to install NGINX Amplify Agent when the package is not available: https://raw.githubusercontent.com/nginxinc/nginx-amplify-agent/master/packages/install-source.sh

@@ -182,7 +182,7 @@ docs: "DOCS-974"
 
    ```
    Type:        gauge, percent
-   Description: CPU utilization percentage observed from the agent process.
+   Description: CPU utilization percentage observed from NGINX Amplify Agent process.
    ```
 
 
@@ -192,5 +192,5 @@ docs: "DOCS-974"
 
   ```
   Type:        gauge, bytes
-  Description: Memory utilized by the agent process.
+  Description: Memory utilized by NGINX Amplify Agent process.
   ```

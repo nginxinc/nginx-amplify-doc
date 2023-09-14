@@ -9,11 +9,11 @@ docs: "DOCS-968"
 
 To use NGINX Amplify to monitor your infrastructure, you need to install NGINX Amplify Agent on each system you wish to monitor.
 
-{{< note >}} The agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, the agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`). {{< /note >}} 
+{{< note >}} NGINX Amplify Agent will drop *root* privileges on startup. It will then use the user ID of the user `nginx` to set its effective user ID. The package install procedure will add the `nginx` user automatically unless it's already found in the system. If the [user](http://nginx.org/en/docs/ngx_core_module.html#user) directive appears in the NGINX configuration, NGINX Amplify Agent will pick up the user specified in the NGINX config for its effective user ID (e.g. `www-data`). {{< /note >}} 
 
 ## Using the Install Script
 
-Take the following steps to install the Agent:
+Take the following steps to install NGINX Amplify Agent:
 
 1. Download and run the install script.
 
@@ -25,14 +25,14 @@ Take the following steps to install the Agent:
 
    Where YOUR_API_KEY is a unique API key assigned to your Amplify account. You will see the API key when adding a new system in the Amplify web interface. You can also find it in the **Account** menu.
 
-2. Verify that the agent has started.
+2. Verify that NGINX Amplify Agent has started.
 
    ```bash
    ps ax | grep -i 'amplify\-'
    2552 ?        S      0:00 amplify-agent
    ```
 
-## Installing the Agent Manually
+## Installing NGINX Amplify Agent Manually
 
 ### Installing on Ubuntu or Debian
 
@@ -71,7 +71,7 @@ Take the following steps to install the Agent:
     apt-get update
     ```
 
-5. Install and run the agent.
+5. Install and run NGINX Amplify Agent.
 
     ```bash
     apt-get install nginx-amplify-agent
@@ -126,7 +126,7 @@ Take the following steps to install the Agent:
     yum makecache
     ```
 
-5. Install and run the agent.
+5. Install and run NGINX Amplify Agent.
 
     ```bash
     yum install nginx-amplify-agent
@@ -143,7 +143,7 @@ sed "s/api_key.*$/api_key = ${api_key}/" \
 
 API_KEY is a unique API key assigned to your Amplify account. You will see your API key when adding a new system using the Amplify web interface. You can also find the API key in the *Account* menu.
 
-## Starting and Stopping the Agent
+## Starting and Stopping NGINX Amplify Agent
 
 ```bash
 service amplify-agent start
@@ -157,7 +157,7 @@ service amplify-agent stop
 service amplify-agent restart
 ```
 
-## Verifying that the Agent Has Started
+## Verifying that NGINX Amplify Agent Has Started
 
 ```bash
 ps ax | grep -i 'amplify\-'
