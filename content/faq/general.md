@@ -36,10 +36,6 @@ NGINX Amplify Agent service communicates using gRPC connections securely over SS
 
 NGINX Amplify Agent is an open-source application. It is licensed under the [2-clause BSD license](https://github.com/nginxinc/nginx-amplify-agent/blob/master/LICENSE), and the code is available in [NGINX Amplify's GitHub repository](https://github.com/nginxinc/nginx-amplify-agent).
 
-### Is the NGINX Agent Code Publicly Available?
-
-NGINX Amplify Agent is an open-source application licensed under the [Apache License 2.0](https://github.com/nginx/agent/blob/main/LICENSE). You can find the code in the [NGINX Agent's GitHub repository](https://github.com/nginx/agent).
-
 ### What is This Question About My Password When Installing NGINX Amplify Agent?
 
 It could be that you're starting the install script from a non-root account. In this case, you will need *sudo* rights. While it depends on a particular system configuration, with a non-root account *sudo* will typically ask for a password.

@@ -10,24 +10,6 @@ tags: ["docs"]
 
 ---
 
-### {{% icon-bug %}} Configuration analysis fails when NGINX root configuration is not named `nginx.conf` {#658}
-
-{{<bootstrap-table "table table-striped table-bordered">}}
-| Issue ID | Status |
-|----------|--------|
-| 658      | Open   |
-{{</bootstrap-table>}}
-
-#### Description
-
-Amplify cannot perform configuration analysis for NGINX instances managed by the NGINX agent when the root NGINX configuration file is not named `nginx.conf`.
-
-#### Workarand
-
-This issue does not affect the Amplify Agent.
-
----
-
 ### {{% icon-resolved %}} Adding new Slack integration not supported in Beta user interface. {#907}
 
 {{<bootstrap-table "table table-striped table-bordered">}}
