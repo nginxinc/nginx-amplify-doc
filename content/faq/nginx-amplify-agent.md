@@ -80,7 +80,7 @@ If you don't see the new system or NGINX in the web interface, or (some) metrics
 
 4. The NGINX instance is started with an absolute path. Currently, NGINX Amplify Agent **can't** detect NGINX instances launched with a relative path (e.g., "./nginx").
 
-5. The [user ID that is used by NGINX Amplify Agent and the NGINX ]({{< relref "/nginx-amplify-agent/install/configuring-amplify-agent#overriding-the-effective-user-id" >}}), can run *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, NGINX Amplify Agent won't be able to find and properly detect the NGINX master process.
+5. The [user ID that is used by NGINX Amplify Agent and NGINX ]({{< relref "/nginx-amplify-agent/install/configuring-amplify-agent#overriding-the-effective-user-id" >}}), can run *ps(1)* to see all system processes. If *ps(1)* is restricted for non-privileged users, NGINX Amplify Agent won't be able to find and properly detect the NGINX master process.
 
 6. The time is set correctly. If the time on the system where NGINX Amplify Agent runs is ahead or behind the world's clock, you won't be able to see the graphs.
 
