@@ -221,7 +221,7 @@ docs: "DOCS-973"
 
 ## Additional NGINX Metrics
 
-NGINX Amplify Agent can collect many additional useful metrics described below. To enable these metrics, please make the following configuration changes. More predefined graphs will be added to the **Graphs** page if NGINX Amplify Agent finds additional metrics. With the required log format configuration, you'll can build more specific custom graphs.
+NGINX Amplify Agent can collect many useful metrics, as described below. To enable these metrics, make the following configuration changes. More predefined graphs will be added to the **Graphs** page if NGINX Amplify Agent finds additional metrics. With the required log format configuration, you can build more specific custom graphs.
 
 The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
 
