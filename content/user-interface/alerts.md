@@ -20,7 +20,7 @@ The way alert rules work is the following:
 
 By default, there's no filtering by host. If a specific alert should only be raised for a particular system, you should specify the hostname(s) or tags when configuring the alert. Currently, metrics can't be aggregated across all systems; instead, any system will match a particular rule unless a host is specified.
 
-There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of the agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
+There's one special rule which is the about **amplify.agent.status** metric. This metric reflects the state of NGINX Amplify Agent (and hence, the state of the system as seen by Amplify). You can only configure a 2 minute interval and only 0 (zero) as the threshold for **amplify.agent.status**.
 
 You shouldn't see consecutive notifications about the same alert repeatedly. Instead, there will be digest information sent out *every 60 minutes*, describing which alerts were generated and which ones were cleared.
 

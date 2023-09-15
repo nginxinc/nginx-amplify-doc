@@ -169,7 +169,7 @@ docs: "DOCS-974"
 
 ## Agent Metrics
 
-{{< note >}} Agent metrics are available only if you are using the Amplify Agent.{{< /note >}}
+{{< note >}} Agent metrics are available only if you are using NGINX Amplify Agent.{{< /note >}}
 
 - ####  **amplify.agent.status**
   
@@ -182,7 +182,7 @@ docs: "DOCS-974"
 
    ```
    Type:        gauge, percent
-   Description: CPU utilization percentage observed from the agent process.
+   Description: CPU utilization percentage observed from the NGINX Amplify Agent process.
    ```
 
 
@@ -192,5 +192,5 @@ docs: "DOCS-974"
 
   ```
   Type:        gauge, bytes
-  Description: Memory utilized by the agent process.
+  Description: Memory utilized by the NGINX Amplify Agent process.
   ```

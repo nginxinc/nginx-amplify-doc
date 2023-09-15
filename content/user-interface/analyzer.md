@@ -41,7 +41,7 @@ The following information is provided when a report is generated from an NGINX c
     * Key security measures (e.g., *stub_status* is unprotected)
     * Typical errors in configuring locations, especially with *regex*
 
-To parse SSL certificate metadata, the Amplify Agent uses standard OpenSSL(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings]({{< relref "/user-interface/account-settings" >}}) are turned on. SSL certificate analysis is *off* by default.
+To parse SSL certificate metadata, NGINX Amplify Agent uses standard OpenSSL(1) functions. SSL certificates are parsed and analyzed only when the corresponding [settings]({{< relref "/user-interface/account-settings" >}}) are turned on. SSL certificate analysis is *off* by default.
 
 Static analysis will only include information about specific issues with the NGINX configuration if those are found in your NGINX setup.
 

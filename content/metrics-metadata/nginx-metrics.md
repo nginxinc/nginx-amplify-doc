@@ -221,7 +221,7 @@ docs: "DOCS-973"
 
 ## Additional NGINX Metrics
 
-NGINX Amplify Agent can collect many additional useful metrics described below. To enable these metrics, please make the following configuration changes. More predefined graphs will be added to the **Graphs** page if the agent finds additional metrics. With the required log format configuration, you'll can build more specific custom graphs.
+NGINX Amplify Agent can collect many useful metrics, as described below. To enable these metrics, make the following configuration changes. More predefined graphs will be added to the **Graphs** page if NGINX Amplify Agent finds additional metrics. With the required log format configuration, you can build more specific custom graphs.
 
 The [access.log](http://nginx.org/en/docs/http/ngx_http_log_module.html) log format should include an extended set of NGINX [variables](http://nginx.org/en/docs/varindex.html). Please add a new log format or modify the existing one — and use it with the `access_log` directives in your NGINX configuration.
 
@@ -242,7 +242,7 @@ To use the extended log format with your access log configuration:
   access_log  /var/log/nginx/access.log  main_ext;
   ```
 
-{{< note >}} Please keep in mind that by default, the agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice. Please refer to the agent configuration section above to learn how to exclude specific log files from processing.{{< /note >}}
+{{< note >}} Please keep in mind that by default, NGINX Amplify Agent will process all access logs that are found in your log directory. If you define a new log file with the extended log format that will contain the entries being already logged to another access log, your metrics might be counted twice. Please refer to the NGINX Amplify Agent configuration section above to learn how to exclude specific log files from processing.{{< /note >}}
 
 The [error.log](http://nginx.org/en/docs/ngx_core_module.html#error_log) log level should be set to `warn`.
 
@@ -444,7 +444,7 @@ List of additional metrics that can be collected from the NGINX log files:
 
 In [NGINX Plus](https://www.nginx.com/products/) several additional metrics describing various aspects of NGINX performance are available. The [API module](http://nginx.org/en/docs/http/ngx_http_api_module.html) in NGINX Plus is responsible for collecting and exposing all of the additional counters and gauges.
 
-The NGINX Plus metrics currently supported by the agent are described below. The NGINX Plus metrics have the "plus" prefix in their names.
+The NGINX Plus metrics currently supported by NGINX Amplify Agent are described below. The NGINX Plus metrics have the "plus" prefix in their names.
 
 Some of the NGINX Plus metrics extracted from the `connections` and the `requests` datasets are used to generate the following server-wide metrics (instead of using the *stub_status* metrics):
 
@@ -460,7 +460,7 @@ nginx.http.request.current = requests.current
 
 The NGINX Plus metrics below are collected *per zone*. When configuring a graph using these metrics, please make sure to pick the correct server, upstream, or cache zone. A more granular peer-specific breakdown of the metrics below is currently not supported in NGINX Amplify.
 
-{{< note >}}NGINX Agent does not support reporting the following metrics *per zone* but it can be used to display a cumulative sum of values from each zone.{{< /note >}}
+{{< note >}}NGINX Amplify Agent does not support reporting the following metrics *per zone* but it can be used to display a cumulative sum of values from each zone.{{< /note >}}
 
 A cumulative metric set is also maintained internally by summing up the per-zone metrics. If you don't configure a specific zone when building graphs, this will result in an "all zones" visualization. E.g., for something like **plus.http.status.2xx** omitting zone will display the instance-wide sum of the successful requests across all zones.
 
