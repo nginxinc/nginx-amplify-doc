@@ -11,7 +11,7 @@ toc: true
  
 - {{% icon-feature %}} **Removal of NGINX Amplify Beta User Interface**
 
-  The NGINX Amplify Beta User Interface has been removed. We’re choosing to go in a different direction. Thank you to everyone who tried out the new UI or provided feedback.
+  The NGINX Amplify Beta User Interface is no longer available. We're shifting our focus to concentrate on core initiatives. A big thank you to all who tested the interface or shared their thoughts.
 
 
 ## July 26, 2023
