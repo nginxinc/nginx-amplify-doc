@@ -5,6 +5,15 @@ weight: 900
 toc: true
 ---
 
+## Sept 21, 2023
+
+### What's New
+ 
+- {{% icon-feature %}} **Removal of NGINX Amplify Beta User Interface**
+
+  The NGINX Amplify Beta User Interface has been removed. We’re choosing to go in a different direction. Thank you to everyone who tried out the new UI or provided feedback.
+
+
 ## July 26, 2023
 
 ### What's New
