@@ -14,6 +14,7 @@ The NGINX Amplify Agent is currently officially packaged and supported for the f
   * Ubuntu 22.04 "jammy" (amd64/arm64)
   * Ubuntu 20.04 "focal" (amd64/arm64)
   * Ubuntu 18.04 "bionic" (amd64/arm64)
+  * Debian 12 "bookworm" (amd64/arm64)
   * Debian 11 "bullseye" (amd64/arm64)
   * Debian 10 "buster" (amd64/arm64)
   * RHEL/CentOS/OEL 8 (amd64/arm64)
